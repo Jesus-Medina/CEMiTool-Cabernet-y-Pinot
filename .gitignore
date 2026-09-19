@@ -1,0 +1,24 @@
+# Raw/public data downloaded reproducibly
+data/raw/
+*.gz
+*.fastq
+*.fastq.gz
+
+# Large R objects / generated state
+*.rds
+.Rhistory
+.RData
+.Rproj.user/
+
+# Generated reports and archives
+reports/**/*.html
+reports/**/*.pdf
+reports/**/*.docx
+reports/**/*.zip
+manuscript/**/*.pdf
+manuscript/**/*.docx
+
+# Temporary/editor/OS
+.DS_Store
+Thumbs.db
+~$*
