@@ -1,0 +1,16 @@
+dataset=GSE98923
+samples=54
+transform=log2(RPKM+1)
+correlation=pearson
+network_type=unsigned
+tom_type=signed
+beta_strategy=manual_set_beta_baseline_reproduction
+set_beta=7
+force_beta=FALSE
+beta=7
+r2=0.549579273382905
+filter=TRUE
+filter_pval=0.1
+min_module_size=30
+seed=1234
+modules=9
