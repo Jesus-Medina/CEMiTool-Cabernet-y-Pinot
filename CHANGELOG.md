@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-09-20 — Main report made cumulative
+
+- Added scripts/post/08_update_report_with_module_statistics.R.
+- The updater reads the outputs from script 07 and integrates them into the main analysis report.
+- The updated report now includes:
+  - beta7 vs beta10 robustness when the comparison tables are available;
+  - module eigengene methodology;
+  - factorial ANOVA results;
+  - significant Cultivar x Stage interactions;
+  - significant Cabernet vs Pinot contrasts by developmental stage;
+  - Year effects;
+  - interpretation limits and the next planned Year-robustness analysis.
+- Before overwriting reports/analysis_report.html, .docx and .pdf, the previous version is archived under reports/archive_before_module_statistics/<timestamp>/.
+- A permanent update log is written so the report history is recoverable.
+
+
 ## 2026-09-19 — Repository initialized and historical work consolidated
 
 ### Dataset and design
