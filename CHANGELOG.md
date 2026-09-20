@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-09-20 — Codex handoff and persistent agent context
+
+- Added root `AGENTS.md` with durable repository rules for Codex.
+- Added `docs/CURRENT_STATE.md` as the live scientific/operational handoff.
+- Added `docs/PROJECT_CONTEXT.md` with the full study context and rationale.
+- Added `docs/DECISIONS.md` to record durable methodological decisions.
+- Added `docs/TASK_LEDGER.md` with active, blocked and future tasks plus acceptance criteria.
+- Added `docs/FUTURE_VISION.md` describing the intended evidence ladder and ChatGPT ↔ Codex workflow.
+- Added `docs/CODEX_HANDOFF.md` with the exact local-PC starting procedure.
+- The repository is now the shared coordination surface between ChatGPT and Codex; local Codex should pull first, read AGENTS/context files, execute locally, then update the ledger and push results.
+
 ## 2026-09-20 — Main report made cumulative
 
 - Added scripts/post/08_update_report_with_module_statistics.R.
