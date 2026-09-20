@@ -1,0 +1,11 @@
+GSE98923 beta 7 vs beta 10 module comparison
+completed=2026-09-19 04:00:15.619288
+genes_beta7=3050
+genes_beta10=3050
+shared_genes=3050
+groups_beta7_including_Not.Correlated=9
+groups_beta10_including_Not.Correlated=11
+
+Interpretation note:
+Module labels (M1, M2, ...) are arbitrary between independent runs.
+Use gene overlap/Jaccard similarity rather than matching modules only by label.

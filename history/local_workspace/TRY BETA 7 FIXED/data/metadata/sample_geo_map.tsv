@@ -1,0 +1,55 @@
+SampleName	Class	GSM	Cultivar	Year	Stage	TimePoint	Replicate	DayAfterVeraison	Evidence	GEO_URL	GEO_Description
+GSM2627691	CS_FruitSet	GSM2627691	Cabernet Sauvignon	2012	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627691	CS12_0_1_0
+GSM2627692	CS_FruitSet	GSM2627692	Cabernet Sauvignon	2012	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627692	CS12_0_2_0
+GSM2627693	CS_FruitSet	GSM2627693	Cabernet Sauvignon	2012	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627693	CS12_0_3_0
+GSM2627709	CS_Veraison	GSM2627709	Cabernet Sauvignon	2012	Veraison	4	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627709	CS12_A_1_4
+GSM2627711	CS_Veraison	GSM2627711	Cabernet Sauvignon	2012	Veraison	4	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627711	CS12_A_2_4
+GSM2627713	CS_Veraison	GSM2627713	Cabernet Sauvignon	2012	Veraison	4	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627713	CS12_A_3_4
+GSM2627739	CS_Harvest	GSM2627739	Cabernet Sauvignon	2012	Harvest	12	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627739	CS12_A_1_12
+GSM2627740	CS_Harvest	GSM2627740	Cabernet Sauvignon	2012	Harvest	12	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627740	CS12_A_2_12
+GSM2627741	CS_Harvest	GSM2627741	Cabernet Sauvignon	2012	Harvest	12	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627741	CS12_A_3_12
+GSM2627742	CS_FruitSet	GSM2627742	Cabernet Sauvignon	2013	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627742	CS13_0_1_0
+GSM2627743	CS_FruitSet	GSM2627743	Cabernet Sauvignon	2013	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627743	CS13_0_2_0
+GSM2627744	CS_FruitSet	GSM2627744	Cabernet Sauvignon	2013	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627744	CS13_0_3_0
+GSM2627754	CS_Veraison	GSM2627754	Cabernet Sauvignon	2013	Veraison	4	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627754	CS13_A_1_4
+GSM2627755	CS_Veraison	GSM2627755	Cabernet Sauvignon	2013	Veraison	4	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627755	CS13_A_2_4
+GSM2627756	CS_Veraison	GSM2627756	Cabernet Sauvignon	2013	Veraison	4	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627756	CS13_A_3_4
+GSM2627781	CS_Harvest	GSM2627781	Cabernet Sauvignon	2013	Harvest	13	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627781	CS13_A_1_13
+GSM2627782	CS_Harvest	GSM2627782	Cabernet Sauvignon	2013	Harvest	13	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627782	CS13_A_2_13
+GSM2627783	CS_Harvest	GSM2627783	Cabernet Sauvignon	2013	Harvest	13	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627783	CS13_A_3_13
+GSM2627784	CS_FruitSet	GSM2627784	Cabernet Sauvignon	2014	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627784	CS14_0_1_0
+GSM2627785	CS_FruitSet	GSM2627785	Cabernet Sauvignon	2014	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627785	CS14_0_2_0
+GSM2627786	CS_FruitSet	GSM2627786	Cabernet Sauvignon	2014	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627786	CS14_0_3_0
+GSM2627793	CS_Veraison	GSM2627793	Cabernet Sauvignon	2014	Veraison	3	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627793	CS14_A_1_3
+GSM2627794	CS_Veraison	GSM2627794	Cabernet Sauvignon	2014	Veraison	3	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627794	CS14_A_2_3
+GSM2627795	CS_Veraison	GSM2627795	Cabernet Sauvignon	2014	Veraison	3	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627795	CS14_A_3_3
+GSM2627820	CS_Harvest	GSM2627820	Cabernet Sauvignon	2014	Harvest	12	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627820	CS14_A_1_12
+GSM2627821	CS_Harvest	GSM2627821	Cabernet Sauvignon	2014	Harvest	12	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627821	CS14_A_2_12
+GSM2627822	CS_Harvest	GSM2627822	Cabernet Sauvignon	2014	Harvest	12	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627822	CS14_A_3_12
+GSM2627823	PN_FruitSet	GSM2627823	Pinot noir	2012	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627823	PN12_0_1_0
+GSM2627824	PN_FruitSet	GSM2627824	Pinot noir	2012	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627824	PN12_0_2_0
+GSM2627825	PN_FruitSet	GSM2627825	Pinot noir	2012	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627825	PN12_0_3_0
+GSM2627835	PN_Veraison	GSM2627835	Pinot noir	2012	Veraison	4	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627835	PN12_A_1_4
+GSM2627836	PN_Veraison	GSM2627836	Pinot noir	2012	Veraison	4	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627836	PN12_A_2_4
+GSM2627837	PN_Veraison	GSM2627837	Pinot noir	2012	Veraison	4	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627837	PN12_A_3_4
+GSM2627850	PN_Harvest	GSM2627850	Pinot noir	2012	Harvest	9	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627850	PN12_A_1_9
+GSM2627851	PN_Harvest	GSM2627851	Pinot noir	2012	Harvest	9	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627851	PN12_A_2_9
+GSM2627852	PN_Harvest	GSM2627852	Pinot noir	2012	Harvest	9	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627852	PN12_A_3_9
+GSM2627853	PN_FruitSet	GSM2627853	Pinot noir	2013	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627853	PN13_0_1_0
+GSM2627854	PN_FruitSet	GSM2627854	Pinot noir	2013	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627854	PN13_0_2_0
+GSM2627855	PN_FruitSet	GSM2627855	Pinot noir	2013	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627855	PN13_0_3_0
+GSM2627862	PN_Veraison	GSM2627862	Pinot noir	2013	Veraison	3	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627862	PN13_A_1_3
+GSM2627863	PN_Veraison	GSM2627863	Pinot noir	2013	Veraison	3	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627863	PN13_A_2_3
+GSM2627864	PN_Veraison	GSM2627864	Pinot noir	2013	Veraison	3	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627864	PN13_A_3_3
+GSM2627883	PN_Harvest	GSM2627883	Pinot noir	2013	Harvest	10	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627883	PN13_A_1_10
+GSM2627884	PN_Harvest	GSM2627884	Pinot noir	2013	Harvest	10	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627884	PN13_A_2_10
+GSM2627885	PN_Harvest	GSM2627885	Pinot noir	2013	Harvest	10	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627885	PN13_A_3_10
+GSM2627886	PN_FruitSet	GSM2627886	Pinot noir	2014	FruitSet	0	1	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627886	PN14_0_1_0
+GSM2627887	PN_FruitSet	GSM2627887	Pinot noir	2014	FruitSet	0	2	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627887	PN14_0_2_0
+GSM2627888	PN_FruitSet	GSM2627888	Pinot noir	2014	FruitSet	0	3	NA	Protocol-derived: sampling begins at fruit set	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627888	PN14_0_3_0
+GSM2627895	PN_Veraison	GSM2627895	Pinot noir	2014	Veraison	3	1	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627895	PN14_A_1_3
+GSM2627896	PN_Veraison	GSM2627896	Pinot noir	2014	Veraison	3	2	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627896	PN14_A_2_3
+GSM2627897	PN_Veraison	GSM2627897	Pinot noir	2014	Veraison	3	3	0	Explicit GEO: day after veraison = 0	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627897	PN14_A_3_3
+GSM2627919	PN_Harvest	GSM2627919	Pinot noir	2014	Harvest	11	1	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627919	PN14_A_1_11
+GSM2627920	PN_Harvest	GSM2627920	Pinot noir	2014	Harvest	11	2	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627920	PN14_A_2_11
+GSM2627921	PN_Harvest	GSM2627921	Pinot noir	2014	Harvest	11	3	NA	Protocol-derived: final time point; sampling until harvest (24.5 Brix)	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627921	PN14_A_3_11

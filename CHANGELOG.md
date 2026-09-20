@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-09-20 — Complete local workspace migration
+
+- Migrated the complete local CEMiTool workspace into a separate synchronization clone without modifying the original folder.
+- Added the two-layer repository model: canonical working folders plus `history/local_workspace/` for the original local folder layout.
+- Preserved all six top-level historical folders, including the otherwise empty `TRY BETA 7 WITH INFORM/` directory.
+- Promoted the current beta 10 inputs, outputs, reports, manuscript, and supporting scripts into the canonical structure.
+- Retained the repository's newer canonical versions of post-processing scripts 06-08; local variants remain in the historical archive.
+- Configured Git LFS for nine large R-object paths (seven unique payloads), including four `.RData` workspace images whose scientific uniqueness could not be safely ruled out.
+- Established `reports/current/`, `reports/archive/`, and `reports/supplementary/`; promoted the latest beta 10 report to `reports/current/`.
+- Added `docs/LOCAL_PROJECT_INVENTORY.md` and `docs/SYNC_POLICY.md`.
+- Replaced the previous broad ignore rules with a minimal local-state and temporary-file policy.
+- Intentionally excluded only 50 unambiguous R/RStudio local-state files (`.Rhistory` and `.Rproj.user/`) from Git; they remain untouched on local disk and are documented in the inventory.
+- No secrets were detected and no scientific file was omitted because of an upload or platform failure.
+
 ## 2026-09-20 — Main report made cumulative
 
 - Added scripts/post/08_update_report_with_module_statistics.R.

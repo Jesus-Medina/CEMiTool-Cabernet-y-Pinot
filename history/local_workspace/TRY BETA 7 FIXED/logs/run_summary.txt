@@ -1,0 +1,6 @@
+GSE98923 CEMiTool baseline
+completed=2026-09-19 02:35:02.873584
+modules=9
+beta_strategy=manual_set_beta_baseline_reproduction
+beta=7
+r2=0.549579273382905

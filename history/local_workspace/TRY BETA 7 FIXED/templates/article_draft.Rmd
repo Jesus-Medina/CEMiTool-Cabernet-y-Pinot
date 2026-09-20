@@ -1,0 +1,108 @@
+---
+title: "[Manuscript title]"
+author:
+  - "[Author 1]"
+  - "[Author 2]"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+bibliography: references.bib
+output:
+  word_document:
+    toc: false
+  pdf_document:
+    latex_engine: xelatex
+fontsize: 11pt
+geometry: margin=1in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  out.width = "88%"
+)
+
+project_dir <- normalizePath("..", winslash = "/", mustWork = TRUE)
+
+samples <- read.delim(
+  file.path(project_dir, "data/metadata/samples.tsv"),
+  sep = "\t",
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+expr <- readRDS(
+  file.path(project_dir, "data/processed/expression_log2rpkm.rds")
+)
+
+cem <- readRDS(
+  file.path(project_dir, "results/objects/cemitool.rds")
+)
+
+parameters <- readLines(
+  file.path(project_dir, "logs/parameters.txt")
+)
+
+param_value <- function(key) {
+  hit <- grep(paste0("^", key, "="), parameters, value = TRUE)
+  if (length(hit) == 0) return(NA_character_)
+  sub(paste0("^", key, "="), "", hit[[1]])
+}
+```
+
+# Abstract
+
+[Write the final abstract after the biological results have been interpreted and verified.]
+
+# Introduction
+
+[Add the literature-supported biological background, study rationale, and research question. Insert only verified references in `references.bib`.]
+
+# Materials and Methods
+
+## Dataset and experimental design
+
+Publicly available expression data were obtained from GEO accession GSE98923. The baseline analysis used a balanced subset of **`r nrow(samples)` samples** comprising Cabernet Sauvignon and Pinot noir, three developmental stages (FruitSet, Veraison, and Harvest), three years (2012-2014), and three replicates per cultivar-stage-year combination.
+
+## Expression preprocessing
+
+The processed RPKM matrix distributed with GSE98923 was used as the expression source. The selected expression matrix contained **`r nrow(expr)` genes** across **`r ncol(expr)` samples**. Values were transformed as \(\log_2(\mathrm{RPKM}+1)\) before co-expression analysis.
+
+## Co-expression network analysis
+
+Gene co-expression analysis was performed in R using CEMiTool. Pearson correlation was used with an unsigned network and signed TOM. CEMiTool filtering was enabled with `filter_pval = 0.1`, `apply_vst = FALSE`, and a minimum module size of 30.
+
+Automatic beta selection did not return a usable value in the initial baseline analysis. For reproducibility of the established baseline, the soft-thresholding power was fixed at **beta = 7** with `set_beta = 7` and `force_beta = FALSE`. This parameter is specific to the present sample set and preprocessing and should be re-evaluated if either changes. A random seed of 1234 was used.
+
+Software versions are provided in `logs/session_info.txt`.
+
+# Results
+
+## Co-expression modules
+
+CEMiTool identified **`r CEMiTool::nmodules(cem)` modules** in the baseline analysis.
+
+[Describe the biologically relevant module patterns after inspecting the module profiles, enrichment results, and hub genes. Avoid interpreting module function solely from visual appearance.]
+
+## Figures
+
+[Select only manuscript-relevant figures from `results/figures/`. The full technical report contains the complete analysis figure set.]
+
+## Tables
+
+[Move the principal manuscript tables here. Complete machine-readable tables are stored under `results/tables/` and indexed in the supplementary manifest.]
+
+# Discussion
+
+[Interpret the findings in relation to grape berry development and the relevant literature. Discuss limitations, including the use of processed RPKM values, the fixed beta = 7 baseline choice, the selected 54-sample baseline design, and any potential year/cultivar effects.]
+
+# Conclusions
+
+[Write concise conclusions supported directly by the results.]
+
+# Data and code availability
+
+The analysis uses public data from GEO accession GSE98923. The reproducible project contains the sample selection, processing scripts, exported results, software-session information, and a supplementary file manifest with MD5 checksums.
+
+# References

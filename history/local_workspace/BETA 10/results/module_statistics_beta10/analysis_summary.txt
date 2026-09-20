@@ -1,0 +1,11 @@
+GSE98923 beta-10 module statistics
+completed=2026-09-19 16:45:43.207549
+primary_network_beta=10
+samples=54
+modules_analyzed=10
+eigengene_method=PC1 of standardized module gene expression
+eigengene_sign=aligned_to_positive_correlation_with_module_mean
+model=Eigengene ~ Cultivar * Stage + Year
+ANOVA=Type III with sum-to-zero contrasts
+multiple_testing=Benjamini-Hochberg FDR
+simple_contrasts=Cabernet Sauvignon vs Pinot noir within each Stage

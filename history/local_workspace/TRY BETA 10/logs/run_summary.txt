@@ -1,0 +1,8 @@
+GSE98923 CEMiTool analysis
+completed=2026-09-19 01:05:05.07786
+samples=54
+genes=29971
+modules=11
+beta_strategy=manual_set_beta_from_diagnostic_plateau
+beta=10
+r2=0.706374247063269

@@ -1,0 +1,14 @@
+dataset=GSE98923
+samples=54
+transform=log2(RPKM+1)
+correlation=pearson
+network_type=unsigned
+tom_type=signed
+beta_strategy=manual_set_beta_from_diagnostic_plateau
+set_beta=10
+force_beta=FALSE
+beta=10
+r2=0.706374247063269
+min_module_size=30
+seed=1234
+modules=11

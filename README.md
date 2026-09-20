@@ -151,36 +151,63 @@ Luego se priorizarán módulos candidatos por:
 - El baseline usa RPKM y una anotación histórica; una versión más fuerte del estudio debería considerar reprocesamiento desde FASTQ y anotación moderna.
 - El análisis de CEMiTool por clase no sustituye el modelo factorial externo que incluye Year.
 
-## Estructura del repositorio
+## Repository organization
 
 ```text
 .
 ├── README.md
 ├── CHANGELOG.md
 ├── docs/
-│   ├── 01_pregunta_y_alcance.md
-│   ├── 02_dataset_y_diseno.md
-│   ├── 03_bitacora_metodologica.md
-│   ├── 04_beta7_vs_beta10.md
-│   ├── 05_limitaciones_y_validacion.md
-│   └── 06_roadmap.md
+│   ├── LOCAL_PROJECT_INVENTORY.md
+│   └── SYNC_POLICY.md
 ├── data/
-│   └── metadata/
+│   ├── metadata/
+│   ├── processed/
+│   └── raw/
 ├── scripts/
 │   ├── baseline/
 │   ├── master/
 │   └── post/
-└── results/
-    ├── beta7/
-    ├── beta10/
-    └── comparisons/
+├── results/
+│   ├── beta7/
+│   ├── beta10/
+│   ├── comparisons/
+│   ├── diagnostics/
+│   └── module_statistics_beta10/
+├── reports/
+│   ├── current/
+│   ├── archive/
+│   └── supplementary/
+├── manuscript/
+└── history/
+    └── local_workspace/
 ```
+
+La estructura canónica (`scripts/`, `data/`, `results/`, `reports/`, `manuscript/` y `docs/`) se usa para el trabajo actual y futuro. `reports/current/` mantiene el informe técnico vigente; `reports/archive/` conserva versiones anteriores. `history/local_workspace/` es el archivo íntegro por carpetas del workspace local anterior y no debe limpiarse ni reorganizarse.
+
+## Sync workflow
+
+Antes de trabajar en RStudio:
+
+```bash
+git pull origin main
+```
+
+Después de revisar los resultados generados:
+
+```bash
+git add <reviewed-paths>
+git commit -m "describe the analysis update"
+git push origin main
+```
+
+Los objetos científicos grandes se gestionan con Git LFS. La política completa está en `docs/SYNC_POLICY.md` y el inventario inicial en `docs/LOCAL_PROJECT_INVENTORY.md`.
 
 ## Reproducibilidad
 
 Los scripts contienen la selección exacta de muestras y generan estructura de carpetas, matrices procesadas, objeto CEMiTool, tablas, diagnósticos, reportes y registros de sesión.
 
-Los archivos públicos de GEO no se duplican necesariamente dentro del repositorio porque el pipeline los descarga de forma reproducible.
+Los archivos públicos de GEO pueden conservarse en `data/raw/` cuando aportan reproducibilidad exacta; el pipeline mantiene además la capacidad de descargarlos de forma reproducible.
 
 ## Estado
 

@@ -1,0 +1,22 @@
+GSE98923 CEMiTool baseline - resumen
+===================================
+
+Fecha/hora: 2026-09-18 23:24:37.184871
+Proyecto: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923
+Muestras: 54
+Genes de entrada: 29971
+Modulos: 9
+force_beta: TRUE
+Beta usado: 7
+R2 asociado: 0.549579273382905
+
+Matriz RPKM: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/data/processed/matrices/GSE98923_CEMiTool_expression_54_RPKM.tsv
+Matriz log2(RPKM+1): C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/data/processed/matrices/GSE98923_CEMiTool_expression_54_log2RPKM.tsv
+Fenotipos: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/muestras/metadata/GSE98923_CEMiTool_phenotypes_54.tsv
+Mapping GEO: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/muestras/metadata/GSE98923_selection_54_with_GEO_description.tsv
+Objeto CEMiTool: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/analisis/cemitool/objetos/GSE98923_CEMiTool_54_baseline.rds
+Tablas: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas
+Figuras: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/figuras/cemitool
+Reporte: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/informes/cemitool/reporte
+Diagnosticos: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/informes/cemitool/diagnosticos
+sessionInfo: C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool/Fasoli cabernet y pinot GSE98923/logs/sessionInfo.txt

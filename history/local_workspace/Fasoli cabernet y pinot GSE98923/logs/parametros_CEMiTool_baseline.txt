@@ -1,0 +1,17 @@
+GSE_ID=GSE98923
+n_muestras=54
+n_genes_entrada=29971
+transformacion=log2(RPKM+1)
+filter=TRUE
+filter_pval=0.1
+apply_vst=FALSE
+cor_method=pearson
+network_type=unsigned
+tom_type=signed
+force_beta=TRUE
+beta_seleccionado=7
+R2_beta=0.549579273382905
+merge_similar=TRUE
+min_ngen=30
+seed=1234
+numero_modulos=9
