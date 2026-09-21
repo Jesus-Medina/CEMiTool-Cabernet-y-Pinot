@@ -248,8 +248,11 @@ ensure_latex <- function() {
 status <- data.frame(format=c("html","docx","pdf"), success=FALSE)
 status$success[1] <- render_one("html_document", "analysis_report.html")
 status$success[2] <- render_one("word_document", "analysis_report.docx")
-if (ensure_latex()) status$success[3] <- render_one("pdf_document", "analysis_report.pdf")
-else warning("PDF skipped: no working LaTeX/TinyTeX installation.")
+if (ensure_latex()) {
+  status$success[3] <- render_one("pdf_document", "analysis_report.pdf")
+} else {
+  warning("PDF skipped: no working LaTeX/TinyTeX installation.")
+}
 
 write.table(status, file.path(report_dir,"analysis_report_status.tsv"),
             sep="\t", quote=FALSE, row.names=FALSE)

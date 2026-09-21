@@ -76,7 +76,7 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 ## T-002 — Integrate post-CEMiTool statistics into the main report
 
-**Status:** TODO / script prepared for the canonical migrated layout; local execution not yet verified in this ledger.
+**Status:** DONE (2026-09-21).
 
 **Script:**
 
@@ -103,12 +103,21 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 **Acceptance criteria:**
 
-- `reports/analysis_report.html` successfully generated;
-- `reports/analysis_report.docx` successfully generated;
-- `reports/analysis_report.pdf` successfully generated;
+- `reports/current/analysis_report.html` successfully generated;
+- `reports/current/analysis_report.docx` successfully generated;
+- `reports/current/analysis_report.pdf` successfully generated;
 - previous report archived;
 - render status saved;
-- latest report copied/promoted to `reports/current/` after repository sync.
+- latest report present in `reports/current/` in the canonical migrated layout.
+
+**Completion verification (2026-09-21):**
+
+- Ran `source("scripts/post/08_update_report_with_module_statistics.R")` from the canonical repository root after verifying the required input/output directories and canonical paths.
+- `reports/current/analysis_report_status.tsv` records `TRUE` for HTML, DOCX and PDF; all three outputs opened and their required post-CEMiTool content was checked.
+- Confirmed beta7 vs beta10, `Eigengene ~ Cultivar * Stage + Year`, M5/M10/M2/M3/M1 interactions, stage-specific Cabernet-versus-Pinot contrasts, Year effect, interpretation boundaries, and the planned `Eigengene ~ Cultivar * Stage * Year` test.
+- The prior report is preserved in `reports/archive/20260921_005059_before_module_statistics/`. Additional intermediate report versions were also archived during visual-quality repairs; the final current report supersedes them.
+- Corrected the updater's R `if`/`else` syntax and the report template's figure embedding and wide-table presentation. Final render includes 17 figures in HTML/DOCX, and visual inspection confirmed the post-CEMiTool section in DOCX/PDF. No scientific inputs, models or conclusions were changed.
+- R reported four non-fatal `C.UTF-8` locale warnings. Final rendering completed with no errors.
 
 ---
 

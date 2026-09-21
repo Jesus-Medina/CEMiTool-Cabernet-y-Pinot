@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-21 — T-002 completed: cumulative report regenerated
+
+- Executed `scripts/post/08_update_report_with_module_statistics.R` from the canonical repository root and generated the current HTML, DOCX and PDF reports in `reports/current/`.
+- Confirmed `analysis_report_status.tsv` reports `TRUE` for all three formats, validated required post-CEMiTool content in each, and visually reviewed the Word/PDF renderings.
+- Archived the pre-update report under `reports/archive/20260921_005059_before_module_statistics/`; intermediate render versions were archived during quality fixes.
+- Fixed an R `if`/`else` parse error in script 08 and repaired the report template so its 17 figures are embedded, wide matrices remain linked as machine-readable tables instead of being printed illegibly, and session information stays within page margins.
+- The final report records five significant Cultivar × Stage modules (M5, M10, M2, M3, M1), nine significant stage-specific contrasts and Year effects in eight modules, with the required scientific limitations and next planned year-robustness model.
+- Non-fatal R startup warnings occurred for the `C.UTF-8` locale; the final render completed without errors. T-003 remains unstarted.
+
 ## 2026-09-20 — Report updater adapted after workspace migration
 
 - Audited `scripts/post/08_update_report_with_module_statistics.R` against the new canonical repository structure.

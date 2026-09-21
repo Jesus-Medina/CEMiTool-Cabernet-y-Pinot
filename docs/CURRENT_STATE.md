@@ -1,6 +1,6 @@
 # Current state
 
-Last consolidated context update: 2026-09-20.
+Last consolidated context update: 2026-09-21.
 
 ## Repository
 
@@ -94,18 +94,21 @@ Year is significant after FDR in 8 of 10 modules under the additive model.
 
 This means the next statistical priority is to determine whether the Cultivar × Stage pattern is robust across 2012, 2013 and 2014 rather than being driven by one vintage.
 
+### Main report
+
+T-002 is complete. The cumulative main report in `reports/current/analysis_report.{html,docx,pdf}` now includes the post-CEMiTool module-statistics section. `reports/current/analysis_report_status.tsv` records `TRUE` for all three formats. The preceding report is archived at `reports/archive/20260921_005059_before_module_statistics/`; subsequent intermediate renders were archived as well. The final report includes 17 embedded diagnostic figures. This report documents associations and interpretation boundaries, not skin-thickness causality.
+
 ## Immediate pending work
 
-1. Run/verify `08_update_report_with_module_statistics.R` locally so the main report includes post-CEMiTool statistics. The script/template have been audited and updated for the post-migration canonical layout (`results/comparisons`, `reports/current`, `reports/archive`, `reports/templates`, `results/beta10`).
-2. Inspect the already-produced QC/statistical files:
+1. T-003: inspect the already-produced QC/statistical files (not yet started):
    - `module_eigengene_qc.tsv`
    - `module_model_diagnostics.tsv`
    - `module_eigengenes_with_metadata_54.tsv`
    - `cabernet_vs_pinot_within_each_stage.tsv`
-3. Build the next analysis script for year robustness:
+2. T-004, after T-003: build the next analysis script for year robustness:
    - `Eigengene ~ Cultivar * Stage * Year`
    - Cabernet vs Pinot within Stage × Year
-4. Only after that, move to biological annotation/enrichment and hubs.
+3. Only after that, move to biological annotation/enrichment and hubs.
 
 ## Important boundary
 

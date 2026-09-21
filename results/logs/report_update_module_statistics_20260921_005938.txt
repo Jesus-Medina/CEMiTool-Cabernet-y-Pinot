@@ -1,0 +1,12 @@
+GSE98923 main report update
+completed=2026-09-21 01:01:12.96463
+primary_network_beta=10
+modules_in_factorial_model=10
+significant_cultivar_stage_interactions_FDR05=5
+significant_stage_specific_contrasts_global_FDR05=9
+modules_with_year_effect_FDR05=8
+strongest_interaction_module=M5
+previous_report_archive=C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool_GITHUB_SYNC/reports/archive/20260921_005938_before_module_statistics
+html_success=TRUE
+docx_success=TRUE
+pdf_success=TRUE
