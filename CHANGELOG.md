@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-21 — T-007 external skin-only validation completed
+
+- Archived SHA-pinned GSE72421 matrix/annotation and PRJNA260535 published log2CPM workbook; audited 50 microarray and 84 RNA-seq skin samples without merging either source into the primary 54-sample design.
+- Tested the frozen 361 M5/M10/M2 candidates and 37 top-decile hubs across six external conditions, retaining all 2,166 comparison rows, assay coverage, complete-replicate flags, Welch estimates/intervals, BH corrections and source QC. GEO's 6,936 missing cells were not imputed; absent filtered RNA-seq genes remain non-evaluable.
+- Found cross-platform expression support for M5 CuAO/NAC and M2 MYB/FAR1 candidates, but limited M10 hub support and sparse RNA-seq coverage of M2. Independently recalculated two RNA-seq 24 °Brix contrasts. Documented family hybridization, reference-mapping, stage and no-skin-thickness-phenotype limits in `docs/T007_SKIN_ONLY_VALIDATION.md`.
+- Four non-fatal R locale warnings and one non-fatal openpyxl workbook-extension warning occurred. No CEMiTool rerun, new network or causal claim was made.
+
 ## 2026-09-21 — T-006 internal hub prioritization completed
 
 - Ranked all M10 (39) and M2 (214) genes by intramodular beta10 adjacency, retaining 23,532 full edges, MapMan/Pfam/PANTHER evidence, beta7 membership, year-omission sensitivities, descriptive stage-by-year gene differences and zero-rate QC.

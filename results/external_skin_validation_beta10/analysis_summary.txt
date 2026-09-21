@@ -1,0 +1,12 @@
+T-007 skin-only external validation of preselected beta10 M5/M10/M2 hubs
+GSE72421=2011 harvest skin microarray; primary WW comparison, WD sensitivity
+PRJNA260535=2012 late-ripening skin RNA-seq; primary 24 Brix, 20/22/26 sensitivities
+37 hubs predefined as beta10 top decile before reading external matrices
+Welch tests are exploratory on processed data; BH within 37 hubs and all 361 priority genes per external comparison
+Direction comparison uses only primary Harvest genes with same CS-PN sign in 2012/2013/2014
+Missing RNA gene reflects source low-count filtering, not biological absence
+Microarray probe mapping one-to-one does not rule out probe cross-hybridization
+GEO matrix has source missing cells; incomplete gene-condition comparisons have no effect/test and are never imputed
+RNA-seq uses PN40024 V1 reference and does not resolve paralogs or cultivar-specific mapping bias
+No Stage/Year equivalence, pooling, or skin-thickness phenotype inference
+Source URL SHA and binary originals=data/reference/external_t007

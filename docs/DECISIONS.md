@@ -191,3 +191,15 @@ that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
 **Boundary:** no hub is a proven causal regulator, skin-specific gene or determinant of skin thickness. See `docs/T006_M5_HUB_PRIORITIZATION.md`.
 
 **M10/M2 extension:** use the same metric on the unchanged graph, annotate both versions where mapping allows, and treat beta7 membership and year-omission stability as **internal** checks only. M2's highly asymmetric zeros in Cabernet require read-level/reference validation before mechanistic interpretation; missing v5.1 annotations cannot be replaced with invented functions. See `docs/T006_M10_M2_HUB_PRIORITIZATION.md`.
+
+---
+
+## D-015 — Keep external skin evidence separate and assay-aware
+
+**Status:** active after T-007 (2026-09-21).
+
+**Decision:** use the frozen T-006 priority list in two skin-only sources without pooling samples with GSE98923 or with one another. Prespecify GSE72421 well-watered and PRJNA260535 24 °Brix as the main Cabernet–Pinot comparisons, with water deficit and 20/22/26 °Brix as sensitivities. Use complete replicates only; never impute GEO missing cells or interpret genes absent from the filtered RNA-seq table as expression zero. Report assay coverage and BH families of 37 hubs and 361 prioritized genes separately.
+
+**Reason:** platforms, years, vineyard conditions and developmental measures differ. RNA-seq retains only 8/22 M2 top hubs; family-specific microarray hybridization and V1 reference mapping remain unresolved. Two sources from the Nevada research program are external to GSE98923, but not wholly independent of each other.
+
+**Boundary:** T-007 validates expression-direction evidence in isolated skin for individual candidates, not a causal skin-thickness pathway, exact CHS/STS identity or a new beta10 network. See `docs/T007_SKIN_ONLY_VALIDATION.md`.

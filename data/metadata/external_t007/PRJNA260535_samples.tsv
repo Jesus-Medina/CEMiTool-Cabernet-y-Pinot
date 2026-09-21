@@ -1,0 +1,85 @@
+SampleName	Cultivar	Brix	Replicate	Year	Tissue
+CF1.20	Cabernet Franc	20	1	2012	berry skin
+CF2.20	Cabernet Franc	20	2	2012	berry skin
+CF3.20	Cabernet Franc	20	3	2012	berry skin
+CF1.22	Cabernet Franc	22	1	2012	berry skin
+CF2.22	Cabernet Franc	22	2	2012	berry skin
+CF3.22	Cabernet Franc	22	3	2012	berry skin
+CF1.24	Cabernet Franc	24	1	2012	berry skin
+CF3.24	Cabernet Franc	24	3	2012	berry skin
+CF2.24	Cabernet Franc	24	2	2012	berry skin
+CF1.26	Cabernet Franc	26	1	2012	berry skin
+CF2.26	Cabernet Franc	26	2	2012	berry skin
+CF3.26	Cabernet Franc	26	3	2012	berry skin
+CSW1.20	Cabernet Sauvignon	20	1	2012	berry skin
+CSW2.20	Cabernet Sauvignon	20	2	2012	berry skin
+CSW3.20	Cabernet Sauvignon	20	3	2012	berry skin
+CSW1.22	Cabernet Sauvignon	22	1	2012	berry skin
+CSW2.22	Cabernet Sauvignon	22	2	2012	berry skin
+CSW3.22	Cabernet Sauvignon	22	3	2012	berry skin
+CSW1.24	Cabernet Sauvignon	24	1	2012	berry skin
+CSW3.24	Cabernet Sauvignon	24	3	2012	berry skin
+CSW2.24	Cabernet Sauvignon	24	2	2012	berry skin
+CSW1.26	Cabernet Sauvignon	26	1	2012	berry skin
+CSW2.26	Cabernet Sauvignon	26	2	2012	berry skin
+CSW3.26	Cabernet Sauvignon	26	3	2012	berry skin
+MEW1.20	Merlot	20	1	2012	berry skin
+MEW2.20	Merlot	20	2	2012	berry skin
+MEW3.20	Merlot	20	3	2012	berry skin
+MEW1.22	Merlot	22	1	2012	berry skin
+MEW2.22	Merlot	22	2	2012	berry skin
+MEW3.22	Merlot	22	3	2012	berry skin
+MEW1.24	Merlot	24	1	2012	berry skin
+MEW3.24	Merlot	24	3	2012	berry skin
+MEW2.24	Merlot	24	2	2012	berry skin
+MEW1.26	Merlot	26	1	2012	berry skin
+MEW2.26	Merlot	26	2	2012	berry skin
+MEW3.26	Merlot	26	3	2012	berry skin
+PNW1.20	Pinot noir	20	1	2012	berry skin
+PNW2.20	Pinot noir	20	2	2012	berry skin
+PNW3.20	Pinot noir	20	3	2012	berry skin
+PNW1.22	Pinot noir	22	1	2012	berry skin
+PNW2.22	Pinot noir	22	2	2012	berry skin
+PNW3.22	Pinot noir	22	3	2012	berry skin
+PNW1.24	Pinot noir	24	1	2012	berry skin
+PNW3.24	Pinot noir	24	3	2012	berry skin
+PNW2.24	Pinot noir	24	2	2012	berry skin
+PNW1.26	Pinot noir	26	1	2012	berry skin
+PNW2.26	Pinot noir	26	2	2012	berry skin
+PNW3.26	Pinot noir	26	3	2012	berry skin
+CDW1.20	Chardonnay	20	1	2012	berry skin
+CDW2.20	Chardonnay	20	2	2012	berry skin
+CDW3.20	Chardonnay	20	3	2012	berry skin
+CDW1.22	Chardonnay	22	1	2012	berry skin
+CDW2.22	Chardonnay	22	2	2012	berry skin
+CDW3.22	Chardonnay	22	3	2012	berry skin
+CDW1.24	Chardonnay	24	1	2012	berry skin
+CDW3.24	Chardonnay	24	3	2012	berry skin
+CDW2.24	Chardonnay	24	2	2012	berry skin
+CDW1.26	Chardonnay	26	1	2012	berry skin
+CDW2.26	Chardonnay	26	2	2012	berry skin
+CDW3.26	Chardonnay	26	3	2012	berry skin
+SB1.20	Sauvignon Blanc	20	1	2012	berry skin
+SB2.20	Sauvignon Blanc	20	2	2012	berry skin
+SB3.20	Sauvignon Blanc	20	3	2012	berry skin
+SB1.22	Sauvignon Blanc	22	1	2012	berry skin
+SB2.22	Sauvignon Blanc	22	2	2012	berry skin
+SB3.22	Sauvignon Blanc	22	3	2012	berry skin
+SB1.24	Sauvignon Blanc	24	1	2012	berry skin
+SB3.24	Sauvignon Blanc	24	3	2012	berry skin
+SB2.24	Sauvignon Blanc	24	2	2012	berry skin
+SB1.26	Sauvignon Blanc	26	1	2012	berry skin
+SB2.26	Sauvignon Blanc	26	2	2012	berry skin
+SB3.26	Sauvignon Blanc	26	3	2012	berry skin
+SMW1.20	Semillon	20	1	2012	berry skin
+SMW2.20	Semillon	20	2	2012	berry skin
+SMW3.20	Semillon	20	3	2012	berry skin
+SMW1.22	Semillon	22	1	2012	berry skin
+SMW2.22	Semillon	22	2	2012	berry skin
+SMW3.22	Semillon	22	3	2012	berry skin
+SMW1.24	Semillon	24	1	2012	berry skin
+SMW3.24	Semillon	24	3	2012	berry skin
+SMW2.24	Semillon	24	2	2012	berry skin
+SMW1.26	Semillon	26	1	2012	berry skin
+SMW2.26	Semillon	26	2	2012	berry skin
+SMW3.26	Semillon	26	3	2012	berry skin

@@ -262,7 +262,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-007 — Skin-only external validation
 
-**Status:** TODO; T-005/T-006 completos, lista para comenzar por separado.
+**Status:** DONE (2026-09-21), validación externa observacional de candidatos; no validación de grosor ni mecanismo.
 
 **Candidate datasets:**
 
@@ -272,6 +272,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 **Goal:** test whether candidate module genes/pathways show evidence in isolated berry skin.
 
 **Rule:** use as external validation, not as extra replicates for the GSE98923 baseline.
+
+**Acceptance verification:** Se archivaron con URL/SHA-256 los originales de GSE72421 y PRJNA260535, se auditaron 50 muestras de microarray y 84 de RNA-seq, y se congelaron los 361 genes M5/M10/M2 y 37 hubs de T-006 antes de las comparaciones. `scripts/post/15_prepare_t007_external_skin.py` y `scripts/post/16_t007_external_skin_validation.R` producen 2.166 filas completas de comparación, 222 filas hub-condición, QC y auditoría de muestras. Se prefijaron GSE WW y RNA-seq 24 °Brix como condiciones principales; WD y 20/22/26 °Brix son sensibilidades. Las 6.936 celdas faltantes de GEO no se imputaron y los genes ausentes del RNA-seq filtrado se marcan no evaluables. M5 muestra apoyo de expresión en piel para CuAO/NAC y parte del bloque familiar; M10 tiene apoyo individual limitado; MYB/FAR1 M2 concuerdan, pero cobertura/mapeo limitan interpretación. Se reprodujeron independientemente dos diferencias de RNA-seq. Métodos, resultados, discrepancias y límites en `docs/T007_SKIN_ONLY_VALIDATION.md` y `results/external_skin_validation_beta10/`. La red primaria y sus 54 muestras permanecen intactas.
 
 ---
 

@@ -1,0 +1,17 @@
+"Metric"	"Value"
+"GSE_array_probes"	29549
+"GSE_unique_V1_genes"	29549
+"GSE_all_samples"	50
+"GSE_CS_PN_samples"	20
+"RNA_source_filtered_genes"	16606
+"RNA_beta10_extracted_genes"	2062
+"RNA_all_samples"	84
+"RNA_CS_PN_samples"	24
+"Frozen_priority_genes"	361
+"Frozen_top_decile_hubs"	37
+"Comparison_rows"	2166
+"GSE_array_mapping_duplicate_V1_IDs"	0
+"GSE_array_missing_expression"	6936
+"RNA_selected_missing_expression"	0
+"GSE_assayed_priority_missing_expression"	165
+"GSE_assayed_priority_incomplete_genes_all_50"	52

@@ -1,0 +1,4 @@
+Source	File	URL	SHA256	Bytes	Data_role
+GSE72421	GSE72421_series_matrix.txt.gz	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72421/matrix/GSE72421_series_matrix.txt.gz	657835f33077e9aa30c11190a0c18062d637bca20de6be792f33622f103cc4a2	8126367	GEO processed normalized microarray sample matrix
+GSE72421	GSE72421_annotation.txt.gz	https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72421/suppl/GSE72421_annotation.txt.gz	35c8d01292af5f0bb4f2a263626c30a693f4bb87a2072091f1e58f69243cb104	332442	GEO array probe to V1 gene mapping
+PRJNA260535	PRJNA260535_additional_file_2_log2CPM.xlsx	https://media.springernature.com/original/springer-static/esm/art%3A10.1186%2Fs12870-017-1043-1/MediaObjects/12870_2017_1043_MOESM2_ESM.xlsx	44cc4a4f65c71aacaa5459c576c5fe73b1cb4354fc34820964583bea53f0512d	12099162	Ghan et al 2017 additional file 2 filtered normalized log2 CPM
