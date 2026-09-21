@@ -14,6 +14,17 @@
 - Intentionally excluded only 50 unambiguous R/RStudio local-state files (`.Rhistory` and `.Rproj.user/`) from Git; they remain untouched on local disk and are documented in the inventory.
 - No secrets were detected and no scientific file was omitted because of an upload or platform failure.
 
+## 2026-09-20 — Codex handoff and persistent agent context
+
+- Added root `AGENTS.md` with durable repository rules for Codex.
+- Added `docs/CURRENT_STATE.md` as the live scientific/operational handoff.
+- Added `docs/PROJECT_CONTEXT.md` with the full study context and rationale.
+- Added `docs/DECISIONS.md` to record durable methodological decisions.
+- Added `docs/TASK_LEDGER.md` with active, blocked and future tasks plus acceptance criteria.
+- Added `docs/FUTURE_VISION.md` describing the intended evidence ladder and ChatGPT ↔ Codex workflow.
+- Added `docs/CODEX_HANDOFF.md` with the exact local-PC starting procedure.
+- The repository is now the shared coordination surface between ChatGPT and Codex; local Codex should pull first, read AGENTS/context files, execute locally, then update the ledger and push results.
+
 ## 2026-09-20 — Main report made cumulative
 
 - Added scripts/post/08_update_report_with_module_statistics.R.
