@@ -16,7 +16,7 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 ## T-001 — Full local workspace synchronization
 
-**Status:** TODO / awaiting local Codex execution.
+**Status:** DONE (2026-09-20).
 
 **Owner:** Codex on the user's PC.
 
@@ -56,6 +56,21 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 - excluded/unuploaded files explicitly listed.
 
 **After completion:** update this entry with final commit SHA, import counts, exclusions and any unresolved file.
+
+**Completion record:**
+
+- Migration commit: `663cbea` (`sync: complete local workspace migration`).
+- Concurrent remote work preserved by merge commit: `9cd4899`.
+- Source inventory: 303 files, 5,875,491,333 bytes (approximately 5.47 GiB).
+- Historical import: 253 source files tracked under `history/local_workspace/`, plus one `.gitkeep` for the empty `TRY BETA 7 WITH INFORM/` folder.
+- Canonical promotion: 118 source-derived file copies.
+- Git LFS: 9 tracked paths, 7 unique payloads, approximately 4.54 GiB unique storage.
+- Intentional exclusions: 45 `.Rproj.user/` files and 5 `.Rhistory` files (9,502 bytes total); all remain on local disk.
+- Secrets blocked: none; scans found no credentials, provider tokens, or private keys.
+- Files not uploaded because of failure or platform limits: none.
+- Normal Git blobs over 100 MB: none.
+- Verification: local `HEAD` matched `origin/main`, working tree was clean, required canonical and historical paths existed in the remote tree, and the repository plus current report and inventory were checked directly on GitHub.
+- Unresolved migration issues: none.
 
 ---
 

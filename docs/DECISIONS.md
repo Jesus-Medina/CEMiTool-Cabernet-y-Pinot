@@ -102,11 +102,13 @@ This file records durable methodological decisions and why they were made.
 
 ## D-009 — Preserve project history in GitHub
 
-**Status:** active.
+**Status:** active; migration completed 2026-09-20.
 
 **Decision:** repository should contain both canonical organized files and historical snapshots.
 
-**Planned historical location:** `history/local_workspace/`.
+**Historical location:** `history/local_workspace/`.
+
+**Implementation:** all six original top-level workspace folders were copied there without internal reorganization. Large R objects and workspace images are retained with Git LFS; only unambiguous local R/RStudio state (`.Rhistory` and `.Rproj.user/`) is excluded from Git and remains on disk.
 
 **Rule:** never discard an earlier scientific state simply because a newer one exists.
 

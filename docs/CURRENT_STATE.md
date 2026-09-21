@@ -8,7 +8,7 @@ Canonical remote:
 
 `Jesus-Medina/CEMiTool-Cabernet-y-Pinot`
 
-The repository currently contains organized documentation, scripts and selected results. A complete local-workspace migration is planned but has not yet been independently verified as finished.
+The repository now contains the complete verified local-workspace migration in addition to the organized canonical documentation, scripts, data, results, reports, and manuscript. The migration commit is `663cbea`; concurrent remote documentation work was preserved through merge commit `9cd4899`. The original local workspace remains untouched as a separate backup.
 
 ## Scientific status
 
@@ -96,17 +96,16 @@ This means the next statistical priority is to determine whether the Cultivar ×
 
 ## Immediate pending work
 
-1. Complete/verify full local workspace synchronization into GitHub without losing historical files.
-2. Run/verify `08_update_report_with_module_statistics.R` locally so the main report includes post-CEMiTool statistics.
-3. Inspect the already-produced QC/statistical files:
+1. Run/verify `08_update_report_with_module_statistics.R` locally so the main report includes post-CEMiTool statistics.
+2. Inspect the already-produced QC/statistical files:
    - `module_eigengene_qc.tsv`
    - `module_model_diagnostics.tsv`
    - `module_eigengenes_with_metadata_54.tsv`
    - `cabernet_vs_pinot_within_each_stage.tsv`
-4. Build the next analysis script for year robustness:
+3. Build the next analysis script for year robustness:
    - `Eigengene ~ Cultivar * Stage * Year`
    - Cabernet vs Pinot within Stage × Year
-5. Only after that, move to biological annotation/enrichment and hubs.
+4. Only after that, move to biological annotation/enrichment and hubs.
 
 ## Important boundary
 
