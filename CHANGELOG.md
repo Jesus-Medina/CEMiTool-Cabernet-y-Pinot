@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-20 — Report updater adapted after workspace migration
+
+- Audited `scripts/post/08_update_report_with_module_statistics.R` against the new canonical repository structure.
+- Fixed stale pre-migration paths for beta comparison inputs, report outputs, archives, templates, and logs.
+- Updated `reports/templates/analysis_report.Rmd` to read the canonical beta10 object, tables, parameters and session information.
+- T-002 remains pending until Codex executes the updater locally and verifies HTML/DOCX/PDF rendering.
+
 ## 2026-09-20 — Complete local workspace migration
 
 - Migrated the complete local CEMiTool workspace into a separate synchronization clone without modifying the original folder.
