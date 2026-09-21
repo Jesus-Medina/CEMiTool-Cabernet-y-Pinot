@@ -76,11 +76,19 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 ## T-002 — Integrate post-CEMiTool statistics into the main report
 
-**Status:** TODO / script prepared; local execution not yet verified in this ledger.
+**Status:** TODO / script prepared for the canonical migrated layout; local execution not yet verified in this ledger.
 
 **Script:**
 
 `scripts/post/08_update_report_with_module_statistics.R`
+
+**Migration-path audit (2026-09-20):**
+- comparison input now points to `results/comparisons/`;
+- report outputs now target `reports/current/`;
+- previous current report is archived under `reports/archive/<timestamp>_before_module_statistics/`;
+- report template now lives under `reports/templates/`;
+- canonical beta10 object/tables/parameters/session paths are used;
+- this audit was completed before asking Codex to execute T-002.
 
 **Goal:** archive the prior report and regenerate HTML/DOCX/PDF with:
 
