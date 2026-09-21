@@ -96,7 +96,7 @@ This means the next statistical priority is to determine whether the Cultivar ×
 
 ## Immediate pending work
 
-1. Run/verify `08_update_report_with_module_statistics.R` locally so the main report includes post-CEMiTool statistics.
+1. Run/verify `08_update_report_with_module_statistics.R` locally so the main report includes post-CEMiTool statistics. The script/template have been audited and updated for the post-migration canonical layout (`results/comparisons`, `reports/current`, `reports/archive`, `reports/templates`, `results/beta10`).
 2. Inspect the already-produced QC/statistical files:
    - `module_eigengene_qc.tsv`
    - `module_model_diagnostics.tsv`
