@@ -1,0 +1,12 @@
+T-005 beta10 functional enrichment
+completed=2026-09-21 17:05:31.451764
+gene_universe=3050 frozen beta10 filtered genes; Not.Correlated excluded from module tests
+primary=v3 MapMan, verified Grapedia annotation, direct reciprocal one-to-one v1 mapping, same strand, >=50% gene overlap
+secondary=PN40024 T2T v5.1 MapMan and GO with the same mapping rule
+ORA=one-sided hypergeometric overrepresentation; background=all selected genes with >=1 valid source annotation
+full_term_tests=term background size 5..500, module annotated n>=5; zero-hit terms included
+GO=obsolete-labeled terms excluded before testing
+FDR=BH within module and globally across all module-term tests per source; global FDR primary
+themes=prespecified unions of matching MapMan categories; BH across all testable module-theme combinations per source
+a_module_term_enrichment_does_not_identify_stage_specific_drivers_or_skin_specificity
+source_hashes_and_urls=data/reference/grapedia_t005/source_manifest.tsv

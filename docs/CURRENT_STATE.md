@@ -106,10 +106,14 @@ T-003 is complete; the detailed record is `docs/T003_QC_REVIEW.md`. All ten beta
 
 T-004 is complete; detailed methodology, evidence and caveats are in `docs/T004_YEAR_ROBUSTNESS.md`. Script `scripts/post/09_year_robustness_beta10.R` fit `Eigengene ~ Cultivar * Stage * Year` in all ten beta10 modules on the unchanged 54-sample design. `results/year_robustness_beta10/` contains complete Type III ANOVA (70 tests), 90 Stage × Year Cabernet-minus-Pinot contrasts with BH FDR, observed cell profiles, diagnostics, ten plots and a priority-module classification. M10 satisfies the prespecified reproducibility rule. M5, M2, M3 and M1 are classified year-dependent at module level, but M5 Harvest and M2 Veraison/Harvest each retain significant same-direction contrasts in all three years. M3 Harvest is dominated in magnitude by 2013, and M1 is not established as stable. The M5 Veraison 2012 contrast is sensitive to the flagged sample GSM2627837. No sample was removed from the primary analysis. The current cumulative report still ends with the earlier post-CEMiTool statistical layer; T-004 findings are in separate results and documentation, not yet integrated into that report.
 
+### T-005 functional enrichment
+
+T-005 is complete with annotation limitations documented in `docs/T005_FUNCTIONAL_ENRICHMENT.md`. Scripts 10 and 11 use pinned Grapedia sources, audited one-to-one legacy-ID equivalences, and full module-wide hypergeometric ORA with BH FDR. Versioned gene–term subsets are in `data/reference/grapedia_t005/`; full results and QC are in `results/functional_enrichment_beta10/`. MapMan v3 is primary (2.608/3.050 beta10 genes annotated); newer T2T v5.1 MapMan and GO are secondary because their mapped coverage is 1.305 and 519 genes. M5 is enriched for phenolic/stilbenoid and PAL categories under v3, including the predefined phenylpropanoid theme, but v5.1 assigns many of the same genes to CHS/flavonoid categories, so exact functional identity is unresolved. M10 has no FDR-global enrichment despite 36/39 v3 coverage. Cuticle/wax, pectin, cellulose/hemicellulose, lignin and anthocyanin themes were not established in the priority modules; epidermis was not testable in these MapMan taxonomies. Enrichment is module-wide and must not be presented as identifying the drivers of a specific year/stage contrast or skin thickness.
+
 ## Immediate pending work
 
-1. T-005: functional annotation and enrichment of robust module components, carrying the T-004 year-dependence cautions into every claim.
-2. Then T-006 hub-gene prioritization and T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work.
+1. T-006: hub-gene prioritization within the robust or repeated module components, with the M5 v3/v5 functional-label conflict and T-004 seasonal caveats explicit.
+2. Then T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work. The current cumulative report has not yet integrated T-004/T-005.
 
 ## Important boundary
 

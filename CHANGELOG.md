@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-21 — T-005 functional annotation and enrichment completed
+
+- Added a reproducible Grapedia annotation-preparation script with pinned URLs/SHA-256 and explicit reciprocal one-to-one v1→v3/v5.1 gene mapping; kept the 128 MB original crosswalk out of Git while versioning the filtered gene–term inputs and coverage audit.
+- Added module-wide hypergeometric ORA for all ten beta10 modules against MapMan v3 (primary), T2T v5.1 MapMan and T2T v5.1 GO (secondary), preserving complete terms, non-tests, BH-FDR results, QC and nine prespecified themes.
+- Independently reproduced the M5 stilbenoid enrichment from gene–term pairs with Fisher's exact test and recalculated global BH FDR; documented that MapMan v3 and v5.1 assign overlapping M5 genes different functional labels.
+- M10 is seasonally reproducible but has no significant MapMan v3 term at global FDR; no priority module was established as cuticle/skin-specific. T-006 is ready with these cautions; no network or original scientific output was overwritten.
+
 ## 2026-09-21 — T-004 year robustness completed
 
 - Added a reproducible full-factorial beta10 analysis using the unchanged 54-sample eigengene table, Type III ANOVA and 90 Stage × Year Cabernet-minus-Pinot contrasts with BH FDR.

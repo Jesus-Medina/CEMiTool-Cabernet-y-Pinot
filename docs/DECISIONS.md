@@ -144,3 +144,15 @@ This file records durable methodological decisions and why they were made.
 8. modern FASTQ reprocessing
 
 Previous report versions should be archived, not destroyed.
+
+---
+
+## D-012 — Use version-aware functional enrichment with explicit mapping coverage
+
+**Status:** active after T-005 (2026-09-21).
+
+**Decision:** use Grapedia MapMan v3 as the primary ORA source for legacy `VIT_` beta10 genes, with PN40024 T2T v5.1 MapMan and GO as secondary checks. Accept only reciprocal one-to-one, same-strand mappings with ≥50 % gene overlap; report coverage per module and preserve all tested/non-tested terms. Apply BH globally across module–term tests within each source.
+
+**Reason:** v3 MapMan covers 2.608/3.050 selected genes, including 36/39 M10, whereas v5.1 MapMan covers 1.305 and v5.1 GO only 519 after mapping. Newer annotations are valuable but too sparse for absence claims in key modules. M5's v3 stilbenoid and v5.1 CHS/flavonoid labels overlap on 16 genes; these are not independent confirmations of a precise biochemical function.
+
+**Boundary:** enrichment describes whole modules, not stage-specific drivers, hubs, isolated skin, or causality. See `docs/T005_FUNCTIONAL_ENRICHMENT.md`.

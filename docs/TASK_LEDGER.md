@@ -188,7 +188,7 @@ M6 is secondary because its current Cultivar × Stage FDR is ~0.10 despite a sig
 
 ## T-005 — Functional annotation and enrichment of robust modules
 
-**Status:** TODO; T-004 completada, lista para iniciar con las cautelas de robustez por año.
+**Status:** DONE (2026-09-21), con límites de cobertura y discordancia de anotación documentados en `docs/T005_FUNCTIONAL_ENRICHMENT.md`.
 
 **Goal:** determine what robust modules represent biologically.
 
@@ -211,11 +211,13 @@ M6 is secondary because its current Cultivar × Stage FDR is ~0.10 despite a sig
 - correct multiple testing;
 - distinguish module-wide enrichment from hand-picked genes.
 
+**Completion verification:** Se fijaron URL y SHA-256 de cuatro fuentes oficiales de Grapedia, se auditó el mapeo recíproco v1→v3/v5.1 de los 3.050 genes y se preservaron anotaciones gen–término y cobertura por módulo. Se ejecutó ORA hipergeométrico para los diez módulos sobre MapMan v3 (principal), MapMan T2T v5.1 y GO T2T v5.1 (secundarios), con tablas completas, BH por módulo y global, QC y nueve temas predefinidos incluidos los no significativos/no evaluables. Una prueba de Fisher independiente reprodujo el hallazgo M5 `9.2.3` y se recalculó el BH global. M5 muestra enriquecimiento de metabolismo fenólico bajo v3, pero v5.1 etiqueta muchos de los mismos genes como CHS/flavonoide; M10 no tiene enriquecimiento global pese a alta cobertura v3. Los resultados se interpretan junto con T-004, sin convertir enriquecimiento de módulo en efecto específico de Harvest ni en causalidad de piel.
+
 ---
 
 ## T-006 — Hub gene prioritization
 
-**Status:** TODO; blocked on T-005.
+**Status:** TODO; T-005 completada, lista para comenzar con las cautelas de correspondencia y anotación.
 
 **Goal:** identify central candidate genes within robust, biologically relevant modules.
 
