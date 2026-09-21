@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-21 — T-003 eigengene and model QC reviewed
+
+- Recomputed all ten beta10 module eigengenes and PC1 variance values directly from the archived network object and expression matrix; no CEMiTool network was rerun.
+- Refitted the ten additive models and independently reproduced all 30 stage-specific Cabernet-minus-Pinot contrasts and both BH-FDR corrections. Preserved machine-readable module, sample-residual and contrast audit tables.
+- Documented residual/influence flags in M2, M3, M5 and M9, the weak additive-model fit of M9, and interpretation distinctions for M1 and M6 in `docs/T003_QC_REVIEW.md`.
+- Corrected script 07's obsolete beta10 object path to the canonical layout without changing its statistical method or rerunning it. T-004 remains unstarted.
+
 ## 2026-09-21 — T-002 completed: cumulative report regenerated
 
 - Executed `scripts/post/08_update_report_with_module_statistics.R` from the canonical repository root and generated the current HTML, DOCX and PDF reports in `reports/current/`.

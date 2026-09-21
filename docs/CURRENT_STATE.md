@@ -98,17 +98,16 @@ This means the next statistical priority is to determine whether the Cultivar ×
 
 T-002 is complete. The cumulative main report in `reports/current/analysis_report.{html,docx,pdf}` now includes the post-CEMiTool module-statistics section. `reports/current/analysis_report_status.tsv` records `TRUE` for all three formats. The preceding report is archived at `reports/archive/20260921_005059_before_module_statistics/`; subsequent intermediate renders were archived as well. The final report includes 17 embedded diagnostic figures. This report documents associations and interpretation boundaries, not skin-thickness causality.
 
+### T-003 eigengene and model QC
+
+T-003 is complete; the detailed record is `docs/T003_QC_REVIEW.md`. All ten beta10 eigengenes and PC1 variance values were reproduced from the frozen expression/network inputs. The 54-sample table is complete and balanced, and all 30 stage-specific Cabernet-minus-Pinot contrasts and BH adjustments were independently verified. Eight sample-module observations exceed absolute standardized residual 3 (M2, M3, M5, M9). M2 Cabernet FruitSet 2014 and M3 Cabernet Harvest 2013 show cell-level patterns; M5 includes an influential Pinot Veraison 2012 sample. These are flags for T-004, not grounds for silently removing samples or claiming an interaction is stable across years. M9 has low additive-model R² (0.255). No biological inference was promoted.
+
 ## Immediate pending work
 
-1. T-003: inspect the already-produced QC/statistical files (not yet started):
-   - `module_eigengene_qc.tsv`
-   - `module_model_diagnostics.tsv`
-   - `module_eigengenes_with_metadata_54.tsv`
-   - `cabernet_vs_pinot_within_each_stage.tsv`
-2. T-004, after T-003: build the next analysis script for year robustness:
+1. T-004: build the next analysis script for year robustness, explicitly checking the T-003 residual/influence flags:
    - `Eigengene ~ Cultivar * Stage * Year`
    - Cabernet vs Pinot within Stage × Year
-3. Only after that, move to biological annotation/enrichment and hubs.
+2. Only after that, move to biological annotation/enrichment and hubs.
 
 ## Important boundary
 

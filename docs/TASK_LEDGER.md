@@ -123,7 +123,7 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 ## T-003 — Review module eigengene QC and full contrast tables
 
-**Status:** TODO.
+**Status:** DONE (2026-09-21), with diagnostic caveats documented in `docs/T003_QC_REVIEW.md`.
 
 **Inputs expected from script 07:**
 
@@ -142,11 +142,13 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 - all contrasts reviewed, not only significant subset;
 - per-sample eigengene table available for year analysis.
 
+**Completion verification:** Recomputed PC1 from the frozen beta10 object and expression matrix for all ten modules; independently refitted all ten additive models and all 30 Cabernet-minus-Pinot stage contrasts; matched stored diagnostics and both BH-FDR corrections. Confirmed the balanced 54-sample table has no missing eigengenes. Flagged residual/influence issues in M2, M3, M5 and M9, plus low M9 model R². See `docs/T003_QC_REVIEW.md` and the three `t003_*.tsv` audit tables in `results/module_statistics_beta10/`. No samples were excluded and no existing statistical estimates were changed.
+
 ---
 
 ## T-004 — Year robustness analysis
 
-**Status:** TODO; blocked on T-003 QC review.
+**Status:** TODO; T-003 QC review complete, ready to start but not yet executed.
 
 **Planned script:**
 

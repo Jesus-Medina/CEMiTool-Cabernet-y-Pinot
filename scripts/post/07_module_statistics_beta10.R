@@ -28,7 +28,7 @@ suppressPackageStartupMessages({
 # 1. INPUTS
 # -------------------------------------------------------------------------
 
-cem_file <- file.path(project_dir, "results/objects/cemitool.rds")
+cem_file <- file.path(project_dir, "results/beta10/objects/cemitool.rds")
 expr_file <- file.path(project_dir, "data/processed/expression_log2rpkm.rds")
 meta_file <- file.path(project_dir, "data/metadata/samples.tsv")
 
