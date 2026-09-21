@@ -114,6 +114,8 @@ T-005 is complete with annotation limitations documented in `docs/T005_FUNCTIONA
 
 The user-prioritized GO-only follow-up is complete. `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md` records an official `go.obo` version 2026-07-26 check of all 3.556 Grapedia GO IDs represented among beta10 genes. There are 390 obsolete IDs, 209 of which were missed by T-005's name-only filter. The corrected, complete ORA and per-ID audit are in `results/go_ora_beta10/`; this supersedes only the **GO portion** of T-005 for inference. The annotated background stays 519 genes, testable module–term combinations fall from 6.864 to 6.344, and the six global-FDR hits remain in M9. M5/M10/M2/M3/M1 have no global-FDR GO hit, but GO coverage is too sparse for negative biological conclusions. MapMan results and the M5 functional-label conflict are unchanged.
 
+The original Grapedia GO ZIP is now preserved at `data/reference/grapedia_t005/t2t_go.zip` following a user-requested provenance check. Its pinned SHA-256 matches, and its GMT reproduces all 33.540 prepared gene–term pairs exactly using the frozen v1→v5.1 map. This adds source traceability without changing the ORA or biological conclusions.
+
 ## Immediate pending work
 
 1. T-006: hub-gene prioritization within the robust or repeated module components, with the M5 v3/v5 functional-label conflict, sparse GO coverage and T-004 seasonal caveats explicit.

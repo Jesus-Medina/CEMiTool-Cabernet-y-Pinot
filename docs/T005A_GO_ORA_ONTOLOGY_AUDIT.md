@@ -13,6 +13,12 @@ registro histórico, pero para inferencia GO lo sustituye
 Se usó la [anotación gen–GO PN40024 T2T v5.1 de Grapedia](https://grapedia.org/files-download/) ya preparada en
 `data/reference/grapedia_t005/v5_go_pairs.tsv`, con las mismas equivalencias
 v1→v5.1 recíprocas uno-a-uno y el mismo umbral de solapamiento de T-005.
+El ZIP original de Grapedia, `data/reference/grapedia_t005/t2t_go.zip`,
+está ahora conservado en Git. Tiene 1.584.493 bytes, contiene solamente
+`5.1_on_T2T_ref_GO.gmt` y coincide con el SHA-256 fijado en el manifiesto.
+El script reconstruye desde ese GMT y el mapeo versionado las 33.540
+asociaciones gen–término preparadas y exige coincidencia exacta de los
+cuatro campos: gen v1, gen de anotación, ID GO y nombre suministrado.
 Se contrastaron **todos los IDs GO**, no solo sus nombres, con la
 [ontología oficial GO](https://geneontology.org/docs/download-ontology/)
 `go.obo`, versión `releases/2026-07-26`. La fuente, SHA-256 y versión
@@ -94,8 +100,9 @@ MapMan v3↔v5.1 de M5 documentada en T-005 sigue abierta.
 
 ## Validación
 
-El archivo GO comprimido se descomprimió y verificó contra su SHA-256
-antes de procesarlo. Se comprobaron 3.556 IDs de Grapedia, 390 obsoletos,
+El ZIP original de Grapedia y el archivo GO comprimido se verificaron
+contra sus respectivos SHA-256 antes de procesarlos. Se comprobaron 3.556
+IDs de Grapedia, 390 obsoletos,
 209 adicionales a los identificables por nombre, exclusión total de IDs
 obsoletos en la nueva tabla, 6.344 pruebas y los seis hits M9. Se
 recalculó independientemente el BH global sobre los p-valores finales.

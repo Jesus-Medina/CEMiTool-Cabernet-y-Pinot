@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-21 — Preserve and verify original Grapedia GO source
+
+- Added only the authentic PN40024 T2T v5.1 GO ZIP to the canonical reference
+  directory after matching its pinned SHA-256 and inspecting its GMT member.
+- Rebuilt and matched all 33.540 prepared gene–term associations against the
+  raw GMT and frozen v1→v5.1 mapping; GO ORA results and conclusions did not
+  change. No unverified local «Gen ontology» folder was invented or imported.
+
 ## 2026-09-21 — T-005A GO ORA and official obsolete-term correction
 
 - Cross-checked every beta10-linked Grapedia GO ID against a SHA-pinned

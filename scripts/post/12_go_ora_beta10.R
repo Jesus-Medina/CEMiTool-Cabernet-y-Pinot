@@ -17,6 +17,19 @@ run_go_ora_beta10 <- function() {
   write_tsv <- function(x, path) write.table(x, path, sep = "\t", quote = FALSE,
                                               row.names = FALSE, na = "NA",
                                               fileEncoding = "UTF-8")
+  grapedia_url <- "https://grapedia.org/wp-content/uploads/2025/04/5.1_on_T2T_ref_GO.zip"
+  grapedia_sha <- "e262c7d4cd8c3caac89e985d5e831a91e033b619427c93dff3e07210a98739d4"
+  grapedia_zip <- file.path(ref, "t2t_go.zip")
+  if (!file.exists(grapedia_zip)) {
+    utils::download.file(grapedia_url, grapedia_zip, mode = "wb", quiet = TRUE)
+  }
+  if (!identical(digest::digest(file = grapedia_zip, algo = "sha256"),
+                 grapedia_sha)) stop("Grapedia GO ZIP SHA-256 mismatch")
+  zip_index <- utils::unzip(grapedia_zip, list = TRUE)
+  gmt_entry <- "5.1_on_T2T_ref_GO.gmt"
+  if (nrow(zip_index) != 1L || !identical(zip_index$Name[1], gmt_entry)) {
+    stop("Unexpected Grapedia GO ZIP contents")
+  }
   ontology_url <- "https://current.geneontology.org/ontology/go.obo"
   ontology_sha <- "d3593751d885ca160b2ab7baf6c7eccd88ca3c4599f79436c674bad661095ff0"
   archive <- file.path(ontology_dir, "go.obo.gz")
@@ -84,6 +97,32 @@ run_go_ora_beta10 <- function() {
       !all(pairs$V1_gene %in% coverage$V1_gene)) {
     stop("Malformed frozen beta10 or Grapedia GO input")
   }
+  mapping <- read_tsv(file.path(ref, "v1_to_v5_reciprocal50.tsv"))
+  if (anyNA(mapping) || anyDuplicated(mapping$V1_gene) ||
+      anyDuplicated(mapping$Annotation_gene)) {
+    stop("Malformed frozen v1-to-v5.1 gene mapping")
+  }
+  gmt_lines <- readLines(unz(grapedia_zip, gmt_entry), warn = FALSE,
+                         encoding = "UTF-8")
+  gmt <- strsplit(gmt_lines, "\t", fixed = TRUE)
+  if (any(lengths(gmt) < 2L) ||
+      anyDuplicated(vapply(gmt, function(x) x[1], ""))) {
+    stop("Malformed original Grapedia GO GMT")
+  }
+  mapped_ids <- setNames(mapping$V1_gene, mapping$Annotation_gene)
+  expected_keys <- unique(unlist(lapply(gmt, function(x) {
+    annotated <- intersect(unique(x[-c(1, 2)]), names(mapped_ids))
+    if (!length(annotated)) return(character())
+    paste(unname(mapped_ids[annotated]), annotated, x[1], x[2],
+          sep = "\034")
+  }), use.names = FALSE))
+  actual_keys <- paste(pairs$V1_gene, pairs$Annotation_gene,
+                       pairs$TermID, pairs$TermName, sep = "\034")
+  if (length(expected_keys) != nrow(pairs) ||
+      anyDuplicated(actual_keys) || !setequal(expected_keys, actual_keys)) {
+    stop("Prepared beta10 GO pairs do not match pinned Grapedia GMT")
+  }
+  raw_pair_count <- nrow(pairs)
   source_terms <- unique(pairs[c("TermID", "TermName")])
   if (anyDuplicated(source_terms$TermID)) stop("Conflicting Grapedia GO labels")
   j <- match(source_terms$TermID, ontology$OfficialID)
@@ -218,11 +257,12 @@ run_go_ora_beta10 <- function() {
     comparison$Global_FDR05_ontology_checked
   write_tsv(comparison, file.path(out, "go_vs_T005_comparison.tsv"))
   manifest <- data.frame(Source = c("Grapedia_GO_GMT", "GO_ontology"),
-                         URL = c("https://grapedia.org/wp-content/uploads/2025/04/5.1_on_T2T_ref_GO.zip",
-                                 ontology_url),
-                         SHA256 = c("e262c7d4cd8c3caac89e985d5e831a91e033b619427c93dff3e07210a98739d4",
-                                    ontology_sha),
+                         URL = c(grapedia_url, ontology_url),
+                         SHA256 = c(grapedia_sha, ontology_sha),
                          Version = c("PN40024_T2T_v5.1", version),
+                         Repository_file = c(
+                           "data/reference/grapedia_t005/t2t_go.zip",
+                           "data/reference/go_2026-07-26/go.obo.gz"),
                          stringsAsFactors = FALSE)
   write_tsv(manifest, file.path(ontology_dir, "go_ora_source_manifest.tsv"))
   summary <- c(
@@ -230,6 +270,7 @@ run_go_ora_beta10 <- function() {
     paste0("GO_ontology_version=", version),
     paste0("GO_ontology_SHA256=", ontology_sha),
     paste0("Grapedia_GO_terms_with_selected_gene=", nrow(source_terms)),
+    paste0("Grapedia_GMT_gene_term_pairs_verified=", raw_pair_count),
     paste0("term_status_counts=", paste(names(table(source_terms$Status)),
                                         as.integer(table(source_terms$Status)),
                                         sep = ":", collapse = ";")),

@@ -234,6 +234,10 @@ old/new comparison were saved without replacing historical T-005 outputs.
 An independent Fisher calculation reproduced M9/GO:0010431 and global BH
 was independently recalculated. Low GO mapping coverage remains a major
 interpretation limit. No CEMiTool run or scientific input was changed.
+As a user-requested provenance follow-up, the original 1.584.493-byte
+Grapedia GO ZIP was added to the reference directory only after its pinned
+SHA-256 and single GMT member were checked; all 33.540 prepared gene–term
+pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ---
 

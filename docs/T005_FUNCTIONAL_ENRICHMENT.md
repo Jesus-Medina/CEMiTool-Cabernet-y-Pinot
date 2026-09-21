@@ -19,10 +19,14 @@ Los IDs de entrada `VIT_...` son de anotación v1. [Grapedia PN40024
 Downloads](https://grapedia.org/files-download/) ofrece equivalencias entre
 versiones y conjuntos funcionales MapMan/GO para PN40024. Se fijaron URL,
 tamaño y SHA-256 de cuatro archivos originales en
-`data/reference/grapedia_t005/source_manifest.tsv`. Los archivos originales,
-incluida la tabla de equivalencias de 128 MB, se descargaron a caché temporal
-y **no** se añadieron al repositorio; los subconjuntos necesarios para los
-3.050 genes sí quedaron versionados bajo `data/reference/grapedia_t005/`.
+`data/reference/grapedia_t005/source_manifest.tsv`. Los originales se
+descargaron inicialmente a caché temporal y se versionaron los subconjuntos
+necesarios para los 3.050 genes. Como ampliación posterior solicitada por el
+usuario, también se archivó el ZIP GO original de Grapedia en
+`data/reference/grapedia_t005/t2t_go.zip`, tras verificar su SHA-256 y su
+concordancia exacta con las parejas gen–término preparadas. Los otros tres
+originales, incluida la tabla de equivalencias de 128 MB, permanecen fuera
+de Git; sus derivados y referencias verificables se conservaron.
 
 Se aceptó una equivalencia v1→v3 o v1→T2T v5.1 solo si era recíproca
 uno-a-uno en la tabla completa, mantenía la hebra y tenía ≥50 % de
