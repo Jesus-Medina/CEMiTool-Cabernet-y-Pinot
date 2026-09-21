@@ -1,16 +1,22 @@
 # 08_update_report_with_module_statistics.R
 # Integrates post-CEMiTool beta10 statistics into the main report.
-# Run from the BETA 10 RStudio project root:
-# source("scripts/08_update_report_with_module_statistics.R")
+# Run from the canonical Git repository root:
+# source("scripts/post/08_update_report_with_module_statistics.R")
+#
+# IMPORTANT:
+# This script uses the post-migration canonical repository layout.
 
 project_dir <- normalizePath(getwd(), winslash="/", mustWork=TRUE)
 stats_dir <- file.path(project_dir, "results", "module_statistics_beta10")
-cmp_dir <- file.path(project_dir, "results", "beta7_vs_beta10")
-report_dir <- file.path(project_dir, "reports")
-template_dir <- file.path(project_dir, "templates")
-log_dir <- file.path(project_dir, "logs")
+cmp_dir <- file.path(project_dir, "results", "comparisons")
+report_root <- file.path(project_dir, "reports")
+report_dir <- file.path(report_root, "current")
+archive_root <- file.path(report_root, "archive")
+template_dir <- file.path(report_root, "templates")
+log_dir <- file.path(project_dir, "results", "logs")
 
 dir.create(report_dir, recursive=TRUE, showWarnings=FALSE)
+dir.create(archive_root, recursive=TRUE, showWarnings=FALSE)
 dir.create(template_dir, recursive=TRUE, showWarnings=FALSE)
 dir.create(log_dir, recursive=TRUE, showWarnings=FALSE)
 
@@ -45,7 +51,10 @@ n_year <- sum(!is.na(year$FDR) & year$FDR < 0.05)
 strongest <- if (n_inter) inter$Module[which.min(inter$FDR)] else "none"
 
 stamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
-archive_dir <- file.path(report_dir, "archive_before_module_statistics", stamp)
+archive_dir <- file.path(
+  archive_root,
+  paste0(stamp, "_before_module_statistics")
+)
 old <- file.path(report_dir, c(
   "analysis_report.html",
   "analysis_report.docx",
@@ -200,8 +209,25 @@ writeLines(c(readLines(base_template, warn=FALSE, encoding="UTF-8"), appendix),
 
 render_one <- function(fmt, filename) {
   tryCatch({
-    rmarkdown::render(updated_template, output_format=fmt, output_file=filename,
-                      output_dir=report_dir, envir=new.env(parent=globalenv()), quiet=TRUE)
+    old_project_env <- Sys.getenv("CEMITOOL_PROJECT_DIR", unset = NA_character_)
+    on.exit({
+      if (is.na(old_project_env)) {
+        Sys.unsetenv("CEMITOOL_PROJECT_DIR")
+      } else {
+        Sys.setenv(CEMITOOL_PROJECT_DIR = old_project_env)
+      }
+    }, add = TRUE)
+
+    Sys.setenv(CEMITOOL_PROJECT_DIR = project_dir)
+
+    rmarkdown::render(
+      updated_template,
+      output_format = fmt,
+      output_file = filename,
+      output_dir = report_dir,
+      envir = new.env(parent = globalenv()),
+      quiet = TRUE
+    )
     message("Created: ", file.path(report_dir, filename))
     TRUE
   }, error=function(e) {
@@ -252,5 +278,5 @@ cat("Strongest interaction:",strongest,"\n")
 cat("Stage-specific contrasts:",n_contr,"\n")
 cat("Year FDR<0.05:",n_year,"\n\n")
 print(status, row.names=FALSE)
-cat("\nReports are in:",report_dir,"\n")
+cat("\nCurrent reports are in:",report_dir,"\n")
 if (dir.exists(archive_dir)) cat("Previous version archived in:",archive_dir,"\n")
