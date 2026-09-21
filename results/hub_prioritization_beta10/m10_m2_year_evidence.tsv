@@ -1,0 +1,3 @@
+"Module"	"Classification"	"Three_way_FDR"	"Cultivar_Year_FDR"	"Stages_with_2plus_year_FDR_hits"	"Single_year_dominant_stages"	"Magnitude_dominated_stages"	"Detected_direction_reversal"	"Note"
+"M10"	"reproducible"	0.270912592086378	0.0901869536309656	"Veraison,Harvest"	""	""	FALSE	"At least one stage has repeated detection and consistent direction"
+"M2"	"year-dependent"	1.06213181809622e-27	2.66746663618532e-23	"Veraison,Harvest"	""	""	TRUE	"Year dependence can coexist with a repeated contrast direction"

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-21 — T-006 internal hub prioritization completed
+
+- Ranked all M10 (39) and M2 (214) genes by intramodular beta10 adjacency, retaining 23,532 full edges, MapMan/Pfam/PANTHER evidence, beta7 membership, year-omission sensitivities, descriptive stage-by-year gene differences and zero-rate QC.
+- Independently reconstructed `kWithin` from the edges and checked source hashes, gene/annotation grain, network weights and rankings. M10 highlights a bHLH-labelled gene and potassium transporter; M2 highlights MYB/FAR1 candidates but also a material zero-expression/reference-mapping concern and sparse v5.1 coverage.
+- Documented why M3/M1 were not elevated to robust candidate modules. Marked T-006 done within its internal scope and T-007 ready; no CEMiTool rerun, external validation or skin-thickness causal claim. Four non-fatal R locale warnings and non-fatal S3-method overwrite messages occurred.
+
 ## 2026-09-21 — T-006 M5 hub phase verified
 
 - Calculated a complete 108-gene M5 hub ranking from the frozen beta10 adjacency, preserving all 5,778 within-module edges, source-backed v3/v5.1 functional evidence, QC and leave-year/sample sensitivities.

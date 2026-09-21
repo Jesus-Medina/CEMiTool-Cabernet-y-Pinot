@@ -118,12 +118,12 @@ The original Grapedia GO ZIP is now preserved at `data/reference/grapedia_t005/t
 
 ### T-006 M5 hub phase
 
-T-006 está **IN PROGRESS**; la fase M5 está ejecutada y documentada en `docs/T006_M5_HUB_PRIORITIZATION.md`. Sobre la adyacencia beta10 congelada se calculó `kWithin` para los 108 genes de M5 y se conservaron ranking completo, 5.778 pares, anotaciones y controles en `results/hub_prioritization_beta10/` y `data/reference/grapedia_t006/`. Ocho de los 11 hubs principales son genes del bloque chr16 etiquetado stilbenoid en MapMan v3 y CHS/flavonoide en v5.1; la discrepancia no permite asignar inequívocamente STS o CHS. No hay PAL en el top 11. También aparecen CuAO (rango 5) y un factor NAC con dominio concordante (rango 7), candidatos no pertenecientes a esa familia. La señal M5 persiste descriptivamente al retirar los 18 genes v3-stilbenoid, pero eso no prueba regulación causal. No se ha cambiado la red, ni se ha hecho una prueba de piel aislada o grosor de piel. Falta priorizar los otros módulos y contrastar validación para cerrar T-006.
+T-006 está **DONE** para priorización interna y se documenta en `docs/T006_M5_HUB_PRIORITIZATION.md` y `docs/T006_M10_M2_HUB_PRIORITIZATION.md`. Sobre la adyacencia beta10 congelada se calculó `kWithin` para 108 genes M5, 39 M10 y 214 M2; rankings completos, aristas, anotaciones v3/v5.1 y QC están en `results/hub_prioritization_beta10/` y `data/reference/grapedia_t006/`. En M5, ocho de 11 hubs principales pertenecen al bloque chr16 etiquetado stilbenoid en v3 y CHS en v5.1, junto a CuAO (rango 5) y NAC (rango 7); no hay PAL en top 11. M10 prioriza un bHLH anotado y un transportador HAK/KUP/KT, pero no tiene enriquecimiento global. M2 prioriza MYB y FAR1 junto a hubs poco anotados; nueve de sus 22 top genes muestran ceros exactos en al menos 7/9 muestras Cabernet Harvest, por lo que deben distinguirse expresión real, variación de copia y posible sesgo de alineamiento. La retención beta7 y la robustez anual apoyan la priorización **interna**, no identidad funcional ni causalidad. M3/M1 quedaron en menor prioridad por T-004. No se ha cambiado la red ni hecho validación en piel aislada o grosor de piel.
 
 ## Immediate pending work
 
-1. Continuar T-006 en M10 y M2 (M5 ya analizado), manteniendo el conflicto v3/v5, la cobertura GO limitada y las cautelas estacionales de T-004.
-2. Then T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work. The current cumulative report has not yet integrated T-004/T-005.
+1. T-007: validación independiente en piel aislada, sin mezclar muestras externas con las 54 del diseño base. Comprobar particularmente la identidad de los hubs M2 con posibles efectos de mapeo.
+2. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work. The current cumulative report has not yet integrated T-004/T-005/T-006.
 
 ## Important boundary
 

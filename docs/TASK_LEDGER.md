@@ -243,7 +243,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-006 — Hub gene prioritization
 
-**Status:** IN PROGRESS (2026-09-21); fase M5 ejecutada y verificada. Faltan otros módulos priorizados.
+**Status:** DONE (2026-09-21), para la priorización interna de M5/M10/M2; la validación en piel aislada pertenece a T-007.
 
 **Goal:** identify central candidate genes within robust, biologically relevant modules.
 
@@ -254,13 +254,15 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 - preserve full ranking;
 - cross-reference annotation and validation evidence.
 
-**M5 phase verification:** `scripts/post/13_m5_hub_prioritization_beta10.R` calculó `kWithin` en la matriz beta10 congelada (108 genes, 5.778 pares) y guardó el ranking completo, aristas, anotaciones v3/v5.1 con URL/SHA-256, QC y sensibilidades. Ocho de los 11 hubs principales pertenecen al bloque etiquetado stilbenoid en v3/CHS en v5.1; los otros incluyen CuAO, un NAC y un gen sin función verificada. Ningún PAL está en el top 11. La comparación de pesos de arista, un recálculo independiente de `kWithin` y las comprobaciones de membresía/anotación pasaron. La retirada exploratoria de los 18 genes de familia no elimina el perfil M5 ni el contraste Harvest repetido. La discordancia CHS/STS, la posible expansión de familia, la estabilidad imperfecta del rango al omitir años y la ausencia de evidencia causal se detallan en `docs/T006_M5_HUB_PRIORITIZATION.md`. **No marcar DONE** hasta priorizar también hubs de otros módulos robustos/relevantes (al menos M10 y M2) y cruzar evidencia de validación disponible.
+**M5 phase verification:** `scripts/post/13_m5_hub_prioritization_beta10.R` calculó `kWithin` en la matriz beta10 congelada (108 genes, 5.778 pares) y guardó el ranking completo, aristas, anotaciones v3/v5.1 con URL/SHA-256, QC y sensibilidades. Ocho de los 11 hubs principales pertenecen al bloque etiquetado stilbenoid en v3/CHS en v5.1; los otros incluyen CuAO, un NAC y un gen sin función verificada. Ningún PAL está en el top 11. El recálculo independiente de `kWithin` y las comprobaciones de membresía/anotación pasaron. La retirada exploratoria de los 18 genes de familia no elimina el perfil M5 ni el contraste Harvest repetido. Ver `docs/T006_M5_HUB_PRIORITIZATION.md`.
+
+**M10/M2 completion verification:** `scripts/post/14_m10_m2_hub_prioritization_beta10.R` calculó rankings completos para 39 genes M10 y 214 genes M2, preservó 23.532 aristas y cotejó etiquetas MapMan/Pfam/PANTHER v3/v5.1, retención de membresía beta7, evidencia anual T-004 y sensibilidades leave-one-year-out. Los hashes funcionales y la adyacencia congelada se comprobaron. Una suma independiente de las aristas reprodujo todos los `kWithin` y verificó los 741/22.791 pares, rangos y retención beta7. M10 tiene un bHLH anotado en rango 1 y un transportador HAK/KUP/KT en rango 2, pero no enriquecimiento global; M2 tiene MYB en rango 2 y FAR1 en rango 8, junto a numerosos hubs poco anotados y una alerta de expresión cero/mapeo en Cabernet. M3/M1 no fueron elevados a prioridad robusta por T-004. Interpretación y límites en `docs/T006_M10_M2_HUB_PRIORITIZATION.md`. Se cumplen la métrica explícita, el ranking completo y el cruce de anotación/validación **interna**. No se hizo validación externa, inferencia causal ni nueva red.
 
 ---
 
 ## T-007 — Skin-only external validation
 
-**Status:** TODO; blocked on T-005/T-006.
+**Status:** TODO; T-005/T-006 completos, lista para comenzar por separado.
 
 **Candidate datasets:**
 

@@ -1,0 +1,11 @@
+T-006 M10/M2 hub prioritization on frozen beta10 adjacency
+primary_metric=sum of off-diagonal intramodular unsigned adjacency |Pearson r|^10
+top_decile=descriptive shortlist, not inferential significance
+annotation=v3/v5 MapMan pairs with reciprocal one-to-one v1 mapping from T-005
+source_URL_SHA=data/reference/grapedia_t005/source_manifest.tsv
+functional_summary_source_URL_SHA=data/reference/grapedia_t006/source_manifest.tsv
+year_evidence=T-004 priority_module_classification, not gene-level validation
+beta7_evidence=gene membership in best-matching beta7 module, not beta7 hub rank
+stage_year_gene_differences=descriptive, no gene-level FDR claim
+leave_year_out=sensitivity only, original graph unchanged
+no_CEMiTool_rerun_no_sample_exclusion_no_skin_specific_or_causal_claim
