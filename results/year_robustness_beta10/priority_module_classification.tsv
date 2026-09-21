@@ -1,0 +1,6 @@
+Module	Classification	Three_way_FDR	Cultivar_Year_FDR	Stages_with_2plus_year_FDR_hits	Single_year_dominant_stages	Magnitude_dominated_stages	Detected_direction_reversal	Note
+M5	year-dependent	0.825960635143789	0.0446066929926917	Harvest	Veraison	Veraison	FALSE	Year dependence can coexist with a repeated contrast direction
+M10	reproducible	0.270912592086378	0.0901869536309656	Veraison,Harvest			FALSE	At least one stage has repeated detection and consistent direction
+M2	year-dependent	1.06213181809622e-27	2.66746663618532e-23	Veraison,Harvest			TRUE	Year dependence can coexist with a repeated contrast direction
+M3	year-dependent	1.06213181809622e-27	7.21663578996973e-20	Harvest		Harvest	TRUE	Year dependence can coexist with a repeated contrast direction
+M1	year-dependent	0.0593011531752688	0.563006522762989		FruitSet	FruitSet	TRUE	Year dependence can coexist with a repeated contrast direction

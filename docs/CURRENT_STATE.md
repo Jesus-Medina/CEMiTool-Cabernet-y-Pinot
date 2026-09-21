@@ -102,12 +102,14 @@ T-002 is complete. The cumulative main report in `reports/current/analysis_repor
 
 T-003 is complete; the detailed record is `docs/T003_QC_REVIEW.md`. All ten beta10 eigengenes and PC1 variance values were reproduced from the frozen expression/network inputs. The 54-sample table is complete and balanced, and all 30 stage-specific Cabernet-minus-Pinot contrasts and BH adjustments were independently verified. Eight sample-module observations exceed absolute standardized residual 3 (M2, M3, M5, M9). M2 Cabernet FruitSet 2014 and M3 Cabernet Harvest 2013 show cell-level patterns; M5 includes an influential Pinot Veraison 2012 sample. These are flags for T-004, not grounds for silently removing samples or claiming an interaction is stable across years. M9 has low additive-model R² (0.255). No biological inference was promoted.
 
+### T-004 year robustness
+
+T-004 is complete; detailed methodology, evidence and caveats are in `docs/T004_YEAR_ROBUSTNESS.md`. Script `scripts/post/09_year_robustness_beta10.R` fit `Eigengene ~ Cultivar * Stage * Year` in all ten beta10 modules on the unchanged 54-sample design. `results/year_robustness_beta10/` contains complete Type III ANOVA (70 tests), 90 Stage × Year Cabernet-minus-Pinot contrasts with BH FDR, observed cell profiles, diagnostics, ten plots and a priority-module classification. M10 satisfies the prespecified reproducibility rule. M5, M2, M3 and M1 are classified year-dependent at module level, but M5 Harvest and M2 Veraison/Harvest each retain significant same-direction contrasts in all three years. M3 Harvest is dominated in magnitude by 2013, and M1 is not established as stable. The M5 Veraison 2012 contrast is sensitive to the flagged sample GSM2627837. No sample was removed from the primary analysis. The current cumulative report still ends with the earlier post-CEMiTool statistical layer; T-004 findings are in separate results and documentation, not yet integrated into that report.
+
 ## Immediate pending work
 
-1. T-004: build the next analysis script for year robustness, explicitly checking the T-003 residual/influence flags:
-   - `Eigengene ~ Cultivar * Stage * Year`
-   - Cabernet vs Pinot within Stage × Year
-2. Only after that, move to biological annotation/enrichment and hubs.
+1. T-005: functional annotation and enrichment of robust module components, carrying the T-004 year-dependence cautions into every claim.
+2. Then T-006 hub-gene prioritization and T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work.
 
 ## Important boundary
 

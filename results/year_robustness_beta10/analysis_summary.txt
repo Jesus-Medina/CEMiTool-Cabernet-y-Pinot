@@ -1,0 +1,17 @@
+T-004 beta10 year robustness
+completed=2026-09-21 16:34:56.794166
+input=results/module_statistics_beta10/module_eigengenes_with_metadata_54.tsv
+samples=54; balanced_cells=18; replicates_per_cell=3
+model=Eigengene ~ Cultivar * Stage * Year
+ANOVA=Type III with sum-to-zero contrasts; BH separately across ten modules for each effect
+contrasts=Cabernet Sauvignon minus Pinot noir within each Stage x Year
+contrast_FDR_primary=BH across all 90 module x Stage x Year tests
+contrast_FDR_secondary=BH within each Stage x Year (10 tests) and module (9 tests)
+classification=year-dependent if three-way or Cultivar:Year BH FDR<0.05, single-year-dominant detected contrast, or detected sign reversal; otherwise reproducible if >=2 global-FDR detections in one stage with same direction in all years; otherwise partially reproducible/unresolved
+single_year_dominant=exactly one global-FDR hit and its absolute estimate exceeds twice each other year's estimate
+magnitude_dominated_by_one_year=largest absolute estimate has global-FDR<0.05 and exceeds twice both other-year absolute estimates; descriptive flag even when another year is detected
+plots=observed cell mean +/- biological-replicate SE; not inferential contrast CI
+sensitivity=M5 leave GSM2627837 out only; no sample excluded from primary analysis
+R=R version 4.6.1 (2026-06-24 ucrt)
+car=3.1.5
+emmeans=2.0.4

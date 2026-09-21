@@ -148,9 +148,9 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 ## T-004 — Year robustness analysis
 
-**Status:** TODO; T-003 QC review complete, ready to start but not yet executed.
+**Status:** DONE (2026-09-21), con cautelas científicas detalladas en `docs/T004_YEAR_ROBUSTNESS.md`.
 
-**Planned script:**
+**Script:**
 
 `scripts/post/09_year_robustness_beta10.R`
 
@@ -158,7 +158,7 @@ Do not mark a task DONE unless its acceptance criteria were actually checked.
 
 `Eigengene ~ Cultivar * Stage * Year`
 
-**Outputs should include:**
+**Outputs include:**
 
 - full Type III ANOVA including higher-order interaction;
 - Cabernet vs Pinot contrasts within each Stage × Year;
@@ -182,11 +182,13 @@ M6 is secondary because its current Cultivar × Stage FDR is ~0.10 despite a sig
 - every priority module classified as reproducible / partially reproducible / year-dependent based on explicit evidence;
 - no biological enrichment interpretation presented as robust before this step is reviewed.
 
+**Completion verification:** Se ajustaron diez modelos factoriales completos con 54 muestras y 36 grados de libertad residuales. Se guardaron 70 pruebas ANOVA tipo III, 90 contrastes Cabernet menos Pinot por Stage × Year con FDR, 180 perfiles de celda, diagnósticos, diez gráficos y una sensibilidad para la muestra M5 marcada en T-003. Los 90 contrastes se cotejaron con diferencias directas de medias (error máximo 4,62×10⁻¹⁴); se verificaron el FDR BH, el contraste de modelos anidados para la interacción de tres vías y los errores estándar. Se inspeccionaron los diez gráficos. La regla explícita clasifica M10 como reproducible y M5/M2/M3/M1 como dependientes del año, con subpatrones repetidos de M5 Harvest y M2 Veraison/Harvest; M1 depende de evidencia descriptiva, no de una interacción estacional con FDR <0,05. El análisis no presenta enriquecimiento biológico ni causalidad de grosor de piel. T-005 puede comenzar con esas cautelas.
+
 ---
 
 ## T-005 — Functional annotation and enrichment of robust modules
 
-**Status:** TODO; blocked on T-004.
+**Status:** TODO; T-004 completada, lista para iniciar con las cautelas de robustez por año.
 
 **Goal:** determine what robust modules represent biologically.
 

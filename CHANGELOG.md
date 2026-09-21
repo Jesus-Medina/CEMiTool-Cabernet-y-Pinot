@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-21 — T-004 year robustness completed
+
+- Added a reproducible full-factorial beta10 analysis using the unchanged 54-sample eigengene table, Type III ANOVA and 90 Stage × Year Cabernet-minus-Pinot contrasts with BH FDR.
+- Preserved complete result and diagnostic TSVs, ten module profile plots, explicit priority-module classification and an M5 flagged-sample sensitivity analysis under `results/year_robustness_beta10/`.
+- Independently checked all 90 contrast estimates against observed cell-mean differences, recalculated the global BH correction, verified the three-way test with nested models and reviewed all ten plots.
+- Documented M10 as reproducible under the prespecified rule, M5/M2/M3/M1 as year-dependent with important stable subpatterns and limitations, in `docs/T004_YEAR_ROBUSTNESS.md`.
+- T-005 is now ready to start; no enrichment analysis, network rerun or sample deletion was performed. Four non-fatal R `C.UTF-8` startup warnings occurred.
+
 ## 2026-09-21 — T-003 eigengene and model QC reviewed
 
 - Recomputed all ten beta10 module eigengenes and PC1 variance values directly from the archived network object and expression matrix; no CEMiTool network was rerun.

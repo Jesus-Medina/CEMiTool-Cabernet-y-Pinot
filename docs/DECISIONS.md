@@ -92,11 +92,13 @@ This file records durable methodological decisions and why they were made.
 
 ## D-008 — Require seasonal robustness before strong biological prioritization
 
-**Status:** active; next statistical step.
+**Status:** active; tested in T-004 on 2026-09-21.
 
 **Decision:** test `Cultivar * Stage * Year` and stage-by-year cultivar contrasts.
 
 **Reason:** Year is significant in most modules and a strong aggregate interaction could still be driven by one season.
+
+**Result:** Keep the full Stage × Year contrasts and their FDR visible when prioritizing biology. M10 meets the prespecified reproducibility rule. M5 Harvest and M2 Veraison/Harvest recur across years, although other parts of those modules vary by year. M3 Harvest is magnitude-dominated by 2013; M1 is not established as a stable pattern. See `docs/T004_YEAR_ROBUSTNESS.md`; these findings do not establish skin specificity or causality.
 
 ---
 
