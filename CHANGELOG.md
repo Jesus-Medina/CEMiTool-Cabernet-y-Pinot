@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-09-21 — T-005A GO ORA and official obsolete-term correction
+
+- Cross-checked every beta10-linked Grapedia GO ID against a SHA-pinned
+  official GO ontology, archiving its compressed source and an ID-level audit.
+- Found 390 obsolete terms, including 209 missed by the former name-only
+  filter; repeated all ten beta10 module ORAs with complete results, QC and
+  a row-level comparison to T-005 while preserving the historical files.
+- Verified that the six global-FDR GO hits remain in M9 and none emerge in
+  the priority modules. Independently recalculated a Fisher test and BH FDR;
+  documented sparse GO coverage and the unchanged MapMan conclusions.
+
 ## 2026-09-21 — T-005 functional annotation and enrichment completed
 
 - Added a reproducible Grapedia annotation-preparation script with pinned URLs/SHA-256 and explicit reciprocal one-to-one v1→v3/v5.1 gene mapping; kept the 128 MB original crosswalk out of Git while versioning the filtered gene–term inputs and coverage audit.

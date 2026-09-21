@@ -1,5 +1,11 @@
 # T-005 — Anotación funcional y enriquecimiento beta10
 
+**Actualización GO:** la comprobación posterior T-005A detectó 209 términos
+obsoletos adicionales que no decían «obsolete» en el nombre de Grapedia.
+Para interpretación GO use `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md` y
+`results/go_ora_beta10/`; el resultado GO de T-005 se conserva solo como
+registro histórico. Los resultados MapMan de este documento no cambiaron.
+
 Ejecutado el 2026-09-21 desde la raíz canónica con
 `source("scripts/post/10_prepare_vitis_annotations_beta10.R")` y después
 `source("scripts/post/11_functional_enrichment_beta10.R")`. Se usaron los

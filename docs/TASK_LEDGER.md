@@ -215,6 +215,28 @@ M6 is secondary because its current Cultivar × Stage FDR is ~0.10 despite a sig
 
 ---
 
+## T-005A — GO ORA with ontology-based obsolete-term audit
+
+**Status:** DONE (2026-09-21), high-priority user request; details in
+`docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
+
+**Goal:** independently check the Grapedia GO annotations against an official
+GO ontology, remove obsolete IDs and repeat beta10 module-wide ORA, comparing
+it with the GO portion of T-005.
+
+**Acceptance verification:** The pinned `go.obo` release 2026-07-26 marked
+390/3.556 GO IDs obsolete, including 209 not identified by Grapedia's term
+names. All 390 were excluded before testing. The GO-annotated background
+remained 519 genes, while tested module–term combinations fell from 6.864 to
+6.344. Six global-FDR hits remained, all in M9; none of the five priority
+modules gained a significant GO term. Full results, per-ID audit, QC and
+old/new comparison were saved without replacing historical T-005 outputs.
+An independent Fisher calculation reproduced M9/GO:0010431 and global BH
+was independently recalculated. Low GO mapping coverage remains a major
+interpretation limit. No CEMiTool run or scientific input was changed.
+
+---
+
 ## T-006 — Hub gene prioritization
 
 **Status:** TODO; T-005 completada, lista para comenzar con las cautelas de correspondencia y anotación.

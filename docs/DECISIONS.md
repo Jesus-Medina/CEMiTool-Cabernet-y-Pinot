@@ -156,3 +156,24 @@ Previous report versions should be archived, not destroyed.
 **Reason:** v3 MapMan covers 2.608/3.050 selected genes, including 36/39 M10, whereas v5.1 MapMan covers 1.305 and v5.1 GO only 519 after mapping. Newer annotations are valuable but too sparse for absence claims in key modules. M5's v3 stilbenoid and v5.1 CHS/flavonoid labels overlap on 16 genes; these are not independent confirmations of a precise biochemical function.
 
 **Boundary:** enrichment describes whole modules, not stage-specific drivers, hubs, isolated skin, or causality. See `docs/T005_FUNCTIONAL_ENRICHMENT.md`.
+
+---
+
+## D-013 — Filter GO obsolescence by official ontology ID
+
+**Status:** active after T-005A (2026-09-21).
+
+**Decision:** for the Grapedia GO ORA, use the SHA-pinned GO ontology release
+2026-07-26 `is_obsolete` field to exclude deprecated IDs before defining the
+background or calculating p-values. Do not rely only on «obsolete» in a
+Grapedia term name, and do not automatically transfer an obsolete annotation
+to a proposed replacement. Preserve the earlier GO output for history, but
+use `results/go_ora_beta10/` for subsequent inference.
+
+**Reason:** 209 obsolete IDs among the beta10-linked Grapedia terms lacked
+an obsolete label in their supplied name. Correcting this removes 520
+testable module–term combinations; the six surviving hits are all M9.
+
+**Boundary:** GO is an exploratory secondary source with only 519/3.050
+beta10 genes annotated. A null GO result in a priority module is not evidence
+that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.

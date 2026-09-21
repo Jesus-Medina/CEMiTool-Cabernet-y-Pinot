@@ -110,9 +110,13 @@ T-004 is complete; detailed methodology, evidence and caveats are in `docs/T004_
 
 T-005 is complete with annotation limitations documented in `docs/T005_FUNCTIONAL_ENRICHMENT.md`. Scripts 10 and 11 use pinned Grapedia sources, audited one-to-one legacy-ID equivalences, and full module-wide hypergeometric ORA with BH FDR. Versioned gene–term subsets are in `data/reference/grapedia_t005/`; full results and QC are in `results/functional_enrichment_beta10/`. MapMan v3 is primary (2.608/3.050 beta10 genes annotated); newer T2T v5.1 MapMan and GO are secondary because their mapped coverage is 1.305 and 519 genes. M5 is enriched for phenolic/stilbenoid and PAL categories under v3, including the predefined phenylpropanoid theme, but v5.1 assigns many of the same genes to CHS/flavonoid categories, so exact functional identity is unresolved. M10 has no FDR-global enrichment despite 36/39 v3 coverage. Cuticle/wax, pectin, cellulose/hemicellulose, lignin and anthocyanin themes were not established in the priority modules; epidermis was not testable in these MapMan taxonomies. Enrichment is module-wide and must not be presented as identifying the drivers of a specific year/stage contrast or skin thickness.
 
+### T-005A Gene Ontology correction
+
+The user-prioritized GO-only follow-up is complete. `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md` records an official `go.obo` version 2026-07-26 check of all 3.556 Grapedia GO IDs represented among beta10 genes. There are 390 obsolete IDs, 209 of which were missed by T-005's name-only filter. The corrected, complete ORA and per-ID audit are in `results/go_ora_beta10/`; this supersedes only the **GO portion** of T-005 for inference. The annotated background stays 519 genes, testable module–term combinations fall from 6.864 to 6.344, and the six global-FDR hits remain in M9. M5/M10/M2/M3/M1 have no global-FDR GO hit, but GO coverage is too sparse for negative biological conclusions. MapMan results and the M5 functional-label conflict are unchanged.
+
 ## Immediate pending work
 
-1. T-006: hub-gene prioritization within the robust or repeated module components, with the M5 v3/v5 functional-label conflict and T-004 seasonal caveats explicit.
+1. T-006: hub-gene prioritization within the robust or repeated module components, with the M5 v3/v5 functional-label conflict, sparse GO coverage and T-004 seasonal caveats explicit.
 2. Then T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work. The current cumulative report has not yet integrated T-004/T-005.
 
 ## Important boundary

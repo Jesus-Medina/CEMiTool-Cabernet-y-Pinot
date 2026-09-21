@@ -1,0 +1,14 @@
+GO-only ORA on frozen beta10 modules; no CEMiTool rerun
+GO_ontology_version=releases/2026-07-26
+GO_ontology_SHA256=d3593751d885ca160b2ab7baf6c7eccd88ca3c4599f79436c674bad661095ff0
+Grapedia_GO_terms_with_selected_gene=3556
+term_status_counts=live_primary_id:3166;obsolete_by_ontology:390
+valid_GO_annotated_background_genes=519
+module_term_rows=31660
+tested_module_terms=6344
+global_FDR05_hits=6
+filter=official is_obsolete, missing ID and source-labeled obsolete; live alternate IDs normalized
+ORA=one-sided hypergeometric; background=beta10 selected genes with >=1 retained GO term
+test=term background size 5..500 and module annotated n>=5
+FDR=BH across all tested module-term combinations; within-module BH also reported
+no GO ancestor propagation; no inference of skin specificity or stage-year drivers
