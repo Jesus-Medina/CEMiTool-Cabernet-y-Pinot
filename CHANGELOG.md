@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-21 — T-006 M5 hub phase verified
+
+- Calculated a complete 108-gene M5 hub ranking from the frozen beta10 adjacency, preserving all 5,778 within-module edges, source-backed v3/v5.1 functional evidence, QC and leave-year/sample sensitivities.
+- Found eight CHS/STS-family-labelled genes among the top 11, alongside CuAO and a NAC transcription-factor candidate; no PAL-labelled gene is in the top 11. Documented the exact v3 stilbenoid versus v5.1 CHS annotation conflict and the chr16 reference interval without assigning unproven enzyme functions or a confirmed family expansion.
+- Independently recomputed centrality from the edge table; the M5 profile and three-year Harvest direction persist descriptively after removing the 18 v3 stilbenoid-labelled genes. T-006 remains IN PROGRESS pending other modules; no network rerun, sample exclusion or causal skin claim was made. Four non-fatal R locale warnings occurred.
+
 ## 2026-09-21 — Preserve and verify original Grapedia GO source
 
 - Added only the authentic PN40024 T2T v5.1 GO ZIP to the canonical reference

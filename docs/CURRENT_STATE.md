@@ -116,9 +116,13 @@ The user-prioritized GO-only follow-up is complete. `docs/T005A_GO_ORA_ONTOLOGY_
 
 The original Grapedia GO ZIP is now preserved at `data/reference/grapedia_t005/t2t_go.zip` following a user-requested provenance check. Its pinned SHA-256 matches, and its GMT reproduces all 33.540 prepared gene–term pairs exactly using the frozen v1→v5.1 map. This adds source traceability without changing the ORA or biological conclusions.
 
+### T-006 M5 hub phase
+
+T-006 está **IN PROGRESS**; la fase M5 está ejecutada y documentada en `docs/T006_M5_HUB_PRIORITIZATION.md`. Sobre la adyacencia beta10 congelada se calculó `kWithin` para los 108 genes de M5 y se conservaron ranking completo, 5.778 pares, anotaciones y controles en `results/hub_prioritization_beta10/` y `data/reference/grapedia_t006/`. Ocho de los 11 hubs principales son genes del bloque chr16 etiquetado stilbenoid en MapMan v3 y CHS/flavonoide en v5.1; la discrepancia no permite asignar inequívocamente STS o CHS. No hay PAL en el top 11. También aparecen CuAO (rango 5) y un factor NAC con dominio concordante (rango 7), candidatos no pertenecientes a esa familia. La señal M5 persiste descriptivamente al retirar los 18 genes v3-stilbenoid, pero eso no prueba regulación causal. No se ha cambiado la red, ni se ha hecho una prueba de piel aislada o grosor de piel. Falta priorizar los otros módulos y contrastar validación para cerrar T-006.
+
 ## Immediate pending work
 
-1. T-006: hub-gene prioritization within the robust or repeated module components, with the M5 v3/v5 functional-label conflict, sparse GO coverage and T-004 seasonal caveats explicit.
+1. Continuar T-006 en M10 y M2 (M5 ya analizado), manteniendo el conflicto v3/v5, la cobertura GO limitada y las cautelas estacionales de T-004.
 2. Then T-007 skin-only external validation. T-008 modern reprocessing and T-009 integrated report/manuscript remain future work. The current cumulative report has not yet integrated T-004/T-005.
 
 ## Important boundary

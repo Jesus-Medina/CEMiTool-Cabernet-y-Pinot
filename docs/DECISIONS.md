@@ -177,3 +177,15 @@ testable module–term combinations; the six surviving hits are all M9.
 **Boundary:** GO is an exploratory secondary source with only 519/3.050
 beta10 genes annotated. A null GO result in a priority module is not evidence
 that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
+
+---
+
+## D-014 — Priorizar hubs sin convertir centralidad ni anotación en mecanismo
+
+**Status:** active after the M5 phase of T-006 (2026-09-21).
+
+**Decision:** use `kWithin`, the sum of off-diagonal intramodular weights in the frozen unsigned beta10 adjacency, as the primary hub metric. Keep the complete ranking and use top-decile membership only as a descriptive shortlist. Report signed eigengene correlation, leave-one-year-out ranking, the T-003 flagged-sample sensitivity and the family-removal profile as checks, not as replacements for the primary network.
+
+**Reason:** eight of M5's top 11 hubs carry conflicting v3 stilbenoid versus v5.1 CHS labels on the same genes. Shared CHS/STS domains and a close chr16 reference-genome interval support a family-like block but cannot identify exact enzyme activity or establish a cultivar-specific expansion. A NAC TF is also central, but coexpression does not show direct regulation.
+
+**Boundary:** no hub is a proven causal regulator, skin-specific gene or determinant of skin thickness. See `docs/T006_M5_HUB_PRIORITIZATION.md`.

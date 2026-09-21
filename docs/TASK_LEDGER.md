@@ -243,7 +243,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-006 — Hub gene prioritization
 
-**Status:** TODO; T-005 completada, lista para comenzar con las cautelas de correspondencia y anotación.
+**Status:** IN PROGRESS (2026-09-21); fase M5 ejecutada y verificada. Faltan otros módulos priorizados.
 
 **Goal:** identify central candidate genes within robust, biologically relevant modules.
 
@@ -253,6 +253,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 - do not equate centrality with causality;
 - preserve full ranking;
 - cross-reference annotation and validation evidence.
+
+**M5 phase verification:** `scripts/post/13_m5_hub_prioritization_beta10.R` calculó `kWithin` en la matriz beta10 congelada (108 genes, 5.778 pares) y guardó el ranking completo, aristas, anotaciones v3/v5.1 con URL/SHA-256, QC y sensibilidades. Ocho de los 11 hubs principales pertenecen al bloque etiquetado stilbenoid en v3/CHS en v5.1; los otros incluyen CuAO, un NAC y un gen sin función verificada. Ningún PAL está en el top 11. La comparación de pesos de arista, un recálculo independiente de `kWithin` y las comprobaciones de membresía/anotación pasaron. La retirada exploratoria de los 18 genes de familia no elimina el perfil M5 ni el contraste Harvest repetido. La discordancia CHS/STS, la posible expansión de familia, la estabilidad imperfecta del rango al omitir años y la ausencia de evidencia causal se detallan en `docs/T006_M5_HUB_PRIORITIZATION.md`. **No marcar DONE** hasta priorizar también hubs de otros módulos robustos/relevantes (al menos M10 y M2) y cruzar evidencia de validación disponible.
 
 ---
 
