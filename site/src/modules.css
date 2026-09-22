@@ -865,3 +865,49 @@
     font-size: 1.45rem;
   }
 }
+
+
+/* Unified light workspace header */
+.modules-hero,
+.module-detail-hero {
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(107,41,66,.045), transparent 34%),
+    var(--surface);
+}
+
+.modules-hero .eyebrow,
+.module-detail-hero .eyebrow {
+  color: var(--cabernet);
+}
+
+.modules-hero h1,
+.module-detail-hero h1 {
+  color: var(--cabernet-deep);
+}
+
+.modules-hero p:last-child,
+.module-detail-hero p:last-child {
+  color: var(--muted);
+}
+
+.module-detail-hero-stats span {
+  border-color: var(--border);
+  color: var(--muted);
+  background: #fbfafb;
+}
+
+.module-detail-hero-stats strong {
+  color: var(--cabernet-deep);
+}
+
+.module-detail-hero--warning {
+  color: var(--ink);
+  border-color: rgba(138,92,22,.22);
+  background: rgba(138,92,22,.055);
+}
+
+.module-detail-hero--warning h1 {
+  color: var(--cabernet-deep);
+}
