@@ -16,6 +16,16 @@ type ApiResponse = {
   answer?: string
   citations?: Citation[]
   error?: string
+  code?: string
+  retryable?: boolean
+  retryAfterSeconds?: number | null
+}
+
+type ChatErrorState = {
+  message: string
+  question: string
+  retryable: boolean
+  retryAfterSeconds?: number | null
 }
 
 const suggestions = [
@@ -44,28 +54,35 @@ export default function ChatPage() {
   ])
   const [draft, setDraft] = useState('')
   const [isSending, setIsSending] = useState(false)
-  const [error, setError] = useState('')
+  const [chatError, setChatError] = useState<ChatErrorState | null>(null)
 
   const configured = Boolean(apiUrl)
 
-  async function sendQuestion(question: string) {
+  async function sendQuestion(
+    question: string,
+    options: { appendUser?: boolean } = {},
+  ) {
     const trimmed = question.trim()
+    const appendUser = options.appendUser !== false
     if (!trimmed || isSending || !configured) return
 
-    const history = messages
+    const historySource = appendUser ? messages : messages.slice(0, -1)
+    const history = historySource
       .filter((message) => message.role === 'user' || message.role === 'assistant')
       .slice(-8)
       .map(({ role, content }) => ({ role, content }))
 
-    const userMessage: ChatMessage = {
-      id: messageId(),
-      role: 'user',
-      content: trimmed,
+    if (appendUser) {
+      const userMessage: ChatMessage = {
+        id: messageId(),
+        role: 'user',
+        content: trimmed,
+      }
+      setMessages((current) => [...current, userMessage])
     }
 
-    setMessages((current) => [...current, userMessage])
     setDraft('')
-    setError('')
+    setChatError(null)
     setIsSending(true)
 
     try {
@@ -81,7 +98,15 @@ export default function ChatPage() {
       const data = (await response.json()) as ApiResponse
 
       if (!response.ok || !data.answer) {
-        throw new Error(data.error || 'No se recibió una respuesta válida.')
+        setChatError({
+          message:
+            data.error ||
+            'No pudimos obtener una respuesta en este momento. Tu pregunta quedó guardada.',
+          question: trimmed,
+          retryable: data.retryable ?? true,
+          retryAfterSeconds: data.retryAfterSeconds,
+        })
+        return
       }
 
       setMessages((current) => [
@@ -93,12 +118,13 @@ export default function ChatPage() {
           citations: data.citations ?? [],
         },
       ])
-    } catch (caught) {
-      const message =
-        caught instanceof Error
-          ? caught.message
-          : 'No se pudo consultar el asistente.'
-      setError(message)
+    } catch {
+      setChatError({
+        message:
+          'No pudimos conectar con el asistente ahora mismo. Tu pregunta quedó guardada y puedes volver a intentarlo.',
+        question: trimmed,
+        retryable: true,
+      })
     } finally {
       setIsSending(false)
     }
@@ -188,9 +214,32 @@ export default function ChatPage() {
             ) : null}
           </div>
 
-          {error ? (
-            <div className="chat-error" role="alert">
-              {error}
+          {chatError ? (
+            <div className="chat-error chat-error--friendly" role="status">
+              <div>
+                <strong>El asistente necesita un momento</strong>
+                <p>{chatError.message}</p>
+                {chatError.retryAfterSeconds !== null &&
+                chatError.retryAfterSeconds !== undefined &&
+                chatError.retryAfterSeconds > 0 ? (
+                  <small>
+                    Puedes probar de nuevo en aproximadamente{' '}
+                    {chatError.retryAfterSeconds} s.
+                  </small>
+                ) : null}
+              </div>
+              {chatError.retryable ? (
+                <button
+                  className="button button--secondary"
+                  type="button"
+                  onClick={() =>
+                    void sendQuestion(chatError.question, { appendUser: false })
+                  }
+                  disabled={isSending}
+                >
+                  Reintentar
+                </button>
+              ) : null}
             </div>
           ) : null}
 
