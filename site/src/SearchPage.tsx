@@ -3,13 +3,13 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { loadHubs, loadModules, loadProvenance, type HubsPayload, type ModulesPayload, type ProvenancePayload } from './data/siteData'
 
 const destinations = [
-  { label: 'Overview', description: 'Pregunta, diseño y hallazgos principales', to: '/', keywords: 'inicio overview pregunta diseño hallazgos' },
+  { label: 'Resumen', description: 'Pregunta, diseño y hallazgos principales', to: '/', keywords: 'inicio resumen overview pregunta diseño hallazgos' },
   { label: 'Módulos', description: 'Comparar M1–M10', to: '/results/modules', keywords: 'resultados modulos m1 m2 m3 m4 m5 m6 m7 m8 m9 m10' },
   { label: 'Función', description: 'Enriquecimiento MapMan y GO', to: '/results/function', keywords: 'funcion enriquecimiento mapman go ora chs sts' },
   { label: 'Validación', description: 'Evidencia externa en piel', to: '/results/validation', keywords: 'validacion piel gse72421 prjna260535 externo' },
   { label: 'Métodos', description: 'Diseño, red, estadística y scripts', to: '/methods', keywords: 'metodos diseño beta estadistica scripts cemitool' },
   { label: 'Reproducibilidad', description: 'Claims, archivos, scripts y hashes', to: '/reproducibility', keywords: 'evidencia reproducibilidad provenance archivos scripts hash' },
-  { label: 'T-008 Status', description: 'Estado del reprocesamiento moderno', to: '/status/t008', keywords: 't008 salmon fastq reprocesamiento qc status' },
+  { label: 'T-008', description: 'Estado del reprocesamiento moderno', to: '/status/t008', keywords: 't008 salmon fastq reprocesamiento qc status' },
   { label: 'Preguntar', description: 'Asistente grounded del proyecto', to: '/ask', keywords: 'chat preguntar asistente gemini rag' },
 ]
 
