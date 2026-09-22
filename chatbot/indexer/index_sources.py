@@ -93,8 +93,64 @@ def prepare_upload(source: Path, temp_root: Path, display_name: str) -> Path:
 
 def wait_for_operation(client: genai.Client, operation) -> None:
     while not operation.done:
-        time.sleep(2)
+        time.sleep(5)
         operation = client.operations.get(operation)
+
+    if getattr(operation, "error", None):
+        raise RuntimeError(f"File Search operation failed: {operation.error}")
+
+
+def existing_display_names(client: genai.Client, store_name: str) -> set[str]:
+    names: set[str] = set()
+    try:
+        for document in client.file_search_stores.documents.list(parent=store_name):
+            display_name = getattr(document, "display_name", None)
+            if display_name:
+                names.add(str(display_name))
+    except Exception as exc:  # noqa: BLE001
+        print(
+            f"WARNING: could not list existing documents in {store_name}: {exc}",
+            file=sys.stderr,
+            flush=True,
+        )
+    return names
+
+
+def upload_with_retry(
+    client: genai.Client,
+    *,
+    upload_path: Path,
+    store_name: str,
+    display_name: str,
+    max_attempts: int = 4,
+) -> None:
+    last_error: Exception | None = None
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            operation = client.file_search_stores.upload_to_file_search_store(
+                file=str(upload_path),
+                file_search_store_name=store_name,
+                config={"display_name": display_name},
+            )
+            wait_for_operation(client, operation)
+            return
+        except Exception as exc:  # noqa: BLE001
+            last_error = exc
+            if attempt >= max_attempts:
+                break
+
+            delay = min(30, 3 * (2 ** (attempt - 1)))
+            print(
+                f"  upload attempt {attempt}/{max_attempts} failed: {exc}",
+                file=sys.stderr,
+                flush=True,
+            )
+            print(f"  retrying in {delay}s...", file=sys.stderr, flush=True)
+            time.sleep(delay)
+
+    assert last_error is not None
+    raise last_error
 
 
 def collect_extra_files(extra_dirs: list[Path]) -> list[tuple[Path, str]]:
@@ -150,7 +206,7 @@ def main() -> int:
 
     if args.store:
         store_name = args.store
-        print(f"Using existing File Search store: {store_name}")
+        print(f"Using existing File Search store: {store_name}", flush=True)
     else:
         store = client.file_search_stores.create(
             config={
@@ -159,33 +215,56 @@ def main() -> int:
             }
         )
         store_name = store.name
-        print(f"Created File Search store: {store_name}")
+        print(f"Created File Search store: {store_name}", flush=True)
 
     state_file = Path(__file__).resolve().parent / ".file-search-store"
     state_file.write_text(store_name + "\n", encoding="utf-8")
 
     uploaded = 0
+    skipped = 0
+    existing = existing_display_names(client, store_name)
+    if existing:
+        print(
+            f"Store already contains {len(existing)} document(s); matching display names will be skipped.",
+            flush=True,
+        )
+
     with tempfile.TemporaryDirectory(prefix="cemitool-rag-") as tmp:
         temp_root = Path(tmp)
         for index, (source, display_name) in enumerate(sources, start=1):
-            upload_path = prepare_upload(source, temp_root, display_name)
-            print(f"[{index}/{len(sources)}] Indexing {display_name}")
-            try:
-                operation = client.file_search_stores.upload_to_file_search_store(
-                    file=str(upload_path),
-                    file_search_store_name=store_name,
-                    config={"display_name": display_name},
+            if display_name in existing:
+                skipped += 1
+                print(
+                    f"[{index}/{len(sources)}] SKIP already indexed: {display_name}",
+                    flush=True,
                 )
-                wait_for_operation(client, operation)
+                continue
+
+            upload_path = prepare_upload(source, temp_root, display_name)
+            print(f"[{index}/{len(sources)}] Indexing {display_name}", flush=True)
+            try:
+                upload_with_retry(
+                    client,
+                    upload_path=upload_path,
+                    store_name=store_name,
+                    display_name=display_name,
+                )
                 uploaded += 1
+                existing.add(display_name)
             except Exception as exc:  # noqa: BLE001
-                print(f"ERROR indexing {display_name}: {exc}", file=sys.stderr)
-                print("No source files were modified.", file=sys.stderr)
+                print(f"ERROR indexing {display_name}: {exc}", file=sys.stderr, flush=True)
+                print("No source files were modified.", file=sys.stderr, flush=True)
+                print(
+                    f"Store preserved for a resumable retry: {store_name}",
+                    file=sys.stderr,
+                    flush=True,
+                )
                 return 4
 
     print()
     print("Indexing completed successfully.")
-    print(f"Indexed documents: {uploaded}")
+    print(f"Indexed this run: {uploaded}")
+    print(f"Skipped already present: {skipped}")
     print(f"Store: {store_name}")
     print(f"Store name saved locally to: {state_file}")
     print()
