@@ -290,23 +290,26 @@ export default function T008DashboardPage() {
           <label className="t008-search"><span>SRR / GSM</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="SRR556…" /></label>
         </div>
 
-        <div className="scientific-table-wrap">
-          <table className="scientific-table t008-table">
-            <thead><tr><th>Estado</th><th>SRR</th><th>GSM</th><th>Cultivar</th><th>Etapa</th><th>Año</th><th>Rep</th><th>Mapping</th><th>Últimas etapas registradas</th></tr></thead>
-            <tbody>
-              {filtered.map((run) => (
-                <tr key={run.sra_run}>
-                  <td><span className={statusClass(run.status)}>{statusLabel(run.status)}</span></td>
-                  <td><code>{run.sra_run}</code></td>
-                  <td><code>{run.gsm}</code></td>
-                  <td>{run.cultivar}</td><td>{run.stage}</td><td>{run.year}</td><td>{run.replicate}</td>
-                  <td>{run.percent_mapped === null ? '—' : formatDecimal(run.percent_mapped, 2) + '%'}</td>
-                  <td>{Object.entries(run.pipeline_stages).length === 0 ? '—' : Object.entries(run.pipeline_stages).map(([key, value]) => key + ':' + value).join(' · ')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <details className="data-disclosure t008-ledger-disclosure">
+          <summary>Ver ledger filtrado ({filtered.length})</summary>
+          <div className="scientific-table-wrap">
+            <table className="scientific-table t008-table">
+              <thead><tr><th>Estado</th><th>SRR</th><th>GSM</th><th>Cultivar</th><th>Etapa</th><th>Año</th><th>Rep</th><th>Mapping</th><th>Últimas etapas registradas</th></tr></thead>
+              <tbody>
+                {filtered.map((run) => (
+                  <tr key={run.sra_run}>
+                    <td><span className={statusClass(run.status)}>{statusLabel(run.status)}</span></td>
+                    <td><code>{run.sra_run}</code></td>
+                    <td><code>{run.gsm}</code></td>
+                    <td>{run.cultivar}</td><td>{run.stage}</td><td>{run.year}</td><td>{run.replicate}</td>
+                    <td>{run.percent_mapped === null ? '—' : formatDecimal(run.percent_mapped, 2) + '%'}</td>
+                    <td>{Object.entries(run.pipeline_stages).length === 0 ? '—' : Object.entries(run.pipeline_stages).map(([key, value]) => key + ':' + value).join(' · ')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
       </section>
 
       <section className="t008-section">
