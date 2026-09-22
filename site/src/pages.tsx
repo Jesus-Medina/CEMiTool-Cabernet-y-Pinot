@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import M5Explorer from './components/M5Explorer'
 import { ModuleExplorerDetailPage, ModulesExplorerPage } from './ModuleExplorerPage'
@@ -31,24 +30,6 @@ function PageIntro({
         <p className="lede">{description}</p>
       </div>
       <span className="status-pill">{status}</span>
-    </section>
-  )
-}
-
-function PlaceholderPanel({
-  title,
-  children,
-}: {
-  title: string
-  children: ReactNode
-}) {
-  return (
-    <section className="placeholder-panel">
-      <div className="placeholder-icon" aria-hidden="true">↗</div>
-      <div>
-        <h2>{title}</h2>
-        <p>{children}</p>
-      </div>
     </section>
   )
 }
