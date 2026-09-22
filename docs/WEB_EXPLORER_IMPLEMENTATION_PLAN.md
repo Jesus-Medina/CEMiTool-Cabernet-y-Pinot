@@ -827,16 +827,18 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-008 — External Validation
 
-- [ ] GSE72421;
-- [ ] PRJNA260535;
-- [ ] scatter;
-- [ ] FDR;
-- [ ] cobertura;
-- [ ] concordancia;
-- [ ] evaluable/no evaluable;
-- [ ] límites de plataforma.
+- [x] GSE72421;
+- [x] PRJNA260535;
+- [x] scatter;
+- [x] FDR;
+- [x] cobertura;
+- [x] concordancia;
+- [x] evaluable/no evaluable;
+- [x] límites de plataforma.
 
 **Aceptación:** queda visualmente imposible confundir validación externa con réplicas del baseline.
+
+**Verificación 2026-09-22:** commit `839c7db`. La ruta `/validation` separa explícitamente GSE72421 y PRJNA260535 como fuentes externas skin-only y las etiqueta como evidencia que no aumenta el N=54 del baseline. El scatter usa como eje X una media descriptiva —claramente etiquetada— de los tres efectos gene-level Harvest 2012/2013/2014 y como eje Y el efecto externo; no dibuja línea y=x ni equipara magnitudes entre plataformas. Incluye filtros por módulo/estado/gen, BH top-37 y BH361, cobertura/evaluable, concordancia, límites de microarray/RNA-seq, conexión a T-008 y provenance. CI run `35751143173` pasó exportación, validación, lint, typecheck y build; validó `external_hubs=74`. GitHub Pages run `35751143153` desplegó con éxito.
 
 ---
 
@@ -1014,14 +1016,19 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-008 — validación externa
+## Próxima tarea: WEB-009 — T-008 live status
 
-Con WEB-006 ya publicado, el siguiente paso del roadmap es convertir T-007 en una vista interactiva que mantenga separadas las dos fuentes skin-only:
+La validación externa T-007 ya está publicada. El siguiente paso es convertir el ledger de reprocesamiento FASTQ en un tablero vivo que se actualice sin editar React.
 
-- GSE72421 (microarray);
-- PRJNA260535 (RNA-seq).
+Debe leer el estado canónico de T-008 y mostrar:
 
-La página debe mostrar cobertura/evaluable, dirección Cabernet−Pinot, FDR, concordancia con el baseline y límites de plataforma, evitando visualmente que estas muestras parezcan réplicas adicionales de GSE98923.
+- progreso global 2/54 → 54/54 cuando corresponda;
+- PASS / FAIL / IN PROGRESS / PENDING;
+- etapas del pipeline por SRR;
+- mapping rate y QC disponibles;
+- último checkpoint;
+- una advertencia inequívoca mientras no exista matriz moderna completa;
+- espacio preparado para la futura comparación histórico vs moderno sin borrar el historial.
 
 ---
 
@@ -1037,8 +1044,8 @@ La página debe mostrar cobertura/evaluable, dirección Cabernet−Pinot, FDR, c
 | WEB-005 | TODO | — | Después de preview/enrichment |
 | WEB-006 | DONE | 2026-09-22 | MapMan v3/v5.1 + GO T-005A + temas/cobertura; CI/deploy PASS |
 | WEB-007 | TODO | — | — |
-| WEB-008 | TODO | — | Próxima |
-| WEB-009 | TODO | — | — |
+| WEB-008 | DONE | 2026-09-22 | T-007 skin-only explorer; CI/deploy PASS |
+| WEB-009 | TODO | — | Próxima |
 | WEB-010 | TODO | — | — |
 | WEB-011 | TODO | — | — |
 | WEB-012 | IN PROGRESS | 2026-09-22 | Preview pública desplegada; release estable queda para después de QA final |
