@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   loadFunctionalEnrichment,
   type EnrichmentSourceId,
@@ -188,10 +188,13 @@ function AnnotationComparison({ data }: { data: FunctionalEnrichmentPayload }) {
 }
 
 export default function EnrichmentPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requestedModule = searchParams.get('module')
+  const initialModule = requestedModule && MODULES.includes(requestedModule) ? requestedModule : 'M5'
   const [data, setData] = useState<FunctionalEnrichmentPayload | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [source, setSource] = useState<EnrichmentSourceId>('v3_mapman')
-  const [module, setModule] = useState('M5')
+  const [module, setModule] = useState(initialModule)
   const [scope, setScope] = useState<'significant' | 'all'>('significant')
   const [query, setQuery] = useState('')
   const [showAllRows, setShowAllRows] = useState(false)
@@ -213,6 +216,13 @@ export default function EnrichmentPage() {
   useEffect(() => {
     setShowAllRows(false)
   }, [source, module, scope, query])
+
+  useEffect(() => {
+    if (searchParams.get('module') === module) return
+    const next = new URLSearchParams(searchParams)
+    next.set('module', module)
+    setSearchParams(next, { replace: true })
+  }, [module, searchParams, setSearchParams])
 
   const terms = useMemo(() => {
     if (!data) return []
