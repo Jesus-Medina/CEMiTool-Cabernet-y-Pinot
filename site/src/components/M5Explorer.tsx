@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type {
   ExternalValidationRow,
@@ -11,13 +11,13 @@ import type {
 } from '../data/siteData'
 import { useM5ExplorerData } from '../hooks/useM5ExplorerData'
 import { formatDecimal, formatScientific } from '../utils/format'
-import M5NetworkExplorer from './M5NetworkExplorer'
 
 const STAGES = ['FruitSet', 'Veraison', 'Harvest'] as const
 const CULTIVARS = ['Cabernet Sauvignon', 'Pinot noir'] as const
 const YEARS = [2012, 2013, 2014] as const
 const NAC_GENE = 'VIT_12s0028g00860'
 const CUAO_GENE = 'VIT_05s0020g03280'
+const M5NetworkExplorer = lazy(() => import('./M5NetworkExplorer'))
 
 type YearFilter = 'all' | 2012 | 2013 | 2014
 
@@ -655,7 +655,9 @@ export default function M5Explorer() {
           </section>
 
           <AnnotationConflictPanel hubs={hubs.rows} />
-          <M5NetworkExplorer hubs={hubs.rows} provenance={provenance} />
+          <Suspense fallback={<div className="data-state"><span className="data-state-dot" />Cargando red interactiva M5…</div>}>
+            <M5NetworkExplorer hubs={hubs.rows} provenance={provenance} />
+          </Suspense>
           <HubsTable hubs={hubs.rows} />
           <ProvenancePanel provenance={provenance} />
         </>
