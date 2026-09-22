@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   loadExternalValidation,
@@ -212,6 +212,7 @@ export default function ExternalValidationPage() {
   const [module, setModule] = useState<ModuleFilter>(initialModule)
   const [status, setStatus] = useState<StatusFilter>(initialStatus)
   const [query, setQuery] = useState(searchParams.get('q') ?? '')
+  const syncingFromUrl = useRef(false)
 
   useEffect(() => {
     let active = true
@@ -234,12 +235,15 @@ export default function ExternalValidationPage() {
     const requestedStatusParam = searchParams.get('status')
     const requestedQueryParam = searchParams.get('q') ?? ''
 
+    let changed = false
+
     if (
       requestedModuleParam &&
       MODULES.includes(requestedModuleParam as ModuleFilter) &&
       requestedModuleParam !== module
     ) {
       setModule(requestedModuleParam as ModuleFilter)
+      changed = true
     }
 
     if (
@@ -248,6 +252,7 @@ export default function ExternalValidationPage() {
       requestedDatasetParam !== dataset
     ) {
       setDataset(requestedDatasetParam as DatasetId)
+      changed = true
     }
 
     const nextStatus: StatusFilter =
@@ -255,11 +260,24 @@ export default function ExternalValidationPage() {
       ['evaluable', 'fdr', 'concordant'].includes(requestedStatusParam)
         ? (requestedStatusParam as StatusFilter)
         : 'all'
-    if (nextStatus !== status) setStatus(nextStatus)
-    if (requestedQueryParam !== query) setQuery(requestedQueryParam)
+    if (nextStatus !== status) {
+      setStatus(nextStatus)
+      changed = true
+    }
+    if (requestedQueryParam !== query) {
+      setQuery(requestedQueryParam)
+      changed = true
+    }
+
+    if (changed) syncingFromUrl.current = true
   }, [searchParams])
 
   useEffect(() => {
+    if (syncingFromUrl.current) {
+      syncingFromUrl.current = false
+      return
+    }
+
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
     next.set('dataset', dataset)
