@@ -27,6 +27,7 @@ export default function App() {
         <Route path="results/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="results/function" element={<EnrichmentPage />} />
         <Route path="results/validation" element={<ValidationPage />} />
+        <Route path="results/genes" element={<SearchPage />} />
         <Route path="results/genes/:geneId" element={<GeneDetailPage />} />
 
         <Route path="modules" element={<ModulesPage />} />
