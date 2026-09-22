@@ -762,19 +762,23 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-004 — M5 Explorer
 
-- [ ] trayectoria 2012;
-- [ ] trayectoria 2013;
-- [ ] trayectoria 2014;
-- [ ] modo todos;
-- [ ] réplicas individuales;
-- [ ] contraste Harvest;
-- [ ] tabla de hubs;
-- [ ] ficha NAC;
-- [ ] ficha CuAO;
-- [ ] panel CHS/STS;
-- [ ] provenance.
+- [x] trayectoria 2012;
+- [x] trayectoria 2013;
+- [x] trayectoria 2014;
+- [x] modo todos;
+- [x] réplicas individuales;
+- [x] contraste Harvest;
+- [x] tabla de hubs;
+- [x] ficha NAC;
+- [x] ficha CuAO;
+- [x] panel CHS/STS;
+- [x] provenance.
 
 **Aceptación:** las cifras coinciden con tablas canónicas y los filtros no alteran los datos subyacentes.
+
+**Verificación 2026-09-22:** commit `b940af4`. El explorador M5 consume `m5_trajectory.json`, `hubs.json`, `external_validation.json` y `provenance.json`. Incluye selector Todos/2012/2013/2014, medias ± SE, réplicas opcionales, tabla descargable de datos mostrados, contrastes Harvest, ranking buscable de 108 hubs, tarjetas NAC/CuAO, panel de conflicto CHS/STS derivado de flags canónicos y enlaces de provenance a fuente/script/hash/commit. GitHub Actions run `35747710946` pasó exportación, validación, lint, typecheck y build.
+
+**Decisión de implementación:** la primera gráfica M5 usa SVG nativo accesible y responsive para mantener el bundle pequeño; Plotly.js queda reservado para vistas donde zoom/selección compleja aporte valor científico.
 
 ---
 
@@ -1008,11 +1012,11 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-004
+## Próxima tarea: primera preview pública
 
-Construir el **M5 Explorer**: primera visualización científica interactiva del sitio. Debe incluir trayectorias 2012/2013/2014, modo conjunto, contraste Harvest, réplicas individuales, ranking de hubs, fichas NAC/CuAO, panel CHS/STS y provenance.
+Con WEB-001 a WEB-004 validados, el siguiente paso recomendado del roadmap es publicar una primera preview en GitHub Pages para revisar la experiencia real en navegador y móvil antes de añadir más capas científicas.
 
-Toda cifra debe seguir entrando por la capa canónica de WEB-002.
+Después de la preview, continuar con WEB-006 (enriquecimiento funcional), seguido por WEB-008 y WEB-009.
 
 ---
 
@@ -1024,8 +1028,8 @@ Toda cifra debe seguir entrando por la capa canónica de WEB-002.
 | WEB-001 | DONE | 2026-09-22 | Scaffold + routing + CI; lint/typecheck/build PASS |
 | WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
 | WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
-| WEB-004 | TODO | — | Próxima |
-| WEB-005 | TODO | — | — |
+| WEB-004 | DONE | 2026-09-22 | M5 Explorer interactivo + hubs + CHS/STS + provenance; CI PASS (run 35747710946) |
+| WEB-005 | TODO | — | Después de preview/enrichment |
 | WEB-006 | TODO | — | — |
 | WEB-007 | TODO | — | — |
 | WEB-008 | TODO | — | — |
