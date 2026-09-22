@@ -304,7 +304,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-010 — Interactive web explorer / GitHub Pages
 
-**Status:** IN PROGRESS (2026-09-22); planning completed, implementation not started.
+**Status:** IN PROGRESS (2026-09-22); implementation through WEB-009 completed except WEB-010/011/final release.
 
 **Master plan:** `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md`
 
@@ -347,7 +347,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-005 completion (2026-09-22):** se integró Cytoscape.js al M5 Explorer con nodos seleccionables, top N configurable, filtro de adyacencia, tamaño por kWithin, búsqueda, navegación a genes, inspector y tabla subyacente de aristas. La forma del nodo distingue CHS/STS-like, NAC, CuAO y otros M5 además del color. Se añadió un locus strip chr16 construido solo desde coordenadas v5.1 de genes M5 con conflicto de anotación, con advertencia explícita de que proximidad en PN40024 T2T no demuestra expansión/pérdida cultivar-específica. La red conserva el carácter unsigned y declara que coexpresión no implica activación/inhibición ni causalidad. Tras detectar que Cytoscape elevaba el chunk inicial a ~748 kB, se movió a carga dinámica: bundle inicial 292,22 kB (89,96 kB gzip) y chunk de red 455,37 kB (146,31 kB gzip). Implementación `bf0faed`, fix `4b053b9`, optimización `879a913`. CI `35753270303` PASS; Pages `35753270081` PASS.
 
-**Immediate next step:** WEB-007 all-module explorer, with M10 and provisional M2 represented according to their actual evidence state rather than forcing M5-style conclusions.
+**WEB-007 completion (2026-09-22):** se reemplazó el placeholder de módulos por un explorador completo M1–M10. La vista cruza tamaño, FDR Cultivar×Stage, robustez T-004, ORA MapMan v3, hubs y evidencia externa sin inventar un score total. Los filtros permiten aislar interacción significativa, módulos reproducibles, year-dependent, con ORA o con T-007. Las fichas de módulo muestran la matriz Stage×Year de contrastes Cabernet−Pinot desde `module_contrasts.json`, resumen funcional, hubs y cobertura externa cuando existe. M2 se mantiene explícitamente provisional hasta T-008 y M10 se presenta como reproducible sin adjudicar función. Commit `37e868ad`; CI `35756864399` PASS; Pages `35756864291` PASS.
+
+**Immediate next step:** WEB-010 global evidence/provenance browser, then WEB-011 QA and the final WEB-012 release.
 
 **Acceptance criteria for T-010 DONE:**
 
