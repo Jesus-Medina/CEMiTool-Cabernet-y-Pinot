@@ -218,6 +218,13 @@ export default function EnrichmentPage() {
   }, [source, module, scope, query])
 
   useEffect(() => {
+    const requested = searchParams.get('module')
+    if (requested && MODULES.includes(requested) && requested !== module) {
+      setModule(requested)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
     if (searchParams.get('module') === module) return
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
