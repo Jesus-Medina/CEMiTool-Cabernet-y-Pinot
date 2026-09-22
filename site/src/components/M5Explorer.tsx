@@ -477,7 +477,7 @@ function ProvenancePanel({
     <section className="m5-section" id="evidence">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">ⓘ Provenance</p>
+          <p className="eyebrow">Trazabilidad</p>
           <h2>De la figura al archivo</h2>
         </div>
         <p>
@@ -525,7 +525,7 @@ export default function M5Explorer() {
     <div className="m5-explorer">
       <section className="m5-hero" id="m5-overview">
         <div>
-          <p className="eyebrow">M5 Explorer</p>
+          <p className="eyebrow">Resultados · M5</p>
           <h1>M5 · fenoles, hubs y trayectoria interanual</h1>
           <p>
             Primera vista científica interactiva del sitio. Las curvas, contrastes,
@@ -547,7 +547,7 @@ export default function M5Explorer() {
         <a href="#candidates">Candidatos</a>
         <a href="#network">Red</a>
         <a href="#hubs">Hubs</a>
-        <a href="#evidence">Evidence</a>
+        <a href="#evidence">Evidencia</a>
       </nav>
 
       <div className="m5-crosslink">
@@ -563,7 +563,7 @@ export default function M5Explorer() {
           <section className="m5-section" id="trajectory">
             <div className="section-heading section-heading--controls">
               <div>
-                <p className="eyebrow">Trajectory</p>
+                <p className="eyebrow">Trayectoria</p>
                 <h2>Eigengene M5 por etapa y año</h2>
               </div>
               <div className="chart-controls">
@@ -640,7 +640,7 @@ export default function M5Explorer() {
           <section className="m5-section" id="candidates">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">Candidate hubs</p>
+                <p className="eyebrow">Hubs candidatos</p>
                 <h2>Dos candidatos destacados fuera del bloque ambiguo</h2>
               </div>
               <p>
