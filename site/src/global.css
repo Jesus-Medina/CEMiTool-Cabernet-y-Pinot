@@ -2604,8 +2604,14 @@ body {
   gap: 3px;
 }
 
-.methods-index nav a {
+.methods-index nav button {
+  width: 100%;
   padding: 8px 9px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
   border-radius: 8px;
   color: var(--ink);
   text-decoration: none;
@@ -2613,8 +2619,8 @@ body {
   font-weight: 700;
 }
 
-.methods-index nav a:hover,
-.methods-index nav a:focus-visible {
+.methods-index nav button:hover,
+.methods-index nav button:focus-visible {
   background: var(--surface-alt);
 }
 
@@ -3143,8 +3149,12 @@ body {
   backdrop-filter: blur(12px);
 }
 
-.m5-section-nav a {
+.m5-section-nav button {
   min-height: 34px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3157,8 +3167,8 @@ body {
   font-weight: 760;
 }
 
-.m5-section-nav a:hover,
-.m5-section-nav a:focus-visible {
+.m5-section-nav button:hover,
+.m5-section-nav button:focus-visible {
   color: var(--cabernet-deep);
   background: var(--surface-alt);
 }
@@ -3180,7 +3190,7 @@ body {
     grid-template-columns: repeat(3,1fr);
   }
 
-  .m5-section-nav a {
+  .m5-section-nav button {
     min-height: 36px;
   }
 }
