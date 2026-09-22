@@ -1,0 +1,56 @@
+name: Index Gemini File Search (online)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/gemini-rag-chatbot
+    paths:
+      - 'chatbot/index-request.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout chatbot branch
+        uses: actions/checkout@v4
+
+      - name: Require Gemini API key
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Missing repository secret GEMINI_API_KEY"
+            exit 1
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install indexer dependencies
+        run: python -m pip install --disable-pip-version-check -r chatbot/indexer/requirements.txt
+
+      - name: Index canonical project sources
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python chatbot/indexer/index_sources.py --repo-root .
+
+      - name: Show store identifier
+        run: |
+          echo "## Gemini File Search store" >> "$GITHUB_STEP_SUMMARY"
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          cat chatbot/indexer/.file-search-store >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload store identifier
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemini-file-search-store
+          path: chatbot/indexer/.file-search-store
+          if-no-files-found: error
+          retention-days: 7
