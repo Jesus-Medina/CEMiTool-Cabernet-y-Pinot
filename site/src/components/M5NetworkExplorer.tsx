@@ -163,7 +163,7 @@ function Chr16Locus({ hubs }: { hubs: HubRow[] }) {
               {genes.map((row) => (
                 <tr key={row.Gene}>
                   <td>{row.Rank_kWithin}</td>
-                  <td><Link to={'/genes/' + row.Gene}><code>{row.Gene}</code></Link></td>
+                  <td><Link to={'/results/genes/' + row.Gene}><code>{row.Gene}</code></Link></td>
                   <td><code>{row.V5_gene ?? '—'}</code></td>
                   <td>{Number(row.V5_GeneStart).toLocaleString('es-CL')}</td>
                   <td>{Number(row.V5_GeneEnd).toLocaleString('es-CL')}</td>
@@ -518,7 +518,7 @@ export default function M5NetworkExplorer({
                       <div><dt>kME</dt><dd>{formatDecimal(selected.kME_signed, 3)}</dd></div>
                       <div><dt>v5.1 locus</dt><dd>{selected.V5_Chr ?? '—'} {selected.V5_GeneStart ? Number(selected.V5_GeneStart).toLocaleString('es-CL') : ''}</dd></div>
                     </dl>
-                    <Link className="inline-link" to={'/genes/' + selected.Gene}>Abrir ficha del gen →</Link>
+                    <Link className="inline-link" to={'/results/genes/' + selected.Gene}>Abrir ficha del gen →</Link>
                   </>
                 ) : (
                   <p>Selecciona un nodo para ver su evidencia. También puedes buscar un gen por ID.</p>
