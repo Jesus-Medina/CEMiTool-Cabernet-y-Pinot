@@ -145,7 +145,7 @@ function ModuleCard({
         <small>filas evaluables</small>
       </div>
 
-      <Link className="button button--secondary module-card-link" to={'/results/results/modules/' + row.module}>
+      <Link className="button button--secondary module-card-link" to={'/results/modules/' + row.module}>
         Abrir
       </Link>
 
@@ -559,7 +559,7 @@ export function ModuleExplorerDetailPage() {
               <Link to={'/results/function?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
               <Link to={'/results/validation?module=' + module}><strong>Validación externa</strong><span>evidencia independiente en piel</span></Link>
               <Link to="/status/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
-              {module === 'M5' && <Link to="/results/results/results/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
+              {module === 'M5' && <Link to="/results/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
             </div>
           </section>
         </>
