@@ -337,9 +337,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-004 completion (2026-09-22):** se implementó el explorador interactivo M5 en `/modules/M5`. La trayectoria permite Todos/2012/2013/2014, muestra media±SE, réplicas opcionales, línea cero, tabla de datos y descarga CSV del subconjunto visible. Se añadieron contrastes Harvest por año, ranking buscable de 108 hubs, tarjetas NAC `VIT_12s0028g00860` y CuAO `VIT_05s0020g03280` con apoyo externo derivado de T-007, panel CHS/STS basado en `V3_V5_STS_CHS_label_conflict` y provenance con fuentes/scripts/SHA-256/commit. La gráfica usa SVG nativo para mantener peso y accesibilidad; no recalcula estadística. GitHub Actions run `35747710946` pasó export, validation, lint, typecheck y build. Commit principal: `b940af4`.
 
-**GitHub Pages preview setup (2026-09-22):** se añadió `.github/workflows/deploy-site.yml`, que reconstruye/valida datos canónicos, corre lint/typecheck/build, empaqueta `site/dist` y despliega con las acciones oficiales de GitHub Pages. También se cambió el frontend a `HashRouter` para que las rutas internas funcionen al recargar desde Pages. El commit de infraestructura es `698192e`. El run `35748440288` pasó export, validation, lint, typecheck y build, pero falló en `actions/configure-pages@v5` con `Not Found` porque Pages aún no está habilitado en la configuración del repositorio. Este conector no tiene permisos de administración para cambiar esa opción.
+**GitHub Pages preview live (2026-09-22):** tras habilitar Pages con GitHub Actions, se reejecutó el run `35748440288` (attempt 2). El job `build` pasó export canónico, validation, lint, typecheck, Vite build, `configure-pages` y upload del artifact; el job `deploy` finalizó con `success`. GitHub reportó la environment URL `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`. La preview usa `HashRouter` y se reconstruye desde resultados canónicos en cada deployment relevante.
 
-**Immediate next step:** one-time manual repository setting: `Settings → Pages → Build and deployment → Source → GitHub Actions`; luego reejecutar el workflow de deployment y validar la URL pública antes de WEB-006.
+**Immediate next step:** WEB-006 functional enrichment explorer.
 
 **Acceptance criteria for T-010 DONE:**
 
