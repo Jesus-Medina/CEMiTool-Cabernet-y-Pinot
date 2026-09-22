@@ -369,7 +369,7 @@ export default function ExternalValidationPage() {
       <section className="validation-main">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Sign concordance</p>
+            <p className="eyebrow">Concordancia de dirección</p>
             <h2>{datasetLabel(dataset)} · {module === 'all' ? 'M5 + M10 + M2' : module}</h2>
           </div>
           <p>
@@ -389,7 +389,7 @@ export default function ExternalValidationPage() {
       <section className="validation-table-panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Hub-level evidence</p>
+            <p className="eyebrow">Evidencia a nivel de hub</p>
             <h2>Genes bajo los filtros actuales</h2>
           </div>
           <p>{filtered.length} filas · {nonEvaluable.length} no evaluables/incompletas.</p>
