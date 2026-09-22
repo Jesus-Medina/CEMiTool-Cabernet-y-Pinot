@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-09-22 — WEB-004 interactive M5 Explorer completed
+
+- Added the first full scientific explorer at `/modules/M5`, consuming only generated canonical JSON.
+- Added year filtering (All/2012/2013/2014), mean ± SE trajectories, optional biological replicate points, zero reference line, accessible SVG descriptions, a visible-data table and client-side CSV export.
+- Added year-specific Harvest Cabernet − Pinot contrasts with confidence intervals and global FDR values from the canonical contrast table.
+- Added a searchable 108-gene M5 hub ranking, candidate cards for NAC `VIT_12s0028g00860` and CuAO `VIT_05s0020g03280`, and external-support counts computed from T-007 rows.
+- Added a CHS/STS annotation-conflict panel derived from canonical v3/v5.1 conflict flags, preserving ambiguity instead of assigning an unsupported exact enzyme identity.
+- Added per-artifact provenance panels for M5 trajectory, hubs and external validation with source/script links, SHA-256 hashes and repository commit.
+- Used native responsive SVG for the initial trajectory chart to keep the first preview lightweight; Plotly remains available for later views needing richer zoom/selection.
+- GitHub Actions run `35747710946` passed canonical export/validation, lint, typecheck and production build for commit `b940af4`.
+- The roadmap now moves to the first GitHub Pages preview before WEB-006 enrichment. No scientific model, table or T-008 conclusion was changed.
+
 ## 2026-09-22 — WEB-003 canonical Home and Story completed
 
 - Replaced the scaffold-only landing page with a data-backed Home that loads the 54-sample design, beta10 diagnostics, M5 Cultivar×Stage FDR and T-008 progress from generated canonical JSON rather than hardcoded result values.
