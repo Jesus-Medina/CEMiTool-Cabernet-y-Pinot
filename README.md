@@ -2,6 +2,12 @@
 
 Proyecto reproducible de análisis de coexpresión génica en vid usando **CEMiTool** y el dataset público **GEO GSE98923**.
 
+## Explorador web interactivo
+
+**Preview pública:** https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/
+
+La web reconstruye sus datos desde resultados canónicos del repositorio y expone Home, Story y el M5 Explorer con trazabilidad hacia tablas/scripts. Sigue en desarrollo; T-008 permanece incompleto y las limitaciones científicas del proyecto se mantienen visibles.
+
 ## Objetivo
 
 Comparar **Cabernet Sauvignon** y **Pinot noir** a través de tres etapas del desarrollo de la baya —**Fruit set, Véraison y Harvest**— preservando la información de **2012, 2013 y 2014**, para identificar módulos de coexpresión y genes candidatos asociados con diferencias de desarrollo y con procesos potencialmente relevantes para la piel de la baya.
