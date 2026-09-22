@@ -340,7 +340,7 @@ function CandidateCard({
           ? 'Factor de transcripción NAC anotado en ambas versiones. La centralidad lo prioriza como candidato; no demuestra regulación directa de CHS/STS.'
           : 'Copper amine oxidase priorizada como hub fuera del bloque CHS/STS. La función causal sobre el fenotipo no está demostrada.'}
       </p>
-      <Link className="inline-link" to={`/genes/${gene}`}>Abrir ficha →</Link>
+      <Link className="inline-link" to={`/results/genes/${gene}`}>Abrir ficha →</Link>
     </article>
   )
 }
@@ -411,7 +411,7 @@ function HubsTable({ hubs }: { hubs: HubRow[] }) {
             {visible.map((row) => (
               <tr key={row.Gene}>
                 <td>{row.Rank_kWithin}</td>
-                <td><Link to={`/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
+                <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
                 <td>{hubLabel(row) ?? '—'}</td>
                 <td>{formatDecimal(row.kWithin, 3)}</td>
                 <td>{formatDecimal(row.kME_signed, 3)}</td>
@@ -452,7 +452,7 @@ function AnnotationConflictPanel({ hubs }: { hubs: HubRow[] }) {
       </div>
       <div className="gene-chip-list" aria-label="Genes CHS/STS con conflicto">
         {topEleven.map((row) => (
-          <Link key={row.Gene} to={`/genes/${row.Gene}`}><code>{row.Gene}</code></Link>
+          <Link key={row.Gene} to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link>
         ))}
       </div>
     </section>
@@ -553,8 +553,8 @@ export default function M5Explorer() {
       <div className="m5-crosslink">
         <span>Sigue la evidencia de M5 hacia función y piel aislada.</span>
         <div className="m5-crosslink-actions">
-          <Link className="button button--secondary" to="/enrichment?module=M5">Enriquecimiento funcional</Link>
-          <Link className="button button--secondary" to="/validation?module=M5">Validación en piel</Link>
+          <Link className="button button--secondary" to="/results/function?module=M5">Enriquecimiento funcional</Link>
+          <Link className="button button--secondary" to="/results/validation?module=M5">Validación en piel</Link>
         </div>
       </div>
 
