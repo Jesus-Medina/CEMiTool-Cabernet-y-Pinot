@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 type Citation = {
   fileName: string
@@ -207,11 +208,14 @@ export default function ChatPage() {
                     <span>Fuentes utilizadas</span>
                     <div>
                       {message.citations.map((citation) => (
-                        <code
+                        <Link
+                          className="chat-citation-link"
                           key={citation.fileName + '-' + (citation.source ?? '')}
+                          to={'/evidence?q=' + encodeURIComponent(citation.fileName)}
                         >
-                          {citation.fileName}
-                        </code>
+                          <span>{citation.fileName}</span>
+                          <small>Ver evidencia →</small>
+                        </Link>
                       ))}
                     </div>
                   </div>
