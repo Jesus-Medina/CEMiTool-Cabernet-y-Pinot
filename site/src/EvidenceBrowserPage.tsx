@@ -355,7 +355,7 @@ export default function EvidenceBrowserPage() {
                   </div>
                   <div className="evidence-artifact-chips">
                     {claim.artifactIds.map((id) => (
-                      <a key={id} href={`#/reproducibility?artifact=${id}`}>{id}</a>
+                      <Link key={id} to={'/reproducibility?artifact=' + encodeURIComponent(id)}>{id}</Link>
                     ))}
                   </div>
                   <div className="evidence-boundary">
