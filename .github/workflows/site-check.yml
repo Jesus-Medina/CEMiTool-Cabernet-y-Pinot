@@ -5,10 +5,30 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'data/metadata/samples.tsv'
+      - 'results/beta10/tables/**'
+      - 'results/module_statistics_beta10/**'
+      - 'results/year_robustness_beta10/**'
+      - 'results/functional_enrichment_beta10/**'
+      - 'results/hub_prioritization_beta10/**'
+      - 'results/external_skin_validation_beta10/**'
+      - 'results/fastq_reprocessing_t008/**'
+      - 'scripts/master/**'
+      - 'scripts/post/**'
       - '.github/workflows/site-check.yml'
   pull_request:
     paths:
       - 'site/**'
+      - 'data/metadata/samples.tsv'
+      - 'results/beta10/tables/**'
+      - 'results/module_statistics_beta10/**'
+      - 'results/year_robustness_beta10/**'
+      - 'results/functional_enrichment_beta10/**'
+      - 'results/hub_prioritization_beta10/**'
+      - 'results/external_skin_validation_beta10/**'
+      - 'results/fastq_reprocessing_t008/**'
+      - 'scripts/master/**'
+      - 'scripts/post/**'
       - '.github/workflows/site-check.yml'
 
 permissions:
@@ -23,6 +43,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Export canonical site data
+        run: python scripts/export_site_data.py
+
+      - name: Validate canonical site data
+        run: python scripts/validate_site_data.py
 
       - name: Setup Node
         uses: actions/setup-node@v4

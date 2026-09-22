@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import csv
+import json
+import math
+from pathlib import Path
+from typing import Any
+
+SITE_DIR = Path(__file__).resolve().parents[1]
+REPO_ROOT = SITE_DIR.parent
+DATA_DIR = SITE_DIR / "public" / "data"
+
+SOURCE_PATHS = {
+    "samples": "data/metadata/samples.tsv",
+    "modules": "results/beta10/tables/module.tsv",
+    "cell_profiles": "results/year_robustness_beta10/cell_profiles.tsv",
+    "eigengenes": "results/module_statistics_beta10/module_eigengenes_with_metadata_54.tsv",
+    "contrasts": "results/year_robustness_beta10/cabernet_vs_pinot_by_stage_year.tsv",
+    "enrichments": "results/functional_enrichment_beta10/v3_mapman_global_FDR05_hits.tsv",
+    "m5_hubs": "results/hub_prioritization_beta10/m5_full_hub_ranking.tsv",
+    "m10_m2_hubs": "results/hub_prioritization_beta10/m10_m2_full_hub_ranking.tsv",
+    "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
+    "external": "results/external_skin_validation_beta10/primary_external_condition_hubs.tsv",
+    "t008_manifest": "results/fastq_reprocessing_t008/selected_54_gsm_to_srr.tsv",
+}
+
+EXPECTED_JSON = {
+    "project_summary.json",
+    "modules.json",
+    "m5_trajectory.json",
+    "module_contrasts.json",
+    "enrichments.json",
+    "hubs.json",
+    "m5_network.json",
+    "external_validation.json",
+    "t008_progress.json",
+    "provenance.json",
+}
+
+
+def load_json(name: str) -> Any:
+    path = DATA_DIR / name
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing generated site data: {path.relative_to(REPO_ROOT)}")
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def read_rows(relative: str) -> list[dict[str, str]]:
+    path = REPO_ROOT / relative
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return list(csv.DictReader(handle, delimiter="\t"))
+
+
+def assert_finite(value: Any, trail: str = "root") -> None:
+    if isinstance(value, float) and not math.isfinite(value):
+        raise ValueError(f"Non-finite number at {trail}")
+    if isinstance(value, dict):
+        for key, item in value.items():
+            assert_finite(item, f"{trail}.{key}")
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            assert_finite(item, f"{trail}[{index}]")
+
+
+def run_qc_pass_count() -> int:
+    count = 0
+    for path in (REPO_ROOT / "results/fastq_reprocessing_t008").glob("SRR*_run_qc.tsv"):
+        rows = read_rows(str(path.relative_to(REPO_ROOT)))
+        metrics = {row["Metric"]: row["Value"] for row in rows}
+        if metrics.get("Validation") == "PASS":
+            count += 1
+    return count
+
+
+def main() -> None:
+    generated = {path.name for path in DATA_DIR.glob("*.json")}
+    missing = EXPECTED_JSON - generated
+    if missing:
+        raise ValueError(f"Generated JSON set is incomplete: {sorted(missing)}")
+
+    payloads = {name: load_json(name) for name in EXPECTED_JSON}
+    for name, payload in payloads.items():
+        assert_finite(payload, name)
+
+    sample_count = len(read_rows(SOURCE_PATHS["samples"]))
+    if payloads["project_summary.json"]["design"]["sample_count"] != sample_count:
+        raise AssertionError("project_summary sample count does not match samples.tsv")
+
+    module_source_count = len(read_rows(SOURCE_PATHS["modules"]))
+    module_export_count = sum(row["gene_count"] for row in payloads["modules.json"]["modules"])
+    if module_export_count != module_source_count:
+        raise AssertionError("modules.json gene counts do not reconstruct module.tsv")
+
+    m5_profile_source = sum(1 for row in read_rows(SOURCE_PATHS["cell_profiles"]) if row["Module"] == "M5")
+    m5_sample_source = len(read_rows(SOURCE_PATHS["eigengenes"]))
+    m5_contrast_source = sum(1 for row in read_rows(SOURCE_PATHS["contrasts"]) if row["Module"] == "M5")
+    m5 = payloads["m5_trajectory.json"]
+    if len(m5["profiles"]) != m5_profile_source or len(m5["samples"]) != m5_sample_source or len(m5["contrasts"]) != m5_contrast_source:
+        raise AssertionError("m5_trajectory.json row counts do not match canonical sources")
+
+    checks = [
+        ("module_contrasts.json", "contrasts", SOURCE_PATHS["contrasts"]),
+        ("enrichments.json", "rows", SOURCE_PATHS["enrichments"]),
+        ("m5_network.json", "edges", SOURCE_PATHS["m5_edges"]),
+        ("external_validation.json", "rows", SOURCE_PATHS["external"]),
+    ]
+    for json_name, key, source in checks:
+        if len(payloads[json_name][key]) != len(read_rows(source)):
+            raise AssertionError(f"{json_name} row count does not match {source}")
+
+    expected_hubs = len(read_rows(SOURCE_PATHS["m5_hubs"])) + len(read_rows(SOURCE_PATHS["m10_m2_hubs"]))
+    if len(payloads["hubs.json"]["rows"]) != expected_hubs:
+        raise AssertionError("hubs.json row count does not match hub source tables")
+
+    t008 = payloads["t008_progress.json"]["summary"]
+    expected_runs = len(read_rows(SOURCE_PATHS["t008_manifest"]))
+    if t008["total_runs"] != expected_runs:
+        raise AssertionError("T-008 total run count does not match selected manifest")
+    if t008["validated_runs"] != run_qc_pass_count():
+        raise AssertionError("T-008 validated count does not match run QC files")
+    if t008["complete"] and t008["validated_runs"] != t008["total_runs"]:
+        raise AssertionError("T-008 cannot be complete before every run validates")
+
+    provenance_ids = {row["artifact_id"] for row in payloads["provenance.json"]["artifacts"]}
+    required_ids = {
+        "project_summary", "modules", "m5_trajectory", "module_contrasts",
+        "enrichments", "hubs", "m5_network", "external_validation", "t008_progress",
+    }
+    if not required_ids.issubset(provenance_ids):
+        raise AssertionError("provenance.json is missing required artifact records")
+
+    print(
+        "Validated site data: "
+        f"samples={sample_count}; modules={module_source_count}; "
+        f"hubs={expected_hubs}; t008={t008['validated_runs']}/{t008['total_runs']}"
+    )
+
+
+if __name__ == "__main__":
+    main()
