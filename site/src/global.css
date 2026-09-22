@@ -3348,3 +3348,64 @@ body {
     margin-inline: 8px;
   }
 }
+
+
+/* Clean 404 */
+.not-found {
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 34px;
+  align-items: center;
+  padding: 38px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.not-found-code {
+  color: #e6dde1;
+  font-size: clamp(5rem, 13vw, 10rem);
+  font-weight: 900;
+  line-height: .8;
+  letter-spacing: -.08em;
+}
+
+.not-found h1 {
+  margin: 0;
+  color: var(--cabernet-deep);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  letter-spacing: -.04em;
+}
+
+.not-found p:not(.eyebrow) {
+  max-width: 560px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+@media (max-width: 650px) {
+  .not-found {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .not-found-code {
+    font-size: 5rem;
+  }
+
+  .not-found-actions .button {
+    width: 100%;
+  }
+}
