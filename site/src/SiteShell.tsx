@@ -178,6 +178,14 @@ export default function SiteShell() {
                   {item.label}
                 </NavLink>
               ))}
+              <a
+                className="utility-link utility-link--external"
+                href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
             </nav>
           </div>
         </div>
