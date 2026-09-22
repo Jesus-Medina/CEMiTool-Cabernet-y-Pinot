@@ -380,31 +380,34 @@ export default function ExternalValidationPage() {
           </div>
           <p>{filtered.length} filas · {nonEvaluable.length} no evaluables/incompletas.</p>
         </div>
-        <div className="scientific-table-wrap">
-          <table className="scientific-table validation-table">
-            <thead>
-              <tr>
-                <th>Módulo</th><th>Rank</th><th>Gen</th><th>Baseline mean</th><th>Externo CS−PN</th>
-                <th>BH37</th><th>BH361</th><th>Concordancia</th><th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((row) => (
-                <tr key={[row.Dataset, row.Module, row.Gene].join('-')} className={row.Gene === NAC_GENE || row.Gene === CUAO_GENE ? 'validation-highlight-row' : ''}>
-                  <td>{row.Module}</td>
-                  <td>{row.Rank_kWithin}</td>
-                  <td><Link to={'/genes/' + row.Gene}><code>{row.Gene}</code></Link>{row.Gene === NAC_GENE ? ' · NAC' : row.Gene === CUAO_GENE ? ' · CuAO' : ''}</td>
-                  <td>{formatDecimal(averageBaseline(row), 2)}</td>
-                  <td>{formatDecimal(row.Mean_CS_minus_PN, 2)}</td>
-                  <td>{formatScientific(row.BH_prespecified_top37)}</td>
-                  <td>{formatScientific(row.BH_priority_361)}</td>
-                  <td>{row.Direction_matches_stable_primary === true ? 'Sí' : row.Direction_matches_stable_primary === false ? 'No' : '—'}</td>
-                  <td>{row.Assayed && row.Complete_data ? 'Evaluable' : row.Assayed ? 'Incompleto' : 'No evaluable'}</td>
+        <details className="data-disclosure">
+          <summary>Ver tabla de genes ({filtered.length})</summary>
+          <div className="scientific-table-wrap">
+            <table className="scientific-table validation-table">
+              <thead>
+                <tr>
+                  <th>Módulo</th><th>Rank</th><th>Gen</th><th>Baseline mean</th><th>Externo CS−PN</th>
+                  <th>BH37</th><th>BH361</th><th>Concordancia</th><th>Estado</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filtered.map((row) => (
+                  <tr key={[row.Dataset, row.Module, row.Gene].join('-')} className={row.Gene === NAC_GENE || row.Gene === CUAO_GENE ? 'validation-highlight-row' : ''}>
+                    <td>{row.Module}</td>
+                    <td>{row.Rank_kWithin}</td>
+                    <td><Link to={'/genes/' + row.Gene}><code>{row.Gene}</code></Link>{row.Gene === NAC_GENE ? ' · NAC' : row.Gene === CUAO_GENE ? ' · CuAO' : ''}</td>
+                    <td>{formatDecimal(averageBaseline(row), 2)}</td>
+                    <td>{formatDecimal(row.Mean_CS_minus_PN, 2)}</td>
+                    <td>{formatScientific(row.BH_prespecified_top37)}</td>
+                    <td>{formatScientific(row.BH_priority_361)}</td>
+                    <td>{row.Direction_matches_stable_primary === true ? 'Sí' : row.Direction_matches_stable_primary === false ? 'No' : '—'}</td>
+                    <td>{row.Assayed && row.Complete_data ? 'Evaluable' : row.Assayed ? 'Incompleto' : 'No evaluable'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
       </section>
 
       <section className="platform-limits">
