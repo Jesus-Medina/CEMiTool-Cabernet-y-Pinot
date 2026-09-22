@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import M5Explorer from './components/M5Explorer'
 import { useCanonicalData } from './hooks/useCanonicalData'
 import { formatDecimal, formatScientific } from './utils/format'
 
@@ -113,6 +114,7 @@ export function HomePage() {
           </p>
           <div className="hero-actions">
             <Link className="button button--primary" to="/story">Entrar a la historia</Link>
+            <Link className="button button--secondary" to="/modules/M5">Explorar M5</Link>
             <Link className="button button--secondary" to="/evidence">Ver evidencia</Link>
           </div>
           <p className="authorship">Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong></p>
@@ -184,8 +186,8 @@ export function HomePage() {
       <EvidenceBoundary />
 
       <section className="portal-grid" aria-label="Áreas del explorador">
-        <Link className="portal-card" to="/modules">
-          <span>01</span><h2>Módulos</h2><p>Trayectorias, robustez y detalle por módulo.</p>
+        <Link className="portal-card" to="/modules/M5">
+          <span>01</span><h2>M5 Explorer</h2><p>Trayectorias, contrastes, hubs y provenance.</p>
         </Link>
         <Link className="portal-card" to="/validation">
           <span>02</span><h2>Validación</h2><p>Evidencia externa y límites de plataforma.</p>
@@ -293,7 +295,7 @@ export function StoryPage() {
               <h2>La función se evalúa a nivel de módulo</h2>
               <p>
                 El enriquecimiento y los hubs se mantienen separados de la inferencia causal.
-                La web hará visible el conflicto de anotación CHS/STS en vez de esconderlo
+                La web hace visible el conflicto de anotación CHS/STS en vez de esconderlo
                 detrás de una única etiqueta.
               </p>
             </div>
@@ -341,15 +343,20 @@ export function ModulesPage() {
         title="Explorador de módulos"
         description="Vista comparativa de módulos, efectos, robustez, enriquecimiento y estado interpretativo."
       />
-      <PlaceholderPanel title="Siguiente capa de exploración">
-        Los datos ya están conectados por WEB-002. La interfaz comparativa completa de M1–M10 se implementará en WEB-007.
+      <PlaceholderPanel title="M5 ya está disponible">
+        La vista general M1–M10 llegará en WEB-007. Mientras tanto, el primer explorador científico completo es M5.
       </PlaceholderPanel>
+      <Link className="button button--primary button--fit" to="/modules/M5">Abrir M5 Explorer</Link>
     </div>
   )
 }
 
 export function ModuleDetailPage() {
   const { moduleId } = useParams()
+  if (moduleId?.toUpperCase() === 'M5') {
+    return <M5Explorer />
+  }
+
   return (
     <div className="page-stack">
       <PageIntro
@@ -357,8 +364,8 @@ export function ModuleDetailPage() {
         title={moduleId?.toUpperCase() ?? 'Módulo'}
         description="Trayectoria, genes, enriquecimiento, red y evidencia externa se ensamblarán desde datos canónicos."
       />
-      <PlaceholderPanel title="Vista de módulo preparada">
-        El routing dinámico ya funciona. WEB-004 dará prioridad a M5 y WEB-007 ampliará la experiencia al resto de módulos.
+      <PlaceholderPanel title="Módulo pendiente de WEB-007">
+        M5 ya tiene explorador interactivo. M10, M2 y el resto se incorporarán conservando su estado interpretativo real.
       </PlaceholderPanel>
     </div>
   )
@@ -373,8 +380,8 @@ export function GeneDetailPage() {
         title={geneId ?? 'Gen'}
         description="Ficha individual para integrar centralidad, anotaciones, posición y evidencia externa sin inventar información ausente."
       />
-      <PlaceholderPanel title="Ficha preparada">
-        El contenido aparecerá únicamente a partir de los campos verificados exportados por la capa canónica.
+      <PlaceholderPanel title="Ficha completa pendiente">
+        WEB-004 ya enlaza NAC, CuAO y genes CHS/STS hacia esta ruta. La ficha detallada reutilizable se completará junto con el explorador de genes.
       </PlaceholderPanel>
     </div>
   )
@@ -434,8 +441,8 @@ export function EvidencePage() {
         title="Evidencia y trazabilidad"
         description="El futuro visor de provenance conectará afirmaciones y gráficos con tablas, scripts, inputs y commits."
       />
-      <PlaceholderPanel title="Provenance disponible como datos">
-        WEB-002 ya construye el manifiesto con hashes SHA-256 y commit. WEB-010 transformará esa base en un navegador de evidencia.
+      <PlaceholderPanel title="Provenance ya visible en M5">
+        WEB-004 incorpora provenance a M5. WEB-010 generalizará la misma lógica a un navegador de evidencia para todo el proyecto.
       </PlaceholderPanel>
     </div>
   )
