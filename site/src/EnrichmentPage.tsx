@@ -190,13 +190,21 @@ function AnnotationComparison({ data }: { data: FunctionalEnrichmentPayload }) {
 export default function EnrichmentPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const requestedModule = searchParams.get('module')
+  const requestedSource = searchParams.get('source')
+  const requestedScope = searchParams.get('scope')
   const initialModule = requestedModule && MODULES.includes(requestedModule) ? requestedModule : 'M5'
+  const initialSource: EnrichmentSourceId =
+    requestedSource && SOURCE_ORDER.includes(requestedSource as EnrichmentSourceId)
+      ? (requestedSource as EnrichmentSourceId)
+      : 'v3_mapman'
+  const initialScope: 'significant' | 'all' =
+    requestedScope === 'all' ? 'all' : 'significant'
   const [data, setData] = useState<FunctionalEnrichmentPayload | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [source, setSource] = useState<EnrichmentSourceId>('v3_mapman')
+  const [source, setSource] = useState<EnrichmentSourceId>(initialSource)
   const [module, setModule] = useState(initialModule)
-  const [scope, setScope] = useState<'significant' | 'all'>('significant')
-  const [query, setQuery] = useState('')
+  const [scope, setScope] = useState<'significant' | 'all'>(initialScope)
+  const [query, setQuery] = useState(searchParams.get('q') ?? '')
   const [showAllRows, setShowAllRows] = useState(false)
 
   useEffect(() => {
@@ -218,18 +226,45 @@ export default function EnrichmentPage() {
   }, [source, module, scope, query])
 
   useEffect(() => {
-    const requested = searchParams.get('module')
-    if (requested && MODULES.includes(requested) && requested !== module) {
-      setModule(requested)
+    const requestedModuleParam = searchParams.get('module')
+    const requestedSourceParam = searchParams.get('source')
+    const requestedScopeParam = searchParams.get('scope')
+    const requestedQueryParam = searchParams.get('q') ?? ''
+
+    if (
+      requestedModuleParam &&
+      MODULES.includes(requestedModuleParam) &&
+      requestedModuleParam !== module
+    ) {
+      setModule(requestedModuleParam)
     }
+
+    if (
+      requestedSourceParam &&
+      SOURCE_ORDER.includes(requestedSourceParam as EnrichmentSourceId) &&
+      requestedSourceParam !== source
+    ) {
+      setSource(requestedSourceParam as EnrichmentSourceId)
+    }
+
+    const nextScope = requestedScopeParam === 'all' ? 'all' : 'significant'
+    if (nextScope !== scope) setScope(nextScope)
+    if (requestedQueryParam !== query) setQuery(requestedQueryParam)
   }, [searchParams])
 
   useEffect(() => {
-    if (searchParams.get('module') === module) return
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
-    setSearchParams(next, { replace: true })
-  }, [module, searchParams, setSearchParams])
+    next.set('source', source)
+    if (scope === 'all') next.set('scope', 'all')
+    else next.delete('scope')
+    if (query.trim()) next.set('q', query)
+    else next.delete('q')
+
+    if (next.toString() !== searchParams.toString()) {
+      setSearchParams(next, { replace: true })
+    }
+  }, [module, source, scope, query, searchParams, setSearchParams])
 
   const terms = useMemo(() => {
     if (!data) return []
