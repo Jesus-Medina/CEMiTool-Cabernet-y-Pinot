@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   loadFunctionalEnrichment,
@@ -206,6 +206,7 @@ export default function EnrichmentPage() {
   const [scope, setScope] = useState<'significant' | 'all'>(initialScope)
   const [query, setQuery] = useState(searchParams.get('q') ?? '')
   const [showAllRows, setShowAllRows] = useState(false)
+  const syncingFromUrl = useRef(false)
 
   useEffect(() => {
     let active = true
@@ -231,12 +232,15 @@ export default function EnrichmentPage() {
     const requestedScopeParam = searchParams.get('scope')
     const requestedQueryParam = searchParams.get('q') ?? ''
 
+    let changed = false
+
     if (
       requestedModuleParam &&
       MODULES.includes(requestedModuleParam) &&
       requestedModuleParam !== module
     ) {
       setModule(requestedModuleParam)
+      changed = true
     }
 
     if (
@@ -245,14 +249,28 @@ export default function EnrichmentPage() {
       requestedSourceParam !== source
     ) {
       setSource(requestedSourceParam as EnrichmentSourceId)
+      changed = true
     }
 
     const nextScope = requestedScopeParam === 'all' ? 'all' : 'significant'
-    if (nextScope !== scope) setScope(nextScope)
-    if (requestedQueryParam !== query) setQuery(requestedQueryParam)
+    if (nextScope !== scope) {
+      setScope(nextScope)
+      changed = true
+    }
+    if (requestedQueryParam !== query) {
+      setQuery(requestedQueryParam)
+      changed = true
+    }
+
+    if (changed) syncingFromUrl.current = true
   }, [searchParams])
 
   useEffect(() => {
+    if (syncingFromUrl.current) {
+      syncingFromUrl.current = false
+      return
+    }
+
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
     next.set('source', source)
