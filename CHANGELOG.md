@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-22 — WEB-003 canonical Home and Story completed
+
+- Replaced the scaffold-only landing page with a data-backed Home that loads the 54-sample design, beta10 diagnostics, M5 Cultivar×Stage FDR and T-008 progress from generated canonical JSON rather than hardcoded result values.
+- Added a responsive developmental-stage flow generated from metadata, plus explicit “what the evidence shows / does not show” interpretation blocks.
+- Added a seven-step Story view covering the operational question, balanced design, primary network, M5 focus, functional interpretation boundaries, external skin validation separation and current T-008 status.
+- Added reusable canonical-data loading, error/loading states and numeric formatting helpers; M5 Harvest direction is derived from exported stage-year contrasts.
+- GitHub Actions run `35746120112` passed canonical export/validation, lint, typecheck and production build for commit `abeb5e4`.
+- WEB-004 (interactive M5 Explorer) is now the next web task. No scientific model, result table or T-008 conclusion was changed.
+
 ## 2026-09-22 — WEB-002 canonical site-data layer completed
 
 - Added a standard-library Python export layer that reads canonical metadata/results and generates ten frontend JSON datasets at build time rather than committing stale derived snapshots.
