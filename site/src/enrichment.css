@@ -1,6 +1,17 @@
 .enrichment-page {
   display: grid;
   gap: 30px;
+  min-width: 0;
+}
+
+.enrichment-page > *,
+.enrichment-main-panel > *,
+.enrichment-controls > *,
+.theme-panel > *,
+.go-audit-panel > *,
+.annotation-compare > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .enrichment-hero {
