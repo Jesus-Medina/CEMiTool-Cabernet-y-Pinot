@@ -291,7 +291,7 @@ function ModuleFunctionalSummary({
           <p className="eyebrow">Functional enrichment</p>
           <h2>MapMan v3 · hits globales</h2>
         </div>
-        <Link className="inline-link" to="/enrichment">Abrir explorador de enriquecimiento →</Link>
+        <Link className="inline-link" to={'/enrichment?module=' + module}>Abrir explorador de enriquecimiento →</Link>
       </div>
 
       {terms.length === 0 ? (
@@ -338,7 +338,7 @@ function ModuleExternalSummary({
           <p className="eyebrow">Skin-only externa</p>
           <h2>Cobertura y concordancia</h2>
         </div>
-        <Link className="inline-link" to="/validation">Abrir validación externa →</Link>
+        <Link className="inline-link" to={'/validation?module=' + module}>Abrir validación externa →</Link>
       </div>
       <div className="external-module-grid">
         {rows.map((row) => (
