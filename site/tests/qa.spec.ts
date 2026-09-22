@@ -22,18 +22,21 @@ const m5 = JSON.parse(readFileSync('public/data/m5_trajectory.json', 'utf8')) as
 const t008 = JSON.parse(readFileSync('public/data/t008_progress.json', 'utf8')) as T008Payload
 
 const routes = [
-  ['/', /Cabernet Sauvignon/i],
-  ['/story', /Historia científica/i],
-  ['/modules', /La red completa/i],
-  ['/modules/M5', /M5 · fenoles/i],
-  ['/modules/M10', /^M10$/i],
-  ['/modules/M2', /^M2$/i],
-  ['/enrichment', /Qué funciones aparecen sobrerrepresentadas/i],
-  ['/validation', /piel aislada|validación/i],
-  ['/t008', /T-008 · estado vivo/i],
-  ['/methods', /Métodos y decisiones/i],
-  ['/evidence', /De una afirmación al archivo/i],
-  ['/genes/VIT_12s0028g00860', /VIT_12s0028g00860/i],
+  ['/', /Comparar programas de coexpresión/i],
+  ['/results', /Elige qué dimensión quieres explorar/i],
+  ['/results/modules', /Comparar los diez módulos/i],
+  ['/results/modules/M5', /M5 · fenoles/i],
+  ['/results/modules/M10', /^M10$/i],
+  ['/results/modules/M2', /^M2$/i],
+  ['/results/function', /Qué funciones aparecen sobrerrepresentadas/i],
+  ['/results/validation', /piel aislada|validación/i],
+  ['/results/genes', /Explora genes priorizados/i],
+  ['/results/genes/VIT_12s0028g00860', /VIT_12s0028g00860/i],
+  ['/methods', /Cómo se construyó la evidencia/i],
+  ['/reproducibility', /Audita un resultado hasta su fuente/i],
+  ['/status/t008', /T-008/i],
+  ['/search', /Encuentra un resultado/i],
+  ['/ask', /Pregúntale al proyecto/i],
 ] as const
 
 function url(route: string) {
@@ -104,7 +107,7 @@ test.describe('WEB-011 route and browser QA', () => {
 })
 
 test('module filters reflect generated canonical flags', async ({ page }) => {
-  await page.goto(url('/modules'))
+  await page.goto(url('/results/modules'))
   await expect(page.locator('.module-card')).toHaveCount(modules.modules.length)
 
   const significant = modules.modules.filter((row) => row.cultivar_stage_significant_fdr05).length
@@ -126,7 +129,7 @@ test('module filters reflect generated canonical flags', async ({ page }) => {
 })
 
 test('M5 year and replicate filters alter the view, not the source data', async ({ page }) => {
-  await page.goto(url('/modules/M5'))
+  await page.goto(url('/results/modules/M5'))
   await expect(page.locator('.trajectory-chart-card')).toHaveCount(3)
 
   await page.getByRole('button', { name: '2013', exact: true }).first().click()
@@ -139,19 +142,21 @@ test('M5 year and replicate filters alter the view, not the source data', async 
 })
 
 test('Evidence Browser search resolves a finding and its artifact', async ({ page }) => {
-  await page.goto(url('/evidence'))
+  await page.goto(url('/reproducibility'))
   const search = page.getByRole('searchbox', { name: 'Buscar evidencia' })
   await search.fill('t008')
   await expect(
     page.locator('.evidence-claim').filter({ hasText: 'Progreso del reprocesamiento moderno T-008' }),
   ).toHaveCount(1)
+
+  await page.getByRole('button', { name: /Artefactos/i }).click()
   await expect(
     page.locator('.evidence-artifact').filter({ hasText: 't008_progress' }),
   ).toHaveCount(1)
 })
 
 test('T-008 status filter matches generated pending count', async ({ page }) => {
-  await page.goto(url('/t008'))
+  await page.goto(url('/status/t008'))
   await page.getByLabel('Estado').selectOption('PENDING')
   await expect(page.locator('.t008-table tbody tr')).toHaveCount(t008.summary.pending_runs)
 })
@@ -159,7 +164,7 @@ test('T-008 status filter matches generated pending count', async ({ page }) => 
 test('mobile layout has no document-level horizontal overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium', 'mobile-only responsive audit')
 
-  for (const route of ['/', '/modules', '/modules/M5', '/enrichment', '/validation', '/t008', '/evidence']) {
+  for (const route of ['/', '/results', '/results/modules', '/results/modules/M5', '/results/function', '/results/validation', '/results/genes', '/methods', '/reproducibility', '/status/t008', '/ask']) {
     await page.goto(url(route))
     await waitForStablePage(page)
     const dimensions = await page.evaluate(() => {
