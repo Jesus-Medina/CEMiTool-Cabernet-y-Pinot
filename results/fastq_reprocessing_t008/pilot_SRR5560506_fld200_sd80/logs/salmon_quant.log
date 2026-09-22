@@ -1,0 +1,53 @@
+[2026-09-22 01:19:43.738] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-22 01:19:43.738] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-22 01:19:43.738] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-22 01:19:43.738] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-22 01:19:43.738] [jointLog] [info] parsing read library format
+[2026-09-22 01:19:43.739] [jointLog] [info] There is 1 library.
+[2026-09-22 01:19:43.759] [jointLog] [info] Loading pufferfish index
+[2026-09-22 01:19:43.766] [jointLog] [info] Loading pufferfish index.
+[2026-09-22 01:20:27.039] [jointLog] [info] done
+[2026-09-22 01:20:27.219] [jointLog] [info] Index contained 56930 targets
+[2026-09-22 01:20:27.418] [jointLog] [info] Number of decoys : 20
+[2026-09-22 01:20:27.419] [jointLog] [info] First decoy index : 56910 
+[2026-09-22 01:26:01.327] [jointLog] [info] Computed 53,291 rich equivalence classes for further processing
+[2026-09-22 01:26:01.328] [jointLog] [info] Counted 11,283,224 total reads in the equivalence classes 
+[2026-09-22 01:26:01.328] [fileLog] [info] 
+At end of round 0
+==================
+Observed 12724462 total fragments (12724462 in most recent round)
+
+[2026-09-22 01:26:01.329] [jointLog] [info] Number of mappings discarded because of alignment score : 13,416,854
+[2026-09-22 01:26:01.329] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 1,200,797
+[2026-09-22 01:26:01.329] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 963,347
+[2026-09-22 01:26:01.329] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 0
+[2026-09-22 01:26:01.330] [jointLog] [info] Mapping rate = 88.6735%
+[2026-09-22 01:26:01.330] [jointLog] [info] finished quantifyLibrary()
+[2026-09-22 01:26:01.336] [jointLog] [info] Starting optimizer
+[2026-09-22 01:26:01.374] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-22 01:26:01.380] [jointLog] [info] iteration = 0 | max rel diff. = 9641.108802207706
+[2026-09-22 01:26:01.411] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-22 01:26:02.980] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-22 01:26:02.987] [jointLog] [info] processed bias for 0.0% of the transcripts
+[2026-09-22 01:26:03.850] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2026-09-22 01:26:04.753] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-22 01:26:05.554] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2026-09-22 01:26:06.435] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2026-09-22 01:26:07.300] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-22 01:26:08.080] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2026-09-22 01:26:08.982] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2026-09-22 01:26:09.973] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-22 01:26:10.857] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2026-09-22 01:26:11.643] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-22 01:26:11.930] [jointLog] [info] iteration = 100 | max rel diff. = 13.939674373446096
+[2026-09-22 01:26:12.231] [jointLog] [info] iteration = 200 | max rel diff. = 0.9468004396673569
+[2026-09-22 01:26:12.541] [jointLog] [info] iteration = 300 | max rel diff. = 0.12383019350167485
+[2026-09-22 01:26:12.851] [jointLog] [info] iteration = 400 | max rel diff. = 5.042553978898927
+[2026-09-22 01:26:13.017] [jointLog] [info] iteration = 457 | max rel diff. = 0.0099921907922807
+[2026-09-22 01:26:13.019] [jointLog] [info] Finished optimizer
+[2026-09-22 01:26:13.019] [jointLog] [info] writing output 
+
+[2026-09-22 01:26:13.620] [jointLog] [info] writing equivalence class counts.
+[2026-09-22 01:26:13.623] [jointLog] [info] Collapsing factorization information into simplified equivalence classes.
+[2026-09-22 01:26:13.630] [jointLog] [info] done.
+[2026-09-22 01:26:13.672] [jointLog] [info] done writing equivalence class counts.

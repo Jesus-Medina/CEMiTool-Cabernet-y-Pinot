@@ -1,0 +1,11 @@
+Metric	Value
+Salmon_version	1.12.1
+Index_version	4
+Kmer_length	31
+Transcript_targets	56910
+Genome_decoys	20
+Keep_duplicate_transcripts	TRUE
+Distinct_kmers	378648074
+Index_sequence_hash	c936fae4325743421db94926d6f5a7832c3cd84321cd64d12598dd95d58b7f6f
+Reference_gentrome_SHA256	2262b886f40e452545270f2fe8cb9f2b49a5bb2eaaab8adb16abb1a245a217d6
+Required_components_nonempty	PASS

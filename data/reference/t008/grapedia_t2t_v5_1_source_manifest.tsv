@@ -1,0 +1,4 @@
+File	URL	SHA256	Bytes	Member	Role
+T2T_ref.zip	https://grapedia.org/wp-content/uploads/2023/11/T2T_ref.zip	582a342a341607b9a4e06bbdd02bb6c7351d4fff50cae92159059da7dd61cc6e	133155642	T2T_ref.fasta	genome
+PN40024_5.1_on_T2T_ref_with_names.zip	https://grapedia.org/wp-content/uploads/2024/11/PN40024_5.1_on_T2T_ref_with_names.zip	ba1c7239d43ae081a661152dac41b4ecb30f4ab52989496f64aa9c8b5ee96de7	5148437	PN40024_5.1_on_T2T_ref_with_names.gff3	annotation
+5.1_on_T2T_all_variants.zip	https://grapedia.org/wp-content/uploads/2025/03/5.1_on_T2T_all_variants.zip	ea63a39cd61cffb7402b0992a9341f4c1ada1f1e171a7d92232aa3dd999f0e88	168153990	5.1_on_T2T_ref_all_transcripts.fasta	all-transcript variants

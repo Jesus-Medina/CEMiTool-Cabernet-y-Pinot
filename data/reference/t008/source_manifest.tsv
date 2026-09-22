@@ -1,0 +1,3 @@
+File	URL	SHA256	Bytes
+GSE98923_GSM_SOFT_brief.txt	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE98923&targ=gsm&view=brief&form=text	6044bb699d970bfc26b671def684e5cef7e191835f3d0922b7c88a0435f5fad1	804548
+SRP107227_ENA_read_run.tsv	https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRP107227&result=read_run&fields=run_accession,sample_accession,secondary_sample_accession,experiment_accession,fastq_ftp,fastq_bytes,fastq_md5,library_layout,read_count,base_count&format=tsv	45234b8d666ab4401b93974019f5149b2bdb26a95975de4385d708f4fc3103ce	41508

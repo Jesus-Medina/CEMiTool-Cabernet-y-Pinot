@@ -1,0 +1,12 @@
+Metric	Value
+GEO_series_GSM	219
+ENA_series_runs	220
+Frozen_GSM	54
+Frozen_samples_TSV_SHA256	fc4b360f78d94935e69837e669fb4d321f35977e324603e3046b15a347fcd17e
+Frozen_GSM_with_run	54
+Selected_runs	54
+Selected_SINGLE_runs	54
+Selected_PAIRED_runs	0
+All_ENA_FASTQ_bytes	601847269992
+Selected_ENA_FASTQ_bytes	140160608633
+Selected_ENA_read_count	1625172664

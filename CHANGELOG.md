@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-22 — T-008 run/reference audit and technical pilot in progress
+
+- Matched all 54 frozen GSE98923 GSMs through GEO SRX to 54 ENA single-end SRRs, confirming sample characteristics and pinning FASTQ URLs, sizes, MD5 and source metadata hashes. The selected runs total 140.16 GB compressed and 1.625 billion reads; no mass download began.
+- Verified official Grapedia PN40024 T2T v5.1 genome, GFF3 and all-variant transcript sources by SHA-256; generated an exact 56,910-transcript-to-47,971-gene map and documented the 1,922/3,050 reciprocal legacy-gene coverage.
+- Downloaded one technical pilot FASTQ and verified ENA MD5, gzip integrity, structure and all 12,724,462 records. Salmon 1.12.1 was checksum-verified; two genome-decoy index attempts failed at an unavailable `en_US.UTF-8` locale in WSL, then a user-local locale enabled a complete index with 20 genome decoys. The single-library pilot completed with 56,910 validated transcripts, 88.67% mapping and zero quantification errors; source quantification and QC are preserved. T-008 remains IN PROGRESS; no 54-sample expression matrix or preservation claims yet.
+- Tested a second fragment-length prior on the same pilot library. Gene TPM top-100 overlap was 63/100 between 250/25 and 200/80; estimated-count top-100 overlap was 99/100. Documented this material TPM sensitivity and the still-unmeasured fragment-length assumption in D-016; no biological contrast or module preservation claim was made.
+- Corrected a T-007 documentation error: GSE98923 berries were grown near Modesto, California, not in Italy, as the GEO sample protocol states.
+
 ## 2026-09-21 — Master audit and beginner-to-technical reconstruction
 
 - Added a complete master documentation layer requested as a project-wide audit: project explanation, history, exhaustive canonical file catalog, script catalog, scientific table catalog, data lineage, glossary and evidence matrix.

@@ -124,9 +124,13 @@ T-006 está **DONE** para priorización interna y se documenta en `docs/T006_M5_
 
 T-007 está **DONE** como validación observacional de expresión; el registro reproducible es `docs/T007_SKIN_ONLY_VALIDATION.md`. Se contrastaron los 361 genes priorizados y 37 hubs congelados de M5/M10/M2 en GSE72421 (microarray de piel 2011) y PRJNA260535 (RNA-seq de piel 2012), sin añadir muestras a las 54 del diseño primario. Los resultados completos, QC y auditoría están en `results/external_skin_validation_beta10/`; las fuentes originales con hashes se conservan en `data/reference/external_t007/`. Las comparaciones principales fueron WW y 24 °Brix, respectivamente. En M5, 11/11 hubs evaluables en microarray WW y 4/7 evaluables en RNA-seq 24 °Brix pasan BH dentro de los 37 hubs; CuAO y NAC concuerdan en ambos. En M10 solo el bHLH rango 1 pasa en microarray y está filtrado del RNA-seq; no hay validación individual de los otros hubs. En M2, MYB y FAR1 concuerdan en ambos, pero el RNA-seq solo evalúa 8/22 hubs y persiste el riesgo de paralogía, variación estructural y sesgo de referencia. Las celdas faltantes del microarray no se imputaron. Ninguna fuente mide grosor de piel ni resuelve CHS frente a STS.
 
+### T-008 raw-read audit and pilot (not completed)
+
+T-008 está **IN PROGRESS**. El manifiesto auditado vincula los 54 GSM originales con 54 SRR single-end y verifica metadatos GEO, URL/tamaño/MD5 ENA (140,16 GB comprimidos en total). Las fuentes Grapedia T2T v5.1 y la unión exacta de 56.910 transcritos con el GFF3 están preparadas; el cruce recíproco antiguo→nuevo cubre 1.922/3.050 genes beta10. Una biblioteca técnica piloto (`SRR5560506`) pasó integridad y 12.724.462 registros; Salmon produjo 56.910 transcritos, 88,67 % de mapeo y cero errores de cuantificación validados frente a ENA y al índice. El control 250/25 versus 200/80 de longitud supuesta mostró sensibilidad material de TPM (63/100 top genes coinciden), menor en recuentos estimados (99/100), por lo que el supuesto requiere justificación antes de inferencia. **No** hay todavía matriz moderna de 54 muestras, contraste nuevo ni conclusión de preservación. El índice Salmon con 20 secuencias genómicas señuelo se completó tras resolver una locale WSL faltante. Ver `docs/T008_RAW_REPROCESSING.md` y `docs/FILES_NOT_UPLOADED.md`.
+
 ## Immediate pending work
 
-1. T-008: reprocesar FASTQ con una referencia/anotación actual, comparando sin borrar el baseline histórico y examinando especialmente la familia M5 y los extremos M2.
+1. Completar T-008: índice y piloto, después las 54 cuantificaciones con QC y comparación calibrada contra el baseline histórico, examinando especialmente la familia M5 y los extremos M2. La descarga masiva todavía no ha comenzado.
 2. T-009: integrar las capas de análisis y límites en el informe/manuscrito. El informe acumulativo actual todavía no incorpora T-004 a T-007.
 
 ## Important boundary

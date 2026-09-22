@@ -7,3 +7,4 @@ history/local_workspace/Fasoli[[:space:]]cabernet[[:space:]]y[[:space:]]pinot[[:
 history/local_workspace/TRY[[:space:]]BETA[[:space:]]10/.RData filter=lfs diff=lfs merge=lfs -text
 history/local_workspace/TRY[[:space:]]BETA[[:space:]]7[[:space:]]FIXED/.RData filter=lfs diff=lfs merge=lfs -text
 history/local_workspace/TRY[[:space:]]BETA[[:space:]]7[[:space:]]MASTER/.RData filter=lfs diff=lfs merge=lfs -text
+scripts/post/*.sh text eol=lf

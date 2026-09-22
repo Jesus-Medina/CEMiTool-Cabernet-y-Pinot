@@ -203,3 +203,15 @@ that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
 **Reason:** platforms, years, vineyard conditions and developmental measures differ. RNA-seq retains only 8/22 M2 top hubs; family-specific microarray hybridization and V1 reference mapping remain unresolved. Two sources from the Nevada research program are external to GSE98923, but not wholly independent of each other.
 
 **Boundary:** T-007 validates expression-direction evidence in isolated skin for individual candidates, not a causal skin-thickness pathway, exact CHS/STS identity or a new beta10 network. See `docs/T007_SKIN_ONLY_VALIDATION.md`.
+
+---
+
+## D-016 — Auditar el supuesto de longitud de fragmento antes del reprocesamiento completo
+
+**Status:** provisional en T-008 (2026-09-22); no es una conclusión de preservación de red.
+
+**Decision:** usar Grapedia PN40024 T2T v5.1 y cuantificación Salmon 1.12.1 con genoma señuelo y transcritos duplicados retenidos como piloto reproducible. Mantener la red/RPKM históricos intactos. Para el análisis moderno de las 54 muestras, justificar la distribución de fragmentos de lectura única y evaluar su sensibilidad; priorizar recuentos estimados por gen con normalización explícita y QC de profundidad sobre TPM sin sensibilidad para comparar coexpresión.
+
+**Reason:** en `SRR5560506`, 250/25 versus 200/80 no cambió el mapeo, pero solo 63/100 genes top por TPM coincidieron, frente a 99/100 por recuentos estimados. La correlación `log1p` por gen fue 0,9862 para TPM y 0,9991 para recuentos. GEO describe bibliotecas no direccionales pero no da una longitud de fragmento por biblioteca. El parámetro no debe disfrazarse de medición.
+
+**Boundary:** un solo piloto no selecciona el parámetro correcto, ni resuelve lecturas compartidas entre parálogos, ni comprueba módulos M5/M10/M2. T-008 sigue abierto. Ver `docs/T008_RAW_REPROCESSING.md`.

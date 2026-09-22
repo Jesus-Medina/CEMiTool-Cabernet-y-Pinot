@@ -1,0 +1,9 @@
+Metric	Value
+GFF3_genes	47971
+GFF3_transcripts	56910
+Transcript_FASTA_ids	56910
+Genome_decoy_sequences	20
+Transcript_ids_without_GFF3	0
+GFF3_transcripts_without_FASTA	0
+Gentrome_bytes	605853261
+Gentrome_SHA256	2262b886f40e452545270f2fe8cb9f2b49a5bb2eaaab8adb16abb1a245a217d6

@@ -13,7 +13,7 @@ Fuentes originales, URL, tamaño y SHA-256: `data/reference/external_t007/source
 | GSE72421 | Microarray de piel, 2011, cerca de 24 °Brix; 5 Cabernet y 5 Pinot por tratamiento | WW, mismo tratamiento | WD |
 | PRJNA260535 | RNA-seq de piel, 2012; 3 Cabernet y 3 Pinot por cultivar × °Brix | 24 °Brix | 20, 22 y 26 °Brix |
 
-Ambas fuentes proceden de trabajos del grupo de Nevada en años diferentes: constituyen dos ensayos externos al pericarpio italiano de GSE98923, pero no dos cohortes totalmente independientes entre sí. °Brix/near-harvest no es una conversión de FruitSet/Veraison/Harvest. No se dispone de medición de grosor de piel en estas comparaciones.
+Ambas fuentes proceden de trabajos del grupo de Nevada en años diferentes: constituyen dos ensayos externos al pericarpio de GSE98923, cuyas uvas se cultivaron cerca de Modesto, California, pero no dos cohortes totalmente independientes entre sí. La ubicación de GSE98923 se verificó en el [protocolo GEO de GSM2627691](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2627691). °Brix/near-harvest no es una conversión de FruitSet/Veraison/Harvest. No se dispone de medición de grosor de piel en estas comparaciones.
 
 ## Auditoría y método
 
