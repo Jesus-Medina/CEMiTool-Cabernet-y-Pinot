@@ -288,7 +288,7 @@ export default function ExternalValidationPage() {
             <strong>{module}</strong>
             <small>La vista mantiene el módulo seleccionado al navegar entre resultados.</small>
           </div>
-          <Link to={'/modules/' + module}>Volver a {module} →</Link>
+          <Link to={'/results/modules/' + module}>Volver a {module} →</Link>
         </div>
       )}
 
@@ -395,7 +395,7 @@ export default function ExternalValidationPage() {
                   <tr key={[row.Dataset, row.Module, row.Gene].join('-')} className={row.Gene === NAC_GENE || row.Gene === CUAO_GENE ? 'validation-highlight-row' : ''}>
                     <td>{row.Module}</td>
                     <td>{row.Rank_kWithin}</td>
-                    <td><Link to={'/genes/' + row.Gene}><code>{row.Gene}</code></Link>{row.Gene === NAC_GENE ? ' · NAC' : row.Gene === CUAO_GENE ? ' · CuAO' : ''}</td>
+                    <td><Link to={'/results/genes/' + row.Gene}><code>{row.Gene}</code></Link>{row.Gene === NAC_GENE ? ' · NAC' : row.Gene === CUAO_GENE ? ' · CuAO' : ''}</td>
                     <td>{formatDecimal(averageBaseline(row), 2)}</td>
                     <td>{formatDecimal(row.Mean_CS_minus_PN, 2)}</td>
                     <td>{formatScientific(row.BH_prespecified_top37)}</td>
@@ -454,7 +454,7 @@ export default function ExternalValidationPage() {
             Los extremos de M2 y las familias parálogas de M5 son precisamente el tipo de señal que el reprocesamiento FASTQ moderno debe revisar sin sustituir el baseline histórico.
           </p>
         </div>
-        <Link className="button button--primary" to="/t008">Abrir T-008</Link>
+        <Link className="button button--primary" to="/status/t008">Abrir T-008</Link>
       </section>
 
       {provenance && <Provenance provenance={provenance} />}
