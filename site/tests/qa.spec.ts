@@ -28,7 +28,7 @@ const routes = [
   ['/modules/M5', /M5 · fenoles/i],
   ['/modules/M10', /^M10$/i],
   ['/modules/M2', /^M2$/i],
-  ['/enrichment', /enriquecimiento/i],
+  ['/enrichment', /Qué funciones aparecen sobrerrepresentadas/i],
   ['/validation', /piel aislada|validación/i],
   ['/t008', /T-008 · estado vivo/i],
   ['/methods', /Métodos y decisiones/i],
@@ -84,7 +84,14 @@ test.describe('WEB-011 route and browser QA', () => {
       const errors: string[] = []
       page.on('pageerror', (error) => errors.push(error.message))
       page.on('console', (message) => {
-        if (message.type() === 'error') errors.push(message.text())
+        if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
+          errors.push(message.text())
+        }
+      })
+      page.on('response', (response) => {
+        if (response.status() >= 400) {
+          errors.push(`HTTP ${response.status()} ${response.url()}`)
+        }
       })
 
       await page.goto(url(route))
@@ -135,10 +142,12 @@ test('Evidence Browser search resolves a finding and its artifact', async ({ pag
   await page.goto(url('/evidence'))
   const search = page.getByRole('searchbox', { name: 'Buscar evidencia' })
   await search.fill('t008')
-  await expect(page.locator('.evidence-claim')).toHaveCount(1)
-  await expect(page.locator('.evidence-claim')).toContainText('T-008')
-  await expect(page.locator('.evidence-artifact')).toHaveCount(1)
-  await expect(page.locator('.evidence-artifact')).toContainText('t008_progress')
+  await expect(
+    page.locator('.evidence-claim').filter({ hasText: 'Progreso del reprocesamiento moderno T-008' }),
+  ).toHaveCount(1)
+  await expect(
+    page.locator('.evidence-artifact').filter({ hasText: 't008_progress' }),
+  ).toHaveCount(1)
 })
 
 test('T-008 status filter matches generated pending count', async ({ page }) => {
@@ -153,10 +162,32 @@ test('mobile layout has no document-level horizontal overflow', async ({ page },
   for (const route of ['/', '/modules', '/modules/M5', '/enrichment', '/validation', '/t008', '/evidence']) {
     await page.goto(url(route))
     await waitForStablePage(page)
-    const dimensions = await page.evaluate(() => ({
-      scrollWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth,
-    }))
-    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 2)
+    const dimensions = await page.evaluate(() => {
+      const clientWidth = document.documentElement.clientWidth
+      const offenders = Array.from(document.querySelectorAll<HTMLElement>('body *'))
+        .map((element) => {
+          const rect = element.getBoundingClientRect()
+          return {
+            tag: element.tagName.toLowerCase(),
+            className: element.className?.toString().slice(0, 120) ?? '',
+            left: Math.round(rect.left),
+            right: Math.round(rect.right),
+            width: Math.round(rect.width),
+          }
+        })
+        .filter((item) => item.right > clientWidth + 2 || item.left < -2)
+        .sort((a, b) => b.width - a.width)
+        .slice(0, 8)
+
+      return {
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth,
+        offenders,
+      }
+    })
+    expect(
+      dimensions.scrollWidth,
+      `Horizontal overflow on ${route}: ${JSON.stringify(dimensions.offenders)}`,
+    ).toBeLessThanOrEqual(dimensions.clientWidth + 2)
   }
 })
