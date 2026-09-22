@@ -354,3 +354,35 @@
     margin-inline: 8px;
   }
 }
+
+
+/* Unified light workspace header */
+.t008-hero {
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(56,69,77,.045), transparent 34%),
+    var(--surface);
+}
+
+.t008-hero .eyebrow {
+  color: #52656f;
+}
+
+.t008-hero h1 {
+  color: #243139;
+}
+
+.t008-hero p:last-child {
+  color: var(--muted);
+}
+
+.t008-big-number {
+  color: #243139;
+  border-color: #dce2e5;
+  background: #f7f9fa;
+}
+
+.t008-big-number span {
+  color: #718087;
+}
