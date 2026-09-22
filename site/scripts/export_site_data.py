@@ -52,7 +52,7 @@ REQUIRED_COLUMNS = {
     "m5_hubs": {"Gene", "Rank_kWithin", "kWithin", "kME_signed", "Top_decile_kWithin"},
     "m10_m2_hubs": {"Module", "Gene", "Rank_kWithin", "kWithin", "kME_signed", "Top_decile_kWithin"},
     "m5_edges": {"Gene1", "Gene2", "Pearson_r", "Beta10_unsigned_adjacency", "Pair_group"},
-    "t008_manifest": {"GSM", "Cultivar", "Stage", "Year", "Replicate", "SRA_Run"},
+    "t008_manifest": {"GSM", "Cultivar", "Stage", "Year", "Replicate", "SRA_Run", "Library_Layout", "FASTQ_MD5", "FASTQ_Total_Bytes", "Read_Count"},
     "t008_events": {"UTC", "SRA_Run", "Stage", "Status", "Detail"},
 }
 
@@ -177,6 +177,10 @@ def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, A
                 "stage": row["Stage"],
                 "year": row["Year"],
                 "replicate": row["Replicate"],
+                "library_layout": row["Library_Layout"],
+                "fastq_md5": row["FASTQ_MD5"],
+                "fastq_total_bytes": row["FASTQ_Total_Bytes"],
+                "read_count": row["Read_Count"],
                 "status": overall,
                 "pipeline_stages": latest_by_stage,
                 "percent_mapped": metrics.get("Percent_mapped"),
@@ -189,16 +193,43 @@ def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, A
 
     validated = sum(1 for row in runs if row["status"] == "PASS")
     failed = sum(1 for row in runs if row["status"] == "FAIL")
+    in_progress = sum(1 for row in runs if row["status"] == "IN_PROGRESS")
+    pending = sum(1 for row in runs if row["status"] == "PENDING")
     latest_event = max((str(row["UTC"]) for row in event_rows if row.get("UTC")), default=None)
+    total_fastq_bytes = sum(int(row["fastq_total_bytes"] or 0) for row in runs)
+    total_reads = sum(int(row["read_count"] or 0) for row in runs)
+    validated_fastq_bytes = sum(
+        int(row["fastq_total_bytes"] or 0) for row in runs if row["status"] == "PASS"
+    )
+    validated_reads = sum(
+        int(row["read_count"] or 0) for row in runs if row["status"] == "PASS"
+    )
+    mapped_values = [
+        float(row["percent_mapped"])
+        for row in runs
+        if row["status"] == "PASS" and row["percent_mapped"] is not None
+    ]
 
     return {
         "summary": {
             "total_runs": len(runs),
             "validated_runs": validated,
             "failed_runs": failed,
-            "pending_or_running_runs": len(runs) - validated - failed,
+            "in_progress_runs": in_progress,
+            "pending_runs": pending,
+            "pending_or_running_runs": pending + in_progress,
+            "progress_percent": (100.0 * validated / len(runs)) if runs else 0.0,
             "complete": len(runs) > 0 and validated == len(runs) and failed == 0,
             "latest_event_utc": latest_event,
+            "total_fastq_bytes": total_fastq_bytes,
+            "total_reads": total_reads,
+            "validated_fastq_bytes": validated_fastq_bytes,
+            "validated_reads": validated_reads,
+            "mapping_percent_min": min(mapped_values) if mapped_values else None,
+            "mapping_percent_max": max(mapped_values) if mapped_values else None,
+            "mapping_percent_mean": (
+                sum(mapped_values) / len(mapped_values) if mapped_values else None
+            ),
         },
         "runs": runs,
         "events": event_rows,
@@ -389,7 +420,7 @@ def main() -> None:
         "hubs.json": {"schema_version": 1, "rows": hubs},
         "m5_network.json": {"schema_version": 1, "edges": m5_edges},
         "external_validation.json": external_validation,
-        "t008_progress.json": {"schema_version": 1, **t008},
+        "t008_progress.json": {"schema_version": 2, **t008},
         "provenance.json": build_manifest(REPO_ROOT, artifacts),
     }
 

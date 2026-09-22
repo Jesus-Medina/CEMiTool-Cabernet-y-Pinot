@@ -198,6 +198,60 @@ export type ExternalValidationPayload = {
   }
 }
 
+export type T008RunStatus = 'PASS' | 'FAIL' | 'IN_PROGRESS' | 'PENDING'
+
+export type T008Run = {
+  gsm: string
+  sra_run: string
+  cultivar: string
+  stage: string
+  year: number
+  replicate: number
+  library_layout: string
+  fastq_md5: string
+  fastq_total_bytes: number
+  read_count: number
+  status: T008RunStatus
+  pipeline_stages: Record<string, string>
+  percent_mapped: number | null
+  processed_fragments: number | null
+  mapped_fragments: number | null
+  salmon_version: string | null
+  validation: string | null
+}
+
+export type T008Event = {
+  UTC: string
+  SRA_Run: string
+  Stage: string
+  Status: string
+  Detail: string | number | null
+}
+
+export type T008ProgressPayload = {
+  schema_version: 2
+  summary: {
+    total_runs: number
+    validated_runs: number
+    failed_runs: number
+    in_progress_runs: number
+    pending_runs: number
+    pending_or_running_runs: number
+    progress_percent: number
+    complete: boolean
+    latest_event_utc: string | null
+    total_fastq_bytes: number
+    total_reads: number
+    validated_fastq_bytes: number
+    validated_reads: number
+    mapping_percent_min: number | null
+    mapping_percent_max: number | null
+    mapping_percent_mean: number | null
+  }
+  runs: T008Run[]
+  events: T008Event[]
+}
+
 export type ProvenanceFile = {
   path: string
   sha256: string
@@ -260,6 +314,10 @@ export function loadHubs() {
 
 export function loadExternalValidation() {
   return fetchJson<ExternalValidationPayload>('external_validation.json')
+}
+
+export function loadT008Progress() {
+  return fetchJson<T008ProgressPayload>('t008_progress.json')
 }
 
 export function loadProvenance() {

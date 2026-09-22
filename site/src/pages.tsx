@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import M5Explorer from './components/M5Explorer'
 import ExternalValidationPage from './ExternalValidationPage'
+import T008DashboardPage from './T008DashboardPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
 import { formatDecimal, formatScientific } from './utils/format'
 
@@ -393,19 +394,7 @@ export function ValidationPage() {
 }
 
 export function T008Page() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="MODERN REPROCESSING"
-        title="T-008"
-        description="Dashboard destinado a reflejar el progreso real del reprocesamiento FASTQ sin convertir un proceso incompleto en una conclusión."
-        status="En desarrollo"
-      />
-      <PlaceholderPanel title="Progreso dinámico pendiente de WEB-009">
-        WEB-002 ya genera el estado desde el manifiesto y QC canónicos; WEB-009 convertirá esos datos en el tablero interactivo.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <T008DashboardPage />
 }
 
 export function MethodsPage() {

@@ -168,14 +168,28 @@ def main() -> None:
     if len(payloads["hubs.json"]["rows"]) != expected_hubs:
         raise AssertionError("hubs.json row count does not match hub source tables")
 
-    t008 = payloads["t008_progress.json"]["summary"]
-    expected_runs = len(read_rows(SOURCE_PATHS["t008_manifest"]))
+    t008_payload = payloads["t008_progress.json"]
+    if t008_payload["schema_version"] != 2:
+        raise AssertionError("t008_progress schema_version must be 2")
+    t008 = t008_payload["summary"]
+    manifest_rows = read_rows(SOURCE_PATHS["t008_manifest"])
+    expected_runs = len(manifest_rows)
     if t008["total_runs"] != expected_runs:
         raise AssertionError("T-008 total run count does not match selected manifest")
     if t008["validated_runs"] != run_qc_pass_count():
         raise AssertionError("T-008 validated count does not match run QC files")
     if t008["complete"] and t008["validated_runs"] != t008["total_runs"]:
         raise AssertionError("T-008 cannot be complete before every run validates")
+    expected_fastq_bytes = sum(int(row["FASTQ_Total_Bytes"]) for row in manifest_rows)
+    expected_reads = sum(int(row["Read_Count"]) for row in manifest_rows)
+    if t008["total_fastq_bytes"] != expected_fastq_bytes:
+        raise AssertionError("T-008 FASTQ byte total does not match frozen manifest")
+    if t008["total_reads"] != expected_reads:
+        raise AssertionError("T-008 read total does not match frozen manifest")
+    if t008["pending_runs"] + t008["in_progress_runs"] + t008["validated_runs"] + t008["failed_runs"] != t008["total_runs"]:
+        raise AssertionError("T-008 run-status counts do not sum to 54")
+    if len(t008_payload["runs"]) != expected_runs:
+        raise AssertionError("T-008 run table does not contain all selected runs")
 
     provenance_ids = {row["artifact_id"] for row in payloads["provenance.json"]["artifacts"]}
     required_ids = {
