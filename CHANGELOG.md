@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-22 — Interactive web explorer implementation plan created
+
+- Added `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md` as the step-by-step roadmap for a React/TypeScript/Vite scientific explorer deployed with GitHub Pages.
+- Defined the site as three coordinated layers: STORY, EXPLORE and EVIDENCE, with a validated Python export layer between canonical scientific TSVs and frontend JSON.
+- Planned the MVP around Home, M5 trajectories/hubs/enrichment, external skin validation, live T-008 status and per-visual provenance; later phases add networks, all-module exploration, QA and final Pages deployment.
+- Added T-010 to `docs/TASK_LEDGER.md` and set WEB-001 (web scaffold) as the next implementation step.
+- No scientific input, statistical model, CEMiTool result, T-008 result or interpretation was changed.
+
 ## 2026-09-22 — T-008 run/reference audit and technical pilot in progress
 
 - Extended T-008 to a conservative full-batch workflow after user authorization: verified a second FASTQ/Salmon run (`SRR5560667`, 19,514,717 reads, 84.94% mapped), resumed a partial ENA download only with HTTP-range and final MD5 checks, added first-10,000-read quality probes, per-run exact compressed archives and a fail-stop progress ledger. The 54-sample assembler is gated on all 54 QC passes. No FASTQ is deleted, no historical input/network changed, and no modern biological conclusion is claimed at 2/54.
