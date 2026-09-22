@@ -653,3 +653,10 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+
+.evidence-version-grid article {
+  border-color: transparent;
+  background: #f6f4f5;
+  box-shadow: none;
+}
