@@ -91,6 +91,7 @@ export default function MethodsPage() {
   const [project, setProject] = useState<ProjectSummary | null>(null)
   const [provenance, setProvenance] = useState<ProvenancePayload | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState('design')
 
   useEffect(() => {
     let active = true
@@ -106,6 +107,30 @@ export default function MethodsPage() {
       })
     return () => { active = false }
   }, [])
+
+  useEffect(() => {
+    const elements = sections
+      .map((section) => document.getElementById(section.id))
+      .filter((element): element is HTMLElement => Boolean(element))
+
+    if (elements.length === 0 || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target.id) setActiveSection(visible[0].target.id)
+      },
+      {
+        rootMargin: '-110px 0px -55% 0px',
+        threshold: [0.1, 0.25, 0.5, 0.75],
+      },
+    )
+
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [project, provenance])
 
   const artifactMap = useMemo(
     () => new Map(provenance?.artifacts.map((artifact) => [artifact.artifact_id, artifact]) ?? []),
@@ -149,8 +174,18 @@ export default function MethodsPage() {
             <span>En esta página</span>
             <nav aria-label="Índice de métodos">
               {sections.map((section) => (
-                <button key={section.id} type="button" onClick={() => scrollToMethod(section.id)}>
-                  {section.label}
+                <button
+                  key={section.id}
+                  type="button"
+                  className={activeSection === section.id ? 'method-index-link method-index-link--active' : 'method-index-link'}
+                  onClick={() => {
+                    setActiveSection(section.id)
+                    scrollToMethod(section.id)
+                  }}
+                  aria-current={activeSection === section.id ? 'true' : undefined}
+                >
+                  <span>{section.label}</span>
+                  <span aria-hidden="true">→</span>
                 </button>
               ))}
             </nav>
