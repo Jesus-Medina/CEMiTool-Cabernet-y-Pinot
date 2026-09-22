@@ -42,23 +42,91 @@
 .network-summary-strip strong { color: var(--cabernet-deep); }
 .network-layout {
   display: grid;
-  grid-template-columns: minmax(0,1.45fr) minmax(260px,.55fr);
+  grid-template-columns: minmax(0,1.62fr) minmax(250px,.38fr);
   gap: 14px;
 }
-.cy-network {
-  height: 600px;
+
+.network-canvas-shell {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 16px;
+  background: #fcfbfc;
+}
+
+.cy-network {
+  height: 640px;
+  border: 0;
+  border-radius: 0;
   background:
-    radial-gradient(circle at 50% 50%, rgba(166,79,115,.06), transparent 40%),
-    #fbf9fa;
+    radial-gradient(circle at 50% 50%, rgba(107,41,66,.035), transparent 46%),
+    linear-gradient(rgba(48,21,31,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(48,21,31,.025) 1px, transparent 1px),
+    #fcfbfc;
+  background-size: auto, 28px 28px, 28px 28px, auto;
+}
+
+.network-view-toolbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid rgba(209,197,202,.92);
+  border-radius: 11px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 8px 24px rgba(48,21,31,.08);
+  backdrop-filter: blur(10px);
+}
+
+.network-view-toolbar button {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.network-view-toolbar button:first-child,
+.network-view-toolbar button:nth-child(2) {
+  padding: 0;
+  font-size: 1.05rem;
+}
+
+.network-view-toolbar button:hover,
+.network-view-toolbar button:focus-visible {
+  background: var(--surface-alt);
+}
+
+.network-interaction-hint,
+.network-view-note {
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.5;
+}
+
+.network-interaction-hint {
+  margin: 9px 2px 0;
+}
+
+.network-view-note {
+  margin: -3px 0 14px;
 }
 .network-inspector {
-  min-height: 600px;
-  padding: 24px;
+  min-height: 640px;
+  padding: 22px;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  background: var(--surface-alt);
+  border-radius: 16px;
+  background: var(--surface-soft, #faf8f9);
 }
 .network-inspector h3 { margin: 0 0 6px; color: var(--cabernet-deep); font-size: 1.8rem; }
 .network-inspector > code { color: var(--cabernet); }
@@ -130,6 +198,28 @@
 @media (max-width: 640px) {
   .network-controls { grid-template-columns: 1fr; }
   .network-search { grid-column: auto; }
-  .cy-network { height: 480px; }
-  .network-locus { padding: 24px 18px; border-radius: 20px; }
+
+  .cy-network { height: 520px; }
+
+  .network-view-toolbar {
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    justify-content: flex-end;
+  }
+
+  .network-view-toolbar button {
+    min-height: 36px;
+  }
+
+  .network-interaction-hint {
+    margin-top: 8px;
+    font-size: .68rem;
+  }
+
+  .network-inspector {
+    min-height: 0;
+  }
+
+  .network-locus { padding: 24px 18px; border-radius: 16px; }
 }
