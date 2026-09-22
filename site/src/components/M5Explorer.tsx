@@ -21,6 +21,10 @@ const M5NetworkExplorer = lazy(() => import('./M5NetworkExplorer'))
 
 type YearFilter = 'all' | 2012 | 2013 | 2014
 
+function scrollToM5Section(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 function DataState({ loading, error }: { loading: boolean; error: string | null }) {
   if (loading) {
     return (
@@ -542,12 +546,12 @@ export default function M5Explorer() {
       <DataState loading={loading} error={error} />
 
       <nav className="m5-section-nav" aria-label="Secciones de M5">
-        <a href="#trajectory">Trayectoria</a>
-        <a href="#contrasts">Contrastes</a>
-        <a href="#candidates">Candidatos</a>
-        <a href="#network">Red</a>
-        <a href="#hubs">Hubs</a>
-        <a href="#evidence">Evidencia</a>
+        <button type="button" onClick={() => scrollToM5Section('trajectory')}>Trayectoria</button>
+        <button type="button" onClick={() => scrollToM5Section('contrasts')}>Contrastes</button>
+        <button type="button" onClick={() => scrollToM5Section('candidates')}>Candidatos</button>
+        <button type="button" onClick={() => scrollToM5Section('network')}>Red</button>
+        <button type="button" onClick={() => scrollToM5Section('hubs')}>Hubs</button>
+        <button type="button" onClick={() => scrollToM5Section('evidence')}>Evidencia</button>
       </nav>
 
       <div className="m5-crosslink">
