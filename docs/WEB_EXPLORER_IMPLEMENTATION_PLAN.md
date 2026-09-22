@@ -798,15 +798,17 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-006 — Functional enrichment
 
-- [ ] barras ORA;
-- [ ] vista MapMan v3;
-- [ ] vista MapMan v5.1;
-- [ ] vista GO auditado;
-- [ ] temas preespecificados;
-- [ ] cobertura;
-- [ ] conflicto CHS/STS.
+- [x] barras ORA;
+- [x] vista MapMan v3;
+- [x] vista MapMan v5.1;
+- [x] vista GO auditado;
+- [x] temas preespecificados;
+- [x] cobertura;
+- [x] conflicto CHS/STS.
 
 **Aceptación:** un usuario puede distinguir claramente enriquecimiento, cobertura y conflicto de anotación.
+
+**Verificación 2026-09-22:** commit `126fead`. Se añadió `functional_enrichment.json` generado desde tablas canónicas vigentes y un explorador en `/enrichment` con selector de fuente, módulo, FDR significativo/todos los tests, búsqueda, barras ORA, cobertura, warnings, temas MapMan, auditoría GO T-005A y comparación M5 v3/v5.1. El exportador excluye la tabla GO histórica de la inferencia actual y usa `results/go_ora_beta10/go_all_terms.tsv`. CI run `35749918846` pasó export, validación, lint, typecheck y build; validó 11.104 términos testados. GitHub Pages run `35749918954` desplegó la actualización con éxito.
 
 ---
 
@@ -1012,15 +1014,14 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-006 — enriquecimiento funcional
+## Próxima tarea: WEB-008 — validación externa
 
-La primera preview pública ya fue desplegada correctamente en:
+Con WEB-006 ya publicado, el siguiente paso del roadmap es convertir T-007 en una vista interactiva que mantenga separadas las dos fuentes skin-only:
 
-`https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`
+- GSE72421 (microarray);
+- PRJNA260535 (RNA-seq).
 
-El segundo intento del workflow `35748440288` completó `build` y `deploy` con `success`. GitHub Pages reportó como environment URL exactamente la dirección anterior.
-
-Siguiente implementación: WEB-006, incorporando enriquecimiento funcional interactivo con MapMan v3/v5.1, GO auditado, cobertura y temas preespecificados, manteniendo visible el conflicto CHS/STS.
+La página debe mostrar cobertura/evaluable, dirección Cabernet−Pinot, FDR, concordancia con el baseline y límites de plataforma, evitando visualmente que estas muestras parezcan réplicas adicionales de GSE98923.
 
 ---
 
@@ -1034,9 +1035,9 @@ Siguiente implementación: WEB-006, incorporando enriquecimiento funcional inter
 | WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
 | WEB-004 | DONE | 2026-09-22 | M5 Explorer interactivo + hubs + CHS/STS + provenance; CI PASS (run 35747710946) |
 | WEB-005 | TODO | — | Después de preview/enrichment |
-| WEB-006 | TODO | — | — |
+| WEB-006 | DONE | 2026-09-22 | MapMan v3/v5.1 + GO T-005A + temas/cobertura; CI/deploy PASS |
 | WEB-007 | TODO | — | — |
-| WEB-008 | TODO | — | — |
+| WEB-008 | TODO | — | Próxima |
 | WEB-009 | TODO | — | — |
 | WEB-010 | TODO | — | — |
 | WEB-011 | TODO | — | — |
