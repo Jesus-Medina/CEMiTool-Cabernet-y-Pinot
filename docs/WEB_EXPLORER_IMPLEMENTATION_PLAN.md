@@ -1012,11 +1012,15 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: primera preview pública
+## Próxima tarea: habilitar GitHub Pages y completar primera preview
 
-Con WEB-001 a WEB-004 validados, el siguiente paso recomendado del roadmap es publicar una primera preview en GitHub Pages para revisar la experiencia real en navegador y móvil antes de añadir más capas científicas.
+El workflow de preview ya está implementado en `.github/workflows/deploy-site.yml` y el build completo pasa. El primer intento de deployment (run `35748440288`) se detuvo únicamente en `actions/configure-pages@v5` porque GitHub Pages todavía no está habilitado para este repositorio.
 
-Después de la preview, continuar con WEB-006 (enriquecimiento funcional), seguido por WEB-008 y WEB-009.
+**Acción manual única requerida:** `Settings → Pages → Build and deployment → Source → GitHub Actions`.
+
+Después de habilitarlo, reejecutar el workflow **Deploy scientific explorer to GitHub Pages**. El sitio quedará preparado para rutas SPA mediante `HashRouter`.
+
+Una vez validada la preview real en navegador y móvil, continuar con WEB-006 (enriquecimiento funcional), seguido por WEB-008 y WEB-009.
 
 ---
 
@@ -1036,6 +1040,6 @@ Después de la preview, continuar con WEB-006 (enriquecimiento funcional), segui
 | WEB-009 | TODO | — | — |
 | WEB-010 | TODO | — | — |
 | WEB-011 | TODO | — | — |
-| WEB-012 | TODO | — | — |
+| WEB-012 | BLOCKED | 2026-09-22 | Workflow listo; Pages requiere habilitación manual en Settings → Pages → GitHub Actions |
 
 Este cuadro debe actualizarse en cada sesión de implementación para evitar perder el estado del trabajo.
