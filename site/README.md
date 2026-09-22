@@ -8,6 +8,7 @@ Frontend del explorador científico interactivo del proyecto.
 - WEB-002: capa canónica de exportación/validación completada.
 - WEB-003: Home + Story conectadas a datos reales.
 - WEB-004: M5 Explorer interactivo completado.
+- WEB-006: enriquecimiento funcional MapMan v3/v5.1 + GO T-005A completado.
 - Preview GitHub Pages: desplegada correctamente en `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
 
 ## Desarrollo
