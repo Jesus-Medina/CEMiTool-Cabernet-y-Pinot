@@ -119,6 +119,19 @@ export type HubsPayload = {
   rows: HubRow[]
 }
 
+export type M5NetworkEdge = {
+  Gene1: string
+  Gene2: string
+  Pearson_r: number
+  Beta10_unsigned_adjacency: number
+  Pair_group: string
+}
+
+export type M5NetworkPayload = {
+  schema_version: number
+  edges: M5NetworkEdge[]
+}
+
 export type ExternalValidationRow = {
   Dataset: 'GSE72421' | 'PRJNA260535'
   Condition: string
@@ -310,6 +323,10 @@ export function loadM5Trajectory() {
 
 export function loadHubs() {
   return fetchJson<HubsPayload>('hubs.json')
+}
+
+export function loadM5Network() {
+  return fetchJson<M5NetworkPayload>('m5_network.json')
 }
 
 export function loadExternalValidation() {

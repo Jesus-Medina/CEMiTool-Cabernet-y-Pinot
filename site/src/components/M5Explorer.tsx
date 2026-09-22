@@ -11,6 +11,7 @@ import type {
 } from '../data/siteData'
 import { useM5ExplorerData } from '../hooks/useM5ExplorerData'
 import { formatDecimal, formatScientific } from '../utils/format'
+import M5NetworkExplorer from './M5NetworkExplorer'
 
 const STAGES = ['FruitSet', 'Veraison', 'Harvest'] as const
 const CULTIVARS = ['Cabernet Sauvignon', 'Pinot noir'] as const
@@ -463,7 +464,7 @@ function ProvenancePanel({
 }: {
   provenance: ProvenancePayload
 }) {
-  const wanted = ['m5_trajectory', 'hubs', 'external_validation']
+  const wanted = ['m5_trajectory', 'hubs', 'm5_network', 'external_validation']
   const artifacts = provenance.artifacts.filter((row) => wanted.includes(row.artifact_id))
   const commit = provenance.repository_commit
 
@@ -654,6 +655,7 @@ export default function M5Explorer() {
           </section>
 
           <AnnotationConflictPanel hubs={hubs.rows} />
+          <M5NetworkExplorer hubs={hubs.rows} provenance={provenance} />
           <HubsTable hubs={hubs.rows} />
           <ProvenancePanel provenance={provenance} />
         </>
