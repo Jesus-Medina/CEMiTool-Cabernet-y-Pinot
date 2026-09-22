@@ -202,7 +202,10 @@ export function HomePage() {
         <Link className="portal-card" to="/enrichment">
           <span>04</span><h2>Enriquecimiento</h2><p>MapMan v3/v5.1, GO auditado y cobertura.</p>
         </Link>
-      </section>
+              <Link className="portal-card" to="/chat">
+          <span>05</span><h2>Chat del proyecto</h2><p>Pregunta sobre resultados, métodos, scripts y trazabilidad usando las fuentes indexadas.</p>
+        </Link>
+</section>
     </div>
   )
 }
