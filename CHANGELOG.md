@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-22 — WEB-002 canonical site-data layer completed
+
+- Added a standard-library Python export layer that reads canonical metadata/results and generates ten frontend JSON datasets at build time rather than committing stale derived snapshots.
+- Added source-schema checks, explicit NA handling, finite-number validation, row-count reconstruction checks and T-008 consistency checks against the 54-run manifest and per-run QC files.
+- Added provenance generation with source/script paths, SHA-256 hashes, repository commit and parameters for project summary, modules, M5 trajectory, contrasts, enrichment, hubs, M5 network, external validation and T-008 progress.
+- Expanded the site CI workflow so scientific source changes also trigger export, validation, lint, typecheck and production build.
+- GitHub Actions run `35745653944` passed all checks and reported: `samples=54; modules=3050; hubs=361; t008=2/54`.
+- WEB-003 (Home + Story consuming generated data) is now the next web task. No scientific result or statistical analysis was changed.
+
 ## 2026-09-22 — WEB-001 interactive explorer scaffold completed
 
 - Added the initial `site/` frontend using React 19, TypeScript and Vite with the GitHub Pages base path `/CEMiTool-Cabernet-y-Pinot/`.
