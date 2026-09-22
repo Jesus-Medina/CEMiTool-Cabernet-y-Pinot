@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-22 — WEB-009 live T-008 dashboard completed
+
+- Replaced the T-008 placeholder with a live dashboard driven entirely by the frozen 54-run manifest, the versioned batch-progress ledger and per-run QC files.
+- Upgraded `t008_progress.json` to schema v2 with PASS/FAIL/IN_PROGRESS/PENDING states, progress percentage, manifest FASTQ bytes/read totals, validated-run mapping summaries and per-run metadata/QC.
+- Added the current 2/54 progress view, a 2 cultivar × 3 stage coverage matrix, validated-run cards, a searchable/filterable 54-run ledger, recent event log and per-artifact provenance.
+- Added a hard interpretation gate: incomplete run QC cannot be presented as a modern expression matrix, cultivar contrast or module-preservation conclusion. Even 54/54 will only unlock the next processing stage, not an automatic biological conclusion.
+- Fixed the design-cell status label so cells with no PASS runs are shown as pending rather than incorrectly labelled QC PASS.
+- CI run `35752102720` passed export/validation/lint/typecheck/build and reported `t008=2/54`; Pages run `35752102759` deployed the update successfully.
+- Implementation commits: `4ef68dc` + `20983af`. No FASTQ processing, CEMiTool rerun, modern contrast or preservation inference was performed by the web layer.
+
 ## 2026-09-22 — WEB-008 external skin validation explorer completed
 
 - Added a dedicated T-007 export layer that enriches the existing primary-hub JSON with canonical module-coverage summaries, source QC and sample-audit summaries while preserving the original two external datasets as separate evidence layers.
