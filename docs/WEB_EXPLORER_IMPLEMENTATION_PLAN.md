@@ -1,6 +1,6 @@
 # CEMiTool Cabernet–Pinot Interactive Explorer — Plan de implementación
 
-**Estado general:** PLANIFICADO  
+**Estado general:** EN IMPLEMENTACIÓN  
 **Inicio:** 2026-09-22  
 **Repositorio:** `Jesus-Medina/CEMiTool-Cabernet-y-Pinot`  
 **Objetivo:** convertir el proyecto en un sitio web científico, interactivo, auditable y desplegado en GitHub Pages, sin reemplazar ni alterar el pipeline científico original.
@@ -709,16 +709,18 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-001 — Scaffold
 
-- [ ] Crear `site/`.
-- [ ] Inicializar React + TypeScript + Vite.
-- [ ] Configurar base path para GitHub Pages.
-- [ ] Añadir router.
-- [ ] Crear layout global.
-- [ ] Añadir variables visuales.
-- [ ] Crear páginas placeholder.
-- [ ] Añadir lint/typecheck/build.
+- [x] Crear `site/`.
+- [x] Inicializar React + TypeScript + Vite.
+- [x] Configurar base path para GitHub Pages.
+- [x] Añadir router.
+- [x] Crear layout global.
+- [x] Añadir variables visuales.
+- [x] Crear páginas placeholder.
+- [x] Añadir lint/typecheck/build.
 
 **Aceptación:** `npm run build` genera sitio estático sin errores.
+
+**Verificación 2026-09-22:** GitHub Actions `Site scaffold checks`, run `35745067306`, completó instalación, lint, typecheck y build con resultado `success`. Scaffold principal: commit `f0c0c38`.
 
 ---
 
@@ -1002,13 +1004,13 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-001
+## Próxima tarea: WEB-002
 
-Crear el scaffold de `site/` con React + TypeScript + Vite, páginas vacías, routing, layout, base path de GitHub Pages y build reproducible.
+Construir `site/scripts/export_site_data.py` y la capa de validación que leerá las tablas canónicas, comprobará sus columnas y generará los primeros JSON del frontend.
 
 **No implementar gráficos científicos todavía.**
 
-Primero necesitamos que la estructura web compile de forma estable. Después WEB-002 conectará datos reales.
+Primero conectaremos y validaremos los datos reales. Los componentes visuales comenzarán después de que WEB-002 tenga una salida reproducible.
 
 ---
 
@@ -1017,8 +1019,8 @@ Primero necesitamos que la estructura web compile de forma estable. Después WEB
 | Fase | Estado | Fecha | Nota |
 |---|---|---|---|
 | WEB-000 | IN PROGRESS | 2026-09-22 | Plan creado; falta congelar paleta y provenance schema |
-| WEB-001 | TODO | — | Próxima |
-| WEB-002 | TODO | — | — |
+| WEB-001 | DONE | 2026-09-22 | Scaffold + routing + CI; lint/typecheck/build PASS |
+| WEB-002 | TODO | — | Próxima |
 | WEB-003 | TODO | — | — |
 | WEB-004 | TODO | — | — |
 | WEB-005 | TODO | — | — |
