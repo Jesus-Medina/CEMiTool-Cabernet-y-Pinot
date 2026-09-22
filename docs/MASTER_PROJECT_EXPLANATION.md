@@ -14,7 +14,7 @@ Documentos complementarios:
 - [Glosario técnico](MASTER_GLOSSARY.md)
 - [Matriz de evidencia](MASTER_EVIDENCE_MATRIX.md)
 
-Estado auditado: 2026-09-21. Se verificó el árbol remoto de GitHub y se contrastaron documentos, scripts canónicos y resultados vigentes. El repositorio contiene 531 archivos: 277 canónicos y 254 históricos. Hay 27 scripts canónicos en `scripts/` y 69 tablas TSV/CSV bajo `results/`.
+Estado auditado: 2026-09-21. Se verificó el árbol remoto de GitHub y se contrastaron documentos, scripts canónicos y resultados vigentes. El repositorio contiene 539 archivos tras esta auditoría: 285 canónicos y 254 históricos. Hay 27 scripts canónicos en `scripts/` y 69 tablas TSV/CSV bajo `results/`.
 
 ---
 
