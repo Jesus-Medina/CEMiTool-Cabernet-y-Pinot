@@ -1012,15 +1012,15 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: habilitar GitHub Pages y completar primera preview
+## Próxima tarea: WEB-006 — enriquecimiento funcional
 
-El workflow de preview ya está implementado en `.github/workflows/deploy-site.yml` y el build completo pasa. El primer intento de deployment (run `35748440288`) se detuvo únicamente en `actions/configure-pages@v5` porque GitHub Pages todavía no está habilitado para este repositorio.
+La primera preview pública ya fue desplegada correctamente en:
 
-**Acción manual única requerida:** `Settings → Pages → Build and deployment → Source → GitHub Actions`.
+`https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`
 
-Después de habilitarlo, reejecutar el workflow **Deploy scientific explorer to GitHub Pages**. El sitio quedará preparado para rutas SPA mediante `HashRouter`.
+El segundo intento del workflow `35748440288` completó `build` y `deploy` con `success`. GitHub Pages reportó como environment URL exactamente la dirección anterior.
 
-Una vez validada la preview real en navegador y móvil, continuar con WEB-006 (enriquecimiento funcional), seguido por WEB-008 y WEB-009.
+Siguiente implementación: WEB-006, incorporando enriquecimiento funcional interactivo con MapMan v3/v5.1, GO auditado, cobertura y temas preespecificados, manteniendo visible el conflicto CHS/STS.
 
 ---
 
@@ -1040,6 +1040,6 @@ Una vez validada la preview real en navegador y móvil, continuar con WEB-006 (e
 | WEB-009 | TODO | — | — |
 | WEB-010 | TODO | — | — |
 | WEB-011 | TODO | — | — |
-| WEB-012 | BLOCKED | 2026-09-22 | Workflow listo; Pages requiere habilitación manual en Settings → Pages → GitHub Actions |
+| WEB-012 | IN PROGRESS | 2026-09-22 | Preview pública desplegada; release estable queda para después de QA final |
 
 Este cuadro debe actualizarse en cada sesión de implementación para evitar perder el estado del trabajo.
