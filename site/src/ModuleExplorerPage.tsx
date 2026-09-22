@@ -257,7 +257,7 @@ function ModuleHubs({
             {rows.map((row) => (
               <tr key={row.Gene}>
                 <td>{row.Rank_kWithin}</td>
-                <td><Link to={`/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
+                <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
                 <td>{formatDecimal(row.kWithin, 3)}</td>
                 <td>{formatDecimal(row.kME_signed, 3)}</td>
                 <td>{row.Top_decile_kWithin ? 'Sí' : 'No'}</td>
