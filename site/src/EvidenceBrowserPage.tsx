@@ -164,9 +164,10 @@ function ArtifactEvidence({
 export default function EvidenceBrowserPage() {
   const [data, setData] = useState<ProvenancePayload | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [query, setQuery] = useState('')
   const [searchParams] = useSearchParams()
   const requestedArtifact = searchParams.get('artifact')
+  const requestedQuery = searchParams.get('q') ?? ''
+  const [query, setQuery] = useState(requestedQuery)
 
   useEffect(() => {
     let active = true
@@ -181,6 +182,10 @@ export default function EvidenceBrowserPage() {
       active = false
     }
   }, [])
+
+  useEffect(() => {
+    setQuery(requestedQuery)
+  }, [requestedQuery])
 
   useEffect(() => {
     if (!data || !requestedArtifact) return
