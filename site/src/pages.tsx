@@ -5,6 +5,8 @@ import { ModuleExplorerDetailPage, ModulesExplorerPage } from './ModuleExplorerP
 import ExternalValidationPage from './ExternalValidationPage'
 import T008DashboardPage from './T008DashboardPage'
 import EvidenceBrowserPage from './EvidenceBrowserPage'
+import MethodsPageView from './MethodsPage'
+import GeneDetailPageView from './GeneDetailPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
 import { formatDecimal, formatScientific } from './utils/format'
 
@@ -412,19 +414,7 @@ export function ModuleDetailPage() {
 }
 
 export function GeneDetailPage() {
-  const { geneId } = useParams()
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="GENE"
-        title={geneId ?? 'Gen'}
-        description="Ficha individual para integrar centralidad, anotaciones, posición y evidencia externa sin inventar información ausente."
-      />
-      <PlaceholderPanel title="Ficha completa pendiente">
-        WEB-004 ya enlaza NAC, CuAO y genes CHS/STS hacia esta ruta. La ficha detallada reutilizable se completará junto con el explorador de genes.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <GeneDetailPageView />
 }
 
 export function ValidationPage() {
@@ -436,18 +426,7 @@ export function T008Page() {
 }
 
 export function MethodsPage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="METHODS"
-        title="Métodos y decisiones"
-        description="Puente entre la explicación humana, los parámetros analíticos y los scripts exactos del repositorio."
-      />
-      <PlaceholderPanel title="Métodos interactivos pendientes">
-        Esta sección enlazará decisiones, definiciones y scripts sin ejecutar análisis científicos dentro del navegador.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <MethodsPageView />
 }
 
 export function EvidencePage() {
