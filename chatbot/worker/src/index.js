@@ -138,6 +138,30 @@ function parseInteraction(data) {
   return { answer, citations: unique };
 }
 
+function parseRetryAfterSeconds(response, data) {
+  const header = response.headers.get("retry-after");
+  if (header) {
+    const numeric = Number(header);
+    if (Number.isFinite(numeric) && numeric >= 0) {
+      return Math.ceil(numeric);
+    }
+
+    const date = Date.parse(header);
+    if (!Number.isNaN(date)) {
+      return Math.max(0, Math.ceil((date - Date.now()) / 1000));
+    }
+  }
+
+  for (const detail of data?.error?.details || []) {
+    const retryDelay = detail?.retryDelay || detail?.retry_delay;
+    if (typeof retryDelay !== "string") continue;
+    const match = retryDelay.match(/^([0-9]+(?:\.[0-9]+)?)s$/);
+    if (match) return Math.ceil(Number(match[1]));
+  }
+
+  return null;
+}
+
 async function callGemini(env, message, history) {
   if (!env.GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is not configured in the worker.");
@@ -181,6 +205,8 @@ async function callGemini(env, message, history) {
       `Gemini API returned HTTP ${response.status}`;
     const error = new Error(detail);
     error.status = response.status;
+    error.providerStatus = data?.error?.status || "";
+    error.retryAfterSeconds = parseRetryAfterSeconds(response, data);
     throw error;
   }
 
@@ -256,13 +282,40 @@ export default {
     } catch (error) {
       const status = Number(error?.status) || 500;
       const publicStatus = status >= 400 && status < 500 ? status : 502;
-      console.error("chat error", error);
+      const retryAfterSeconds =
+        Number.isFinite(Number(error?.retryAfterSeconds))
+          ? Number(error.retryAfterSeconds)
+          : null;
+
+      console.error("chat error", {
+        status,
+        providerStatus: error?.providerStatus || "",
+        message: error?.message || "Unknown error",
+        retryAfterSeconds,
+      });
+
+      if (publicStatus === 429) {
+        return json(
+          {
+            error:
+              retryAfterSeconds !== null && retryAfterSeconds <= 120
+                ? "El asistente necesita un momento antes de responder. Tu pregunta quedó guardada y podrás reintentarlo en unos segundos."
+                : "El asistente no puede responder por el momento porque alcanzó su límite temporal de consultas. Tu pregunta quedó guardada para que puedas reintentarlo más tarde.",
+            code: "RATE_LIMITED",
+            retryable: true,
+            retryAfterSeconds,
+          },
+          429,
+          cors,
+        );
+      }
+
       return json(
         {
           error:
-            publicStatus === 429
-              ? "El asistente alcanzó temporalmente un límite de uso. Intenta nuevamente en unos minutos."
-              : "No se pudo consultar el asistente en este momento.",
+            "No pudimos consultar las fuentes del proyecto ahora mismo. Tu pregunta no se perdió; puedes volver a intentarlo.",
+          code: "ASSISTANT_UNAVAILABLE",
+          retryable: true,
         },
         publicStatus,
         cors,
