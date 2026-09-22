@@ -182,7 +182,7 @@ function ContrastMatrix({
           <p>
             La dirección y la magnitud se muestran por celda. El FDR global corresponde a la familia de 90 contrastes.
           </p>
-          <Link className="inline-link" to="/reproducibility?artifact=module_contrasts">ⓘ Ver provenance →</Link>
+          <Link className="inline-link" to="/reproducibility?artifact=module_contrasts">ⓘ Ver trazabilidad →</Link>
         </div>
       </div>
 
