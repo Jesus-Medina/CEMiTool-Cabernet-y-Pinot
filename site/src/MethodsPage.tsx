@@ -146,7 +146,7 @@ export default function MethodsPage() {
             <nav aria-label="Índice de métodos">
               {sections.map((section) => <a key={section.id} href={'#' + section.id}>{section.label}</a>)}
             </nav>
-            <Link to="/evidence">Abrir reproducibilidad →</Link>
+            <Link to="/reproducibility">Abrir reproducibilidad →</Link>
           </aside>
 
           <div className="methods-content">
@@ -187,14 +187,14 @@ export default function MethodsPage() {
             <section className="method-section" id="enrichment">
               <div className="method-section-heading"><span>04</span><div><p className="eyebrow">Función</p><h2>Enriquecimiento funcional</h2></div></div>
               <div className="method-answer"><p>La función se evalúa a nivel de módulo mediante las fuentes exportadas por el proyecto. Los conflictos de anotación, como CHS/STS, se mantienen visibles en vez de forzar una identidad enzimática única.</p></div>
-              <Link className="inline-link" to="/enrichment">Abrir exploración funcional →</Link>
+              <Link className="inline-link" to="/results/function">Abrir exploración funcional →</Link>
               <MethodEvidence artifacts={evidence(['functional_enrichment', 'enrichments'])} provenance={provenance} />
             </section>
 
             <section className="method-section" id="validation">
               <div className="method-section-heading"><span>05</span><div><p className="eyebrow">Validación</p><h2>Validación externa en piel</h2></div></div>
               <div className="method-answer"><p>Los datasets externos se presentan como evidencia observacional independiente. No se agregan al N={project.design.sample_count} del baseline como si fueran réplicas equivalentes.</p></div>
-              <Link className="inline-link" to="/validation">Abrir validación externa →</Link>
+              <Link className="inline-link" to="/results/validation">Abrir validación externa →</Link>
               <MethodEvidence artifacts={evidence(['external_validation'])} provenance={provenance} />
             </section>
 
@@ -204,7 +204,7 @@ export default function MethodsPage() {
                 Estado exportado actual: <strong>{project.t008.validated_runs}/{project.t008.total_runs}</strong> corridas validadas. {' '}
                 {project.t008.complete ? 'El exportador marca el lote como completo.' : 'La matriz moderna completa todavía no está disponible, por lo que el sitio no presenta una conclusión moderna final.'}
               </p></div>
-              <Link className="inline-link" to="/t008">Abrir estado T-008 →</Link>
+              <Link className="inline-link" to="/status/t008">Abrir estado T-008 →</Link>
               <MethodEvidence artifacts={evidence(['t008_progress'])} provenance={provenance} />
             </section>
           </div>
