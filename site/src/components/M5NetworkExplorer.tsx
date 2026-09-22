@@ -192,8 +192,8 @@ export default function M5NetworkExplorer({
 }) {
   const [edges, setEdges] = useState<M5NetworkEdge[] | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [topN, setTopN] = useState<(typeof TOP_OPTIONS)[number]>(25)
-  const [threshold, setThreshold] = useState(0.3)
+  const [topN, setTopN] = useState<(typeof TOP_OPTIONS)[number]>(15)
+  const [threshold, setThreshold] = useState(0.4)
   const [selectedGene, setSelectedGene] = useState<string | null>(null)
   const [query, setQuery] = useState('')
   const containerRef = useRef<HTMLDivElement>(null)
@@ -270,9 +270,9 @@ export default function M5NetworkExplorer({
     const cy = cytoscape({
       container: containerRef.current,
       elements,
-      minZoom: 0.35,
-      maxZoom: 2.5,
-      wheelSensitivity: 0.25,
+      minZoom: 0.2,
+      maxZoom: 3.5,
+      wheelSensitivity: 0.12,
       style: [
         {
           selector: 'node',
@@ -307,9 +307,9 @@ export default function M5NetworkExplorer({
         {
           selector: 'edge',
           style: {
-            width: 'mapData(weight, ' + String(threshold) + ', 1, 0.7, 4)',
+            width: 'mapData(weight, ' + String(threshold) + ', 1, 0.55, 2.6)',
             'line-color': '#b9aeb3',
-            opacity: 0.5,
+            opacity: 0.28,
             'curve-style': 'haystack',
           },
         },
@@ -330,9 +330,15 @@ export default function M5NetworkExplorer({
         name: 'cose',
         animate: false,
         fit: true,
-        padding: 34,
-        nodeRepulsion: 8000,
-        idealEdgeLength: 70,
+        padding: 72,
+        nodeRepulsion: 18000,
+        nodeOverlap: 30,
+        idealEdgeLength: 120,
+        edgeElasticity: 70,
+        nestingFactor: 1.2,
+        gravity: 0.35,
+        numIter: 1400,
+        randomize: true,
       },
     })
 
@@ -340,8 +346,20 @@ export default function M5NetworkExplorer({
       setSelectedGene(event.target.id())
     })
 
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => cy.resize())
+        : null
+    if (containerRef.current) resizeObserver?.observe(containerRef.current)
+
+    requestAnimationFrame(() => {
+      cy.resize()
+      cy.fit(cy.elements(), 72)
+    })
+
     cyRef.current = cy
     return () => {
+      resizeObserver?.disconnect()
       cy.destroy()
       cyRef.current = null
     }
@@ -353,9 +371,44 @@ export default function M5NetworkExplorer({
     if (node.nonempty()) {
       cyRef.current.$(':selected').unselect()
       node.select()
-      cyRef.current.animate({ center: { eles: node }, zoom: 1.15 }, { duration: 250 })
+      const targetZoom = Math.min(Math.max(cyRef.current.zoom(), 1.15), 1.7)
+      cyRef.current.animate({ center: { eles: node }, zoom: targetZoom }, { duration: 250 })
     }
   }, [selectedGene, elements])
+
+  function changeZoom(factor: number) {
+    const cy = cyRef.current
+    if (!cy) return
+    const next = Math.max(cy.minZoom(), Math.min(cy.maxZoom(), cy.zoom() * factor))
+    cy.animate({ zoom: next }, { duration: 160 })
+  }
+
+  function fitNetwork() {
+    const cy = cyRef.current
+    if (!cy) return
+    cy.resize()
+    cy.fit(cy.elements(), 72)
+  }
+
+  function relayoutNetwork() {
+    const cy = cyRef.current
+    if (!cy) return
+    cy.layout({
+      name: 'cose',
+      animate: true,
+      animationDuration: 420,
+      fit: true,
+      padding: 72,
+      nodeRepulsion: 18000,
+      nodeOverlap: 30,
+      idealEdgeLength: 120,
+      edgeElasticity: 70,
+      nestingFactor: 1.2,
+      gravity: 0.35,
+      numIter: 1400,
+      randomize: true,
+    }).run()
+  }
 
   function locateGene() {
     const normalized = query.trim().toLowerCase()
@@ -427,10 +480,24 @@ export default function M5NetworkExplorer({
               <span><strong>{visibleEdgeCount(edges, visibleIds, threshold)}</strong> aristas visibles</span>
               <span><strong>{edges.length.toLocaleString('es-CL')}</strong> aristas canónicas totales</span>
             </div>
+            <p className="network-view-note">
+              La vista inicial prioriza legibilidad con Top 15 y adjacency ≥ 0,40. Puedes ampliar la red con los filtros sin recalcular los datos.
+            </p>
 
             <div className="network-layout">
               <div>
-                <div ref={containerRef} className="cy-network" aria-label="Red interactiva M5 renderizada con Cytoscape.js" />
+                <div className="network-canvas-shell">
+                  <div className="network-view-toolbar" aria-label="Controles de vista de la red">
+                    <button type="button" onClick={() => changeZoom(0.82)} aria-label="Alejar red" title="Alejar">−</button>
+                    <button type="button" onClick={() => changeZoom(1.22)} aria-label="Acercar red" title="Acercar">+</button>
+                    <button type="button" onClick={fitNetwork}>Ajustar</button>
+                    <button type="button" onClick={relayoutNetwork}>Reordenar</button>
+                  </div>
+                  <div ref={containerRef} className="cy-network" aria-label="Red interactiva M5 renderizada con Cytoscape.js" />
+                </div>
+                <div className="network-interaction-hint">
+                  Rueda para zoom · arrastra el fondo para mover la vista · toca un nodo para inspeccionarlo.
+                </div>
                 <div className="network-legend">
                   <span><i className="network-shape network-shape--family" />CHS/STS-like</span>
                   <span><i className="network-shape network-shape--nac" />NAC</span>
