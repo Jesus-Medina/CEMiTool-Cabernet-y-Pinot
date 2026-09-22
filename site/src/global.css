@@ -3811,3 +3811,236 @@ body {
     min-height: 36px;
   }
 }
+
+
+/* Results landing */
+.results-landing {
+  display: grid;
+  gap: 18px;
+}
+
+.results-landing-intro {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(300px,.55fr);
+  gap: 34px;
+  align-items: end;
+  padding: 30px 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(107,41,66,.04), transparent 34%),
+    var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.results-landing-intro h1 {
+  max-width: 820px;
+  margin: 0;
+  color: var(--cabernet-deep);
+  font-size: clamp(2rem,4.4vw,4rem);
+  line-height: 1.01;
+  letter-spacing: -.045em;
+}
+
+.results-landing-intro > div > p:last-child {
+  max-width: 720px;
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+.results-landing-facts {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+}
+
+.results-landing-facts div {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fbfafb;
+}
+
+.results-landing-facts dt {
+  color: var(--muted);
+  font-size: .66rem;
+  font-weight: 760;
+}
+
+.results-landing-facts dd {
+  margin: 0;
+  color: var(--cabernet-deep);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.results-destination-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+.results-destination-card {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  color: inherit;
+  background: var(--surface);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.results-destination-card:hover,
+.results-destination-card:focus-visible {
+  border-color: var(--border-strong);
+  background: #fcfafb;
+}
+
+.results-destination-card--primary {
+  border-color: rgba(107,41,66,.25);
+  background:
+    linear-gradient(145deg, rgba(107,41,66,.055), transparent 55%),
+    var(--surface);
+}
+
+.results-destination-card span {
+  color: #9f9298;
+  font-size: .63rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.results-destination-card h2 {
+  margin: 24px 0 8px;
+  color: var(--cabernet-deep);
+  font-size: 1.35rem;
+}
+
+.results-destination-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+.results-destination-card > strong {
+  color: var(--cabernet);
+  font-size: .74rem;
+}
+
+.results-secondary-path,
+.results-guidance {
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.results-secondary-path {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  padding: 22px;
+}
+
+.results-secondary-path > div {
+  max-width: 760px;
+}
+
+.results-secondary-path h2 {
+  margin: 0;
+  color: var(--cabernet-deep);
+  font-size: 1.25rem;
+}
+
+.results-secondary-path p:last-child {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.results-guidance {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.results-guidance article {
+  padding: 20px;
+  background: var(--surface);
+}
+
+.results-guidance strong {
+  color: var(--cabernet-deep);
+}
+
+.results-guidance p {
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.results-guidance a {
+  color: var(--cabernet);
+  font-size: .72rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .results-landing-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .results-landing-facts {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .results-destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-destination-card {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 650px) {
+  .results-landing-intro {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .results-landing-intro h1 {
+    font-size: clamp(2rem,11vw,3rem);
+  }
+
+  .results-landing-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .results-secondary-path {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .results-secondary-path .button {
+    width: 100%;
+  }
+
+  .results-guidance {
+    grid-template-columns: 1fr;
+  }
+}
