@@ -382,6 +382,101 @@ export function StoryPage() {
   )
 }
 
+export function ResultsLandingPage() {
+  const { project, modules, loading, error } = useCanonicalData()
+  const significantCount =
+    modules?.modules.filter((row) => row.cultivar_stage_significant_fdr05).length ?? 0
+  const reproducibleCount =
+    modules?.modules.filter((row) => row.robustness_classification === 'reproducible').length ?? 0
+
+  return (
+    <div className="results-landing">
+      <header className="results-landing-intro">
+        <div>
+          <p className="eyebrow">Resultados</p>
+          <h1>Elige qué dimensión quieres explorar.</h1>
+          <p>
+            Compara módulos, revisa evidencia externa o busca genes sin tener que conocer
+            de antemano cómo está organizado el pipeline.
+          </p>
+        </div>
+
+        {project && (
+          <dl className="results-landing-facts">
+            <div><dt>Módulos</dt><dd>{modules?.modules.length ?? '—'}</dd></div>
+            <div><dt>Cult×Stage FDR&lt;0,05</dt><dd>{significantCount}</dd></div>
+            <div><dt>Reproducibles</dt><dd>{reproducibleCount}</dd></div>
+          </dl>
+        )}
+      </header>
+
+      <DataState loading={loading} error={error} />
+
+      <section className="results-destination-grid" aria-label="Áreas de resultados">
+        <Link to="/results/modules" className="results-destination-card results-destination-card--primary">
+          <div>
+            <span>01</span>
+            <h2>Módulos</h2>
+            <p>
+              Compara M1–M10 por tamaño, interacción, robustez, enriquecimiento y evidencia externa.
+            </p>
+          </div>
+          <strong>Comparar módulos →</strong>
+        </Link>
+
+        <Link to="/results/validation" className="results-destination-card">
+          <div>
+            <span>02</span>
+            <h2>Validación</h2>
+            <p>
+              Revisa concordancia observacional en piel aislada sin mezclarla con el baseline.
+            </p>
+          </div>
+          <strong>Abrir validación →</strong>
+        </Link>
+
+        <Link to="/search?q=VIT_" className="results-destination-card">
+          <div>
+            <span>03</span>
+            <h2>Genes</h2>
+            <p>
+              Busca genes priorizados y abre fichas con centralidad, anotación y evidencia externa.
+            </p>
+          </div>
+          <strong>Buscar genes →</strong>
+        </Link>
+      </section>
+
+      <section className="results-secondary-path">
+        <div>
+          <p className="eyebrow">Función</p>
+          <h2>Explorar enriquecimiento transversal</h2>
+          <p>
+            MapMan, GO y auditoría de anotaciones siguen disponibles como una vista funcional
+            transversal, aunque su contexto natural sea cada módulo.
+          </p>
+        </div>
+        <Link className="button button--secondary" to="/results/function">
+          Abrir función
+        </Link>
+      </section>
+
+      <section className="results-guidance">
+        <article>
+          <strong>¿No sabes por dónde empezar?</strong>
+          <p>M5 es el caso más desarrollado del sitio y conecta trayectoria, hubs, red y validación.</p>
+          <Link to="/results/modules/M5">Abrir M5 →</Link>
+        </article>
+        <article>
+          <strong>¿Quieres verificar un resultado?</strong>
+          <p>Reproducibilidad conecta claims con archivos, scripts, parámetros, commit y hashes.</p>
+          <Link to="/reproducibility">Abrir reproducibilidad →</Link>
+        </article>
+      </section>
+    </div>
+  )
+}
+
 export function ModulesPage() {
   return <ModulesExplorerPage />
 }
