@@ -178,7 +178,7 @@ export function HomePage() {
                 <p>
                   FDR {formatScientific(m5?.cultivar_stage_fdr)} en el resumen canónico del módulo.
                 </p>
-                <Link to="/results/results/modules/M5">Abrir M5 →</Link>
+                <Link to="/results/modules/M5">Abrir M5 →</Link>
               </article>
 
               <article>
@@ -214,7 +214,7 @@ export function HomePage() {
                 sin convertir coexpresión en causalidad.
               </p>
               <div className="overview-inline-actions">
-                <Link className="button button--primary" to="/results/results/modules/M5">Explorar M5</Link>
+                <Link className="button button--primary" to="/results/modules/M5">Explorar M5</Link>
                 <Link className="button button--secondary" to="/reproducibility">Auditar evidencia</Link>
               </div>
             </div>
@@ -331,7 +331,7 @@ export function StoryPage() {
                   <strong>{harvestNegativeAllYears ? 'Cabernet − Pinot mantiene dirección negativa en todos ellos.' : 'la dirección no es idéntica en todos los años.'}</strong>
                 </p>
               )}
-              <Link className="inline-link" to="/results/results/modules/M5">Abrir M5 →</Link>
+              <Link className="inline-link" to="/results/modules/M5">Abrir M5 →</Link>
             </div>
           </article>
 
