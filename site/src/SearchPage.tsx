@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { loadHubs, loadModules, loadProvenance, type HubsPayload, type ModulesPayload, type ProvenancePayload } from './data/siteData'
 
 const destinations = [
@@ -23,6 +23,8 @@ function geneKeywords(row: HubsPayload['rows'][number]) {
 }
 
 export default function SearchPage() {
+  const { pathname } = useLocation()
+  const genesMode = pathname.startsWith('/results/genes')
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') ?? '')
   const [modules, setModules] = useState<ModulesPayload | null>(null)
@@ -70,9 +72,15 @@ export default function SearchPage() {
   }, [modules, normalized])
 
   const geneResults = useMemo(() => {
-    if (!hubs || !normalized) return []
-    return hubs.rows.filter((row) => geneKeywords(row).includes(normalized)).slice(0, 24)
-  }, [hubs, normalized])
+    if (!hubs) return []
+    if (!normalized) {
+      if (!genesMode) return []
+      return [...hubs.rows]
+        .sort((a, b) => a.Module.localeCompare(b.Module) || a.Rank_kWithin - b.Rank_kWithin)
+        .slice(0, 36)
+    }
+    return hubs.rows.filter((row) => geneKeywords(row).includes(normalized)).slice(0, 36)
+  }, [hubs, normalized, genesMode])
 
   const artifactResults = useMemo(() => {
     if (!provenance || !normalized) return []
@@ -84,26 +92,30 @@ export default function SearchPage() {
     ).slice(0, 20)
   }, [provenance, normalized])
 
-  const resultCount = pageResults.length + moduleResults.length + geneResults.length + artifactResults.length
+  const resultCount = (genesMode ? 0 : pageResults.length) + moduleResults.length + geneResults.length + artifactResults.length
 
   return (
     <div className="search-page">
       <header className="search-intro">
         <div>
-          <p className="eyebrow">Buscar</p>
-          <h1>Encuentra un resultado sin saber dónde vive.</h1>
-          <p>Busca módulos, genes, métodos, datasets, artefactos o conceptos del proyecto.</p>
+          <p className="eyebrow">{genesMode ? 'Resultados · Genes' : 'Buscar'}</p>
+          <h1>{genesMode ? 'Explora genes priorizados.' : 'Encuentra un resultado sin saber dónde vive.'}</h1>
+          <p>
+            {genesMode
+              ? 'Busca por ID, módulo o etiqueta funcional y abre una ficha con centralidad, anotación y evidencia externa.'
+              : 'Busca módulos, genes, métodos, datasets, artefactos o conceptos del proyecto.'}
+          </p>
         </div>
         <label className="global-search-box">
-          <span>Buscar en el explorador</span>
+          <span>{genesMode ? 'Buscar genes' : 'Buscar en el explorador'}</span>
           <input
             autoFocus
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="M5, NAC, VIT_…, CHS, T-008…"
+            placeholder={genesMode ? 'VIT_…, NAC, CHS, M5…' : 'M5, NAC, VIT_…, CHS, T-008…'}
           />
-          {normalized && <small>{resultCount} resultado(s) visibles</small>}
+          {(normalized || genesMode) && <small>{resultCount} resultado(s) visibles</small>}
         </label>
       </header>
 
@@ -111,16 +123,18 @@ export default function SearchPage() {
       {error && <div className="data-state data-state--error" role="alert"><strong>No se pudo preparar la búsqueda.</strong><span>{error}</span></div>}
 
       <section className="search-results">
-        <div className="search-group">
-          <div className="search-group-heading"><h2>{normalized ? 'Páginas' : 'Accesos rápidos'}</h2><span>{pageResults.length}</span></div>
-          <div className="search-result-list">
-            {pageResults.map((item) => (
-              <Link key={item.to} to={item.to} className="search-result-row">
-                <div><strong>{item.label}</strong><span>{item.description}</span></div><span aria-hidden="true">→</span>
-              </Link>
-            ))}
+        {!genesMode && (
+          <div className="search-group">
+            <div className="search-group-heading"><h2>{normalized ? 'Páginas' : 'Accesos rápidos'}</h2><span>{pageResults.length}</span></div>
+            <div className="search-result-list">
+              {pageResults.map((item) => (
+                <Link key={item.to} to={item.to} className="search-result-row">
+                  <div><strong>{item.label}</strong><span>{item.description}</span></div><span aria-hidden="true">→</span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {normalized && moduleResults.length > 0 && (
           <div className="search-group">
@@ -135,7 +149,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {normalized && geneResults.length > 0 && (
+        {(normalized || genesMode) && geneResults.length > 0 && (
           <div className="search-group">
             <div className="search-group-heading"><h2>Genes</h2><span>{geneResults.length}</span></div>
             <div className="search-result-list search-result-list--dense">
@@ -161,7 +175,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {normalized && resultCount === 0 && (
+        {(normalized || genesMode) && resultCount === 0 && (
           <div className="search-empty"><strong>Sin coincidencias</strong><span>Prueba con un ID de gen, módulo, dataset o término más corto.</span></div>
         )}
       </section>
