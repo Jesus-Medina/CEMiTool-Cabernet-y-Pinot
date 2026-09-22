@@ -64,6 +64,8 @@ jobs:
         run: npm run typecheck
 
       - name: Build
+        env:
+          VITE_CHAT_API_URL: ${{ vars.VITE_CHAT_API_URL }}
         run: npm run build
 
       - name: Configure GitHub Pages

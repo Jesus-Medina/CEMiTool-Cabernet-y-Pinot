@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local worker development only.
+# NEVER commit real values.
+GEMINI_API_KEY=replace_me
+GEMINI_FILE_SEARCH_STORE=fileSearchStores/replace_me

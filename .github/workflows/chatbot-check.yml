@@ -1,0 +1,43 @@
+name: Chatbot checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'chatbot/**'
+      - '.github/workflows/chatbot-check.yml'
+  pull_request:
+    paths:
+      - 'chatbot/**'
+      - '.github/workflows/chatbot-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-chatbot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compile indexer
+        run: python -m py_compile chatbot/indexer/index_sources.py
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Worker dependencies
+        working-directory: chatbot/worker
+        run: npm install --no-audit --no-fund
+
+      - name: Dry-run Worker build
+        working-directory: chatbot/worker
+        run: npm run check

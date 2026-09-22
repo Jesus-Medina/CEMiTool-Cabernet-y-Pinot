@@ -55,3 +55,25 @@ Pages ya está habilitado con **GitHub Actions**. Los cambios relevantes en dato
 ## Regla científica
 
 La UI no recalcula CEMiTool ni modelos estadísticos. `export_site_data.py` lee tablas canónicas, valida sus columnas, convierte NA de forma explícita y genera JSON de frontend junto con un manifiesto de provenance y hashes SHA-256.
+
+
+## Chat RAG
+
+La ruta `#/chat` integra un asistente científico basado en Gemini File Search a través de un backend externo seguro.
+
+El frontend nunca contiene la API key. En producción espera:
+
+```text
+VITE_CHAT_API_URL
+```
+
+El workflow de GitHub Pages inyecta esa variable desde **Settings → Secrets and variables → Actions → Variables**.
+
+Si la variable no está definida, el sitio sigue compilando y la página de chat muestra un estado de configuración pendiente.
+
+Implementación y despliegue:
+
+```text
+../chatbot/README.md
+../docs/CHATBOT_RAG_IMPLEMENTATION.md
+```

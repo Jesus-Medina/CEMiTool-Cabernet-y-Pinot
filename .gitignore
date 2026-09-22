@@ -12,3 +12,10 @@ Thumbs.db
 *.swo
 __pycache__/
 .cache/
+
+# Chatbot local secrets / generated state
+chatbot/worker/.dev.vars
+chatbot/worker/node_modules/
+chatbot/indexer/.venv/
+chatbot/indexer/.file-search-store
+site/.env.local

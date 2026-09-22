@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'chatbot/**'
       - 'data/metadata/samples.tsv'
       - 'results/beta10/tables/**'
       - 'results/module_statistics_beta10/**'
@@ -19,6 +20,7 @@ on:
   pull_request:
     paths:
       - 'site/**'
+      - 'chatbot/**'
       - 'data/metadata/samples.tsv'
       - 'results/beta10/tables/**'
       - 'results/module_statistics_beta10/**'
@@ -71,3 +73,11 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Syntax-check chatbot Worker
+        working-directory: .
+        run: node --check chatbot/worker/src/index.js
+
+      - name: Compile chatbot indexer
+        working-directory: .
+        run: python -m py_compile chatbot/indexer/index_sources.py
