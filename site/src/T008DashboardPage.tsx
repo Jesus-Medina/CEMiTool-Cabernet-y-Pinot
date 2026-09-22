@@ -165,11 +165,11 @@ export default function T008DashboardPage() {
     <div className="t008-page">
       <section className="t008-hero">
         <div>
-          <p className="eyebrow">WEB-009 · modern raw-read reprocessing</p>
-          <h1>T-008 · estado vivo del reprocesamiento</h1>
+          <p className="eyebrow">Status · T-008</p>
+          <h1>Estado del reprocesamiento moderno</h1>
           <p>
-            Las mismas 54 corridas del baseline histórico se cuantifican contra PN40024 T2T v5.1 con Salmon.
-            Este tablero refleja el ledger versionado y los QC por corrida; no ejecuta ni infiere análisis en el navegador.
+            Seguimiento de las mismas 54 corridas del baseline histórico contra PN40024 T2T v5.1.
+            Aquí se muestra avance técnico reproducible; no una conclusión biológica final.
           </p>
         </div>
         <div className="t008-big-number">
@@ -268,8 +268,8 @@ export default function T008DashboardPage() {
       <section className="t008-section">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">54-run ledger</p>
-            <h2>Manifiesto y estado por corrida</h2>
+            <p className="eyebrow">Detalle técnico</p>
+            <h2>Ledger de las 54 corridas</h2>
           </div>
           <p>{filtered.length} corridas bajo los filtros actuales.</p>
         </div>
@@ -311,7 +311,7 @@ export default function T008DashboardPage() {
 
       <section className="t008-section">
         <div className="section-heading">
-          <div><p className="eyebrow">Event log</p><h2>Últimos checkpoints versionados</h2></div>
+          <div><p className="eyebrow">Eventos</p><h2>Últimos checkpoints versionados</h2></div>
           <p>Se muestran eventos del ledger, incluyendo controles globales del lote.</p>
         </div>
         <ol className="t008-events">
