@@ -4116,3 +4116,87 @@ body {
 .results-landing-facts div:hover {
   background: #f3f0f2;
 }
+
+
+/* Unified interactive states */
+button,
+input,
+select,
+textarea {
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+input[type="search"],
+input[type="text"],
+input[list],
+select,
+textarea {
+  border-color: var(--border-strong);
+}
+
+input[type="search"]:hover:not(:disabled),
+input[type="text"]:hover:not(:disabled),
+input[list]:hover:not(:disabled),
+select:hover:not(:disabled),
+textarea:hover:not(:disabled) {
+  border-color: #bfaeb5;
+}
+
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[list]:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid rgba(107,41,66,.08);
+  outline-offset: 0;
+  border-color: rgba(107,41,66,.5);
+  box-shadow: 0 0 0 1px rgba(107,41,66,.04);
+}
+
+.button,
+.nav-link,
+.utility-link,
+.result-context-link,
+.search-result-row,
+.overview-next a,
+.results-destination-card {
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.button--secondary:hover:not(:disabled),
+.button--secondary:focus-visible {
+  color: var(--cabernet-deep);
+  border-color: #baa8b0;
+  background: #faf7f8;
+}
+
+.button--primary:active:not(:disabled),
+.button--secondary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+select {
+  cursor: pointer;
+}
+
+::selection {
+  color: white;
+  background: var(--cabernet);
+}
