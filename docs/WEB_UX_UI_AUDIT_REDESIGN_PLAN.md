@@ -401,13 +401,20 @@ Regla: un mismo concepto debe usar el mismo componente visual en todo el sitio.
 
 **Registro de cierre:** auditoría completada sobre las rutas públicas vigentes, incluyendo el nuevo Chat RAG. Se identificaron blockers de release (Methods/Gene placeholders), problemas estructurales de navegación y contexto, jerarquía visual plana, exceso de detalle temprano, debilidades mobile-native y falta de un design system final. Commit del informe: `cbb11ba`.
 
-### UX-02 — Arquitectura y flujos
-- sitemap nuevo;
-- user journeys;
-- navegación primaria/secundaria;
-- estructura de Module workspace.
+### UX-02 — Arquitectura y flujos — DONE (2026-09-22)
+- [x] sitemap nuevo;
+- [x] user journeys;
+- [x] navegación primaria/secundaria;
+- [x] estructura de Module workspace;
+- [x] rutas profundas compartibles;
+- [x] reglas de persistencia de contexto;
+- [x] estrategia de redirects;
+- [x] integración arquitectónica de Chat y T-008;
+- [x] navegación mobile objetivo.
 
 **Salida:** `docs/WEB_UX_FLOWS.md`
+
+**Registro de cierre:** la arquitectura objetivo reduce la navegación primaria a Overview / Results / Methods / Reproducibility; mueve Search, Ask, T-008 Status y GitHub a utilidades; integra Enrichment dentro de Module Workspace; define rutas específicas por módulo y sección; conserva compatibilidad mediante redirects y establece Evidence Drawer contextual. Commit del documento: `401cb5f`.
 
 ### UX-03 — Wireframes
 Wireframes desktop + mobile de:
