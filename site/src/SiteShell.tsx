@@ -3,14 +3,14 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const primaryNavigation = [
   { to: '/', label: 'Overview', end: true },
-  { to: '/modules', label: 'Resultados' },
+  { to: '/results', label: 'Resultados' },
   { to: '/methods', label: 'Métodos' },
-  { to: '/evidence', label: 'Reproducibilidad' },
+  { to: '/reproducibility', label: 'Reproducibilidad' },
 ]
 
 const utilityNavigation = [
-  { to: '/t008', label: 'T-008 Status' },
-  { to: '/chat', label: 'Preguntar' },
+  { to: '/status/t008', label: 'T-008 Status' },
+  { to: '/ask', label: 'Preguntar' },
 ]
 
 export default function SiteShell() {
@@ -19,15 +19,18 @@ export default function SiteShell() {
 
   function primaryActive(to: string) {
     if (to === '/') return pathname === '/' || pathname.startsWith('/story')
-    if (to === '/modules') {
-      return ['/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
+    if (to === '/results') {
+      return ['/results', '/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
         pathname.startsWith(prefix),
       )
+    }
+    if (to === '/reproducibility') {
+      return pathname.startsWith('/reproducibility') || pathname.startsWith('/evidence')
     }
     return pathname.startsWith(to)
   }
 
-  const inResults = ['/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
+  const inResults = ['/results', '/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
     pathname.startsWith(prefix),
   )
 
@@ -105,8 +108,8 @@ export default function SiteShell() {
             <span>Resultados</span>
             <nav aria-label="Navegación de resultados">
               <NavLink
-                to="/modules"
-                className={pathname.startsWith('/modules') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+                to="/results"
+                className={pathname.startsWith('/results') || pathname.startsWith('/modules') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Módulos
               </NavLink>
