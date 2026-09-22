@@ -416,16 +416,23 @@ Regla: un mismo concepto debe usar el mismo componente visual en todo el sitio.
 
 **Registro de cierre:** la arquitectura objetivo reduce la navegación primaria a Overview / Results / Methods / Reproducibility; mueve Search, Ask, T-008 Status y GitHub a utilidades; integra Enrichment dentro de Module Workspace; define rutas específicas por módulo y sección; conserva compatibilidad mediante redirects y establece Evidence Drawer contextual. Commit del documento: `401cb5f`.
 
-### UX-03 — Wireframes
-Wireframes desktop + mobile de:
-- Overview;
-- Results/Modules;
-- Module workspace;
-- Validation;
-- T-008;
-- Evidence.
+### UX-03 — Wireframes — DONE (2026-09-22)
+Wireframes low-fi desktop + mobile completados para:
+- [x] Overview;
+- [x] Results/Modules;
+- [x] Module Workspace / M5;
+- [x] Validation;
+- [x] T-008 Status;
+- [x] Reproducibility / Evidence Drawer;
+- [x] Methods;
+- [x] Gene Detail;
+- [x] Ask.
 
-No diseñar high-fi todavía.
+**Salida:** `docs/WEB_UX_WIREFRAMES.md`
+
+**Registro de cierre:** se definió shell global desktop/mobile, progressive disclosure Answer → Evidence → Explore → Audit, Context Bar para módulos, filtros móviles en sheet, Evidence Drawer y reglas responsive. Commit: `6ee9891`.
+
+No se diseñó high-fi ni se cambió React/CSS.
 
 ### UX-04 — Design system
 - paleta final;
