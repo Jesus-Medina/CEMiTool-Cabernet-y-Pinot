@@ -3184,3 +3184,64 @@ body {
     min-height: 36px;
   }
 }
+
+
+/* Shared explorer context */
+.explorer-context-banner {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: #fbfafb;
+  box-shadow: var(--shadow-soft);
+}
+
+.explorer-context-banner > div {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.explorer-context-banner span {
+  color: var(--muted);
+  font-size: .63rem;
+  font-weight: 780;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.explorer-context-banner strong {
+  color: var(--cabernet-deep);
+  font-size: .92rem;
+}
+
+.explorer-context-banner small {
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+.explorer-context-banner a {
+  flex: 0 0 auto;
+  color: var(--cabernet);
+  text-decoration: none;
+  font-size: .7rem;
+  font-weight: 800;
+}
+
+@media (max-width: 620px) {
+  .explorer-context-banner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .explorer-context-banner a {
+    width: fit-content;
+  }
+}
