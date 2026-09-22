@@ -329,7 +329,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Implementation phases:** WEB-000 through WEB-012 are tracked in the master plan.
 
-**Immediate next step:** WEB-001, scaffold `site/` with React/TypeScript/Vite, routing, global layout and a reproducible production build; do not add scientific graphs until WEB-002 establishes the validated data-export layer.
+**WEB-001 completion (2026-09-22):** scaffold creado en `site/` con React 19 + TypeScript + Vite, routing para Home/Story/Modules/ModuleDetail/Gene/Validation/T-008/Methods/Evidence, layout responsive, variables visuales provisionales y base `/CEMiTool-Cabernet-y-Pinot/`. Se añadió `.github/workflows/site-check.yml`. GitHub Actions run `35745067306` pasó install, lint, typecheck y build. Commit principal: `f0c0c38`.
+
+**Immediate next step:** WEB-002, build the validated canonical-data export layer before adding scientific charts.
 
 **Acceptance criteria for T-010 DONE:**
 
