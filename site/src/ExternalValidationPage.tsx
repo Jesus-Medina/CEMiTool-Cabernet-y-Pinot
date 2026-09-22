@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   loadExternalValidation,
   loadProvenance,
@@ -175,11 +175,17 @@ function Provenance({ provenance }: { provenance: ProvenancePayload }) {
 }
 
 export default function ExternalValidationPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requestedModule = searchParams.get('module')
+  const initialModule: ModuleFilter =
+    requestedModule && MODULES.includes(requestedModule as ModuleFilter)
+      ? (requestedModule as ModuleFilter)
+      : 'M5'
   const [data, setData] = useState<ExternalValidationPayload | null>(null)
   const [provenance, setProvenance] = useState<ProvenancePayload | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [dataset, setDataset] = useState<DatasetId>('GSE72421')
-  const [module, setModule] = useState<ModuleFilter>('M5')
+  const [module, setModule] = useState<ModuleFilter>(initialModule)
   const [status, setStatus] = useState<StatusFilter>('all')
   const [query, setQuery] = useState('')
 
@@ -197,6 +203,13 @@ export default function ExternalValidationPage() {
       })
     return () => { active = false }
   }, [])
+
+  useEffect(() => {
+    if (searchParams.get('module') === module) return
+    const next = new URLSearchParams(searchParams)
+    next.set('module', module)
+    setSearchParams(next, { replace: true })
+  }, [module, searchParams, setSearchParams])
 
   const filtered = useMemo(() => {
     if (!data) return []
