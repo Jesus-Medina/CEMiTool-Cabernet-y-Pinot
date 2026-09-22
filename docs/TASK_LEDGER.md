@@ -304,7 +304,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-010 — Interactive web explorer / GitHub Pages
 
-**Status:** IN PROGRESS (2026-09-22); implementation through WEB-009 completed except WEB-010/011/final release.
+**Status:** IN PROGRESS (2026-09-22); WEB-001 through WEB-011 completed. WEB-012 stable release/tag remains.
 
 **Master plan:** `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md`
 
@@ -351,7 +351,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-010 completion (2026-09-22):** se reemplazó el placeholder Evidence por un navegador global de provenance. La ruta `/evidence` muestra el commit de construcción, fecha de exportación, artefactos, fuentes/scripts únicos y ocho mapas de hallazgos principales. El buscador indexa claims, artifact IDs, rutas TSV, scripts y parámetros. Cada artefacto abre fuentes/scripts en GitHub fijados al commit y expone SHA-256, tamaño y parámetros; además se añadieron enlaces directos desde enriquecimiento y contrastes de módulos hacia el artefacto correspondiente. Commit `e6845b8`; CI `35757479808` PASS; Pages `35757479727` PASS.
 
-**Immediate next step:** WEB-011 final scientific/visual QA, then WEB-012 stable release/tag.
+**WEB-011 completion (2026-09-22):** se cerró la fase de QA con el workflow `WEB-011 scientific and browser QA`, run `35766922688`, PASS sobre commit `a42a095`. La corrida volvió a exportar y validar los datasets del sitio, ejecutó QA de valores científicos, lint, typecheck, build y presupuesto de bundle, e hizo pruebas Playwright en Chrome, Firefox y móvil. La pasada móvil detectó overflows de layout que fueron corregidos sucesivamente en Enrichment (`40cbb17`), Validation (`c53ff7a`), T-008 (`758ed2e`) y Evidence (`a42a095`). El run final terminó sin pasos fallidos y dejó validado el comportamiento de rutas principales, filtros, accesibilidad básica y ausencia de overflow horizontal a nivel de documento.
+
+**Immediate next step:** WEB-012 stable release/tag.
 
 **Acceptance criteria for T-010 DONE:**
 
