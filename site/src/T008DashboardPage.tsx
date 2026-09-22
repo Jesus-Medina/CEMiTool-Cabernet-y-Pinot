@@ -165,7 +165,7 @@ export default function T008DashboardPage() {
     <div className="t008-page">
       <section className="t008-hero">
         <div>
-          <p className="eyebrow">Status · T-008</p>
+          <p className="eyebrow">Estado · T-008</p>
           <h1>Estado del reprocesamiento moderno</h1>
           <p>
             Seguimiento de las mismas 54 corridas del baseline histórico contra PN40024 T2T v5.1.
@@ -188,7 +188,7 @@ export default function T008DashboardPage() {
               : 'Mientras falte una sola corrida validada, la web no presenta preservación moderna de M5/M10/M2 ni contrasta cultivares con esta cuantificación.'}
           </p>
         </div>
-        <span className="t008-gate-badge">{summary.complete ? 'RUN QC COMPLETE' : 'NO PRESERVATION CLAIM'}</span>
+        <span className="t008-gate-badge">{summary.complete ? 'QC DE CORRIDAS COMPLETO' : 'SIN CONCLUSIÓN DE PRESERVACIÓN'}</span>
       </section>
 
       <section className="t008-progress-panel">
