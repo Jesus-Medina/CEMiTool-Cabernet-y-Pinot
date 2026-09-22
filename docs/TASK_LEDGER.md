@@ -333,7 +333,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-002 completion (2026-09-22):** se añadieron `site/scripts/export_site_data.py`, `validate_site_data.py` y `build_provenance_manifest.py`. La capa genera en build-time diez JSON desde TSV canónicos, convierte NA explícitamente, valida esquemas/row counts/valores finitos, cruza el progreso T-008 con archivos `SRR*_run_qc.tsv` y registra SHA-256 + commit para provenance. Los JSON quedan ignorados por Git para evitar snapshots web obsoletos. GitHub Actions run `35745653944` verificó `54` muestras, `3050` genes de módulos, `361` hubs y `2/54` runs T-008 validados, y completó export, validation, lint, typecheck y build con éxito. Commit principal: `1cad93d`.
 
-**Immediate next step:** WEB-003, implement Home + Story using the generated canonical site data.
+**WEB-003 completion (2026-09-22):** Home y Story ya consumen los JSON generados por WEB-002. La portada muestra diseño, beta principal, M5 y T-008 desde fuentes canónicas; el flujo de etapas se construye desde metadata y la narrativa diferencia resultados apoyados de conclusiones no demostradas. Se añadieron estados de carga/error, layout responsive y una Story de siete pasos con T-008 dinámico. GitHub Actions run `35746120112` pasó export, validation, lint, typecheck y build. Commit principal: `abeb5e4`.
+
+**Immediate next step:** WEB-004, implement the interactive M5 Explorer using the canonical M5 trajectory/hub datasets.
 
 **Acceptance criteria for T-010 DONE:**
 
