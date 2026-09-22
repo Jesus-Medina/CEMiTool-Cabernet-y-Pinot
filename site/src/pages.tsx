@@ -105,77 +105,71 @@ function EvidenceBoundary() {
 export function HomePage() {
   const { project, modules, loading, error } = useCanonicalData()
   const m5 = modules?.modules.find((row) => row.module === 'M5') ?? null
+  const robustness =
+    m5?.robustness_classification === 'reproducible'
+      ? 'Reproducible'
+      : m5?.robustness_classification === 'year-dependent'
+        ? 'Dependiente del año'
+        : 'En revisión'
 
   return (
-    <div className="page-stack">
-      <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">Interactive scientific explorer</p>
-          <h1>Cabernet Sauvignon <span>×</span> Pinot noir</h1>
-          <p className="hero-lede">
-            Trayectorias de coexpresión, robustez interanual, metabolismo fenólico,
-            hubs y validación externa, conectados directamente con la evidencia del repositorio.
+    <div className="overview-page">
+      <section className="overview-hero">
+        <div className="overview-hero-copy">
+          <p className="eyebrow">Overview científico</p>
+          <h1>Comparar programas de coexpresión durante la maduración.</h1>
+          <p className="overview-lede">
+            Cabernet Sauvignon y Pinot noir se comparan a través de etapas y años
+            para identificar programas transcriptómicos diferenciales, revisar su
+            robustez y buscar apoyo independiente en piel.
           </p>
           <div className="hero-actions">
-            <Link className="button button--primary" to="/story">Entrar a la historia</Link>
-            <Link className="button button--secondary" to="/modules/M5">Explorar M5</Link>
-            <Link className="button button--secondary" to="/evidence">Ver evidencia</Link>
+            <Link className="button button--primary" to="/modules">Explorar resultados</Link>
+            <Link className="button button--secondary" to="/methods">Ver métodos</Link>
           </div>
-          <p className="authorship">Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong></p>
+          <p className="authorship">
+            Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong>
+          </p>
         </div>
 
-        <div className="hero-orbit" aria-label="Estructura conceptual del sitio">
-          <div className="orbit-card orbit-card--story">
-            <strong>STORY</strong><span>Entender</span>
+        <dl className="overview-facts" aria-label="Diseño del estudio">
+          <div>
+            <dt>Muestras baseline</dt>
+            <dd>{project?.design.sample_count ?? '54'}</dd>
           </div>
-          <div className="orbit-card orbit-card--explore">
-            <strong>EXPLORE</strong><span>Investigar</span>
+          <div>
+            <dt>Tejido</dt>
+            <dd>Pericarpio</dd>
           </div>
-          <div className="orbit-card orbit-card--evidence">
-            <strong>EVIDENCE</strong><span>Auditar</span>
+          <div>
+            <dt>Diseño</dt>
+            <dd>
+              {project
+                ? [project.design.cultivars.length, project.design.stages.length, project.design.years.length].join(' × ')
+                : '2 × 3 × 3'}
+            </dd>
           </div>
-        </div>
+          <div>
+            <dt>Red principal</dt>
+            <dd>β={project?.network.primary_beta ?? 10}</dd>
+          </div>
+        </dl>
       </section>
 
       <DataState loading={loading} error={error} />
 
       {project && (
         <>
-          <section className="metrics-grid" aria-label="Resumen del proyecto">
-            <article className="metric-card">
-              <p>Diseño</p>
-              <strong>{project.design.sample_count}</strong>
-              <span>
-                {project.design.cultivars.length} cultivares · {project.design.stages.length} etapas · {project.design.years.length} años
-              </span>
-            </article>
-            <article className="metric-card">
-              <p>Red principal</p>
-              <strong>β = {project.network.primary_beta}</strong>
-              <span>R² scale-free {formatDecimal(project.network.scale_free_r2, 3)}</span>
-            </article>
-            <article className="metric-card metric-card--accent">
-              <p>Foco actual</p>
-              <strong>{m5?.module ?? 'M5'}</strong>
-              <span>FDR Cultivar×Stage {formatScientific(m5?.cultivar_stage_fdr)}</span>
-            </article>
-            <article className="metric-card">
-              <p>T-008 moderno</p>
-              <strong>{project.t008.validated_runs}/{project.t008.total_runs}</strong>
-              <span>{project.t008.complete ? 'Completo' : 'Aún sin matriz moderna completa'}</span>
-            </article>
-          </section>
-
-          <section className="development-section">
+          <section className="overview-design" aria-labelledby="overview-design-title">
             <div>
-              <p className="eyebrow">Diseño biológico</p>
-              <h2>Una misma pregunta a través de la maduración</h2>
+              <p className="eyebrow">Diseño experimental</p>
+              <h2 id="overview-design-title">La misma comparación a través de tres etapas y tres años</h2>
               <p>
-                Las etapas visibles aquí vienen del diseño canónico exportado desde el repositorio.
-                El sitio no inventa ni reetiqueta muestras.
+                {project.design.cultivars.join(' vs ')} · {project.design.years.join(', ')} ·
+                {' '}{project.design.replicates_per_cell_values[0] ?? 3} réplicas por celda.
               </p>
             </div>
-            <ol className="stage-flow">
+            <ol className="overview-stage-flow">
               {project.design.stages.map((stage, index) => (
                 <li key={stage}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
@@ -184,28 +178,91 @@ export function HomePage() {
               ))}
             </ol>
           </section>
+
+          <section className="overview-findings" aria-labelledby="overview-findings-title">
+            <div className="overview-section-heading">
+              <div>
+                <p className="eyebrow">Hallazgos principales</p>
+                <h2 id="overview-findings-title">Tres ideas para orientarse antes de explorar</h2>
+              </div>
+            </div>
+
+            <div className="overview-finding-grid">
+              <article>
+                <span>01</span>
+                <strong>M5</strong>
+                <h3>Interacción Cultivar×Stage destacada</h3>
+                <p>
+                  FDR {formatScientific(m5?.cultivar_stage_fdr)} en el resumen canónico del módulo.
+                </p>
+                <Link to="/modules/M5">Abrir M5 →</Link>
+              </article>
+
+              <article>
+                <span>02</span>
+                <strong>{robustness}</strong>
+                <h3>La robustez anual se evalúa por separado</h3>
+                <p>
+                  Significancia global y repetición entre años responden preguntas distintas.
+                </p>
+                <Link to="/modules">Comparar módulos →</Link>
+              </article>
+
+              <article>
+                <span>03</span>
+                <strong>Piel externa</strong>
+                <h3>La validación no se mezcla con el baseline</h3>
+                <p>
+                  Los datasets de piel aislada se usan como evidencia observacional independiente.
+                </p>
+                <Link to="/validation">Ver validación →</Link>
+              </article>
+            </div>
+          </section>
+
+          <section className="overview-m5-highlight">
+            <div>
+              <p className="eyebrow">Resultado destacado</p>
+              <h2>M5 concentra la exploración más profunda del sitio</h2>
+              <p>
+                {m5?.gene_count ?? '—'} genes · FDR Cultivar×Stage{' '}
+                {formatScientific(m5?.cultivar_stage_fdr)} · {robustness.toLowerCase()}.
+                Su workspace conecta trayectoria, hubs, red, función y evidencia externa
+                sin convertir coexpresión en causalidad.
+              </p>
+              <div className="overview-inline-actions">
+                <Link className="button button--primary" to="/modules/M5">Explorar M5</Link>
+                <Link className="button button--secondary" to="/evidence">Auditar evidencia</Link>
+              </div>
+            </div>
+            <div className="overview-m5-metrics">
+              <div><span>Genes</span><strong>{m5?.gene_count ?? '—'}</strong></div>
+              <div><span>Red principal</span><strong>β={project.network.primary_beta}</strong></div>
+              <div><span>Scale-free R²</span><strong>{formatDecimal(project.network.scale_free_r2, 3)}</strong></div>
+            </div>
+          </section>
+
+          <section className="overview-validation-band">
+            <div>
+              <p className="eyebrow">Evidencia externa</p>
+              <h2>Baseline en pericarpio → comparación independiente en piel</h2>
+              <p>
+                La validación externa pregunta por concordancia de expresión en otro tejido/plataforma;
+                no suma nuevas réplicas al diseño de 54 muestras.
+              </p>
+            </div>
+            <Link className="button button--secondary" to="/validation">Abrir validación</Link>
+          </section>
         </>
       )}
 
       <EvidenceBoundary />
 
-      <section className="portal-grid" aria-label="Áreas del explorador">
-        <Link className="portal-card" to="/modules/M5">
-          <span>01</span><h2>M5 Explorer</h2><p>Trayectorias, contrastes, hubs y provenance.</p>
-        </Link>
-        <Link className="portal-card" to="/validation">
-          <span>02</span><h2>Validación</h2><p>Evidencia externa y límites de plataforma.</p>
-        </Link>
-        <Link className="portal-card" to="/t008">
-          <span>03</span><h2>T-008</h2><p>Estado del reprocesamiento moderno.</p>
-        </Link>
-        <Link className="portal-card" to="/enrichment">
-          <span>04</span><h2>Enriquecimiento</h2><p>MapMan v3/v5.1, GO auditado y cobertura.</p>
-        </Link>
-              <Link className="portal-card" to="/chat">
-          <span>05</span><h2>Chat del proyecto</h2><p>Pregunta sobre resultados, métodos, scripts y trazabilidad usando las fuentes indexadas.</p>
-        </Link>
-</section>
+      <nav className="overview-next" aria-label="Continuar explorando">
+        <Link to="/modules"><span>Resultados</span><strong>Comparar módulos</strong></Link>
+        <Link to="/methods"><span>Métodos</span><strong>Cómo se construyó la evidencia</strong></Link>
+        <Link to="/evidence"><span>Reproducibilidad</span><strong>Fuentes, scripts y artefactos</strong></Link>
+      </nav>
     </div>
   )
 }
