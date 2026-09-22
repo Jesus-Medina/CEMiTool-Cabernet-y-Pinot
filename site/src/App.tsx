@@ -21,6 +21,12 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="story" element={<Navigate to="/" replace />} />
         <Route path="results" element={<ModulesPage />} />
+        <Route path="results/modules" element={<ModulesPage />} />
+        <Route path="results/modules/:moduleId" element={<ModuleDetailPage />} />
+        <Route path="results/function" element={<EnrichmentPage />} />
+        <Route path="results/validation" element={<ValidationPage />} />
+        <Route path="results/genes/:geneId" element={<GeneDetailPage />} />
+
         <Route path="modules" element={<ModulesPage />} />
         <Route path="modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="enrichment" element={<EnrichmentPage />} />
