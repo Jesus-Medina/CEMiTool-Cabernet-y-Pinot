@@ -349,7 +349,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-007 completion (2026-09-22):** se reemplazó el placeholder de módulos por un explorador completo M1–M10. La vista cruza tamaño, FDR Cultivar×Stage, robustez T-004, ORA MapMan v3, hubs y evidencia externa sin inventar un score total. Los filtros permiten aislar interacción significativa, módulos reproducibles, year-dependent, con ORA o con T-007. Las fichas de módulo muestran la matriz Stage×Year de contrastes Cabernet−Pinot desde `module_contrasts.json`, resumen funcional, hubs y cobertura externa cuando existe. M2 se mantiene explícitamente provisional hasta T-008 y M10 se presenta como reproducible sin adjudicar función. Commit `37e868ad`; CI `35756864399` PASS; Pages `35756864291` PASS.
 
-**Immediate next step:** WEB-010 global evidence/provenance browser, then WEB-011 QA and the final WEB-012 release.
+**WEB-010 completion (2026-09-22):** se reemplazó el placeholder Evidence por un navegador global de provenance. La ruta `/evidence` muestra el commit de construcción, fecha de exportación, artefactos, fuentes/scripts únicos y ocho mapas de hallazgos principales. El buscador indexa claims, artifact IDs, rutas TSV, scripts y parámetros. Cada artefacto abre fuentes/scripts en GitHub fijados al commit y expone SHA-256, tamaño y parámetros; además se añadieron enlaces directos desde enriquecimiento y contrastes de módulos hacia el artefacto correspondiente. Commit `e6845b8`; CI `35757479808` PASS; Pages `35757479727` PASS.
+
+**Immediate next step:** WEB-011 final scientific/visual QA, then WEB-012 stable release/tag.
 
 **Acceptance criteria for T-010 DONE:**
 
