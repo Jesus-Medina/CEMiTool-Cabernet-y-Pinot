@@ -9,6 +9,7 @@ const primaryNavigation = [
 ]
 
 const utilityNavigation = [
+  { to: '/search', label: 'Buscar' },
   { to: '/status/t008', label: 'T-008 Status' },
   { to: '/ask', label: 'Preguntar' },
 ]
