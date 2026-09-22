@@ -8,7 +8,7 @@ Frontend del explorador científico interactivo del proyecto.
 - WEB-002: capa canónica de exportación/validación completada.
 - WEB-003: Home + Story conectadas a datos reales.
 - WEB-004: M5 Explorer interactivo completado.
-- Preview GitHub Pages: workflow de despliegue incorporado.
+- Preview GitHub Pages: desplegada correctamente en `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
 
 ## Desarrollo
 
@@ -46,11 +46,7 @@ La aplicación usa `HashRouter` para que rutas como M5, Story o Evidence funcion
 
 El artifact publicado es `site/dist/`, generado después de reconstruir y validar los JSON científicos.
 
-Si Pages todavía no está habilitado para el repositorio, en GitHub debe seleccionarse una sola vez:
-
-`Settings → Pages → Build and deployment → Source → GitHub Actions`
-
-Luego se puede reejecutar manualmente el workflow **Deploy scientific explorer to GitHub Pages**.
+Pages ya está habilitado con **GitHub Actions**. Los cambios relevantes en datos científicos o frontend disparan el workflow de deployment automáticamente.
 
 ## Regla científica
 
