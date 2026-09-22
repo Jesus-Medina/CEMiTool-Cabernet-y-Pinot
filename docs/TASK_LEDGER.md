@@ -331,7 +331,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-001 completion (2026-09-22):** scaffold creado en `site/` con React 19 + TypeScript + Vite, routing para Home/Story/Modules/ModuleDetail/Gene/Validation/T-008/Methods/Evidence, layout responsive, variables visuales provisionales y base `/CEMiTool-Cabernet-y-Pinot/`. Se añadió `.github/workflows/site-check.yml`. GitHub Actions run `35745067306` pasó install, lint, typecheck y build. Commit principal: `f0c0c38`.
 
-**Immediate next step:** WEB-002, build the validated canonical-data export layer before adding scientific charts.
+**WEB-002 completion (2026-09-22):** se añadieron `site/scripts/export_site_data.py`, `validate_site_data.py` y `build_provenance_manifest.py`. La capa genera en build-time diez JSON desde TSV canónicos, convierte NA explícitamente, valida esquemas/row counts/valores finitos, cruza el progreso T-008 con archivos `SRR*_run_qc.tsv` y registra SHA-256 + commit para provenance. Los JSON quedan ignorados por Git para evitar snapshots web obsoletos. GitHub Actions run `35745653944` verificó `54` muestras, `3050` genes de módulos, `361` hubs y `2/54` runs T-008 validados, y completó export, validation, lint, typecheck y build con éxito. Commit principal: `1cad93d`.
+
+**Immediate next step:** WEB-003, implement Home + Story using the generated canonical site data.
 
 **Acceptance criteria for T-010 DONE:**
 
