@@ -27,8 +27,22 @@ try {
     $env:GEMINI_API_KEY = $plain
 
     Write-Host ""
-    Write-Host "Indexando fuentes canónicas..." -ForegroundColor Cyan
-    & $python (Join-Path $scriptDir "index_sources.py") --repo-root $repoRoot
+    $extraDir = Read-Host "Ruta opcional a fuentes extra de NotebookLM/PDF/figuras (ENTER para omitir)"
+    $indexArgs = @(
+        (Join-Path $scriptDir "index_sources.py"),
+        "--repo-root",
+        $repoRoot
+    )
+
+    if ($extraDir -and $extraDir.Trim()) {
+        $extraResolved = Resolve-Path $extraDir.Trim() -ErrorAction Stop
+        $indexArgs += @("--extra-dir", $extraResolved.Path)
+        Write-Host ("También se indexarán fuentes extra desde: " + $extraResolved.Path) -ForegroundColor Cyan
+    }
+
+    Write-Host ""
+    Write-Host "Indexando fuentes..." -ForegroundColor Cyan
+    & $python @indexArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "El indexador terminó con código $LASTEXITCODE"
