@@ -16,7 +16,7 @@ import {
   type FunctionalEnrichmentPayload,
 } from './data/enrichmentData'
 import { formatDecimal, formatScientific } from './utils/format'
-import './modules.css'
+import './results/modules.css'
 
 type ModuleExplorerData = {
   modules: ModulesPayload
@@ -145,7 +145,7 @@ function ModuleCard({
         <small>filas evaluables</small>
       </div>
 
-      <Link className="button button--secondary module-card-link" to={'/modules/' + row.module}>
+      <Link className="button button--secondary module-card-link" to={'/results/results/modules/' + row.module}>
         Abrir
       </Link>
 
@@ -178,7 +178,7 @@ function ContrastMatrix({
           <p>
             La dirección y la magnitud se muestran por celda. El FDR global corresponde a la familia de 90 contrastes.
           </p>
-          <Link className="inline-link" to="/evidence?artifact=module_contrasts">ⓘ Ver provenance →</Link>
+          <Link className="inline-link" to="/reproducibility?artifact=module_contrasts">ⓘ Ver provenance →</Link>
         </div>
       </div>
 
@@ -291,7 +291,7 @@ function ModuleFunctionalSummary({
           <p className="eyebrow">Función</p>
           <h2>MapMan v3 · hits globales</h2>
         </div>
-        <Link className="inline-link" to={'/enrichment?module=' + module}>Abrir explorador de enriquecimiento →</Link>
+        <Link className="inline-link" to={'/results/function?module=' + module}>Abrir explorador de enriquecimiento →</Link>
       </div>
 
       {terms.length === 0 ? (
@@ -338,7 +338,7 @@ function ModuleExternalSummary({
           <p className="eyebrow">Piel externa</p>
           <h2>Cobertura y concordancia</h2>
         </div>
-        <Link className="inline-link" to={'/validation?module=' + module}>Abrir validación externa →</Link>
+        <Link className="inline-link" to={'/results/validation?module=' + module}>Abrir validación externa →</Link>
       </div>
       <div className="external-module-grid">
         {rows.map((row) => (
@@ -486,7 +486,7 @@ export function ModuleExplorerDetailPage() {
     return (
       <div className="modules-page">
         <section className="modules-hero"><div><p className="eyebrow">MODULE</p><h1>Módulo no reconocido</h1></div></section>
-        <Link className="button button--primary button--fit" to="/modules">Volver a módulos</Link>
+        <Link className="button button--primary button--fit" to="/results/modules">Volver a módulos</Link>
       </div>
     )
   }
@@ -529,7 +529,7 @@ export function ModuleExplorerDetailPage() {
                 El proyecto documenta una sensibilidad histórica relacionada con ceros de expresión y posibles efectos de referencia/mapeo.
                 La web conserva M2 como candidato, pero no lo presenta como una conclusión moderna establecida.
               </p>
-              <Link className="inline-link" to="/t008">Ver progreso T-008 →</Link>
+              <Link className="inline-link" to="/status/t008">Ver progreso T-008 →</Link>
             </section>
           )}
 
@@ -556,10 +556,10 @@ export function ModuleExplorerDetailPage() {
               </div>
             </div>
             <div className="module-route-grid">
-              <Link to={'/enrichment?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
-              <Link to={'/validation?module=' + module}><strong>Validación externa</strong><span>evidencia independiente en piel</span></Link>
-              <Link to="/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
-              {module === 'M5' && <Link to="/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
+              <Link to={'/results/function?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
+              <Link to={'/results/validation?module=' + module}><strong>Validación externa</strong><span>evidencia independiente en piel</span></Link>
+              <Link to="/status/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
+              {module === 'M5' && <Link to="/results/results/results/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
             </div>
           </section>
         </>
