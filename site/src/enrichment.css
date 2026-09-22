@@ -568,3 +568,25 @@
     display: none;
   }
 }
+
+
+/* Unified light workspace header */
+.enrichment-hero {
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(107,41,66,.04), transparent 34%),
+    var(--surface);
+}
+
+.enrichment-hero .eyebrow {
+  color: var(--cabernet);
+}
+
+.enrichment-hero h1 {
+  color: var(--cabernet-deep);
+}
+
+.enrichment-hero p:last-child {
+  color: var(--muted);
+}
