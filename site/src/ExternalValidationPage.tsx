@@ -205,6 +205,17 @@ export default function ExternalValidationPage() {
   }, [])
 
   useEffect(() => {
+    const requested = searchParams.get('module')
+    if (
+      requested &&
+      MODULES.includes(requested as ModuleFilter) &&
+      requested !== module
+    ) {
+      setModule(requested as ModuleFilter)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
     if (searchParams.get('module') === module) return
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
