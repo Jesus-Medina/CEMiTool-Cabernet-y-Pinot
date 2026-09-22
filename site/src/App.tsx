@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import SiteShell from './SiteShell'
+import EnrichmentPage from './EnrichmentPage'
 import {
   EvidencePage,
   GeneDetailPage,
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="story" element={<StoryPage />} />
         <Route path="modules" element={<ModulesPage />} />
         <Route path="modules/:moduleId" element={<ModuleDetailPage />} />
+        <Route path="enrichment" element={<EnrichmentPage />} />
         <Route path="genes/:geneId" element={<GeneDetailPage />} />
         <Route path="validation" element={<ValidationPage />} />
         <Route path="t008" element={<T008Page />} />

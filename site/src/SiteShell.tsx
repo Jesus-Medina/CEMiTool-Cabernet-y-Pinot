@@ -4,6 +4,7 @@ const navigation = [
   { to: '/', label: 'Inicio', end: true },
   { to: '/story', label: 'Story' },
   { to: '/modules', label: 'Módulos' },
+  { to: '/enrichment', label: 'Enriquecimiento' },
   { to: '/validation', label: 'Validación' },
   { to: '/t008', label: 'T-008' },
   { to: '/methods', label: 'Métodos' },
@@ -47,7 +48,7 @@ export default function SiteShell() {
       <footer className="site-footer">
         <div className="footer-inner">
           <span>CEMiTool Cabernet–Pinot Explorer</span>
-          <span>Visualización científica · datos canónicos pendientes de WEB-002</span>
+          <span>Visualización científica · datos canónicos + provenance reproducible</span>
         </div>
       </footer>
     </div>

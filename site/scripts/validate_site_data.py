@@ -18,6 +18,13 @@ SOURCE_PATHS = {
     "eigengenes": "results/module_statistics_beta10/module_eigengenes_with_metadata_54.tsv",
     "contrasts": "results/year_robustness_beta10/cabernet_vs_pinot_by_stage_year.tsv",
     "enrichments": "results/functional_enrichment_beta10/v3_mapman_global_FDR05_hits.tsv",
+    "v3_mapman_all": "results/functional_enrichment_beta10/v3_mapman_all_terms.tsv",
+    "v3_mapman_themes": "results/functional_enrichment_beta10/v3_mapman_prespecified_themes.tsv",
+    "v5_mapman_all": "results/functional_enrichment_beta10/v5_mapman_all_terms.tsv",
+    "v5_mapman_themes": "results/functional_enrichment_beta10/v5_mapman_prespecified_themes.tsv",
+    "enrichment_qc": "results/functional_enrichment_beta10/annotation_and_test_qc.tsv",
+    "go_all": "results/go_ora_beta10/go_all_terms.tsv",
+    "go_qc": "results/go_ora_beta10/go_annotation_and_test_qc.tsv",
     "m5_hubs": "results/hub_prioritization_beta10/m5_full_hub_ranking.tsv",
     "m10_m2_hubs": "results/hub_prioritization_beta10/m10_m2_full_hub_ranking.tsv",
     "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
@@ -31,6 +38,7 @@ EXPECTED_JSON = {
     "m5_trajectory.json",
     "module_contrasts.json",
     "enrichments.json",
+    "functional_enrichment.json",
     "hubs.json",
     "m5_network.json",
     "external_validation.json",
@@ -110,6 +118,34 @@ def main() -> None:
         if len(payloads[json_name][key]) != len(read_rows(source)):
             raise AssertionError(f"{json_name} row count does not match {source}")
 
+    enrichment = payloads["functional_enrichment.json"]
+    expected_tested = {
+        "v3_mapman": sum(1 for row in read_rows(SOURCE_PATHS["v3_mapman_all"]) if row["Tested"].upper() == "TRUE"),
+        "v5_mapman": sum(1 for row in read_rows(SOURCE_PATHS["v5_mapman_all"]) if row["Tested"].upper() == "TRUE"),
+        "go": sum(1 for row in read_rows(SOURCE_PATHS["go_all"]) if row["Tested"].upper() == "TRUE"),
+    }
+    exported_tested = {
+        source: sum(1 for row in enrichment["terms"] if row["Source"] == source)
+        for source in expected_tested
+    }
+    if exported_tested != expected_tested:
+        raise AssertionError(f"functional_enrichment tested-term counts mismatch: {exported_tested} != {expected_tested}")
+
+    expected_themes = len(read_rows(SOURCE_PATHS["v3_mapman_themes"])) + len(read_rows(SOURCE_PATHS["v5_mapman_themes"]))
+    if len(enrichment["themes"]) != expected_themes:
+        raise AssertionError("functional_enrichment theme count does not match canonical MapMan theme tables")
+
+    expected_qc = sum(
+        1 for row in read_rows(SOURCE_PATHS["enrichment_qc"])
+        if row["Source"] in {"v3_mapman", "v5_mapman"}
+    ) + len(read_rows(SOURCE_PATHS["go_qc"]))
+    if len(enrichment["qc"]) != expected_qc:
+        raise AssertionError("functional_enrichment QC count does not match canonical QC tables")
+
+    for source, expected in expected_tested.items():
+        if enrichment["summary"]["tested_terms"][source] != expected:
+            raise AssertionError(f"functional_enrichment summary count mismatch for {source}")
+
     expected_hubs = len(read_rows(SOURCE_PATHS["m5_hubs"])) + len(read_rows(SOURCE_PATHS["m10_m2_hubs"]))
     if len(payloads["hubs.json"]["rows"]) != expected_hubs:
         raise AssertionError("hubs.json row count does not match hub source tables")
@@ -126,7 +162,7 @@ def main() -> None:
     provenance_ids = {row["artifact_id"] for row in payloads["provenance.json"]["artifacts"]}
     required_ids = {
         "project_summary", "modules", "m5_trajectory", "module_contrasts",
-        "enrichments", "hubs", "m5_network", "external_validation", "t008_progress",
+        "enrichments", "functional_enrichment", "hubs", "m5_network", "external_validation", "t008_progress",
     }
     if not required_ids.issubset(provenance_ids):
         raise AssertionError("provenance.json is missing required artifact records")
@@ -134,7 +170,8 @@ def main() -> None:
     print(
         "Validated site data: "
         f"samples={sample_count}; modules={module_source_count}; "
-        f"hubs={expected_hubs}; t008={t008['validated_runs']}/{t008['total_runs']}"
+        f"hubs={expected_hubs}; enrichment_terms={sum(expected_tested.values())}; "
+        f"t008={t008['validated_runs']}/{t008['total_runs']}"
     )
 
 

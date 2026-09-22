@@ -540,6 +540,11 @@ export default function M5Explorer() {
 
       <DataState loading={loading} error={error} />
 
+      <div className="m5-crosslink">
+        <span>¿Quieres ver qué funciones están sobrerrepresentadas en M5?</span>
+        <Link className="button button--secondary" to="/enrichment">Abrir enriquecimiento funcional</Link>
+      </div>
+
       {trajectory && hubs && external && provenance && (
         <>
           <section className="m5-section">

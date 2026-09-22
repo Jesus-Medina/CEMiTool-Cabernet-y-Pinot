@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from build_provenance_manifest import build_manifest
+from export_functional_enrichment import FUNCTIONAL_SOURCE_PATHS, build_functional_enrichment
 
 SITE_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = SITE_DIR.parent
@@ -221,6 +222,7 @@ def main() -> None:
     m10_m2_hubs = loaded["m10_m2_hubs"]
     m5_edges = loaded["m5_edges"]
     external_rows = loaded["external"]
+    functional_enrichment = build_functional_enrichment(REPO_ROOT)
     t008 = build_t008(loaded["t008_manifest"], loaded["t008_events"])
 
     beta_row = next((row for row in beta_rows if row["Power"] == PRIMARY_BETA), None)
@@ -334,6 +336,20 @@ def main() -> None:
             "scripts": ["scripts/post/11_functional_enrichment_beta10.R"],
             "parameters": {"source": "v3_mapman", "scope": "global_FDR05_hits"},
         },
+        "functional_enrichment": {
+            "sources": list(FUNCTIONAL_SOURCE_PATHS.values()),
+            "scripts": [
+                "scripts/post/11_functional_enrichment_beta10.R",
+                "scripts/post/12_go_ora_beta10.R",
+            ],
+            "parameters": {
+                "mapman_primary": "v3_mapman",
+                "mapman_secondary": "v5_mapman",
+                "go_current": "results/go_ora_beta10/go_all_terms.tsv",
+                "term_scope": "tested_terms_only",
+                "global_fdr_threshold": 0.05,
+            },
+        },
         "hubs": {
             "sources": [SOURCES["m5_hubs"], SOURCES["m10_m2_hubs"]],
             "scripts": ["scripts/post/13_m5_hub_prioritization_beta10.R", "scripts/post/14_m10_m2_hub_prioritization_beta10.R"],
@@ -362,6 +378,7 @@ def main() -> None:
         "m5_trajectory.json": {"schema_version": 1, **m5_trajectory},
         "module_contrasts.json": {"schema_version": 1, "contrasts": contrast_rows},
         "enrichments.json": {"schema_version": 1, "rows": enrichment_rows},
+        "functional_enrichment.json": functional_enrichment,
         "hubs.json": {"schema_version": 1, "rows": hubs},
         "m5_network.json": {"schema_version": 1, "edges": m5_edges},
         "external_validation.json": {"schema_version": 1, "rows": external_rows},

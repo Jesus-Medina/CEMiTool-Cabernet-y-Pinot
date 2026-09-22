@@ -195,8 +195,8 @@ export function HomePage() {
         <Link className="portal-card" to="/t008">
           <span>03</span><h2>T-008</h2><p>Estado del reprocesamiento moderno.</p>
         </Link>
-        <Link className="portal-card" to="/methods">
-          <span>04</span><h2>Métodos</h2><p>Decisiones analíticas y rutas hacia el código.</p>
+        <Link className="portal-card" to="/enrichment">
+          <span>04</span><h2>Enriquecimiento</h2><p>MapMan v3/v5.1, GO auditado y cobertura.</p>
         </Link>
       </section>
     </div>
