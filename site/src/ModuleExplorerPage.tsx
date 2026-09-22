@@ -288,7 +288,7 @@ function ModuleFunctionalSummary({
     <section className="module-detail-section">
       <div className="module-section-heading">
         <div>
-          <p className="eyebrow">Functional enrichment</p>
+          <p className="eyebrow">Función</p>
           <h2>MapMan v3 · hits globales</h2>
         </div>
         <Link className="inline-link" to={'/enrichment?module=' + module}>Abrir explorador de enriquecimiento →</Link>
@@ -325,7 +325,7 @@ function ModuleExternalSummary({
     return (
       <section className="module-detail-section">
         <div className="module-empty">
-          La validación externa prioritaria T-007 se concentró en M5/M10/M2; {module} no tiene resumen equivalente en ese conjunto congelado.
+          La validación externa prioritaria se concentró en M5/M10/M2; {module} no tiene resumen equivalente en ese conjunto congelado.
         </div>
       </section>
     )
@@ -335,7 +335,7 @@ function ModuleExternalSummary({
     <section className="module-detail-section">
       <div className="module-section-heading">
         <div>
-          <p className="eyebrow">Skin-only externa</p>
+          <p className="eyebrow">Piel externa</p>
           <h2>Cobertura y concordancia</h2>
         </div>
         <Link className="inline-link" to={'/validation?module=' + module}>Abrir validación externa →</Link>
@@ -495,7 +495,7 @@ export function ModuleExplorerDetailPage() {
     <div className="modules-page">
       <section className={module === 'M2' ? 'module-detail-hero module-detail-hero--warning' : 'module-detail-hero'}>
         <div>
-          <p className="eyebrow">Module Explorer</p>
+          <p className="eyebrow">Resultados · Módulo</p>
           <h1>{module}</h1>
           {summary && (
             <p>
@@ -550,9 +550,9 @@ export function ModuleExplorerDetailPage() {
             </div>
             <div className="module-route-grid">
               <Link to={'/enrichment?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
-              <Link to={'/validation?module=' + module}><strong>Validación externa</strong><span>skin-only T-007</span></Link>
+              <Link to={'/validation?module=' + module}><strong>Validación externa</strong><span>evidencia independiente en piel</span></Link>
               <Link to="/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
-              {module === 'M5' && <Link to="/modules/M5"><strong>M5 Explorer</strong><span>red, chr16 y hubs</span></Link>}
+              {module === 'M5' && <Link to="/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
             </div>
           </section>
         </>
