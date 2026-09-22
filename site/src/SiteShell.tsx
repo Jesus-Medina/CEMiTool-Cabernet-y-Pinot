@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const primaryNavigation = [
@@ -35,9 +35,21 @@ export default function SiteShell() {
     pathname.startsWith(prefix),
   )
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    setMenuOpen(false)
+  }, [pathname])
+
+  function skipToContent(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault()
+    const main = document.getElementById('main-content')
+    main?.focus({ preventScroll: true })
+    main?.scrollIntoView({ block: 'start' })
+  }
+
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">
+      <a className="skip-link" href="#main-content" onClick={skipToContent}>
         Saltar al contenido
       </a>
 
@@ -103,7 +115,7 @@ export default function SiteShell() {
         </div>
       </header>
 
-      <main className="site-main" id="main-content">
+      <main className="site-main" id="main-content" tabIndex={-1}>
         {inResults && (
           <div className="result-context-bar">
             <span>Resultados</span>
