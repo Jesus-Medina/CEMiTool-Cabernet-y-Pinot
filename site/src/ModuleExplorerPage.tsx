@@ -549,8 +549,8 @@ export function ModuleExplorerDetailPage() {
               </div>
             </div>
             <div className="module-route-grid">
-              <Link to="/enrichment"><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
-              <Link to="/validation"><strong>Validación externa</strong><span>skin-only T-007</span></Link>
+              <Link to={'/enrichment?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
+              <Link to={'/validation?module=' + module}><strong>Validación externa</strong><span>skin-only T-007</span></Link>
               <Link to="/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
               {module === 'M5' && <Link to="/modules/M5"><strong>M5 Explorer</strong><span>red, chr16 y hubs</span></Link>}
             </div>
