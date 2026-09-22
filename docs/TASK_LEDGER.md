@@ -335,7 +335,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-003 completion (2026-09-22):** Home y Story ya consumen los JSON generados por WEB-002. La portada muestra diseño, beta principal, M5 y T-008 desde fuentes canónicas; el flujo de etapas se construye desde metadata y la narrativa diferencia resultados apoyados de conclusiones no demostradas. Se añadieron estados de carga/error, layout responsive y una Story de siete pasos con T-008 dinámico. GitHub Actions run `35746120112` pasó export, validation, lint, typecheck y build. Commit principal: `abeb5e4`.
 
-**Immediate next step:** WEB-004, implement the interactive M5 Explorer using the canonical M5 trajectory/hub datasets.
+**WEB-004 completion (2026-09-22):** se implementó el explorador interactivo M5 en `/modules/M5`. La trayectoria permite Todos/2012/2013/2014, muestra media±SE, réplicas opcionales, línea cero, tabla de datos y descarga CSV del subconjunto visible. Se añadieron contrastes Harvest por año, ranking buscable de 108 hubs, tarjetas NAC `VIT_12s0028g00860` y CuAO `VIT_05s0020g03280` con apoyo externo derivado de T-007, panel CHS/STS basado en `V3_V5_STS_CHS_label_conflict` y provenance con fuentes/scripts/SHA-256/commit. La gráfica usa SVG nativo para mantener peso y accesibilidad; no recalcula estadística. GitHub Actions run `35747710946` pasó export, validation, lint, typecheck y build. Commit principal: `b940af4`.
+
+**Immediate next step:** publish the first GitHub Pages preview, then continue with WEB-006 functional enrichment.
 
 **Acceptance criteria for T-010 DONE:**
 
