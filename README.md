@@ -6,7 +6,7 @@ Proyecto reproducible de análisis de coexpresión génica en vid usando **CEMiT
 
 **Preview pública:** https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/
 
-La web reconstruye sus datos desde resultados canónicos del repositorio y expone Home, Story y el M5 Explorer con trazabilidad hacia tablas/scripts. Sigue en desarrollo; T-008 permanece incompleto y las limitaciones científicas del proyecto se mantienen visibles.
+La web reconstruye sus datos desde resultados canónicos del repositorio y expone Home, Story, M5 Explorer y enriquecimiento funcional MapMan/GO con trazabilidad hacia tablas/scripts. Sigue en desarrollo; T-008 permanece incompleto y las limitaciones científicas del proyecto se mantienen visibles.
 
 ## Objetivo
 
