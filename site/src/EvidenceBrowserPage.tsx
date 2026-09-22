@@ -339,7 +339,7 @@ export default function EvidenceBrowserPage() {
           <section className="evidence-claims">
             <div className="evidence-section-heading">
               <div>
-                <p className="eyebrow">Claims</p>
+                <p className="eyebrow">Hallazgos</p>
                 <h2>Resultado → evidencia</h2>
               </div>
               <span>{filteredClaims.length} de {CLAIMS.length}</span>
