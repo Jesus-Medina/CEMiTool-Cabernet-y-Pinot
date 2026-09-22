@@ -518,3 +518,53 @@
     border-radius: 14px;
   }
 }
+
+
+/* UX-04 mobile control density */
+@media (max-width: 680px) {
+  .source-switcher {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .source-button {
+    min-height: 52px;
+    padding: 8px 7px;
+    border-radius: 9px;
+    text-align: center;
+  }
+
+  .source-button strong {
+    font-size: .72rem;
+    line-height: 1.2;
+  }
+
+  .source-button small {
+    margin-top: 3px;
+    font-size: .58rem;
+  }
+
+  .enrichment-filter-row {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .coverage-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .coverage-strip article {
+    min-height: 105px;
+    padding: 13px;
+  }
+
+  .coverage-strip strong {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .source-button small {
+    display: none;
+  }
+}
