@@ -341,7 +341,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-006 completion (2026-09-22):** se añadió una capa de exportación específica de enriquecimiento que reúne únicamente términos testados vigentes de MapMan v3, MapMan v5.1 y GO T-005A, más QC de cobertura y temas preespecificados. La vista `/enrichment` permite seleccionar fuente/módulo, alternar hits FDR<0,05 vs todos los tests, buscar términos, inspeccionar barras −log10(FDR), fold/overlap, warnings de cobertura, temas MapMan y el estado de auditoría GO. El GO histórico T-005 se mantiene solo como trazabilidad y no alimenta la vista vigente. CI run `35749918846` validó `enrichment_terms=11104` y pasó export/validation/lint/typecheck/build; Pages run `35749918954` desplegó con éxito. Commit principal: `126fead`.
 
-**Immediate next step:** WEB-008 external validation explorer, preserving GSE72421 and PRJNA260535 as separate skin-only evidence layers.
+**WEB-008 completion (2026-09-22):** se añadió `site/scripts/export_external_validation.py` y se amplió `external_validation.json` a schema v2 con 74 filas de hubs de las dos condiciones externas primarias, resumen de cobertura por módulo/condición, QC de fuente y resúmenes de auditoría de muestras. La página `/validation` mantiene GSE72421 (microarray, WW) y PRJNA260535 (RNA-seq, 24 °Brix) visualmente separadas, incluye scatter de concordancia direccional, filtros, FDR BH37/BH361, estados evaluable/no evaluable, límites de plataforma y provenance. La media 2012/13/14 del eje baseline es únicamente una métrica descriptiva de visualización y se etiqueta como tal; no se comparan magnitudes entre plataformas. CI run `35751143173` reportó `external_hubs=74` y pasó export/validation/lint/typecheck/build. Pages run `35751143153` desplegó con éxito. Commit principal: `839c7db`.
+
+**Immediate next step:** WEB-009 T-008 live status dashboard driven entirely by the canonical T-008 progress/QC files.
 
 **Acceptance criteria for T-010 DONE:**
 
