@@ -793,8 +793,12 @@
   backdrop-filter: blur(12px);
 }
 
-.module-section-nav a {
+.module-section-nav button {
   min-height: 34px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -807,8 +811,8 @@
   font-weight: 760;
 }
 
-.module-section-nav a:hover,
-.module-section-nav a:focus-visible {
+.module-section-nav button:hover,
+.module-section-nav button:focus-visible {
   color: var(--cabernet-deep);
   background: var(--surface-alt);
 }
