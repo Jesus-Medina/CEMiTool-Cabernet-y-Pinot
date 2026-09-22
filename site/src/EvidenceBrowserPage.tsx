@@ -177,7 +177,7 @@ export default function EvidenceBrowserPage() {
         if (active) setData(payload)
       })
       .catch((reason: unknown) => {
-        if (active) setError(reason instanceof Error ? reason.message : 'No se pudo cargar provenance.json')
+        if (active) setError(reason instanceof Error ? reason.message : 'No se pudo cargar la trazabilidad reproducible')
       })
     return () => {
       active = false
@@ -263,12 +263,12 @@ export default function EvidenceBrowserPage() {
 
       {!data && !error && (
         <div className="data-state" role="status">
-          <span className="data-state-dot" />Cargando provenance reproducible…
+          <span className="data-state-dot" />Cargando trazabilidad reproducible…
         </div>
       )}
       {error && (
         <div className="data-state data-state--error" role="alert">
-          <strong>Error de provenance</strong><span>{error}</span>
+          <strong>Error de trazabilidad</strong><span>{error}</span>
         </div>
       )}
 
@@ -404,7 +404,7 @@ export default function EvidenceBrowserPage() {
               <p className="eyebrow">Qué no garantiza</p>
               <h2>Un hash no convierte una interpretación en causal</h2>
               <p>
-                Provenance demuestra qué archivo y script sostienen una visualización; las limitaciones
+                La trazabilidad demuestra qué archivo y script sostienen una visualización; las limitaciones
                 biológicas y estadísticas siguen aplicando exactamente igual.
               </p>
             </article>
