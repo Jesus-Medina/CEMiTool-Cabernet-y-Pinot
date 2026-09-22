@@ -1,6 +1,20 @@
 .validation-page {
   display: grid;
   gap: 30px;
+  min-width: 0;
+}
+
+.validation-page > *,
+.validation-main > *,
+.validation-table-panel > *,
+.validation-controls > *,
+.dataset-separation > *,
+.validation-summary-grid > *,
+.platform-limits > *,
+.validation-boundary > *,
+.validation-provenance > * {
+  min-width: 0;
+  max-width: 100%;
 }
 .validation-hero {
   display: grid;
@@ -16,6 +30,7 @@
 .validation-hero .eyebrow { color: #e9cbd8; }
 .validation-hero h1 {
   max-width: 850px;
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: clamp(2.6rem, 6vw, 5.6rem);
   line-height: .98;
@@ -53,7 +68,13 @@
   background: linear-gradient(155deg, rgba(234,214,223,.54), #fff 64%);
 }
 .dataset-card > span { display: block; color: var(--pinot); font-size: .68rem; font-weight: 850; letter-spacing: .14em; }
-.dataset-card strong { display: block; margin-top: 38px; color: var(--cabernet-deep); font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.dataset-card strong {
+  display: block;
+  margin-top: 38px;
+  color: var(--cabernet-deep);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  overflow-wrap: anywhere;
+}
 .dataset-card small { display: block; margin-top: 6px; color: var(--muted); }
 .dataset-card p { margin: 16px 0 0; color: var(--muted); font-size: .78rem; }
 .validation-controls {
