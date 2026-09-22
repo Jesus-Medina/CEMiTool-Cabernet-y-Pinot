@@ -18,7 +18,6 @@ docs/T007_SKIN_ONLY_VALIDATION.md
 docs/T008_RAW_REPROCESSING.md
 
 data/metadata/samples.tsv
-results/beta10/tables/module.tsv
 results/beta10/tables/beta_fit_indices.tsv
 results/comparisons/best_module_matches_beta7_to_beta10.tsv
 results/module_statistics_beta10/module_factorial_ANOVA_typeIII.tsv
