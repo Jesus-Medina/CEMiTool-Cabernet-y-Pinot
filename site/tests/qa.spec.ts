@@ -34,7 +34,7 @@ const routes = [
   ['/results/genes/VIT_12s0028g00860', /VIT_12s0028g00860/i],
   ['/methods', /Cómo se construyó la evidencia/i],
   ['/reproducibility', /Audita un resultado hasta su fuente/i],
-  ['/status/t008', /T-008/i],
+  ['/status/t008', /Estado del reprocesamiento moderno/i],
   ['/search', /Encuentra un resultado/i],
   ['/ask', /Pregúntale al proyecto/i],
 ] as const
