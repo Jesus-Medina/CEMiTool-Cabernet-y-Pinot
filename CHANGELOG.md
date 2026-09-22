@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-22 — WEB-001 interactive explorer scaffold completed
+
+- Added the initial `site/` frontend using React 19, TypeScript and Vite with the GitHub Pages base path `/CEMiTool-Cabernet-y-Pinot/`.
+- Added routed placeholders for Home, Story, modules, module detail, gene detail, external validation, T-008, methods and evidence/provenance, plus a responsive global shell and provisional design tokens.
+- Kept WEB-001 intentionally free of scientific result values; canonical data integration remains reserved for WEB-002.
+- Added `.github/workflows/site-check.yml`; GitHub Actions run `35745067306` completed dependency installation, lint, typecheck and production build successfully.
+- Updated the web implementation plan and T-010 handoff so WEB-002 is now the next task. No scientific analysis, result table, model or T-008 conclusion changed.
+
 ## 2026-09-22 — Interactive web explorer implementation plan created
 
 - Added `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md` as the step-by-step roadmap for a React/TypeScript/Vite scientific explorer deployed with GitHub Pages.
