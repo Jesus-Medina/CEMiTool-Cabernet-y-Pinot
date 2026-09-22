@@ -20,14 +20,18 @@ export default function App() {
       <Route element={<SiteShell />}>
         <Route index element={<HomePage />} />
         <Route path="story" element={<Navigate to="/" replace />} />
+        <Route path="results" element={<ModulesPage />} />
         <Route path="modules" element={<ModulesPage />} />
         <Route path="modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="enrichment" element={<EnrichmentPage />} />
         <Route path="genes/:geneId" element={<GeneDetailPage />} />
         <Route path="validation" element={<ValidationPage />} />
+        <Route path="status/t008" element={<T008Page />} />
         <Route path="t008" element={<T008Page />} />
         <Route path="methods" element={<MethodsPage />} />
+        <Route path="reproducibility" element={<EvidencePage />} />
         <Route path="evidence" element={<EvidencePage />} />
+        <Route path="ask" element={<ChatPage />} />
         <Route path="chat" element={<ChatPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
