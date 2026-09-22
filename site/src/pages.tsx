@@ -99,7 +99,7 @@ export function HomePage() {
     <div className="overview-page">
       <section className="overview-hero">
         <div className="overview-hero-copy">
-          <p className="eyebrow">Overview científico</p>
+          <p className="eyebrow">Resumen científico</p>
           <h1>Comparar programas de coexpresión durante la maduración.</h1>
           <p className="overview-lede">
             Cabernet Sauvignon y Pinot noir se comparan a través de etapas y años
@@ -520,7 +520,7 @@ export function NotFoundPage() {
           Puedes volver al overview o entrar directamente a los resultados del estudio.
         </p>
         <div className="not-found-actions">
-          <Link className="button button--primary" to="/">Ir al overview</Link>
+          <Link className="button button--primary" to="/">Ir al resumen</Link>
           <Link className="button button--secondary" to="/results/modules">Ver resultados</Link>
         </div>
       </div>
