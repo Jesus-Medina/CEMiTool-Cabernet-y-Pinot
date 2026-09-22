@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import SiteShell from './SiteShell'
 import EnrichmentPage from './EnrichmentPage'
 import ChatPage from './ChatPage'
+import SearchPage from './SearchPage'
 import {
   EvidencePage,
   GeneDetailPage,
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="methods" element={<MethodsPage />} />
         <Route path="reproducibility" element={<EvidencePage />} />
         <Route path="evidence" element={<EvidencePage />} />
+        <Route path="search" element={<SearchPage />} />
         <Route path="ask" element={<ChatPage />} />
         <Route path="chat" element={<ChatPage />} />
         <Route path="*" element={<NotFoundPage />} />
