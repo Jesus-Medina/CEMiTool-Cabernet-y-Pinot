@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-22 — GitHub Pages preview deployment prepared; one-time Pages enablement pending
+
+- Added `.github/workflows/deploy-site.yml` using the current GitHub Pages flow: canonical data export/validation, frontend checks/build, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4` and `actions/deploy-pages@v4`.
+- Switched the frontend router to `HashRouter` so direct/reloaded internal routes remain compatible with static GitHub Pages hosting.
+- Added `.nojekyll` to the published public assets and documented deployment/re-run instructions in `site/README.md`.
+- Commit `698192e` passed the scientific data export, validation, lint, typecheck and Vite build. Deployment run `35748440288` then stopped at GitHub Pages configuration because Pages has not yet been enabled for the repository.
+- Required one-time owner action: `Settings → Pages → Build and deployment → Source → GitHub Actions`. After that, the existing workflow can be re-run without code changes.
+- No scientific result, model, annotation or T-008 conclusion changed.
+
 ## 2026-09-22 — WEB-004 interactive M5 Explorer completed
 
 - Added the first full scientific explorer at `/modules/M5`, consuming only generated canonical JSON.
