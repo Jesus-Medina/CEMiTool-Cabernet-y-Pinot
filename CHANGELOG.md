@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-22 — WEB-008 external skin validation explorer completed
+
+- Added a dedicated T-007 export layer that enriches the existing primary-hub JSON with canonical module-coverage summaries, source QC and sample-audit summaries while preserving the original two external datasets as separate evidence layers.
+- Replaced the validation placeholder with an interactive skin-only evidence page for GSE72421 WW microarray and PRJNA260535 24 °Brix RNA-seq.
+- Added module/status/gene filters, top-hub coverage cards, BH corrections for the preselected 37 hubs and 361 priority genes, evaluable/non-evaluable states and a gene-level sign-concordance scatter.
+- The scatter uses a clearly labelled descriptive mean of the three canonical baseline Harvest gene effects only as an X-axis display summary. It deliberately omits a y=x line because effect magnitudes are not comparable across the historical baseline, microarray and RNA-seq processed scales.
+- Added explicit microarray cross-hybridization and RNA-seq filtering/reference caveats, plus “external source — does not add to N=54” labelling and provenance links.
+- CI run `35751143173` passed and reported `external_hubs=74`; Pages run `35751143153` built and deployed the update successfully.
+- Commit: `839c7db`. No CEMiTool rerun, external statistical reanalysis, imputation, cross-platform pooling or skin-thickness causal claim was introduced by the web layer.
+
 ## 2026-09-22 — WEB-006 functional enrichment explorer completed
 
 - Added a dedicated canonical export for functional enrichment, retaining only tested current terms from MapMan v3, MapMan v5.1 and the corrected T-005A GO analysis.
