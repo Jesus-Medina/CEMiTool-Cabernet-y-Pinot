@@ -1937,3 +1937,161 @@ body {
     display: none;
   }
 }
+
+
+/* UX-04 chart language + compact scientific workspaces */
+.m5-hero {
+  gap: 26px;
+  padding: 30px 32px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  background:
+    radial-gradient(circle at 88% 22%, rgba(221,181,198,.16), transparent 34%),
+    linear-gradient(145deg, #351a25, #642b43);
+}
+
+.m5-hero h1 {
+  font-size: clamp(2rem, 4.3vw, 4rem);
+  line-height: 1.02;
+}
+
+.m5-hero p:last-child {
+  line-height: 1.6;
+}
+
+.m5-hero-facts span {
+  min-height: 58px;
+  border-radius: 11px;
+}
+
+.m5-section {
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.section-heading {
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2,
+.annotation-conflict h2 {
+  font-size: clamp(1.45rem, 2.4vw, 2.15rem);
+}
+
+.trajectory-grid {
+  gap: 12px;
+}
+
+.trajectory-chart-card {
+  border-color: var(--border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.chart-card-header {
+  padding: 16px 17px 2px;
+}
+
+.chart-card-header h3 {
+  font-size: 1.15rem;
+}
+
+.chart-card-header .eyebrow {
+  margin-bottom: 6px;
+  font-size: .62rem;
+}
+
+.chart-legend {
+  gap: 12px;
+  font-size: .66rem;
+}
+
+.trajectory-svg {
+  padding: 2px 8px 8px;
+}
+
+.chart-gridline {
+  stroke: #ece7e9;
+}
+
+.chart-stage-line {
+  stroke: #f0ecee;
+  stroke-dasharray: 3 6;
+}
+
+.zero-line {
+  stroke: #8a8085;
+  stroke-width: 1.2;
+  stroke-dasharray: 4 5;
+}
+
+.chart-axis-label,
+.chart-stage-label,
+.chart-y-title {
+  fill: #6f666a;
+}
+
+.chart-stage-label {
+  font-weight: 720;
+}
+
+.trajectory-line {
+  stroke-width: 3;
+}
+
+.mean-point {
+  stroke-width: 2.5;
+}
+
+.replicate-point {
+  opacity: .5;
+}
+
+.contrast-grid {
+  gap: 10px;
+}
+
+.contrast-card {
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 13px;
+  background: #fcfafb;
+}
+
+.contrast-card strong {
+  font-size: 1.9rem;
+}
+
+.segmented-control,
+.check-control {
+  border-radius: 10px;
+}
+
+.segment {
+  border-radius: 7px;
+}
+
+.annotation-conflict {
+  padding: 26px;
+  border-radius: 16px;
+}
+
+@media (max-width: 620px) {
+  .m5-hero,
+  .m5-section,
+  .annotation-conflict {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .m5-hero h1 {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .chart-card-header {
+    padding: 14px 14px 2px;
+  }
+}
