@@ -70,7 +70,7 @@ export default function GeneDetailPage() {
           <h1>{geneId ?? 'Gen'}</h1>
           <p>Este ID no aparece en el ranking de hubs exportado por el sitio.</p>
         </header>
-        <Link className="button button--secondary button--fit" to="/modules">Volver a resultados</Link>
+        <Link className="button button--secondary button--fit" to="/results/modules">Volver a resultados</Link>
       </div>
     )
   }
@@ -89,8 +89,8 @@ export default function GeneDetailPage() {
           <h1>{hub.Gene}</h1>
           <p>{annotationLabel(hub)}</p>
           <div className="gene-actions">
-            <Link className="button button--primary" to={'/modules/' + hub.Module}>Ver en {hub.Module}</Link>
-            <Link className="button button--secondary" to="/evidence?artifact=hubs">Evidence</Link>
+            <Link className="button button--primary" to={'/results/results/modules/' + hub.Module}>Ver en {hub.Module}</Link>
+            <Link className="button button--secondary" to="/reproducibility?artifact=hubs">Evidence</Link>
           </div>
         </div>
         <div className="gene-identity-stats">
@@ -158,7 +158,7 @@ export default function GeneDetailPage() {
       <section className="gene-section">
         <div className="gene-section-heading">
           <div><p className="eyebrow">Piel externa</p><h2>Validación por dataset</h2></div>
-          <Link className="inline-link" to="/validation">Abrir validación global →</Link>
+          <Link className="inline-link" to="/results/validation">Abrir validación global →</Link>
         </div>
         {externalRows.length > 0 ? (
           <div className="gene-external-list">
