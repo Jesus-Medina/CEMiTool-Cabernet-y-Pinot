@@ -42,7 +42,7 @@ function MethodEvidence({
   provenance: ProvenancePayload
 }) {
   if (artifacts.length === 0) {
-    return <p className="method-no-evidence">No hay un artefacto de provenance asociado a esta sección.</p>
+    return <p className="method-no-evidence">No hay un artefacto de trazabilidad asociado a esta sección.</p>
   }
 
   return (
@@ -162,7 +162,7 @@ export default function MethodsPage() {
       </header>
 
       {!project && !error && (
-        <div className="data-state" role="status"><span className="data-state-dot" />Cargando métodos y provenance…</div>
+        <div className="data-state" role="status"><span className="data-state-dot" />Cargando métodos y trazabilidad…</div>
       )}
       {error && (
         <div className="data-state data-state--error" role="alert"><strong>No se pudieron cargar los métodos.</strong><span>{error}</span></div>
