@@ -746,15 +746,17 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-003 — Home + Story
 
-- [ ] Home.
-- [ ] tarjetas 54 / beta10 / M5 / T-008;
-- [ ] flujo FruitSet→Veraison→Harvest;
-- [ ] resumen de M5;
-- [ ] límites científicos;
-- [ ] Story completa;
-- [ ] navegación móvil.
+- [x] Home.
+- [x] tarjetas 54 / beta10 / M5 / T-008;
+- [x] flujo FruitSet→Veraison→Harvest;
+- [x] resumen de M5;
+- [x] límites científicos;
+- [x] Story completa;
+- [x] navegación móvil.
 
 **Aceptación:** alguien ajeno al repo puede entender la pregunta, diseño, resultado principal y límites sin abrir GitHub.
+
+**Verificación 2026-09-22:** commit `abeb5e4`. Home y Story consumen `project_summary.json`, `modules.json` y `m5_trajectory.json`; las tarjetas y el estado T-008 se derivan de datos canónicos. La Story mantiene explícitas las fronteras pericarpio/piel, hub/causalidad y T-008 incompleto. GitHub Actions run `35746120112` completó export, validation, lint, typecheck y build con `success`.
 
 ---
 
@@ -1006,11 +1008,11 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-003
+## Próxima tarea: WEB-004
 
-Construir la primera experiencia real de lectura: Home + Story, consumiendo `project_summary.json` y los primeros datasets generados por WEB-002.
+Construir el **M5 Explorer**: primera visualización científica interactiva del sitio. Debe incluir trayectorias 2012/2013/2014, modo conjunto, contraste Harvest, réplicas individuales, ranking de hubs, fichas NAC/CuAO, panel CHS/STS y provenance.
 
-La Home debe mostrar datos reales derivados del repositorio, no cifras escritas a mano, y mantener visibles los límites científicos. La Story debe explicar el flujo del proyecto sin reemplazar el manuscrito técnico.
+Toda cifra debe seguir entrando por la capa canónica de WEB-002.
 
 ---
 
@@ -1021,8 +1023,8 @@ La Home debe mostrar datos reales derivados del repositorio, no cifras escritas 
 | WEB-000 | IN PROGRESS | 2026-09-22 | Plan creado; falta congelar paleta y provenance schema |
 | WEB-001 | DONE | 2026-09-22 | Scaffold + routing + CI; lint/typecheck/build PASS |
 | WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
-| WEB-003 | TODO | — | Próxima |
-| WEB-004 | TODO | — | — |
+| WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
+| WEB-004 | TODO | — | Próxima |
 | WEB-005 | TODO | — | — |
 | WEB-006 | TODO | — | — |
 | WEB-007 | TODO | — | — |
