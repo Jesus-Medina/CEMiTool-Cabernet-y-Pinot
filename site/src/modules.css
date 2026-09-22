@@ -826,3 +826,38 @@
     grid-template-columns: repeat(2,1fr);
   }
 }
+
+
+@media (max-width: 650px) {
+  .module-filter-panel {
+    gap: 11px;
+    padding: 12px;
+  }
+
+  .module-filter-buttons {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 3px;
+    scrollbar-width: thin;
+  }
+
+  .module-filter {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .module-overview-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .module-overview-strip article {
+    min-height: 82px;
+    padding: 12px;
+  }
+
+  .module-overview-strip strong {
+    font-size: 1.45rem;
+  }
+}
