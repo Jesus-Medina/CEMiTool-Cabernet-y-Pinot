@@ -1,13 +1,13 @@
 # Catálogo maestro de archivos
 
-Auditoría del árbol GitHub actual. Total: **539 archivos**, de los cuales **285 canónicos** y **254 históricos** bajo `history/`.
+Auditoría del árbol GitHub actual. Total: **539 archivos**: **285 canónicos** y **254 históricos**.
 
-El catálogo enumera todos los archivos canónicos del árbol. El subárbol `history/local_workspace/` contiene copias históricas preservadas y no se duplica línea por línea aquí; su función es trazabilidad, no fuente vigente.
+Este catálogo enumera individualmente tanto los archivos canónicos como los históricos. Para trabajo actual, usar la copia canónica cuando exista; `history/local_workspace/` se conserva para trazabilidad.
 
 ## Cómo interpretar columnas
 
 - **Ruta:** ubicación exacta.
-- **Bytes:** tamaño Git del blob; punteros LFS pueden mostrar tamaño de puntero, no payload real.
+- **Bytes:** tamaño Git del blob; un puntero LFS puede no equivaler al payload real.
 - **Rol:** clasificación funcional.
 - **Estado:** vigencia/uso.
 
@@ -33,7 +33,7 @@ El catálogo enumera todos los archivos canónicos del árbol. El subárbol `his
 
 | Ruta | Bytes | Rol | Estado |
 |---|---:|---|---|
-| `CHANGELOG.md` | 13456 | configuración/raíz | canónico |
+| `CHANGELOG.md` | 14249 | configuración/raíz | canónico |
 
 ## README.md/
 
@@ -96,9 +96,9 @@ El catálogo enumera todos los archivos canónicos del árbol. El subárbol `his
 | `docs/LOCAL_PROJECT_INVENTORY.md` | 5569 | documentación | canónico |
 | `docs/MASTER_DATA_LINEAGE.md` | 4390 | documentación | canónico |
 | `docs/MASTER_EVIDENCE_MATRIX.md` | 5565 | documentación | canónico |
-| `docs/MASTER_FILE_CATALOG.md` | 30366 | documentación | canónico |
+| `docs/MASTER_FILE_CATALOG.md` | 30649 | documentación | canónico |
 | `docs/MASTER_GLOSSARY.md` | 11106 | documentación | canónico |
-| `docs/MASTER_PROJECT_EXPLANATION.md` | 23918 | documentación | canónico |
+| `docs/MASTER_PROJECT_EXPLANATION.md` | 23939 | documentación | canónico |
 | `docs/MASTER_PROJECT_HISTORY.md` | 5727 | documentación | canónico |
 | `docs/MASTER_SCRIPT_CATALOG.md` | 7509 | documentación | canónico |
 | `docs/MASTER_TABLE_CATALOG.md` | 11538 | documentación | canónico |
@@ -351,9 +351,264 @@ El catálogo enumera todos los archivos canónicos del árbol. El subárbol `his
 | `scripts/post/15_prepare_t007_external_skin.py` | 4605 | script | canónico |
 | `scripts/post/16_t007_external_skin_validation.R` | 15702 | script | canónico |
 
-## Histórico
+## history/local_workspace/ — índice completo histórico
 
-`history/local_workspace/` conserva 254 archivos históricos. No debe usarse como fuente canónica cuando exista una versión promovida fuera de `history/`.
+| Ruta | Bytes | Rol | Estado |
+|---|---:|---|---|
+| `history/local_workspace/BETA 10/BETA 10.Rproj` | 205 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/metadata/phenotypes.tsv` | 1241 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/metadata/sample_geo_map.tsv` | 10599 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/metadata/sample_images.tsv` | 1442 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/metadata/samples.tsv` | 9902 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/processed/expression_log2rpkm.rds` | 9656439 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/processed/expression_log2rpkm.tsv` | 21772309 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/processed/expression_rpkm.tsv` | 11128956 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/raw/geo/gse98923_expression_set.rds` | 16049 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/data/raw/geo/GSE98923/GSE98923_RPKM_2012-2013-2014_controls.txt.gz` | 18257506 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/docs/experimental_design.md` | 314 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/logs/parameters.txt` | 272 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/logs/run_summary.txt` | 141 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/logs/session_info.txt` | 5767 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/manuscript/article_draft.docx` | 12542 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/manuscript/article_draft.pdf` | 31403 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/manuscript/article_draft.Rmd` | 4061 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/manuscript/article_render_status.tsv` | 34 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/manuscript/references.bib` | 95 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/README.md` | 4305 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/analysis_report_status.tsv` | 44 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/analysis_report.docx` | 36007 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/analysis_report.html` | 1083723 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/analysis_report.pdf` | 77923 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/beta_r2.png` | 71381 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/gsea.png` | 78199 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/hist.png` | 36655 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/mean_k.png` | 61503 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/mean_var.png` | 101917 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M1.png` | 1749179 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M10.png` | 290712 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M2.png` | 1188758 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M3.png` | 958925 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M4.png` | 898361 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M5.png` | 662542 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M6.png` | 435784 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M7.png` | 574290 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M8.png` | 449372 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_M9.png` | 350601 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/profile_Not_Correlated.png` | 415654 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/assets/figures/qq.png` | 33861 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/cemitool/report.html` | 4050321 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/diagnostics/diagnostics.html` | 974989 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/native_report_status.tsv` | 100 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/README.md` | 668 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/supplementary/gse98923_supplementary_files.zip` | 28995357 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/reports/supplementary/manifest.tsv` | 2233 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/best_module_matches_beta7_to_beta10.tsv` | 718 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/comparison_summary.txt` | 387 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/gene_module_membership_beta7_vs_beta10.tsv` | 74159 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/module_overlap_counts.tsv` | 304 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/module_overlap_percent_from_beta7.tsv` | 436 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/module_overlap_percent_to_beta10.tsv` | 448 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/module_pairwise_jaccard.tsv` | 4222 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/beta7_vs_beta10/module_sizes_beta7_vs_beta10.tsv` | 153 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/beta_r2.pdf` | 5718 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/gsea.pdf` | 9481 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/hist.pdf` | 5105 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/mean_k.pdf` | 5468 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/mean_var.pdf` | 173388 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/profile.pdf` | 715657 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/qq.pdf` | 1392120 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/figures/sample_tree.pdf` | 6798 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/analysis_summary.txt` | 443 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/cabernet_vs_pinot_within_each_stage.tsv` | 4763 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/module_eigengene_qc.tsv` | 448 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/module_eigengenes_54.tsv` | 10156 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/module_eigengenes_with_metadata_54.tsv` | 19525 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/module_factorial_ANOVA_typeIII.tsv` | 3523 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/module_model_diagnostics.tsv` | 837 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/significant_cabernet_vs_pinot_stage_contrasts_FDR05.tsv` | 1531 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/module_statistics_beta10/significant_cultivar_stage_interactions_FDR05.tsv` | 511 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/objects/cemitool.rds` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables.zip` | 60587 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/beta_fit_indices.tsv` | 2511 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/enrichment_es.tsv` | 1262 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/enrichment_nes.tsv` | 1202 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/enrichment_padj.tsv` | 1325 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/module.tsv` | 76991 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/modules_genes.gmt` | 72613 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/parameters.tsv` | 235 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/selected_genes.txt` | 54900 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/summary_eigengene.tsv` | 12081 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/summary_mean.tsv` | 10881 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/results/tables/summary_median.tsv` | 10059 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/run_all_gse98923_MASTER_beta10_COMPLETE.R` | 64433 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/00_setup.R` | 14604 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/01_download_geo.R` | 1081 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/02_prepare_data.R` | 3703 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/03_run_cemitool.R` | 1474 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/04_export_results.R` | 4540 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/05_render_reports.R` | 8419 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/06_compare_beta7_beta10.R` | 8310 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/scripts/07_module_statistics_beta10.R` | 12267 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/templates/analysis_report.Rmd` | 7033 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/BETA 10/templates/article_draft.Rmd` | 4061 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/.RData` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/objetos/GSE98923_CEMiTool_54_baseline.rds` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/enrichment_es.tsv` | 1027 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/enrichment_nes.tsv` | 987 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/enrichment_padj.tsv` | 1071 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/module.tsv` | 76472 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/modules_genes.gmt` | 70329 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/parameters.tsv` | 233 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/selected_genes.txt` | 54900 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/summary_eigengene.tsv` | 10026 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/summary_mean.tsv` | 9075 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/analisis/cemitool/tablas/summary_median.tsv` | 7935 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/data/processed/matrices/GSE98923_CEMiTool_expression_54_log2RPKM.tsv` | 21772308 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/data/processed/matrices/GSE98923_CEMiTool_expression_54_RPKM.tsv` | 11128955 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/data/raw/geo/GSE98923/GSE98923_RPKM_2012-2013-2014_controls.txt.gz` | 18257506 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/documentacion/GSE98923_CEMiTool_design_54.xlsx` | 9940 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/documentacion/original_bundle/GSE98923_CEMiTool_baseline_54_bundle.zip` | 15557 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/documentacion/README_GSE98923_CEMiTool_54.txt` | 1815 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/Fasoli cabernet y pinot GSE98923.Rproj` | 205 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/beta_r2.pdf` | 5718 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/gsea.pdf` | 8691 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/hist.pdf` | 5105 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/mean_k.pdf` | 5468 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/mean_var.pdf` | 173388 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/profile.pdf` | 708378 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/qq.pdf` | 1392120 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/figuras/cemitool/sample_tree.pdf` | 6798 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/informes/cemitool/diagnosticos/diagnostics.html` | 970295 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/informes/cemitool/reporte/report.html` | 3278237 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/logs/parametros_CEMiTool_baseline.txt` | 301 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/logs/resumen_ejecucion.txt` | 1697 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/logs/sessionInfo.txt` | 5975 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/muestras/fotos/indice_fotos.tsv` | 1446 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/muestras/fotos/README_fotos.txt` | 501 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/muestras/metadata/GSE98923_CEMiTool_phenotypes_54.tsv` | 1241 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/muestras/metadata/GSE98923_selection_54_with_GEO_description.tsv` | 10599 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/muestras/metadata/GSE98923_selection_54.tsv` | 9902 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/README_ESTRUCTURA_PROYECTO.txt` | 1105 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/Fasoli cabernet y pinot GSE98923/scripts/run_GSE98923_CEMiTool_54_baseline.R` | 24680 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/.RData` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/metadata/phenotypes.tsv` | 1241 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/metadata/sample_geo_map.tsv` | 10527 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/metadata/sample_images.tsv` | 1442 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/metadata/samples.tsv` | 9902 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/processed/expression_log2rpkm.rds` | 9656439 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/processed/expression_log2rpkm.tsv` | 21772309 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/processed/expression_rpkm.tsv` | 11128956 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/raw/geo/gse98923_expression_set.rds` | 16049 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/data/raw/geo/GSE98923/GSE98923_RPKM_2012-2013-2014_controls.txt.gz` | 18257506 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/docs/experimental_design.md` | 231 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/logs/parameters.txt` | 261 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/logs/run_summary.txt` | 180 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/logs/session_info.txt` | 5823 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/reports/cemitool/report.html` | 4052433 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/reports/diagnostics/diagnostics.html` | 970689 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/beta_r2.pdf` | 5718 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/gsea.pdf` | 9481 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/hist.pdf` | 5105 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/mean_k.pdf` | 5468 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/mean_var.pdf` | 173388 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/profile.pdf` | 715657 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/qq.pdf` | 1392120 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/figures/sample_tree.pdf` | 6798 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/objects/cemitool.rds` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables.zip` | 60587 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/beta_fit_indices.tsv` | 2511 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/enrichment_es.tsv` | 1262 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/enrichment_nes.tsv` | 1202 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/enrichment_padj.tsv` | 1325 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/module.tsv` | 76991 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/modules_genes.gmt` | 72613 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/parameters.tsv` | 235 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/selected_genes.txt` | 54900 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/summary_eigengene.tsv` | 12081 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/summary_mean.tsv` | 10881 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/results/tables/summary_median.tsv` | 10059 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/run_all_gse98923_beta10.R` | 21666 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 10/TRY BETA 10.Rproj` | 205 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/.RData` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/metadata/phenotypes.tsv` | 1241 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/metadata/sample_geo_map.tsv` | 10599 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/metadata/sample_images.tsv` | 1442 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/metadata/samples.tsv` | 9902 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/processed/expression_log2rpkm.rds` | 9656439 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/processed/expression_log2rpkm.tsv` | 21772309 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/processed/expression_rpkm.tsv` | 11128956 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/raw/geo/gse98923_expression_set.rds` | 16049 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/data/raw/geo/GSE98923/GSE98923_RPKM_2012-2013-2014_controls.txt.gz` | 18257506 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/docs/experimental_design.md` | 314 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/logs/parameters.txt` | 284 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/logs/run_summary.txt` | 154 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/logs/session_info.txt` | 5767 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/manuscript/article_draft.docx` | 12542 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/manuscript/article_draft.pdf` | 31453 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/manuscript/article_draft.Rmd` | 4058 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/manuscript/article_render_status.tsv` | 34 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/manuscript/references.bib` | 95 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/README.md` | 4305 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/analysis_report_status.tsv` | 44 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/analysis_report.docx` | 33646 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/analysis_report.html` | 1070733 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/analysis_report.pdf` | 73972 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/beta_r2.png` | 70869 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/gsea.png` | 70794 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/hist.png` | 36655 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/mean_k.png` | 61503 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/mean_var.png` | 101917 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M1.png` | 1665420 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M2.png` | 1067847 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M3.png` | 813469 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M4.png` | 656070 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M5.png` | 773210 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M6.png` | 583487 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M7.png` | 268598 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_M8.png` | 333333 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/profile_Not_Correlated.png` | 185506 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/assets/figures/qq.png` | 33861 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/cemitool/report.html` | 3270175 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/diagnostics/diagnostics.html` | 974731 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/native_report_status.tsv` | 100 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/README.md` | 668 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/supplementary/gse98923_supplementary_files.zip` | 28405021 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/reports/supplementary/manifest.tsv` | 2230 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/beta_r2.pdf` | 5718 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/gsea.pdf` | 8691 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/hist.pdf` | 5105 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/mean_k.pdf` | 5468 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/mean_var.pdf` | 173388 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/profile.pdf` | 708378 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/qq.pdf` | 1392120 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/figures/sample_tree.pdf` | 6798 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/objects/cemitool.rds` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables.zip` | 57087 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/beta_fit_indices.tsv` | 2511 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/enrichment_es.tsv` | 1027 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/enrichment_nes.tsv` | 987 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/enrichment_padj.tsv` | 1071 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/module.tsv` | 76472 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/modules_genes.gmt` | 70329 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/parameters.tsv` | 233 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/selected_genes.txt` | 54900 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/summary_eigengene.tsv` | 10026 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/summary_mean.tsv` | 9075 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/results/tables/summary_median.tsv` | 7935 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/run_all_gse98923_MASTER_beta7_COMPLETE.R` | 64486 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/00_setup.R` | 14604 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/01_download_geo.R` | 1081 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/02_prepare_data.R` | 3703 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/03_run_cemitool.R` | 1508 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/04_export_results.R` | 4568 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/scripts/05_render_reports.R` | 8417 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/templates/analysis_report.Rmd` | 7031 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/templates/article_draft.Rmd` | 4058 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 FIXED/TRY BETA 7 FIXED.Rproj` | 205 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 MASTER/.RData` | 134 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 MASTER/run_all_gse98923_MASTER_beta7_COMPLETE.R` | 64486 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 MASTER/TRY BETA 7 MASTER.Rproj` | 205 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
+| `history/local_workspace/TRY BETA 7 WITH INFORM/.gitkeep` | 60 | histórico preservado | histórico; no usar como fuente vigente si existe copia canónica |
 
 ## Discrepancias relevantes
 
