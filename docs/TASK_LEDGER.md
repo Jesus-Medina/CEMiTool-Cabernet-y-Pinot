@@ -339,7 +339,9 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **GitHub Pages preview live (2026-09-22):** tras habilitar Pages con GitHub Actions, se reejecutó el run `35748440288` (attempt 2). El job `build` pasó export canónico, validation, lint, typecheck, Vite build, `configure-pages` y upload del artifact; el job `deploy` finalizó con `success`. GitHub reportó la environment URL `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`. La preview usa `HashRouter` y se reconstruye desde resultados canónicos en cada deployment relevante.
 
-**Immediate next step:** WEB-006 functional enrichment explorer.
+**WEB-006 completion (2026-09-22):** se añadió una capa de exportación específica de enriquecimiento que reúne únicamente términos testados vigentes de MapMan v3, MapMan v5.1 y GO T-005A, más QC de cobertura y temas preespecificados. La vista `/enrichment` permite seleccionar fuente/módulo, alternar hits FDR<0,05 vs todos los tests, buscar términos, inspeccionar barras −log10(FDR), fold/overlap, warnings de cobertura, temas MapMan y el estado de auditoría GO. El GO histórico T-005 se mantiene solo como trazabilidad y no alimenta la vista vigente. CI run `35749918846` validó `enrichment_terms=11104` y pasó export/validation/lint/typecheck/build; Pages run `35749918954` desplegó con éxito. Commit principal: `126fead`.
+
+**Immediate next step:** WEB-008 external validation explorer, preserving GSE72421 and PRJNA260535 as separate skin-only evidence layers.
 
 **Acceptance criteria for T-010 DONE:**
 
