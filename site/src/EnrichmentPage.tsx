@@ -269,7 +269,7 @@ export default function EnrichmentPage() {
           <strong>{module}</strong>
           <small>Los filtros y resultados de esta vista corresponden al módulo seleccionado.</small>
         </div>
-        <Link to={'/modules/' + module}>Volver a {module} →</Link>
+        <Link to={'/results/modules/' + module}>Volver a {module} →</Link>
       </div>
 
       {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando enriquecimiento canónico…</div>}
@@ -357,7 +357,7 @@ export default function EnrichmentPage() {
                 <p>
                   Barras = −log10(FDR global). El fold indica sobrerrepresentación respecto del background anotado de esa fuente.
                 </p>
-                <Link className="inline-link" to="/evidence?artifact=functional_enrichment">Ver trazabilidad →</Link>
+                <Link className="inline-link" to="/reproducibility?artifact=functional_enrichment">Ver trazabilidad →</Link>
               </div>
             </div>
             <EnrichmentBars rows={terms} />
