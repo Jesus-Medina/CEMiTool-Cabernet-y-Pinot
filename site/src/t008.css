@@ -386,3 +386,11 @@
 .t008-big-number span {
   color: #718087;
 }
+
+
+.t008-scale-grid article,
+.t008-status-grid article {
+  border-color: transparent;
+  background: #f4f6f7;
+  box-shadow: none;
+}
