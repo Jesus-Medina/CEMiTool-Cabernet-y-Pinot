@@ -553,8 +553,8 @@ export default function M5Explorer() {
       <div className="m5-crosslink">
         <span>Sigue la evidencia de M5 hacia función y piel aislada.</span>
         <div className="m5-crosslink-actions">
-          <Link className="button button--secondary" to="/enrichment">Enriquecimiento funcional</Link>
-          <Link className="button button--secondary" to="/validation">Validación en piel</Link>
+          <Link className="button button--secondary" to="/enrichment?module=M5">Enriquecimiento funcional</Link>
+          <Link className="button button--secondary" to="/validation?module=M5">Validación en piel</Link>
         </div>
       </div>
 
