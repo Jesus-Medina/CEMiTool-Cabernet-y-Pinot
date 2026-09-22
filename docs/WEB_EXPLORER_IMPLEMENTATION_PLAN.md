@@ -844,15 +844,17 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-009 — T-008 live status
 
-- [ ] progreso dinámico;
-- [ ] tabla SRR;
-- [ ] QC;
-- [ ] mapping;
-- [ ] estados PASS/FAIL/PENDING;
-- [ ] advertencia 54/54;
-- [ ] preparado para comparación histórico/moderno futura.
+- [x] progreso dinámico;
+- [x] tabla SRR;
+- [x] QC;
+- [x] mapping;
+- [x] estados PASS/FAIL/IN PROGRESS/PENDING;
+- [x] advertencia 54/54;
+- [x] preparado para comparación histórico/moderno futura.
 
 **Aceptación:** actualizar `t008_batch_progress.tsv` y redeployar actualiza la página sin editar React.
+
+**Verificación 2026-09-22:** implementación principal en `4ef68dc` y corrección de etiquetado de celdas pendientes en `20983af`. `t008_progress.json` pasó a schema v2 e incorpora las 54 corridas del manifiesto, estados derivados del ledger/QC, tamaño FASTQ, lecturas, mapping y métricas por corrida. La ruta `/t008` muestra progreso global, PASS/FAIL/IN PROGRESS/PENDING, cobertura del diseño 2×3×3, corridas validadas, ledger filtrable, event log, provenance y un gate explícito que impide presentar preservación moderna mientras no exista matriz completa. CI run `35752102720` pasó exportación, validación, lint, typecheck y build, reportando `t008=2/54`; Pages run `35752102759` desplegó con éxito.
 
 ---
 
@@ -890,11 +892,11 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-012 — GitHub Pages
 
-- [ ] workflow;
-- [ ] permisos Pages;
-- [ ] deployment preview;
+- [x] workflow;
+- [x] permisos Pages;
+- [x] deployment preview;
 - [ ] deployment final;
-- [ ] URL en README;
+- [x] URL en README;
 - [ ] versión inicial etiquetada.
 
 **Aceptación:** sitio público estable, reconstruible desde el repo y sin secretos.
@@ -1016,19 +1018,20 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-009 — T-008 live status
+## Próxima tarea: WEB-005 — red de coexpresión + chr16
 
-La validación externa T-007 ya está publicada. El siguiente paso es convertir el ledger de reprocesamiento FASTQ en un tablero vivo que se actualice sin editar React.
+Con el MVP científico ya cubriendo Home, Story, M5, enriquecimiento, validación externa y T-008, el siguiente paso del orden previsto es profundizar M5 con estructura de red.
 
-Debe leer el estado canónico de T-008 y mostrar:
+Implementar:
 
-- progreso global 2/54 → 54/54 cuando corresponda;
-- PASS / FAIL / IN PROGRESS / PENDING;
-- etapas del pipeline por SRR;
-- mapping rate y QC disponibles;
-- último checkpoint;
-- una advertencia inequívoca mientras no exista matriz moderna completa;
-- espacio preparado para la futura comparación histórico vs moderno sin borrar el historial.
+- red M5 interactiva a partir de `m5_network.json`;
+- top N configurable y umbral de edge weight;
+- tamaño de nodo por kWithin;
+- búsqueda/selección de gen;
+- etiquetas funcionales con cautela CHS/STS;
+- locus strip de chr16 cuando haya coordenadas canónicas disponibles;
+- provenance y tabla subyacente;
+- límites explícitos: coexpresión ≠ regulación causal y proximidad cromosómica ≠ expansión/pérdida específica de cultivar.
 
 ---
 
@@ -1041,11 +1044,11 @@ Debe leer el estado canónico de T-008 y mostrar:
 | WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
 | WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
 | WEB-004 | DONE | 2026-09-22 | M5 Explorer interactivo + hubs + CHS/STS + provenance; CI PASS (run 35747710946) |
-| WEB-005 | TODO | — | Después de preview/enrichment |
+| WEB-005 | TODO | — | Próxima |
 | WEB-006 | DONE | 2026-09-22 | MapMan v3/v5.1 + GO T-005A + temas/cobertura; CI/deploy PASS |
 | WEB-007 | TODO | — | — |
 | WEB-008 | DONE | 2026-09-22 | T-007 skin-only explorer; CI/deploy PASS |
-| WEB-009 | TODO | — | Próxima |
+| WEB-009 | DONE | 2026-09-22 | T-008 live dashboard; CI/deploy PASS (2/54 actual) |
 | WEB-010 | TODO | — | — |
 | WEB-011 | TODO | — | — |
 | WEB-012 | IN PROGRESS | 2026-09-22 | Preview pública desplegada; release estable queda para después de QA final |
