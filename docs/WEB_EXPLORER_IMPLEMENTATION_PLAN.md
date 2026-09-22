@@ -784,15 +784,17 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-005 — Network + chromosome
 
-- [ ] Cytoscape M5;
-- [ ] top N;
-- [ ] threshold;
-- [ ] tamaño por kWithin;
-- [ ] labels;
-- [ ] navegación a genes;
-- [ ] vista chr16.
+- [x] Cytoscape M5;
+- [x] top N;
+- [x] threshold;
+- [x] tamaño por kWithin;
+- [x] labels;
+- [x] navegación a genes;
+- [x] vista chr16.
 
 **Aceptación:** la red es usable y no implica causalidad o dirección regulatoria inexistente.
+
+**Verificación 2026-09-22:** implementación principal `bf0faed`, corrección de typings `4b053b9` y lazy-loading de Cytoscape `879a913`. La vista M5 incorpora red interactiva beta10 con top N configurable (15/25/40/60/108), umbral de adyacencia, tamaño por kWithin, formas distintas para CHS/STS-like/NAC/CuAO, búsqueda, node inspector, navegación a fichas y tabla de aristas mostradas. La vista chr16 deriva dinámicamente el intervalo de los genes M5 con conflicto v3/v5.1 y coordenadas PN40024 T2T v5.1, sin inferir expansión/pérdida específica de cultivar. Cytoscape se carga en un chunk separado: bundle inicial 292,22 kB (89,96 kB gzip) y chunk de red 455,37 kB (146,31 kB gzip). CI run `35753270303` pasó export/validation/lint/typecheck/build; Pages run `35753270081` desplegó con éxito.
 
 ---
 
@@ -1018,20 +1020,19 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-005 — red de coexpresión + chr16
+## Próxima tarea: WEB-007 — Module Explorer
 
-Con el MVP científico ya cubriendo Home, Story, M5, enriquecimiento, validación externa y T-008, el siguiente paso del orden previsto es profundizar M5 con estructura de red.
+Con M5 ya cubierto en trayectoria, función, red, locus y validación, el siguiente paso es evitar que la web parezca un estudio de un solo módulo.
 
 Implementar:
 
-- red M5 interactiva a partir de `m5_network.json`;
-- top N configurable y umbral de edge weight;
-- tamaño de nodo por kWithin;
-- búsqueda/selección de gen;
-- etiquetas funcionales con cautela CHS/STS;
-- locus strip de chr16 cuando haya coordenadas canónicas disponibles;
-- provenance y tabla subyacente;
-- límites explícitos: coexpresión ≠ regulación causal y proximidad cromosómica ≠ expansión/pérdida específica de cultivar.
+- tabla comparativa M1–M10 desde `modules.json`;
+- filtros por interacción Cultivar×Stage y robustez;
+- tamaño, FDR, clasificación anual y nota interpretativa;
+- M10 como señal temporal reproducible pero funcionalmente no resuelta;
+- M2 con advertencia provisional y vínculo explícito a T-008;
+- rutas de detalle para M10/M2 sin inventar resultados equivalentes a M5;
+- enlaces a enriquecimiento, hubs, validación y provenance cuando existan.
 
 ---
 
@@ -1044,9 +1045,9 @@ Implementar:
 | WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
 | WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
 | WEB-004 | DONE | 2026-09-22 | M5 Explorer interactivo + hubs + CHS/STS + provenance; CI PASS (run 35747710946) |
-| WEB-005 | TODO | — | Próxima |
+| WEB-005 | DONE | 2026-09-22 | Cytoscape M5 + chr16; CI/deploy PASS; network lazy-loaded |
 | WEB-006 | DONE | 2026-09-22 | MapMan v3/v5.1 + GO T-005A + temas/cobertura; CI/deploy PASS |
-| WEB-007 | TODO | — | — |
+| WEB-007 | TODO | — | Próxima |
 | WEB-008 | DONE | 2026-09-22 | T-007 skin-only explorer; CI/deploy PASS |
 | WEB-009 | DONE | 2026-09-22 | T-008 live dashboard; CI/deploy PASS (2/54 actual) |
 | WEB-010 | TODO | — | — |
