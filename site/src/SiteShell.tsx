@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const primaryNavigation = [
   { to: '/', label: 'Overview', end: true },
@@ -15,6 +15,17 @@ const utilityNavigation = [
 
 export default function SiteShell() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  function primaryActive(to: string) {
+    if (to === '/') return pathname === '/' || pathname.startsWith('/story')
+    if (to === '/modules') {
+      return ['/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
+        pathname.startsWith(prefix),
+      )
+    }
+    return pathname.startsWith(to)
+  }
 
   return (
     <div className="app-shell">
@@ -59,9 +70,7 @@ export default function SiteShell() {
                   to={item.to}
                   end={item.end}
                   onClick={() => setMenuOpen(false)}
-                  className={({ isActive }) =>
-                    isActive ? 'nav-link nav-link--active' : 'nav-link'
-                  }
+                  className={primaryActive(item.to) ? 'nav-link nav-link--active' : 'nav-link'}
                 >
                   {item.label}
                 </NavLink>
