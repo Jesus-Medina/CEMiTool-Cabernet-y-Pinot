@@ -92,7 +92,9 @@ export default function SearchPage() {
     ).slice(0, 20)
   }, [provenance, normalized])
 
-  const resultCount = (genesMode ? 0 : pageResults.length) + moduleResults.length + geneResults.length + artifactResults.length
+  const resultCount = genesMode
+    ? geneResults.length
+    : pageResults.length + moduleResults.length + geneResults.length + artifactResults.length
 
   return (
     <div className="search-page">
@@ -136,7 +138,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {normalized && moduleResults.length > 0 && (
+        {!genesMode && normalized && moduleResults.length > 0 && (
           <div className="search-group">
             <div className="search-group-heading"><h2>Módulos</h2><span>{moduleResults.length}</span></div>
             <div className="search-result-list">
@@ -162,7 +164,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {normalized && artifactResults.length > 0 && (
+        {!genesMode && normalized && artifactResults.length > 0 && (
           <div className="search-group">
             <div className="search-group-heading"><h2>Reproducibilidad</h2><span>{artifactResults.length}</span></div>
             <div className="search-result-list search-result-list--dense">
