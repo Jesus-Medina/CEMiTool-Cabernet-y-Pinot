@@ -190,7 +190,7 @@ export default function GeneDetailPage() {
       </section>
 
       <section className="gene-boundary">
-        <div><p className="eyebrow">Interpretation boundary</p><h2>Prioridad no es causalidad</h2></div>
+        <div><p className="eyebrow">Límite de interpretación</p><h2>Prioridad no es causalidad</h2></div>
         <p>
           kWithin, kME, concordancia externa y anotaciones ayudan a priorizar e interpretar este gen;
           {' '}ninguna de esas capas demuestra regulación directa, actividad enzimática o efecto causal sobre grosor de piel.
