@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const primaryNavigation = [
-  { to: '/', label: 'Overview', end: true },
+  { to: '/', label: 'Resumen', end: true },
   { to: '/results', label: 'Resultados' },
   { to: '/methods', label: 'Métodos' },
   { to: '/reproducibility', label: 'Reproducibilidad' },
@@ -10,7 +10,7 @@ const primaryNavigation = [
 
 const utilityNavigation = [
   { to: '/search', label: 'Buscar' },
-  { to: '/status/t008', label: 'T-008 Status' },
+  { to: '/status/t008', label: 'T-008' },
   { to: '/ask', label: 'Preguntar' },
 ]
 
@@ -186,7 +186,7 @@ export default function SiteShell() {
       <main className="site-main" id="main-content" tabIndex={-1}>
         {breadcrumbItems.length > 0 && (
           <nav className="breadcrumb-bar" aria-label="Ruta actual">
-            <Link to="/">Overview</Link>
+            <Link to="/">Resumen</Link>
             {breadcrumbItems.map((item, index) => (
               <span className="breadcrumb-item" key={item.label + String(index)}>
                 <span aria-hidden="true">/</span>
