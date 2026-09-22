@@ -911,3 +911,10 @@
 .module-detail-hero--warning h1 {
   color: var(--cabernet-deep);
 }
+
+
+.module-overview-strip article {
+  border-color: transparent;
+  background: #f6f4f5;
+  box-shadow: none;
+}
