@@ -3245,3 +3245,47 @@ body {
     width: fit-content;
   }
 }
+
+
+/* Actionable chat citations */
+.chat-citations > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chat-citation-link {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid #e5dfe2;
+  border-radius: 9px;
+  color: inherit;
+  background: white;
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.chat-citation-link:hover,
+.chat-citation-link:focus-visible {
+  border-color: var(--border-strong);
+  background: #fcfafb;
+}
+
+.chat-citation-link span {
+  max-width: 260px;
+  overflow: hidden;
+  color: var(--cabernet-deep);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .66rem;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-citation-link small {
+  color: var(--cabernet);
+  font-size: .61rem;
+  font-weight: 760;
+}
