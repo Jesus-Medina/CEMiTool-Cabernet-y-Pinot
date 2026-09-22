@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-22 — WEB-006 functional enrichment explorer completed
+
+- Added a dedicated canonical export for functional enrichment, retaining only tested current terms from MapMan v3, MapMan v5.1 and the corrected T-005A GO analysis.
+- Added `/enrichment` with source/module filters, significant-vs-all-tested scope, search, ORA bar view, full term table, annotation coverage/QC, MapMan prespecified themes and M5 cross-version annotation comparison.
+- The GO view explicitly uses `results/go_ora_beta10/go_all_terms.tsv` and reports the older T-005 `v5_go_all_terms.tsv` as superseded historical evidence rather than current inference.
+- Added GO audit summary fields and coverage warnings to the frontend without recomputing the enrichment analysis.
+- CI run `35749918846` passed and validated `11104` exported tested terms; Pages run `35749918954` built and deployed the updated public explorer successfully.
+- Commit: `126fead`. No CEMiTool rerun, module reassignment, ORA recalculation or T-008 biological conclusion was introduced by the web layer.
+
 ## 2026-09-22 — First GitHub Pages preview successfully deployed
 
 - GitHub Pages was enabled for the repository and deployment run `35748440288` was re-run as attempt 2.
