@@ -270,7 +270,7 @@ function HarvestContrasts({ contrasts }: { contrasts: M5Contrast[] }) {
     .sort((a, b) => a.Year - b.Year)
 
   return (
-    <section className="m5-section">
+    <section className="m5-section" id="contrasts">
       <div className="section-heading">
         <div>
           <p className="eyebrow">Harvest contrast</p>
@@ -365,7 +365,7 @@ function HubsTable({ hubs }: { hubs: HubRow[] }) {
   const visible = showAll || normalized ? filtered : filtered.slice(0, 15)
 
   return (
-    <section className="m5-section">
+    <section className="m5-section" id="hubs">
       <div className="section-heading">
         <div>
           <p className="eyebrow">Hub ranking</p>
@@ -436,7 +436,7 @@ function AnnotationConflictPanel({ hubs }: { hubs: HubRow[] }) {
     .filter((row) => row.V3_V5_STS_CHS_label_conflict === true)
 
   return (
-    <section className="annotation-conflict">
+    <section className="annotation-conflict" id="annotation">
       <div>
         <p className="eyebrow">CHS / STS annotation conflict</p>
         <h2>Una familia, etiquetas distintas entre versiones</h2>
@@ -474,7 +474,7 @@ function ProvenancePanel({
   }
 
   return (
-    <section className="m5-section">
+    <section className="m5-section" id="evidence">
       <div className="section-heading">
         <div>
           <p className="eyebrow">ⓘ Provenance</p>
@@ -523,7 +523,7 @@ export default function M5Explorer() {
 
   return (
     <div className="m5-explorer">
-      <section className="m5-hero">
+      <section className="m5-hero" id="m5-overview">
         <div>
           <p className="eyebrow">M5 Explorer</p>
           <h1>M5 · fenoles, hubs y trayectoria interanual</h1>
@@ -541,6 +541,15 @@ export default function M5Explorer() {
 
       <DataState loading={loading} error={error} />
 
+      <nav className="m5-section-nav" aria-label="Secciones de M5">
+        <a href="#trajectory">Trayectoria</a>
+        <a href="#contrasts">Contrastes</a>
+        <a href="#candidates">Candidatos</a>
+        <a href="#network">Red</a>
+        <a href="#hubs">Hubs</a>
+        <a href="#evidence">Evidence</a>
+      </nav>
+
       <div className="m5-crosslink">
         <span>Sigue la evidencia de M5 hacia función y piel aislada.</span>
         <div className="m5-crosslink-actions">
@@ -551,7 +560,7 @@ export default function M5Explorer() {
 
       {trajectory && hubs && external && provenance && (
         <>
-          <section className="m5-section">
+          <section className="m5-section" id="trajectory">
             <div className="section-heading section-heading--controls">
               <div>
                 <p className="eyebrow">Trajectory</p>
@@ -628,7 +637,7 @@ export default function M5Explorer() {
 
           <HarvestContrasts contrasts={trajectory.contrasts} />
 
-          <section className="m5-section">
+          <section className="m5-section" id="candidates">
             <div className="section-heading">
               <div>
                 <p className="eyebrow">Candidate hubs</p>
