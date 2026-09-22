@@ -107,7 +107,7 @@ export function HomePage() {
             robustez y buscar apoyo independiente en piel.
           </p>
           <div className="hero-actions">
-            <Link className="button button--primary" to="/modules">Explorar resultados</Link>
+            <Link className="button button--primary" to="/results/modules">Explorar resultados</Link>
             <Link className="button button--secondary" to="/methods">Ver métodos</Link>
           </div>
           <p className="authorship">
@@ -178,7 +178,7 @@ export function HomePage() {
                 <p>
                   FDR {formatScientific(m5?.cultivar_stage_fdr)} en el resumen canónico del módulo.
                 </p>
-                <Link to="/modules/M5">Abrir M5 →</Link>
+                <Link to="/results/results/modules/M5">Abrir M5 →</Link>
               </article>
 
               <article>
@@ -188,7 +188,7 @@ export function HomePage() {
                 <p>
                   Significancia global y repetición entre años responden preguntas distintas.
                 </p>
-                <Link to="/modules">Comparar módulos →</Link>
+                <Link to="/results/modules">Comparar módulos →</Link>
               </article>
 
               <article>
@@ -198,7 +198,7 @@ export function HomePage() {
                 <p>
                   Los datasets de piel aislada se usan como evidencia observacional independiente.
                 </p>
-                <Link to="/validation">Ver validación →</Link>
+                <Link to="/results/validation">Ver validación →</Link>
               </article>
             </div>
           </section>
@@ -214,8 +214,8 @@ export function HomePage() {
                 sin convertir coexpresión en causalidad.
               </p>
               <div className="overview-inline-actions">
-                <Link className="button button--primary" to="/modules/M5">Explorar M5</Link>
-                <Link className="button button--secondary" to="/evidence">Auditar evidencia</Link>
+                <Link className="button button--primary" to="/results/results/modules/M5">Explorar M5</Link>
+                <Link className="button button--secondary" to="/reproducibility">Auditar evidencia</Link>
               </div>
             </div>
             <div className="overview-m5-metrics">
@@ -234,7 +234,7 @@ export function HomePage() {
                 no suma nuevas réplicas al diseño de 54 muestras.
               </p>
             </div>
-            <Link className="button button--secondary" to="/validation">Abrir validación</Link>
+            <Link className="button button--secondary" to="/results/validation">Abrir validación</Link>
           </section>
         </>
       )}
@@ -242,9 +242,9 @@ export function HomePage() {
       <EvidenceBoundary />
 
       <nav className="overview-next" aria-label="Continuar explorando">
-        <Link to="/modules"><span>Resultados</span><strong>Comparar módulos</strong></Link>
+        <Link to="/results/modules"><span>Resultados</span><strong>Comparar módulos</strong></Link>
         <Link to="/methods"><span>Métodos</span><strong>Cómo se construyó la evidencia</strong></Link>
-        <Link to="/evidence"><span>Reproducibilidad</span><strong>Fuentes, scripts y artefactos</strong></Link>
+        <Link to="/reproducibility"><span>Reproducibilidad</span><strong>Fuentes, scripts y artefactos</strong></Link>
       </nav>
     </div>
   )
@@ -331,7 +331,7 @@ export function StoryPage() {
                   <strong>{harvestNegativeAllYears ? 'Cabernet − Pinot mantiene dirección negativa en todos ellos.' : 'la dirección no es idéntica en todos los años.'}</strong>
                 </p>
               )}
-              <Link className="inline-link" to="/modules/M5">Abrir M5 →</Link>
+              <Link className="inline-link" to="/results/results/modules/M5">Abrir M5 →</Link>
             </div>
           </article>
 
@@ -371,7 +371,7 @@ export function StoryPage() {
                   ? 'El exportador reporta el lote moderno como completo.'
                   : 'El lote moderno sigue incompleto; por eso la web no presenta todavía una conclusión de preservación moderna.'}
               </p>
-              <Link className="inline-link" to="/t008">Ver estado T-008 →</Link>
+              <Link className="inline-link" to="/status/t008">Ver estado T-008 →</Link>
             </div>
           </article>
         </section>
