@@ -9,6 +9,7 @@ import {
   HomePage,
   MethodsPage,
   ModuleDetailPage,
+  ResultsLandingPage,
   ModulesPage,
   NotFoundPage,
   T008Page,
@@ -21,7 +22,7 @@ export default function App() {
       <Route element={<SiteShell />}>
         <Route index element={<HomePage />} />
         <Route path="story" element={<Navigate to="/" replace />} />
-        <Route path="results" element={<ModulesPage />} />
+        <Route path="results" element={<ResultsLandingPage />} />
         <Route path="results/modules" element={<ModulesPage />} />
         <Route path="results/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="results/function" element={<EnrichmentPage />} />
