@@ -387,17 +387,19 @@ Regla: un mismo concepto debe usar el mismo componente visual en todo el sitio.
 
 ## 11. Fases de ejecución
 
-### UX-01 — Auditoría completa
-- inventario de todas las pantallas;
-- heurísticas;
-- navegación;
-- contenido;
-- responsive;
-- accesibilidad;
-- inconsistencias;
-- severidad P0/P1/P2/P3.
+### UX-01 — Auditoría completa — DONE (2026-09-22)
+- [x] inventario de todas las pantallas;
+- [x] heurísticas;
+- [x] navegación;
+- [x] contenido;
+- [x] responsive;
+- [x] accesibilidad;
+- [x] inconsistencias;
+- [x] severidad P0/P1/P2/P3.
 
 **Salida:** `docs/WEB_UX_UI_AUDIT.md`
+
+**Registro de cierre:** auditoría completada sobre las rutas públicas vigentes, incluyendo el nuevo Chat RAG. Se identificaron blockers de release (Methods/Gene placeholders), problemas estructurales de navegación y contexto, jerarquía visual plana, exceso de detalle temprano, debilidades mobile-native y falta de un design system final. Commit del informe: `cbb11ba`.
 
 ### UX-02 — Arquitectura y flujos
 - sitemap nuevo;
