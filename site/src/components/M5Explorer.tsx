@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type {
   ExternalValidationRow,
@@ -521,6 +521,32 @@ export default function M5Explorer() {
   const { trajectory, hubs, external, provenance, loading, error } = useM5ExplorerData()
   const [yearFilter, setYearFilter] = useState<YearFilter>('all')
   const [showReplicates, setShowReplicates] = useState(false)
+  const [activeSection, setActiveSection] = useState('trajectory')
+
+  useEffect(() => {
+    const ids = ['trajectory', 'contrasts', 'candidates', 'network', 'hubs', 'evidence']
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => Boolean(element))
+
+    if (elements.length === 0 || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target.id) setActiveSection(visible[0].target.id)
+      },
+      {
+        rootMargin: '-130px 0px -52% 0px',
+        threshold: [0.1, 0.25, 0.5],
+      },
+    )
+
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [trajectory, hubs, external, provenance])
 
   const filteredProfiles =
     trajectory?.profiles.filter((row) => yearFilter === 'all' || row.Year === yearFilter) ?? []
@@ -551,12 +577,72 @@ export default function M5Explorer() {
       <DataState loading={loading} error={error} />
 
       <nav className="m5-section-nav" aria-label="Secciones de M5">
-        <button type="button" onClick={() => scrollToM5Section('trajectory')}>Trayectoria</button>
-        <button type="button" onClick={() => scrollToM5Section('contrasts')}>Contrastes</button>
-        <button type="button" onClick={() => scrollToM5Section('candidates')}>Candidatos</button>
-        <button type="button" onClick={() => scrollToM5Section('network')}>Red</button>
-        <button type="button" onClick={() => scrollToM5Section('hubs')}>Hubs</button>
-        <button type="button" onClick={() => scrollToM5Section('evidence')}>Evidencia</button>
+        <button
+          type="button"
+          className={activeSection === 'trajectory' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('trajectory')
+            scrollToM5Section('trajectory')
+          }}
+          aria-current={activeSection === 'trajectory' ? 'true' : undefined}
+        >
+          Trayectoria
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'contrasts' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('contrasts')
+            scrollToM5Section('contrasts')
+          }}
+          aria-current={activeSection === 'contrasts' ? 'true' : undefined}
+        >
+          Contrastes
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'candidates' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('candidates')
+            scrollToM5Section('candidates')
+          }}
+          aria-current={activeSection === 'candidates' ? 'true' : undefined}
+        >
+          Candidatos
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'network' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('network')
+            scrollToM5Section('network')
+          }}
+          aria-current={activeSection === 'network' ? 'true' : undefined}
+        >
+          Red
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'hubs' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('hubs')
+            scrollToM5Section('hubs')
+          }}
+          aria-current={activeSection === 'hubs' ? 'true' : undefined}
+        >
+          Hubs
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'evidence' ? 'm5-section-nav-link m5-section-nav-link--active' : 'm5-section-nav-link'}
+          onClick={() => {
+            setActiveSection('evidence')
+            scrollToM5Section('evidence')
+          }}
+          aria-current={activeSection === 'evidence' ? 'true' : undefined}
+        >
+          Evidencia
+        </button>
       </nav>
 
       <div className="m5-crosslink">
