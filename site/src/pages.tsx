@@ -435,7 +435,7 @@ export function ResultsLandingPage() {
           <strong>Abrir validación →</strong>
         </Link>
 
-        <Link to="/search?q=VIT_" className="results-destination-card">
+        <Link to="/results/genes" className="results-destination-card">
           <div>
             <span>03</span>
             <h2>Genes</h2>
