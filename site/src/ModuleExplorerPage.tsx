@@ -242,30 +242,33 @@ function ModuleHubs({
         </div>
         <p>Centralidad intramodular, no jerarquía causal.</p>
       </div>
-      <div className="scientific-table-wrap">
-        <table className="scientific-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Gen</th>
-              <th>kWithin</th>
-              <th>kME</th>
-              <th>Top decile</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.Gene}>
-                <td>{row.Rank_kWithin}</td>
-                <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
-                <td>{formatDecimal(row.kWithin, 3)}</td>
-                <td>{formatDecimal(row.kME_signed, 3)}</td>
-                <td>{row.Top_decile_kWithin ? 'Sí' : 'No'}</td>
+      <details className="data-disclosure">
+        <summary>Ver top 12 hubs</summary>
+        <div className="scientific-table-wrap">
+          <table className="scientific-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Gen</th>
+                <th>kWithin</th>
+                <th>kME</th>
+                <th>Top decile</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.Gene}>
+                  <td>{row.Rank_kWithin}</td>
+                  <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
+                  <td>{formatDecimal(row.kWithin, 3)}</td>
+                  <td>{formatDecimal(row.kME_signed, 3)}</td>
+                  <td>{row.Top_decile_kWithin ? 'Sí' : 'No'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
     </section>
   )
 }
@@ -485,6 +488,29 @@ export function ModuleExplorerDetailPage() {
   const summary = data?.modules.modules.find((row) => row.module === module)
   const v3Hits = data ? significantV3Count(data.enrichment, module) : 0
   const externalRows = data ? externalEvaluableCount(data.external, module) : 0
+  const [activeSection, setActiveSection] = useState('module-contrasts')
+
+  useEffect(() => {
+    const ids = ['module-contrasts', 'module-function', 'module-hubs', 'module-validation']
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => Boolean(element))
+
+    if (elements.length === 0 || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]?.target.id) setActiveSection(visible[0].target.id)
+      },
+      { rootMargin: '-130px 0px -52% 0px', threshold: [0.1, 0.25, 0.5] },
+    )
+
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [data, module])
 
   if (!module.match(/^M(?:10|[1-9])$/)) {
     return (
@@ -517,10 +543,50 @@ export function ModuleExplorerDetailPage() {
       {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
 
       <nav className="module-section-nav" aria-label={'Secciones de ' + module}>
-        <button type="button" onClick={() => scrollToModuleSection('module-contrasts')}>Contrastes</button>
-        <button type="button" onClick={() => scrollToModuleSection('module-function')}>Función</button>
-        <button type="button" onClick={() => scrollToModuleSection('module-hubs')}>Hubs</button>
-        <button type="button" onClick={() => scrollToModuleSection('module-validation')}>Validación</button>
+        <button
+          type="button"
+          className={activeSection === 'module-contrasts' ? 'module-section-nav-link module-section-nav-link--active' : 'module-section-nav-link'}
+          onClick={() => {
+            setActiveSection('module-contrasts')
+            scrollToModuleSection('module-contrasts')
+          }}
+          aria-current={activeSection === 'module-contrasts' ? 'true' : undefined}
+        >
+          Contrastes
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'module-function' ? 'module-section-nav-link module-section-nav-link--active' : 'module-section-nav-link'}
+          onClick={() => {
+            setActiveSection('module-function')
+            scrollToModuleSection('module-function')
+          }}
+          aria-current={activeSection === 'module-function' ? 'true' : undefined}
+        >
+          Función
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'module-hubs' ? 'module-section-nav-link module-section-nav-link--active' : 'module-section-nav-link'}
+          onClick={() => {
+            setActiveSection('module-hubs')
+            scrollToModuleSection('module-hubs')
+          }}
+          aria-current={activeSection === 'module-hubs' ? 'true' : undefined}
+        >
+          Hubs
+        </button>
+        <button
+          type="button"
+          className={activeSection === 'module-validation' ? 'module-section-nav-link module-section-nav-link--active' : 'module-section-nav-link'}
+          onClick={() => {
+            setActiveSection('module-validation')
+            scrollToModuleSection('module-validation')
+          }}
+          aria-current={activeSection === 'module-validation' ? 'true' : undefined}
+        >
+          Validación
+        </button>
       </nav>
 
       {data && summary && (
