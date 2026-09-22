@@ -122,7 +122,7 @@ def main() -> None:
     exported_hubs = {
         row["Gene"]: row for row in hubs["rows"] if row["Module"] == "M5"
     }
-    if len(exported_hubs) != len(source_hubs) != 108:
+    if len(exported_hubs) != 108 or len(source_hubs) != 108:
         raise AssertionError("QA hubs: M5 hub universe mismatch")
     for source in source_hubs[:11]:
         gene = source["Gene"]
