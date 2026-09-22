@@ -64,6 +64,8 @@ function Scatter({ rows, dataset }: { rows: ExternalValidationRow[]; dataset: Da
     const py = y(row.Mean_CS_minus_PN as number)
     const significant = row.BH_prespecified_top37 !== null && row.BH_prespecified_top37 < 0.05
     const cls = 'validation-point ' + moduleClass(row.Module) + (significant ? ' validation-point--sig' : '')
+    const candidateLabel =
+      row.Gene === NAC_GENE ? 'NAC' : row.Gene === CUAO_GENE ? 'CuAO' : null
     const concordance =
       row.Direction_matches_stable_primary === true
         ? 'sí'
@@ -77,14 +79,26 @@ function Scatter({ rows, dataset }: { rows: ExternalValidationRow[]; dataset: Da
       ' · BH37=' + formatScientific(row.BH_prespecified_top37) +
       ' · concordancia=' + concordance
 
+    let shape
     if (row.Module === 'M10') {
-      return <rect key={row.Gene} x={px - 6} y={py - 6} width="12" height="12" className={cls}><title>{title}</title></rect>
-    }
-    if (row.Module === 'M2') {
+      shape = <rect x={px - 6} y={py - 6} width="12" height="12" className={cls}><title>{title}</title></rect>
+    } else if (row.Module === 'M2') {
       const d = 'M ' + px + ' ' + (py - 7) + ' L ' + (px + 7) + ' ' + py + ' L ' + px + ' ' + (py + 7) + ' L ' + (px - 7) + ' ' + py + ' Z'
-      return <path key={row.Gene} d={d} className={cls}><title>{title}</title></path>
+      shape = <path d={d} className={cls}><title>{title}</title></path>
+    } else {
+      shape = <circle cx={px} cy={py} r="6.5" className={cls}><title>{title}</title></circle>
     }
-    return <circle key={row.Gene} cx={px} cy={py} r="6.5" className={cls}><title>{title}</title></circle>
+
+    return (
+      <g key={row.Gene}>
+        {shape}
+        {candidateLabel && (
+          <text x={px + 10} y={py - 10} className="validation-point-label">
+            {candidateLabel}
+          </text>
+        )}
+      </g>
+    )
   }
 
   const titleId = 'validation-scatter-title-' + dataset
@@ -199,7 +213,7 @@ export default function ExternalValidationPage() {
       })
       .catch((reason: unknown) => {
         if (!active) return
-        setError(reason instanceof Error ? reason.message : 'Error al cargar T-007')
+        setError(reason instanceof Error ? reason.message : 'Error al cargar la validación externa')
       })
     return () => { active = false }
   }, [])
