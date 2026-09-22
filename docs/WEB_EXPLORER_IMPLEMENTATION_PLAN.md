@@ -816,14 +816,16 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-007 — Module Explorer
 
-- [ ] tabla M1–M10;
-- [ ] filtros;
-- [ ] M10;
-- [ ] M2 con advertencia provisional;
-- [ ] rutas a resultados;
-- [ ] robustez anual.
+- [x] tabla M1–M10;
+- [x] filtros;
+- [x] M10;
+- [x] M2 con advertencia provisional;
+- [x] rutas a resultados;
+- [x] robustez anual.
 
 **Aceptación:** no se reduce el análisis a M5 y se preserva el estado interpretativo real de cada módulo.
+
+**Verificación 2026-09-22:** commit `37e868ad`. La ruta `/modules` compara los diez módulos beta10 con tamaño, FDR Cultivar×Stage, clasificación de robustez, hits ORA MapMan v3, hubs y disponibilidad de evidencia externa. Incluye filtros por interacción significativa, reproducibilidad, dependencia del año, ORA y evidencia externa. Las rutas `/modules/:module` añaden una matriz 3×3 de contrastes Cabernet−Pinot por Stage×Year, resumen funcional, hubs y validación externa cuando existe. M2 conserva una advertencia explícita de provisionalidad hasta T-008 y M10 mantiene su etiqueta reproducible sin convertirla en una función biológica asignada. CI run `35756864399` pasó export/validation/lint/typecheck/build; Pages run `35756864291` desplegó con éxito.
 
 ---
 
