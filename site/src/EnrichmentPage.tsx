@@ -371,32 +371,35 @@ export default function EnrichmentPage() {
               )}
             </div>
 
-            <div className="scientific-table-wrap">
-              <table className="scientific-table enrichment-table">
-                <thead>
-                  <tr>
-                    <th>Término</th>
-                    <th>ID</th>
-                    <th>Overlap</th>
-                    <th>Fold</th>
-                    <th>p</th>
-                    <th>FDR global</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visibleRows.map((row) => (
-                    <tr key={`${row.Source}-${row.Module}-${row.TermID}`}>
-                      <td>{row.TermName}</td>
-                      <td><code>{row.TermID}</code></td>
-                      <td>{row.Overlap_k}/{row.Module_n}</td>
-                      <td>{formatDecimal(row.Fold_enrichment, 2)}</td>
-                      <td>{formatScientific(row.p_value)}</td>
-                      <td>{formatScientific(row.FDR_global_module_terms)}</td>
+            <details className="data-disclosure">
+              <summary>Ver tabla de términos ({terms.length})</summary>
+              <div className="scientific-table-wrap">
+                <table className="scientific-table enrichment-table">
+                  <thead>
+                    <tr>
+                      <th>Término</th>
+                      <th>ID</th>
+                      <th>Overlap</th>
+                      <th>Fold</th>
+                      <th>p</th>
+                      <th>FDR global</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {visibleRows.map((row) => (
+                      <tr key={`${row.Source}-${row.Module}-${row.TermID}`}>
+                        <td>{row.TermName}</td>
+                        <td><code>{row.TermID}</code></td>
+                        <td>{row.Overlap_k}/{row.Module_n}</td>
+                        <td>{formatDecimal(row.Fold_enrichment, 2)}</td>
+                        <td>{formatScientific(row.p_value)}</td>
+                        <td>{formatScientific(row.FDR_global_module_terms)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
           </section>
 
           <ThemePanel themes={data.themes} source={source} module={module} />
