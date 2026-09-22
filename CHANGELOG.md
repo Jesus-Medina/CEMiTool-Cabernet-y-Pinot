@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-22 — WEB-005 M5 network and chromosome-16 explorer completed
+
+- Added Cytoscape.js to the M5 Explorer using the frozen beta10 intramodular edge table; no network or centrality values are recalculated in the browser.
+- Added top-N controls (15/25/40/60/108), unsigned-adjacency thresholding, kWithin-scaled node size, functional node shapes, gene search, selection inspector, gene navigation and a table fallback for visible edges.
+- Added a chr16 locus strip derived from canonical PN40024 T2T v5.1 coordinates for M5 genes carrying the v3 stilbenoid / v5.1 CHS conflict; the view explicitly avoids cultivar-specific expansion/loss claims.
+- Preserved interpretation boundaries: unsigned coexpression is not regulatory direction or causality; genomic proximity in a reference genome is not structural evidence for Cabernet versus Pinot.
+- Fixed Cytoscape TypeScript style-property units after the first check caught the issue, then split Cytoscape into a lazy-loaded chunk to protect initial page weight.
+- Final build: initial JS 292.22 kB (89.96 kB gzip); M5 network chunk 455.37 kB (146.31 kB gzip). CI run `35753270303` and Pages run `35753270081` both passed.
+- Implementation commits: `bf0faed`, `4b053b9`, `879a913`. No scientific result, network, annotation or T-008 conclusion changed.
+
 ## 2026-09-22 — WEB-009 live T-008 dashboard completed
 
 - Replaced the T-008 placeholder with a live dashboard driven entirely by the frozen 54-run manifest, the versioned batch-progress ledger and per-run QC files.
