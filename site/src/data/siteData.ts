@@ -38,6 +38,28 @@ export type ModulesPayload = {
   modules: ModuleSummary[]
 }
 
+export type ModuleContrast = {
+  Module: string
+  Stage: string
+  Year: number
+  contrast: string
+  estimate: number
+  SE: number
+  df: number
+  't.ratio': number
+  'p.value': number
+  CI_low_unadjusted: number
+  CI_high_unadjusted: number
+  FDR_global_90: number | null
+  FDR_within_stage_year_10: number | null
+  FDR_within_module_9: number | null
+}
+
+export type ModuleContrastsPayload = {
+  schema_version: number
+  contrasts: ModuleContrast[]
+}
+
 export type M5Profile = {
   Module: string
   Cultivar: string
@@ -319,6 +341,10 @@ export function loadModules() {
 
 export function loadM5Trajectory() {
   return fetchJson<M5TrajectoryPayload>('m5_trajectory.json')
+}
+
+export function loadModuleContrasts() {
+  return fetchJson<ModuleContrastsPayload>('module_contrasts.json')
 }
 
 export function loadHubs() {

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import M5Explorer from './components/M5Explorer'
+import { ModuleExplorerDetailPage, ModulesExplorerPage } from './ModuleExplorerPage'
 import ExternalValidationPage from './ExternalValidationPage'
 import T008DashboardPage from './T008DashboardPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
@@ -338,19 +339,7 @@ export function StoryPage() {
 }
 
 export function ModulesPage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="EXPLORE"
-        title="Explorador de módulos"
-        description="Vista comparativa de módulos, efectos, robustez, enriquecimiento y estado interpretativo."
-      />
-      <PlaceholderPanel title="M5 ya está disponible">
-        La vista general M1–M10 llegará en WEB-007. Mientras tanto, el primer explorador científico completo es M5.
-      </PlaceholderPanel>
-      <Link className="button button--primary button--fit" to="/modules/M5">Abrir M5 Explorer</Link>
-    </div>
-  )
+  return <ModulesExplorerPage />
 }
 
 export function ModuleDetailPage() {
@@ -358,19 +347,7 @@ export function ModuleDetailPage() {
   if (moduleId?.toUpperCase() === 'M5') {
     return <M5Explorer />
   }
-
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="MODULE DETAIL"
-        title={moduleId?.toUpperCase() ?? 'Módulo'}
-        description="Trayectoria, genes, enriquecimiento, red y evidencia externa se ensamblarán desde datos canónicos."
-      />
-      <PlaceholderPanel title="Módulo pendiente de WEB-007">
-        M5 ya tiene explorador interactivo. M10, M2 y el resto se incorporarán conservando su estado interpretativo real.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <ModuleExplorerDetailPage />
 }
 
 export function GeneDetailPage() {
