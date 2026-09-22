@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cemitool-cabernet-pinot-chat",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-22",
+  "vars": {
+    "GEMINI_MODEL": "gemini-3.8-flash",
+    "ALLOWED_ORIGINS": "https://jesus-medina.github.io,http://localhost:5173,http://127.0.0.1:5173"
+  }
+}
