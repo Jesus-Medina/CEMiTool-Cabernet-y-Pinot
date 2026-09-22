@@ -108,20 +108,20 @@ export default function SiteShell() {
             <span>Resultados</span>
             <nav aria-label="Navegación de resultados">
               <NavLink
-                to="/results"
-                className={pathname.startsWith('/results') || pathname.startsWith('/modules') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+                to="/results/modules"
+                className={pathname.startsWith('/results/modules') || pathname.startsWith('/modules') || pathname.startsWith('/genes') || pathname.startsWith('/results/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Módulos
               </NavLink>
               <NavLink
-                to="/enrichment"
-                className={pathname.startsWith('/enrichment') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+                to="/results/function"
+                className={pathname.startsWith('/results/function') || pathname.startsWith('/enrichment') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Función
               </NavLink>
               <NavLink
-                to="/validation"
-                className={pathname.startsWith('/validation') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+                to="/results/validation"
+                className={pathname.startsWith('/results/validation') || pathname.startsWith('/validation') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Validación
               </NavLink>
