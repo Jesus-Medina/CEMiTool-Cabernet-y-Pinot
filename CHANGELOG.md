@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-22 — WEB-010 global Evidence Browser completed
+
+- Replaced the Evidence placeholder with a global provenance browser powered by the generated `provenance.json` manifest.
+- Added build commit, export timestamp, artifact/source/script counts and searchable indexing across finding labels, artifact IDs, TSV paths, scripts and parameters.
+- Added eight evidence maps for the main web narratives: baseline/beta10, module effects and annual robustness, M5 trajectory, functional enrichment, hub prioritization, M5 network, external skin validation and live T-008 progress.
+- Each artifact exposes commit-pinned GitHub links, SHA-256 hashes, file sizes, generating scripts and parameters while retaining an explicit interpretation boundary for the associated finding.
+- Added direct provenance navigation from the all-module contrast matrix and functional-enrichment view; M5, T-007 validation and T-008 already exposed dedicated provenance.
+- Commit `e6845b8`; CI run `35757479808` passed export/validation/lint/typecheck/build and Pages run `35757479727` deployed successfully.
+- WEB-011 final QA is now the next phase. No scientific analysis, result, annotation, network or T-008 conclusion was changed.
+
 ## 2026-09-22 — WEB-007 all-module explorer completed
 
 - Replaced the modules placeholder with a full M1–M10 explorer backed by canonical `modules.json`, `module_contrasts.json`, enrichment, hubs and external-validation data.
