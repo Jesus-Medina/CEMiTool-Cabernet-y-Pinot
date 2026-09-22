@@ -90,7 +90,7 @@ export default function GeneDetailPage() {
           <p>{annotationLabel(hub)}</p>
           <div className="gene-actions">
             <Link className="button button--primary" to={'/results/modules/' + hub.Module}>Ver en {hub.Module}</Link>
-            <Link className="button button--secondary" to="/reproducibility?artifact=hubs">Evidence</Link>
+            <Link className="button button--secondary" to="/reproducibility?artifact=hubs">Ver evidencia</Link>
           </div>
         </div>
         <div className="gene-identity-stats">
@@ -101,7 +101,14 @@ export default function GeneDetailPage() {
         </div>
       </header>
 
-      <section className="gene-summary-grid">
+      <nav className="gene-section-nav" aria-label="Secciones de la ficha">
+        <a href="#gene-summary">Resumen</a>
+        <a href="#gene-baseline">Baseline</a>
+        <a href="#gene-annotation">Anotación</a>
+        <a href="#gene-external">Piel externa</a>
+      </nav>
+
+      <section className="gene-summary-grid" id="gene-summary">
         <article>
           <p className="eyebrow">Por qué aparece</p>
           <h2>Centralidad intramodular</h2>
@@ -119,7 +126,7 @@ export default function GeneDetailPage() {
         </article>
       </section>
 
-      <section className="gene-section">
+      <section className="gene-section" id="gene-baseline">
         <div className="gene-section-heading">
           <div><p className="eyebrow">Baseline</p><h2>Harvest · Cabernet − Pinot</h2></div>
           <span>{hub.Harvest_same_direction_all_years ? 'misma dirección en 2012–2014' : 'dirección no estable o no disponible'}</span>
@@ -135,7 +142,7 @@ export default function GeneDetailPage() {
         </div>
       </section>
 
-      <section className="gene-section">
+      <section className="gene-section" id="gene-annotation">
         <div className="gene-section-heading">
           <div><p className="eyebrow">Anotación</p><h2>Identidad y contexto</h2></div>
         </div>
@@ -155,7 +162,7 @@ export default function GeneDetailPage() {
         )}
       </section>
 
-      <section className="gene-section">
+      <section className="gene-section" id="gene-external">
         <div className="gene-section-heading">
           <div><p className="eyebrow">Piel externa</p><h2>Validación por dataset</h2></div>
           <Link className="inline-link" to="/results/validation">Abrir validación global →</Link>
