@@ -100,10 +100,15 @@ def main() -> None:
     if payloads["project_summary.json"]["design"]["sample_count"] != sample_count:
         raise AssertionError("project_summary sample count does not match samples.tsv")
 
-    module_source_count = len(read_rows(SOURCE_PATHS["modules"]))
-    module_export_count = sum(row["gene_count"] for row in payloads["modules.json"]["modules"])
-    if module_export_count != module_source_count:
-        raise AssertionError("modules.json gene counts do not reconstruct module.tsv")
+    module_source_rows = read_rows(SOURCE_PATHS["modules"])
+    module_source_count = len(module_source_rows)
+    biological_source_count = sum(1 for row in module_source_rows if row["modules"] != "Not.Correlated")
+    module_payload = payloads["modules.json"]["modules"]
+    module_export_count = sum(row["gene_count"] for row in module_payload)
+    if len(module_payload) != 10 or {row["module"] for row in module_payload} != {f"M{i}" for i in range(1, 11)}:
+        raise AssertionError("modules.json must expose exactly the ten biological beta10 modules")
+    if module_export_count != biological_source_count:
+        raise AssertionError("modules.json biological gene counts do not reconstruct module.tsv excluding Not.Correlated")
 
     m5_profile_source = sum(1 for row in read_rows(SOURCE_PATHS["cell_profiles"]) if row["Module"] == "M5")
     m5_sample_source = len(read_rows(SOURCE_PATHS["eigengenes"]))
@@ -201,7 +206,8 @@ def main() -> None:
 
     print(
         "Validated site data: "
-        f"samples={sample_count}; modules={module_source_count}; "
+        f"samples={sample_count}; biological_modules=10; "
+        f"module_assignments={biological_source_count}/{module_source_count}; "
         f"hubs={expected_hubs}; enrichment_terms={sum(expected_tested.values())}; "
         f"external_hubs={external['summary']['primary_hub_rows']}; "
         f"t008={t008['validated_runs']}/{t008['total_runs']}"
