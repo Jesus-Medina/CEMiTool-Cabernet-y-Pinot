@@ -89,7 +89,7 @@ export default function GeneDetailPage() {
           <h1>{hub.Gene}</h1>
           <p>{annotationLabel(hub)}</p>
           <div className="gene-actions">
-            <Link className="button button--primary" to={'/results/results/modules/' + hub.Module}>Ver en {hub.Module}</Link>
+            <Link className="button button--primary" to={'/results/modules/' + hub.Module}>Ver en {hub.Module}</Link>
             <Link className="button button--secondary" to="/reproducibility?artifact=hubs">Evidence</Link>
           </div>
         </div>
