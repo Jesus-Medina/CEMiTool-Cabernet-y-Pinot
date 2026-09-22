@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const primaryNavigation = [
   { to: '/', label: 'Overview', end: true },
@@ -34,6 +34,74 @@ export default function SiteShell() {
   const inResults = ['/results', '/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
     pathname.startsWith(prefix),
   )
+
+  const segments = pathname.split('/').filter(Boolean)
+  const canonicalResultsPath =
+    pathname.startsWith('/modules') ||
+    pathname.startsWith('/enrichment') ||
+    pathname.startsWith('/validation') ||
+    pathname.startsWith('/genes')
+      ? true
+      : pathname.startsWith('/results')
+
+  const breadcrumbItems: Array<{ label: string; to?: string }> = []
+
+  if (canonicalResultsPath) {
+    breadcrumbItems.push({ label: 'Resultados', to: '/results/modules' })
+
+    if (
+      pathname.startsWith('/results/modules') ||
+      pathname.startsWith('/modules')
+    ) {
+      breadcrumbItems.push({ label: 'Módulos', to: '/results/modules' })
+      const moduleId =
+        pathname.startsWith('/results/modules/')
+          ? segments[2]
+          : pathname.startsWith('/modules/')
+            ? segments[1]
+            : null
+      if (moduleId) breadcrumbItems.push({ label: moduleId.toUpperCase() })
+    } else if (
+      pathname.startsWith('/results/function') ||
+      pathname.startsWith('/enrichment')
+    ) {
+      breadcrumbItems.push({ label: 'Función' })
+    } else if (
+      pathname.startsWith('/results/validation') ||
+      pathname.startsWith('/validation')
+    ) {
+      breadcrumbItems.push({ label: 'Validación' })
+    } else if (
+      pathname.startsWith('/results/genes') ||
+      pathname.startsWith('/genes')
+    ) {
+      breadcrumbItems.push({ label: 'Genes', to: '/search?q=gene' })
+      const geneId =
+        pathname.startsWith('/results/genes/')
+          ? segments[2]
+          : pathname.startsWith('/genes/')
+            ? segments[1]
+            : null
+      if (geneId) breadcrumbItems.push({ label: geneId })
+    }
+  } else if (pathname.startsWith('/methods')) {
+    breadcrumbItems.push({ label: 'Métodos' })
+  } else if (
+    pathname.startsWith('/reproducibility') ||
+    pathname.startsWith('/evidence')
+  ) {
+    breadcrumbItems.push({ label: 'Reproducibilidad' })
+  } else if (
+    pathname.startsWith('/status/t008') ||
+    pathname.startsWith('/t008')
+  ) {
+    breadcrumbItems.push({ label: 'Status' })
+    breadcrumbItems.push({ label: 'T-008' })
+  } else if (pathname.startsWith('/search')) {
+    breadcrumbItems.push({ label: 'Buscar' })
+  } else if (pathname.startsWith('/ask') || pathname.startsWith('/chat')) {
+    breadcrumbItems.push({ label: 'Preguntar' })
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -116,13 +184,32 @@ export default function SiteShell() {
       </header>
 
       <main className="site-main" id="main-content" tabIndex={-1}>
+        {breadcrumbItems.length > 0 && (
+          <nav className="breadcrumb-bar" aria-label="Ruta actual">
+            <Link to="/">Overview</Link>
+            {breadcrumbItems.map((item, index) => (
+              <span className="breadcrumb-item" key={item.label + String(index)}>
+                <span aria-hidden="true">/</span>
+                {item.to && index < breadcrumbItems.length - 1 ? (
+                  <Link to={item.to}>{item.label}</Link>
+                ) : (
+                  <strong>{item.label}</strong>
+                )}
+              </span>
+            ))}
+          </nav>
+        )}
+
         {inResults && (
           <div className="result-context-bar">
-            <span>Resultados</span>
+            <div>
+              <strong>Explorar resultados</strong>
+              <span>Cambia de vista sin perder el contexto científico.</span>
+            </div>
             <nav aria-label="Navegación de resultados">
               <NavLink
                 to="/results/modules"
-                className={pathname.startsWith('/results/modules') || pathname.startsWith('/modules') || pathname.startsWith('/genes') || pathname.startsWith('/results/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+                className={pathname.startsWith('/results/modules') || pathname.startsWith('/modules') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Módulos
               </NavLink>
@@ -137,6 +224,12 @@ export default function SiteShell() {
                 className={pathname.startsWith('/results/validation') || pathname.startsWith('/validation') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Validación
+              </NavLink>
+              <NavLink
+                to="/search?q=VIT_"
+                className={pathname.startsWith('/results/genes') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+              >
+                Genes
               </NavLink>
             </nav>
           </div>
