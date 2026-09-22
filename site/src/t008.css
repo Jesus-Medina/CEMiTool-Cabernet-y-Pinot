@@ -1,4 +1,21 @@
-.t008-page { display: grid; gap: 30px; }
+.t008-page {
+  display: grid;
+  gap: 30px;
+  min-width: 0;
+}
+
+.t008-page > *,
+.t008-progress-panel > *,
+.t008-section > *,
+.t008-scale-grid > *,
+.t008-design-grid > *,
+.t008-pass-grid > *,
+.t008-filters > *,
+.t008-boundary > *,
+.t008-provenance > * {
+  min-width: 0;
+  max-width: 100%;
+}
 .t008-hero {
   display: grid;
   grid-template-columns: minmax(0,1fr) auto;
@@ -11,7 +28,14 @@
   box-shadow: var(--shadow);
 }
 .t008-hero .eyebrow { color: #c6d4da; }
-.t008-hero h1 { max-width: 900px; margin: 0; font-size: clamp(2.5rem,6vw,5.5rem); line-height: .98; letter-spacing: -.045em; }
+.t008-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(2.5rem,6vw,5.5rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+  overflow-wrap: anywhere;
+}
 .t008-hero p:last-child { max-width: 820px; color: rgba(255,255,255,.72); line-height: 1.75; }
 .t008-big-number { min-width: 210px; padding: 22px; border: 1px solid rgba(255,255,255,.16); border-radius: 20px; background: rgba(255,255,255,.06); }
 .t008-big-number strong { display: block; font-size: clamp(2.7rem,6vw,5rem); letter-spacing: -.06em; }
