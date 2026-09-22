@@ -166,9 +166,12 @@ function ContrastMatrix({
           <p className="eyebrow">Robustez anual</p>
           <h2>Contraste Cabernet − Pinot por etapa y año</h2>
         </div>
-        <p>
-          La dirección y la magnitud se muestran por celda. El FDR global corresponde a la familia de 90 contrastes.
-        </p>
+        <div>
+          <p>
+            La dirección y la magnitud se muestran por celda. El FDR global corresponde a la familia de 90 contrastes.
+          </p>
+          <Link className="inline-link" to="/evidence?artifact=module_contrasts">ⓘ Ver provenance →</Link>
+        </div>
       </div>
 
       <div className="contrast-matrix" role="table" aria-label={`Contrastes de ${module}`}>

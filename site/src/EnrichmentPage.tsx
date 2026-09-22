@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   loadFunctionalEnrichment,
   type EnrichmentSourceId,
@@ -326,9 +327,12 @@ export default function EnrichmentPage() {
                 <p className="eyebrow">ORA por término</p>
                 <h2>{module} · {sourceMeta?.label}</h2>
               </div>
-              <p>
-                Barras = −log10(FDR global). El fold indica sobrerrepresentación respecto del background anotado de esa fuente.
-              </p>
+              <div>
+                <p>
+                  Barras = −log10(FDR global). El fold indica sobrerrepresentación respecto del background anotado de esa fuente.
+                </p>
+                <Link className="inline-link" to="/evidence?artifact=functional_enrichment">ⓘ Ver provenance →</Link>
+              </div>
             </div>
             <EnrichmentBars rows={terms} />
 

@@ -4,6 +4,7 @@ import M5Explorer from './components/M5Explorer'
 import { ModuleExplorerDetailPage, ModulesExplorerPage } from './ModuleExplorerPage'
 import ExternalValidationPage from './ExternalValidationPage'
 import T008DashboardPage from './T008DashboardPage'
+import EvidenceBrowserPage from './EvidenceBrowserPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
 import { formatDecimal, formatScientific } from './utils/format'
 
@@ -390,18 +391,7 @@ export function MethodsPage() {
 }
 
 export function EvidencePage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="EVIDENCE"
-        title="Evidencia y trazabilidad"
-        description="El futuro visor de provenance conectará afirmaciones y gráficos con tablas, scripts, inputs y commits."
-      />
-      <PlaceholderPanel title="Provenance ya visible en M5">
-        WEB-004 incorpora provenance a M5. WEB-010 generalizará la misma lógica a un navegador de evidencia para todo el proyecto.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <EvidenceBrowserPage />
 }
 
 export function NotFoundPage() {
