@@ -357,7 +357,7 @@ export default function EnrichmentPage() {
                 <p>
                   Barras = −log10(FDR global). El fold indica sobrerrepresentación respecto del background anotado de esa fuente.
                 </p>
-                <Link className="inline-link" to="/evidence?artifact=functional_enrichment">ⓘ Ver provenance →</Link>
+                <Link className="inline-link" to="/evidence?artifact=functional_enrichment">Ver trazabilidad →</Link>
               </div>
             </div>
             <EnrichmentBars rows={terms} />
@@ -404,7 +404,7 @@ export default function EnrichmentPage() {
           {source === 'go' && (
             <section className="go-audit-panel">
               <div>
-                <p className="eyebrow">T-005A · GO auditado</p>
+                <p className="eyebrow">GO auditado</p>
                 <h2>La tabla GO histórica no es la fuente vigente</h2>
                 <p>
                   Esta vista usa <code>{data.summary.go_current_table}</code>. La tabla histórica
