@@ -1,6 +1,19 @@
 .evidence-page {
   display: grid;
   gap: 30px;
+  min-width: 0;
+}
+
+.evidence-page > *,
+.evidence-version-grid > *,
+.evidence-search-panel > *,
+.evidence-claims > *,
+.evidence-catalog > *,
+.evidence-claim-grid > *,
+.evidence-artifact-body > *,
+.evidence-boundary-grid > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .evidence-hero {
@@ -21,6 +34,7 @@
   font-size: clamp(2.7rem, 7vw, 6rem);
   line-height: .96;
   letter-spacing: -.05em;
+  overflow-wrap: anywhere;
 }
 
 .evidence-hero p:last-child {
@@ -234,6 +248,7 @@
 
 .evidence-artifact summary strong {
   color: var(--cabernet-deep);
+  overflow-wrap: anywhere;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
