@@ -135,46 +135,58 @@ export default function ChatPage() {
     void sendQuestion(draft)
   }
 
+  const userMessageCount = messages.filter((message) => message.role === 'user').length
+
   return (
-    <div className="page-stack chat-page">
-      <section className="chat-hero">
-        <div>
-          <p className="eyebrow">Asistente RAG · Gemini File Search</p>
-          <h1>Pregúntale al proyecto</h1>
-          <p className="lede">
-            El chat consulta una colección curada de documentación, tablas y
-            scripts canónicos. Está diseñado para explicar evidencia y
-            trazabilidad sin convertir coexpresión en causalidad.
+    <div className="chat-page chat-page--workspace">
+      <section className="chat-intro" aria-labelledby="chat-title">
+        <div className="chat-intro-copy">
+          <div className="chat-status-row">
+            <span className="chat-status-dot" aria-hidden="true" />
+            <span>Asistente del proyecto</span>
+            <span className="chat-status-separator" aria-hidden="true">·</span>
+            <span>Gemini File Search</span>
+          </div>
+          <h1 id="chat-title">Pregúntale al proyecto</h1>
+          <p>
+            Consulta resultados, métodos, genes, módulos y trazabilidad usando
+            las fuentes canónicas del repositorio.
           </p>
         </div>
-        <div className="chat-hero-note">
-          <strong>Fuente antes que memoria</strong>
+
+        <div className="chat-trust-note">
+          <strong>Responde desde las fuentes</strong>
           <span>
-            Si la evidencia indexada no basta, el asistente debe decirlo en vez
-            de completar el hueco.
+            Si la evidencia indexada no alcanza, el asistente lo dirá en vez de
+            completar la respuesta con supuestos.
           </span>
         </div>
       </section>
 
       {!configured ? (
         <section className="chat-config-warning" role="status">
-          <strong>Chat aún no conectado.</strong>
+          <strong>El asistente todavía no está conectado.</strong>
           <p>
-            Falta definir <code>VITE_CHAT_API_URL</code> durante el build del
-            sitio. El frontend ya está preparado para conectarse al worker
-            seguro.
+            La interfaz está lista, pero falta conectar el endpoint seguro del
+            backend antes de poder hacer consultas.
           </p>
-          <a
-            className="inline-link"
-            href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot/tree/main/chatbot"
-          >
-            Ver guía de configuración →
-          </a>
         </section>
       ) : null}
 
-      <section className="chat-layout" aria-label="Asistente del proyecto">
+      <section className="chat-workspace" aria-label="Asistente del proyecto">
         <div className="chat-panel">
+          <header className="chat-panel-header">
+            <div>
+              <strong>Conversación</strong>
+              <span>
+                {userMessageCount === 0
+                  ? 'Haz una pregunta o usa una sugerencia.'
+                  : userMessageCount + ' ' + (userMessageCount === 1 ? 'pregunta' : 'preguntas') + ' en esta sesión'}
+              </span>
+            </div>
+            <span className="chat-source-badge">Fuentes canónicas</span>
+          </header>
+
           <div className="chat-thread" aria-live="polite">
             {messages.map((message) => (
               <article
@@ -186,17 +198,17 @@ export default function ChatPage() {
                 key={message.id}
               >
                 <div className="chat-message-meta">
-                  {message.role === 'user' ? 'Tú' : 'Asistente del proyecto'}
+                  {message.role === 'user' ? 'Tú' : 'Asistente'}
                 </div>
                 <div className="chat-message-body">{message.content}</div>
 
                 {message.citations && message.citations.length > 0 ? (
                   <div className="chat-citations" aria-label="Fuentes recuperadas">
-                    <span>Fuentes recuperadas</span>
+                    <span>Fuentes utilizadas</span>
                     <div>
                       {message.citations.map((citation) => (
                         <code
-                          key={`${citation.fileName}-${citation.source ?? ''}`}
+                          key={citation.fileName + '-' + (citation.source ?? '')}
                         >
                           {citation.fileName}
                         </code>
@@ -209,6 +221,7 @@ export default function ChatPage() {
 
             {isSending ? (
               <div className="chat-thinking" role="status">
+                <span className="chat-thinking-dot" aria-hidden="true" />
                 Buscando en las fuentes del proyecto…
               </div>
             ) : null}
@@ -244,13 +257,13 @@ export default function ChatPage() {
           ) : null}
 
           <form className="chat-composer" onSubmit={submit}>
-            <label htmlFor="project-question">Pregunta</label>
+            <label htmlFor="project-question">Tu pregunta</label>
             <textarea
               id="project-question"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Ej.: ¿Qué evidencia respalda M5 en Harvest?"
-              rows={4}
+              rows={3}
               maxLength={5000}
               disabled={!configured || isSending}
             />
@@ -268,8 +281,8 @@ export default function ChatPage() {
         </div>
 
         <aside className="chat-sidebar">
-          <div className="chat-sidebar-card">
-            <p className="eyebrow">Prueba una pregunta</p>
+          <section className="chat-sidebar-card">
+            <p className="chat-sidebar-kicker">Empieza por aquí</p>
             <div className="chat-suggestions">
               {suggestions.map((suggestion) => (
                 <button
@@ -278,21 +291,30 @@ export default function ChatPage() {
                   onClick={() => void sendQuestion(suggestion)}
                   disabled={!configured || isSending}
                 >
-                  {suggestion}
+                  <span>{suggestion}</span>
+                  <span aria-hidden="true">→</span>
                 </button>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className="chat-sidebar-card chat-sidebar-card--limit">
-            <p className="eyebrow">Límite científico</p>
+          <section className="chat-sidebar-card chat-sidebar-card--quiet">
+            <p className="chat-sidebar-kicker">Cómo responde</p>
+            <ul className="chat-rules">
+              <li>Prioriza documentos y tablas canónicas.</li>
+              <li>Separa resultados de interpretación.</li>
+              <li>Expone límites cuando la evidencia no alcanza.</li>
+            </ul>
+          </section>
+
+          <section className="chat-sidebar-card chat-sidebar-card--limit">
+            <p className="chat-sidebar-kicker">Límite científico</p>
             <p>
-              Este asistente explica resultados del proyecto. No convierte hubs
-              en reguladores causales, no atribuye grosor de piel a M5 y no
-              presenta T-008 como terminado mientras las fuentes indiquen lo
-              contrario.
+              Coexpresión y centralidad no prueban causalidad. La validación en
+              piel se mantiene separada del baseline y T-008 no se presenta como
+              terminado mientras siga incompleto.
             </p>
-          </div>
+          </section>
         </aside>
       </section>
     </div>
