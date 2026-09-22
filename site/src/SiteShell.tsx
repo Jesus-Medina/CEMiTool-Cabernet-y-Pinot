@@ -34,6 +34,7 @@ export default function SiteShell() {
   const inResults = ['/results', '/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
     pathname.startsWith(prefix),
   )
+  const showResultsContext = inResults && pathname !== '/results'
 
   const segments = pathname.split('/').filter(Boolean)
   const canonicalResultsPath =
@@ -208,7 +209,7 @@ export default function SiteShell() {
           </nav>
         )}
 
-        {inResults && (
+        {showResultsContext && (
           <div className="result-context-bar">
             <div>
               <strong>Explorar resultados</strong>
