@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-21 — Master audit and beginner-to-technical reconstruction
+
+- Added a complete master documentation layer requested as a project-wide audit: project explanation, history, exhaustive canonical file catalog, script catalog, scientific table catalog, data lineage, glossary and evidence matrix.
+- Audited the current remote tree (27 canonical scripts; 69 result TSV/CSV tables) and explicitly separated canonical material from preserved `history/local_workspace/` copies.
+- Documented pre/post-migration path discrepancies, the superseded T-005 GO output, the current report lag behind T-004–T-007, and the unresolved M5 CHS/STS annotation conflict without changing scientific results.
+- No CEMiTool rerun, network change, sample change, T-008 analysis or deletion was performed.
+
 ## 2026-09-21 — T-007 external skin-only validation completed
 
 - Archived SHA-pinned GSE72421 matrix/annotation and PRJNA260535 published log2CPM workbook; audited 50 microarray and 84 RNA-seq skin samples without merging either source into the primary 54-sample design.
