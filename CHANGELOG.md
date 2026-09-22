@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-22 — First GitHub Pages preview successfully deployed
+
+- GitHub Pages was enabled for the repository and deployment run `35748440288` was re-run as attempt 2.
+- The full build path passed: canonical export, data validation, dependency install, lint, typecheck, Vite build, Pages configuration and Pages artifact upload.
+- The deploy job completed successfully and GitHub reported the public environment URL: `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
+- Added the live explorer link to the root README and moved the roadmap forward to WEB-006 functional enrichment.
+- The public preview remains a work in progress rather than the final QA-reviewed release; no scientific result, model, annotation or T-008 conclusion changed.
+
 ## 2026-09-22 — GitHub Pages preview deployment prepared; one-time Pages enablement pending
 
 - Added `.github/workflows/deploy-site.yml` using the current GitHub Pages flow: canonical data export/validation, frontend checks/build, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4` and `actions/deploy-pages@v4`.
