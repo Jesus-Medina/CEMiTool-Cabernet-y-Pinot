@@ -387,3 +387,31 @@
   stroke-width: 4px;
   stroke-linejoin: round;
 }
+
+
+/* Unified light workspace header */
+.validation-hero {
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(107,41,66,.04), transparent 34%),
+    var(--surface);
+}
+
+.validation-hero .eyebrow {
+  color: var(--cabernet);
+}
+
+.validation-hero h1 {
+  color: var(--cabernet-deep);
+}
+
+.validation-hero p:last-child {
+  color: var(--muted);
+}
+
+.external-badge {
+  color: var(--cabernet-deep);
+  border-color: var(--border);
+  background: #fbfafb;
+}
