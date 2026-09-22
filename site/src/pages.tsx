@@ -416,13 +416,19 @@ export function EvidencePage() {
 
 export function NotFoundPage() {
   return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="404"
-        title="Esta ruta todavía no existe"
-        description="La arquitectura del explorador está creciendo por fases."
-      />
-      <Link className="button button--primary button--fit" to="/">Volver al inicio</Link>
-    </div>
+    <section className="not-found">
+      <span className="not-found-code">404</span>
+      <div>
+        <p className="eyebrow">Página no encontrada</p>
+        <h1>No encontramos esa ruta.</h1>
+        <p>
+          Puedes volver al overview o entrar directamente a los resultados del estudio.
+        </p>
+        <div className="not-found-actions">
+          <Link className="button button--primary" to="/">Ir al overview</Link>
+          <Link className="button button--secondary" to="/results/modules">Ver resultados</Link>
+        </div>
+      </div>
+    </section>
   )
 }
