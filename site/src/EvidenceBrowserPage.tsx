@@ -32,7 +32,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Efectos Cultivar × Stage y robustez anual',
     description: 'Tablas que sostienen la comparación de módulos y los contrastes Cabernet−Pinot por Stage × Year.',
     artifactIds: ['modules', 'module_contrasts'],
-    route: '/modules',
+    route: '/results/modules',
     boundary: 'Significancia del modelo y reproducibilidad anual son dimensiones distintas.',
   },
   {
@@ -40,7 +40,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Trayectoria interanual de M5',
     description: 'Perfiles, eigengenes y contrastes usados por el explorador M5, incluido Harvest por año.',
     artifactIds: ['m5_trajectory', 'module_contrasts'],
-    route: '/modules/M5',
+    route: '/results/modules/M5',
     boundary: 'Una diferencia de eigengene resume coexpresión; no demuestra represión ni causalidad.',
   },
   {
@@ -48,7 +48,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Enriquecimiento funcional y conflicto CHS/STS',
     description: 'ORA MapMan v3/v5.1 y GO auditado, con cobertura y fuentes funcionales vigentes.',
     artifactIds: ['functional_enrichment', 'enrichments'],
-    route: '/enrichment',
+    route: '/results/function',
     boundary: 'El enriquecimiento describe sobrerrepresentación del módulo; no identifica por sí solo un driver causal.',
   },
   {
@@ -56,7 +56,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Priorización de hubs M5/M10/M2',
     description: 'Rankings de kWithin y evidencia de centralidad intramodular usada para priorizar candidatos.',
     artifactIds: ['hubs'],
-    route: '/modules/M5',
+    route: '/results/modules/M5',
     boundary: 'Centralidad de red no equivale a regulación causal.',
   },
   {
@@ -64,7 +64,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Red de coexpresión M5',
     description: 'Aristas beta10 y script que generan la red interactiva M5 y la vista chr16.',
     artifactIds: ['m5_network', 'hubs'],
-    route: '/modules/M5',
+    route: '/results/modules/M5',
     boundary: 'La red es unsigned: una arista no significa activación, inhibición ni dirección regulatoria.',
   },
   {
@@ -72,7 +72,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Validación externa en piel aislada',
     description: 'Fuentes, scripts y parámetros usados para GSE72421 y PRJNA260535 en T-007.',
     artifactIds: ['external_validation'],
-    route: '/validation',
+    route: '/results/validation',
     boundary: 'La validación externa es observacional y no se suma al N=54 del baseline.',
   },
   {
@@ -80,7 +80,7 @@ const CLAIMS: EvidenceClaim[] = [
     title: 'Progreso del reprocesamiento moderno T-008',
     description: 'Manifiesto de 54 corridas, ledger, QC por SRR y scripts que alimentan el dashboard vivo.',
     artifactIds: ['t008_progress'],
-    route: '/t008',
+    route: '/status/t008',
     boundary: 'Mientras no exista la matriz moderna completa, no hay conclusión de preservación de módulos.',
   },
 ]
@@ -328,7 +328,7 @@ export default function EvidenceBrowserPage() {
                   </div>
                   <div className="evidence-artifact-chips">
                     {claim.artifactIds.map((id) => (
-                      <a key={id} href={`#/evidence?artifact=${id}`}>{id}</a>
+                      <a key={id} href={`#/reproducibility?artifact=${id}`}>{id}</a>
                     ))}
                   </div>
                   <div className="evidence-boundary">
