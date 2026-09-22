@@ -191,17 +191,27 @@ function Provenance({ provenance }: { provenance: ProvenancePayload }) {
 export default function ExternalValidationPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const requestedModule = searchParams.get('module')
+  const requestedDataset = searchParams.get('dataset')
+  const requestedStatus = searchParams.get('status')
   const initialModule: ModuleFilter =
     requestedModule && MODULES.includes(requestedModule as ModuleFilter)
       ? (requestedModule as ModuleFilter)
       : 'M5'
+  const initialDataset: DatasetId =
+    requestedDataset && DATASETS.includes(requestedDataset as DatasetId)
+      ? (requestedDataset as DatasetId)
+      : 'GSE72421'
+  const initialStatus: StatusFilter =
+    requestedStatus && ['all', 'evaluable', 'fdr', 'concordant'].includes(requestedStatus)
+      ? (requestedStatus as StatusFilter)
+      : 'all'
   const [data, setData] = useState<ExternalValidationPayload | null>(null)
   const [provenance, setProvenance] = useState<ProvenancePayload | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [dataset, setDataset] = useState<DatasetId>('GSE72421')
+  const [dataset, setDataset] = useState<DatasetId>(initialDataset)
   const [module, setModule] = useState<ModuleFilter>(initialModule)
-  const [status, setStatus] = useState<StatusFilter>('all')
-  const [query, setQuery] = useState('')
+  const [status, setStatus] = useState<StatusFilter>(initialStatus)
+  const [query, setQuery] = useState(searchParams.get('q') ?? '')
 
   useEffect(() => {
     let active = true
@@ -219,22 +229,49 @@ export default function ExternalValidationPage() {
   }, [])
 
   useEffect(() => {
-    const requested = searchParams.get('module')
+    const requestedModuleParam = searchParams.get('module')
+    const requestedDatasetParam = searchParams.get('dataset')
+    const requestedStatusParam = searchParams.get('status')
+    const requestedQueryParam = searchParams.get('q') ?? ''
+
     if (
-      requested &&
-      MODULES.includes(requested as ModuleFilter) &&
-      requested !== module
+      requestedModuleParam &&
+      MODULES.includes(requestedModuleParam as ModuleFilter) &&
+      requestedModuleParam !== module
     ) {
-      setModule(requested as ModuleFilter)
+      setModule(requestedModuleParam as ModuleFilter)
     }
+
+    if (
+      requestedDatasetParam &&
+      DATASETS.includes(requestedDatasetParam as DatasetId) &&
+      requestedDatasetParam !== dataset
+    ) {
+      setDataset(requestedDatasetParam as DatasetId)
+    }
+
+    const nextStatus: StatusFilter =
+      requestedStatusParam &&
+      ['evaluable', 'fdr', 'concordant'].includes(requestedStatusParam)
+        ? (requestedStatusParam as StatusFilter)
+        : 'all'
+    if (nextStatus !== status) setStatus(nextStatus)
+    if (requestedQueryParam !== query) setQuery(requestedQueryParam)
   }, [searchParams])
 
   useEffect(() => {
-    if (searchParams.get('module') === module) return
     const next = new URLSearchParams(searchParams)
     next.set('module', module)
-    setSearchParams(next, { replace: true })
-  }, [module, searchParams, setSearchParams])
+    next.set('dataset', dataset)
+    if (status !== 'all') next.set('status', status)
+    else next.delete('status')
+    if (query.trim()) next.set('q', query)
+    else next.delete('q')
+
+    if (next.toString() !== searchParams.toString()) {
+      setSearchParams(next, { replace: true })
+    }
+  }, [module, dataset, status, query, searchParams, setSearchParams])
 
   const filtered = useMemo(() => {
     if (!data) return []
