@@ -4100,3 +4100,19 @@ body {
     padding-bottom: 2px;
   }
 }
+
+
+/* Flatter summary metrics */
+.overview-facts div,
+.results-landing-facts div,
+.methods-summary span,
+.gene-identity-stats div {
+  border-color: transparent;
+  background: #f6f4f5;
+  box-shadow: none;
+}
+
+.overview-facts div:hover,
+.results-landing-facts div:hover {
+  background: #f3f0f2;
+}
