@@ -864,16 +864,18 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-010 — Evidence browser
 
-- [ ] provenance global;
-- [ ] provenance por gráfico;
-- [ ] links a GitHub;
-- [ ] links a scripts;
-- [ ] links a TSV;
-- [ ] commit científico;
-- [ ] fecha de exportación;
-- [ ] buscador de evidencias.
+- [x] provenance global;
+- [x] provenance por gráfico;
+- [x] links a GitHub;
+- [x] links a scripts;
+- [x] links a TSV;
+- [x] commit científico;
+- [x] fecha de exportación;
+- [x] buscador de evidencias.
 
 **Aceptación:** para cada hallazgo principal puede identificarse tabla + script + commit.
+
+**Verificación 2026-09-22:** commit `e6845b8`. La ruta `/evidence` carga `provenance.json`, muestra commit exacto de construcción, fecha de exportación, conteo de artefactos/fuentes/scripts y un buscador que cubre hallazgos, artifact IDs, TSV, scripts y parámetros. Ocho mapas de hallazgos principales conectan diseño/beta10, efectos de módulos, trayectoria M5, enriquecimiento, hubs, red M5, validación skin-only y progreso T-008 con sus artefactos y límites interpretativos. Cada artefacto expone fuentes, scripts, SHA-256, tamaños, parámetros y enlaces GitHub fijados al commit. Se añadieron accesos directos a provenance desde la matriz de contrastes de módulos y el explorador de enriquecimiento; M5, validación y T-008 ya tenían provenance propio. CI run `35757479808` pasó export/validation/lint/typecheck/build y Pages run `35757479727` desplegó con éxito.
 
 ---
 
@@ -1052,7 +1054,7 @@ Implementar:
 | WEB-007 | TODO | — | Próxima |
 | WEB-008 | DONE | 2026-09-22 | T-007 skin-only explorer; CI/deploy PASS |
 | WEB-009 | DONE | 2026-09-22 | T-008 live dashboard; CI/deploy PASS (2/54 actual) |
-| WEB-010 | TODO | — | — |
+| WEB-010 | DONE | 2026-09-22 | Evidence Browser global + hashes + commit + búsqueda; CI/Pages PASS |
 | WEB-011 | TODO | — | — |
 | WEB-012 | IN PROGRESS | 2026-09-22 | Preview pública desplegada; release estable queda para después de QA final |
 
