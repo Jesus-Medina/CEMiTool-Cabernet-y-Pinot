@@ -38,7 +38,7 @@ jobs:
       - name: Index canonical project sources
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python chatbot/indexer/index_sources.py --repo-root .
+        run: python chatbot/indexer/index_sources.py --repo-root . --store fileSearchStores/cemitoolcabernetpinot-n37zsfbp8owh
 
       - name: Show store identifier
         run: |
