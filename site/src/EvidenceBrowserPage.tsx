@@ -168,6 +168,7 @@ export default function EvidenceBrowserPage() {
   const requestedArtifact = searchParams.get('artifact')
   const requestedQuery = searchParams.get('q') ?? ''
   const [query, setQuery] = useState(requestedQuery)
+  const [view, setView] = useState<'claims' | 'artifacts'>(requestedArtifact ? 'artifacts' : 'claims')
 
   useEffect(() => {
     let active = true
@@ -186,6 +187,10 @@ export default function EvidenceBrowserPage() {
   useEffect(() => {
     setQuery(requestedQuery)
   }, [requestedQuery])
+
+  useEffect(() => {
+    if (requestedArtifact) setView('artifacts')
+  }, [requestedArtifact])
 
   useEffect(() => {
     if (!data || !requestedArtifact) return
@@ -309,6 +314,28 @@ export default function EvidenceBrowserPage() {
             </p>
           </section>
 
+          <nav className="evidence-view-tabs" aria-label="Vista de reproducibilidad">
+            <button
+              type="button"
+              className={view === 'claims' ? 'evidence-view-tab evidence-view-tab--active' : 'evidence-view-tab'}
+              onClick={() => setView('claims')}
+              aria-pressed={view === 'claims'}
+            >
+              <span>Hallazgos</span>
+              <strong>{filteredClaims.length}</strong>
+            </button>
+            <button
+              type="button"
+              className={view === 'artifacts' ? 'evidence-view-tab evidence-view-tab--active' : 'evidence-view-tab'}
+              onClick={() => setView('artifacts')}
+              aria-pressed={view === 'artifacts'}
+            >
+              <span>Artefactos</span>
+              <strong>{filteredArtifacts.length}</strong>
+            </button>
+          </nav>
+
+          {view === 'claims' && (
           <section className="evidence-claims">
             <div className="evidence-section-heading">
               <div>
@@ -344,7 +371,9 @@ export default function EvidenceBrowserPage() {
               <div className="module-empty">No hay hallazgos principales que coincidan con la búsqueda.</div>
             )}
           </section>
+          )}
 
+          {view === 'artifacts' && (
           <section className="evidence-catalog">
             <div className="evidence-section-heading">
               <div>
@@ -360,6 +389,7 @@ export default function EvidenceBrowserPage() {
               ))}
             </div>
           </section>
+          )}
 
           <section className="evidence-boundary-grid">
             <article>
