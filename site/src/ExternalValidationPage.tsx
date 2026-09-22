@@ -149,7 +149,7 @@ function Provenance({ provenance }: { provenance: ProvenancePayload }) {
 
   return (
     <details className="validation-provenance">
-      <summary>ⓘ Provenance de validación externa</summary>
+      <summary>Trazabilidad de validación externa</summary>
       <div className="validation-provenance-grid">
         <div>
           <h3>Fuentes</h3>
@@ -242,10 +242,10 @@ export default function ExternalValidationPage() {
   }, [data, dataset, module, status, query])
 
   if (!data && !error) {
-    return <div className="data-state" role="status"><span className="data-state-dot" />Cargando T-007 desde datos canónicos…</div>
+    return <div className="data-state" role="status"><span className="data-state-dot" />Cargando validación externa desde datos canónicos…</div>
   }
   if (error || !data) {
-    return <div className="data-state data-state--error" role="alert"><strong>No se pudo cargar T-007.</strong><span>{error}</span></div>
+    return <div className="data-state data-state--error" role="alert"><strong>No se pudo cargar la validación externa.</strong><span>{error}</span></div>
   }
 
   const datasetInfo = data.datasets[dataset]
