@@ -5,9 +5,10 @@ Frontend del explorador científico interactivo del proyecto.
 ## Estado
 
 - WEB-001: scaffold React + TypeScript + Vite completado.
-- WEB-002: capa canónica de exportación/validación en implementación.
-
-La interfaz todavía no presenta gráficos científicos; primero se valida el contrato de datos.
+- WEB-002: capa canónica de exportación/validación completada.
+- WEB-003: Home + Story conectadas a datos reales.
+- WEB-004: M5 Explorer interactivo completado.
+- Preview GitHub Pages: workflow de despliegue incorporado.
 
 ## Desarrollo
 
@@ -33,13 +34,23 @@ npm run build
 
 ## GitHub Pages
 
+El deployment se realiza desde `.github/workflows/deploy-site.yml`.
+
 Vite usa como base:
 
 ```text
 /CEMiTool-Cabernet-y-Pinot/
 ```
 
-El deployment público se incorporará en WEB-012.
+La aplicación usa `HashRouter` para que rutas como M5, Story o Evidence funcionen al abrirse o recargarse directamente desde GitHub Pages sin depender de un servidor SPA.
+
+El artifact publicado es `site/dist/`, generado después de reconstruir y validar los JSON científicos.
+
+Si Pages todavía no está habilitado para el repositorio, en GitHub debe seleccionarse una sola vez:
+
+`Settings → Pages → Build and deployment → Source → GitHub Actions`
+
+Luego se puede reejecutar manualmente el workflow **Deploy scientific explorer to GitHub Pages**.
 
 ## Regla científica
 
