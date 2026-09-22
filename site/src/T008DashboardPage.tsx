@@ -91,7 +91,7 @@ function Provenance({ provenance }: { provenance: ProvenancePayload }) {
 
   return (
     <details className="t008-provenance">
-      <summary>ⓘ Provenance del tablero T-008</summary>
+      <summary>Trazabilidad del tablero T-008</summary>
       <div className="t008-provenance-grid">
         <div>
           <h3>Fuentes canónicas</h3>
