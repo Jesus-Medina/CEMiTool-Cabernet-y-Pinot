@@ -108,7 +108,7 @@ function TrajectorySvg({
     <div className="trajectory-chart-card">
       <div className="chart-card-header">
         <div>
-          <p className="eyebrow">M5 trajectory</p>
+          <p className="eyebrow">Trayectoria M5</p>
           <h3>{year}</h3>
         </div>
         <div className="chart-legend" aria-label="Leyenda">
@@ -277,7 +277,7 @@ function HarvestContrasts({ contrasts }: { contrasts: M5Contrast[] }) {
     <section className="m5-section" id="contrasts">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Harvest contrast</p>
+          <p className="eyebrow">Contraste Harvest</p>
           <h2>Cabernet Sauvignon − Pinot noir</h2>
         </div>
         <p>
@@ -447,7 +447,7 @@ function AnnotationConflictPanel({ hubs }: { hubs: HubRow[] }) {
   return (
     <section className="annotation-conflict" id="annotation">
       <div>
-        <p className="eyebrow">CHS / STS annotation conflict</p>
+        <p className="eyebrow">Conflicto de anotación CHS / STS</p>
         <h2>Una familia, etiquetas distintas entre versiones</h2>
         <p>
           Estos genes son etiquetados como stilbenoid en MapMan v3 y como CHS en v5.1,
