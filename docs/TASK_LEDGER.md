@@ -298,3 +298,47 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 **Goal:** assemble methods, diagnostics, results, validation, limitations, figures and supplementary files into a publication-quality narrative.
 
 **No result should be promoted to a strong mechanistic conclusion unless its evidence layer has actually been completed.**
+
+
+---
+
+## T-010 — Interactive web explorer / GitHub Pages
+
+**Status:** IN PROGRESS (2026-09-22); planning completed, implementation not started.
+
+**Master plan:** `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md`
+
+**Goal:** build an interactive, auditable, static scientific website that presents the Cabernet–Pinot project as a paper/story, exploratory dashboard and evidence browser while reading canonical repository results and preserving the existing scientific pipeline.
+
+**Architecture decision:**
+
+- React + TypeScript + Vite;
+- Plotly.js for scientific plots;
+- Cytoscape.js for coexpression networks;
+- Python exporter from canonical TSVs to validated frontend data;
+- GitHub Actions + GitHub Pages;
+- no backend;
+- no CEMiTool/model re-execution in the browser.
+
+**Scientific boundaries:**
+
+- website is a visualization layer, not a new inference layer;
+- no hand-entered replacement for canonical result tables when machine-readable sources exist;
+- preserve the pericarp/skin-thickness, hub/causality, CHS/STS, external-validation and T-008 interpretation limits;
+- T-008 progress must remain explicitly incomplete until the 54-run criteria are actually satisfied.
+
+**Implementation phases:** WEB-000 through WEB-012 are tracked in the master plan.
+
+**Immediate next step:** WEB-001, scaffold `site/` with React/TypeScript/Vite, routing, global layout and a reproducible production build; do not add scientific graphs until WEB-002 establishes the validated data-export layer.
+
+**Acceptance criteria for T-010 DONE:**
+
+- site builds reproducibly from the repository;
+- canonical TSV/result sources feed generated frontend data;
+- major scientific figures expose provenance;
+- Home, M5 explorer, enrichment, external validation, T-008 status and evidence browser are implemented;
+- scientific limitations are visible in the UI;
+- automated checks pass;
+- GitHub Pages deployment is active;
+- README links to the deployed site;
+- final scientific and visual QA is recorded.
