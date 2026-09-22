@@ -271,8 +271,8 @@ export default function ExternalValidationPage() {
     <div className="validation-page">
       <section className="validation-hero">
         <div>
-          <p className="eyebrow">WEB-008 · T-007 skin-only evidence</p>
-          <h1>Validación externa en piel aislada</h1>
+          <p className="eyebrow">Resultados · Validación externa</p>
+          <h1>Validación en piel aislada</h1>
           <p>
             Dos ensayos externos preguntan si candidatos preseleccionados conservan la dirección Cabernet Sauvignon − Pinot noir
             observada en Harvest. Son evidencia observacional separada del baseline, no nuevas réplicas de GSE98923.
@@ -280,6 +280,17 @@ export default function ExternalValidationPage() {
         </div>
         <div className="external-badge">FUENTE EXTERNA · NO SUMA AL N=54</div>
       </section>
+
+      {module !== 'all' && (
+        <div className="explorer-context-banner">
+          <div>
+            <span>Contexto activo</span>
+            <strong>{module}</strong>
+            <small>La vista mantiene el módulo seleccionado al navegar entre resultados.</small>
+          </div>
+          <Link to={'/modules/' + module}>Volver a {module} →</Link>
+        </div>
+      )}
 
       <section className="dataset-separation" aria-label="Fuentes externas separadas">
         {DATASETS.map((id, index) => {
