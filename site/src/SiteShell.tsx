@@ -27,6 +27,10 @@ export default function SiteShell() {
     return pathname.startsWith(to)
   }
 
+  const inResults = ['/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
+    pathname.startsWith(prefix),
+  )
+
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">
@@ -96,6 +100,31 @@ export default function SiteShell() {
       </header>
 
       <main className="site-main" id="main-content">
+        {inResults && (
+          <div className="result-context-bar">
+            <span>Resultados</span>
+            <nav aria-label="Navegación de resultados">
+              <NavLink
+                to="/modules"
+                className={pathname.startsWith('/modules') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+              >
+                Módulos
+              </NavLink>
+              <NavLink
+                to="/enrichment"
+                className={pathname.startsWith('/enrichment') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+              >
+                Función
+              </NavLink>
+              <NavLink
+                to="/validation"
+                className={pathname.startsWith('/validation') ? 'result-context-link result-context-link--active' : 'result-context-link'}
+              >
+                Validación
+              </NavLink>
+            </nav>
+          </div>
+        )}
         <Outlet />
       </main>
 
