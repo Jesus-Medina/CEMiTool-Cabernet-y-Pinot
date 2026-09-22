@@ -331,3 +331,26 @@
     border-radius: 12px;
   }
 }
+
+
+.t008-pass-grid--inside {
+  padding: 0 10px 10px;
+}
+
+.t008-events--inside {
+  margin: 0 10px 10px;
+}
+
+.t008-ledger-disclosure {
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .t008-pass-grid--inside {
+    padding-inline: 8px;
+  }
+
+  .t008-events--inside {
+    margin-inline: 8px;
+  }
+}
