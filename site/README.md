@@ -8,6 +8,7 @@ Frontend del explorador científico interactivo del proyecto.
 - WEB-002: capa canónica de exportación/validación completada.
 - WEB-003: Home + Story conectadas a datos reales.
 - WEB-004: M5 Explorer interactivo completado.
+- WEB-005: red Cytoscape M5 + locus chr16 completados.
 - WEB-006: enriquecimiento funcional MapMan v3/v5.1 + GO T-005A completado.
 - WEB-008: validación externa skin-only completada.
 - WEB-009: dashboard vivo T-008 completado; refleja el estado canónico actual sin inferir preservación.
