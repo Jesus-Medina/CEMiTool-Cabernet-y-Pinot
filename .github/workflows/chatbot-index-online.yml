@@ -40,6 +40,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python chatbot/indexer/index_sources.py --repo-root . --store fileSearchStores/cemitoolcabernetpinot-n37zsfbp8owh
 
+      - name: Smoke-test grounded retrieval
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python chatbot/indexer/smoke_test.py
+
       - name: Show store identifier
         run: |
           echo "## Gemini File Search store" >> "$GITHUB_STEP_SUMMARY"
