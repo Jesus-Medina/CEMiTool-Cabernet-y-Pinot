@@ -1133,6 +1133,41 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin: 0 20px 16px;
 }
 
+.chat-error--friendly {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.chat-error--friendly > div {
+  min-width: 0;
+}
+
+.chat-error--friendly strong {
+  display: block;
+  color: var(--cabernet-deep);
+  margin-bottom: 5px;
+}
+
+.chat-error--friendly p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.chat-error--friendly small {
+  display: block;
+  margin-top: 7px;
+  color: var(--warning);
+}
+
+.chat-error--friendly .button {
+  flex: 0 0 auto;
+  min-width: 112px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .chat-composer {
   display: grid;
   gap: 9px;
@@ -1253,4 +1288,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .chat-thread { padding: 15px; }
   .chat-message { width: 94%; }
   .chat-composer { padding: 15px; }
+
+  .chat-error--friendly {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .chat-error--friendly .button {
+    width: 100%;
+  }
 }
