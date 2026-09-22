@@ -521,3 +521,258 @@
     gap: 5px;
   }
 }
+
+
+/* UX-04 results workspace */
+.modules-page {
+  gap: 18px;
+}
+
+.modules-hero,
+.module-detail-hero {
+  gap: 24px;
+  padding: 30px 32px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  background:
+    radial-gradient(circle at 86% 18%, rgba(221,181,198,.14), transparent 34%),
+    linear-gradient(145deg, #351a25, #632b43);
+}
+
+.modules-hero h1,
+.module-detail-hero h1 {
+  max-width: 760px;
+  font-size: clamp(2rem, 4.2vw, 3.9rem);
+  line-height: 1.02;
+}
+
+.modules-hero p:last-child,
+.module-detail-hero p:last-child {
+  line-height: 1.6;
+}
+
+.module-filter-panel {
+  padding: 14px;
+  border-radius: 13px;
+  box-shadow: var(--shadow-soft);
+}
+
+.module-filter {
+  min-height: 34px;
+  padding: 0 11px;
+  border-radius: 9px;
+  background: #fbfafb;
+  font-size: .72rem;
+}
+
+.module-search input {
+  min-height: 38px;
+  border-radius: 9px;
+}
+
+.module-overview-strip {
+  gap: 8px;
+}
+
+.module-overview-strip article {
+  min-height: 92px;
+  padding: 15px;
+  border-radius: 11px;
+}
+
+.module-overview-strip strong {
+  font-size: 1.65rem;
+}
+
+.module-card-grid {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.module-card {
+  min-height: 0;
+  display: grid;
+  grid-template-columns:
+    minmax(150px, 1.05fr)
+    minmax(86px, .55fr)
+    minmax(150px, 1fr)
+    minmax(90px, .6fr)
+    minmax(90px, .6fr)
+    minmax(125px, .8fr)
+    auto;
+  gap: 12px;
+  align-items: center;
+  padding: 15px 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.module-card--priority {
+  border-color: rgba(107,41,66,.28);
+  background:
+    linear-gradient(90deg, rgba(107,41,66,.055), transparent 24%),
+    var(--surface);
+}
+
+.module-card-identity {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.module-card-identity > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.module-id {
+  font-size: 1.45rem;
+}
+
+.module-status {
+  font-size: .67rem;
+  line-height: 1.35;
+}
+
+.priority-pill {
+  padding: 4px 7px;
+  border-radius: 7px;
+  font-size: .57rem;
+}
+
+.module-row-stat {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.module-row-stat > span {
+  color: var(--muted);
+  font-size: .61rem;
+  font-weight: 760;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.module-row-stat > strong {
+  overflow-wrap: anywhere;
+  color: var(--cabernet-deep);
+  font-size: .9rem;
+  line-height: 1.2;
+}
+
+.module-row-stat > small {
+  color: #8d8388;
+  font-size: .6rem;
+  line-height: 1.35;
+}
+
+.module-card-link {
+  min-height: 36px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.module-card-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid #eee9eb;
+  color: var(--muted);
+  font-size: .68rem;
+  line-height: 1.45;
+}
+
+.module-boundary {
+  gap: 10px;
+}
+
+.module-boundary article {
+  padding: 22px;
+  border-radius: 13px;
+  box-shadow: var(--shadow-soft);
+}
+
+.module-boundary h2 {
+  font-size: 1.25rem;
+}
+
+.module-detail-section,
+.module-provisional-warning,
+.module-highlight {
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.module-detail-hero-stats span {
+  min-height: 56px;
+  border-radius: 10px;
+}
+
+.contrast-matrix {
+  border-radius: 12px;
+}
+
+.contrast-cell {
+  min-height: 70px;
+  padding: 12px;
+}
+
+.module-term-list article {
+  border-radius: 10px;
+}
+
+.external-module-grid article {
+  min-height: 125px;
+  padding: 17px;
+  border-radius: 11px;
+}
+
+.module-route-grid a {
+  min-height: 100px;
+  border-radius: 11px;
+}
+
+@media (max-width: 1050px) {
+  .module-card {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+
+  .module-card-identity {
+    grid-column: 1 / -1;
+  }
+
+  .module-card-link {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 650px) {
+  .modules-hero,
+  .module-detail-hero {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .modules-hero h1,
+  .module-detail-hero h1 {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .module-card {
+    grid-template-columns: 1fr 1fr;
+    padding: 14px;
+  }
+
+  .module-card-identity,
+  .module-card-note {
+    grid-column: 1 / -1;
+  }
+
+  .module-card-link {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
