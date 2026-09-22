@@ -726,19 +726,21 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-002 — Exportador canónico
 
-- [ ] Crear `export_site_data.py`.
-- [ ] Implementar validación de fuentes.
-- [ ] Generar `project_summary.json`.
-- [ ] Generar `modules.json`.
-- [ ] Generar `m5_trajectory.json`.
-- [ ] Generar `hubs.json`.
-- [ ] Generar `external_validation.json`.
-- [ ] Generar `t008_progress.json`.
-- [ ] Generar `provenance.json`.
-- [ ] Registrar SHA-256 de inputs.
-- [ ] Tests de row counts/columnas/NA.
+- [x] Crear `export_site_data.py`.
+- [x] Implementar validación de fuentes.
+- [x] Generar `project_summary.json`.
+- [x] Generar `modules.json`.
+- [x] Generar `m5_trajectory.json`.
+- [x] Generar `hubs.json`.
+- [x] Generar `external_validation.json`.
+- [x] Generar `t008_progress.json`.
+- [x] Generar `provenance.json`.
+- [x] Registrar SHA-256 de inputs.
+- [x] Tests de row counts/columnas/NA.
 
 **Aceptación:** los JSON se reconstruyen automáticamente desde resultados canónicos sin edición manual.
+
+**Verificación 2026-09-22:** commit `1cad93d`. GitHub Actions run `35745653944` generó 10 archivos JSON en build-time y validó `samples=54`, `modules=3050` genes, `hubs=361` y `T-008=2/54`. Export, validation, lint, typecheck y build finalizaron con `success`. Los JSON generados están ignorados por Git y siempre se reconstruyen desde fuentes canónicas para evitar datos web obsoletos.
 
 ---
 
@@ -1004,13 +1006,11 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-002
+## Próxima tarea: WEB-003
 
-Construir `site/scripts/export_site_data.py` y la capa de validación que leerá las tablas canónicas, comprobará sus columnas y generará los primeros JSON del frontend.
+Construir la primera experiencia real de lectura: Home + Story, consumiendo `project_summary.json` y los primeros datasets generados por WEB-002.
 
-**No implementar gráficos científicos todavía.**
-
-Primero conectaremos y validaremos los datos reales. Los componentes visuales comenzarán después de que WEB-002 tenga una salida reproducible.
+La Home debe mostrar datos reales derivados del repositorio, no cifras escritas a mano, y mantener visibles los límites científicos. La Story debe explicar el flujo del proyecto sin reemplazar el manuscrito técnico.
 
 ---
 
@@ -1020,8 +1020,8 @@ Primero conectaremos y validaremos los datos reales. Los componentes visuales co
 |---|---|---|---|
 | WEB-000 | IN PROGRESS | 2026-09-22 | Plan creado; falta congelar paleta y provenance schema |
 | WEB-001 | DONE | 2026-09-22 | Scaffold + routing + CI; lint/typecheck/build PASS |
-| WEB-002 | TODO | — | Próxima |
-| WEB-003 | TODO | — | — |
+| WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
+| WEB-003 | TODO | — | Próxima |
 | WEB-004 | TODO | — | — |
 | WEB-005 | TODO | — | — |
 | WEB-006 | TODO | — | — |
