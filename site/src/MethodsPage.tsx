@@ -26,6 +26,10 @@ const sections: MethodSection[] = [
   { id: 't008', label: 'T-008', artifactIds: ['t008_progress'] },
 ]
 
+function scrollToMethod(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 function githubUrl(path: string, commit: string | null) {
   return REPO + '/blob/' + (commit ?? 'main') + '/' + path
 }
@@ -144,7 +148,11 @@ export default function MethodsPage() {
           <aside className="methods-index">
             <span>En esta página</span>
             <nav aria-label="Índice de métodos">
-              {sections.map((section) => <a key={section.id} href={'#' + section.id}>{section.label}</a>)}
+              {sections.map((section) => (
+                <button key={section.id} type="button" onClick={() => scrollToMethod(section.id)}>
+                  {section.label}
+                </button>
+              ))}
             </nav>
             <Link to="/reproducibility">Abrir reproducibilidad →</Link>
           </aside>
