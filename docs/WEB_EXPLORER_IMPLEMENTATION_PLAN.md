@@ -881,18 +881,20 @@ sin modificar el archivo científico original.
 
 ## Fase WEB-011 — QA
 
-- [ ] validación científica de cifras;
-- [ ] pruebas de filtros;
-- [ ] responsive;
-- [ ] Chrome;
-- [ ] Firefox;
-- [ ] móvil;
-- [ ] accesibilidad básica;
-- [ ] broken links;
-- [ ] performance;
-- [ ] build reproducible.
+- [x] validación científica de cifras;
+- [x] pruebas de filtros;
+- [x] responsive;
+- [x] Chrome;
+- [x] Firefox;
+- [x] móvil;
+- [x] accesibilidad básica;
+- [x] broken links;
+- [x] performance;
+- [x] build reproducible.
 
 **Aceptación:** checklist firmado antes de publicar.
+
+**Verificación 2026-09-22:** GitHub Actions `WEB-011 scientific and browser QA`, run `35766922688`, finalizó con `success` sobre commit `a42a095`. La batería reconstruyó datos canónicos, ejecutó validación de esquemas y valores científicos, lint, TypeScript, build, presupuesto de bundle y Playwright en Chrome, Firefox y viewport móvil. Los tests recorren las rutas principales, detectan errores JS/HTTP, comprueban nombres accesibles básicos y verifican filtros de módulos, M5, Evidence y T-008. La auditoría responsive detectó y permitió corregir overflows reales en Enrichment (`40cbb17`), Validation (`c53ff7a`), T-008 (`758ed2e`) y Evidence (`a42a095`). El run final no registró pasos fallidos.
 
 ---
 
