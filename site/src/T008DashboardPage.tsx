@@ -247,22 +247,25 @@ export default function T008DashboardPage() {
           </div>
           <p>Mapping y recuentos son métricas técnicas por biblioteca, no evidencia de preservación de módulos.</p>
         </div>
-        <div className="t008-pass-grid">
-          {validated.map((run) => (
-            <article key={run.sra_run}>
-              <div className="t008-run-heading">
-                <div><span>{run.gsm}</span><h3>{run.sra_run}</h3></div>
-                <span className={statusClass(run.status)}>{run.status}</span>
-              </div>
-              <dl>
-                <div><dt>Diseño</dt><dd>{run.cultivar} · {run.stage} {run.year} · rep {run.replicate}</dd></div>
-                <div><dt>Mapping</dt><dd>{formatDecimal(run.percent_mapped, 2)}%</dd></div>
-                <div><dt>Reads</dt><dd>{run.read_count.toLocaleString('es-CL')}</dd></div>
-                <div><dt>Procesados</dt><dd>{run.processed_fragments?.toLocaleString('es-CL') ?? '—'}</dd></div>
-              </dl>
-            </article>
-          ))}
-        </div>
+        <details className="data-disclosure">
+          <summary>Ver corridas QC PASS ({validated.length})</summary>
+          <div className="t008-pass-grid t008-pass-grid--inside">
+            {validated.map((run) => (
+              <article key={run.sra_run}>
+                <div className="t008-run-heading">
+                  <div><span>{run.gsm}</span><h3>{run.sra_run}</h3></div>
+                  <span className={statusClass(run.status)}>{run.status}</span>
+                </div>
+                <dl>
+                  <div><dt>Diseño</dt><dd>{run.cultivar} · {run.stage} {run.year} · rep {run.replicate}</dd></div>
+                  <div><dt>Mapping</dt><dd>{formatDecimal(run.percent_mapped, 2)}%</dd></div>
+                  <div><dt>Reads</dt><dd>{run.read_count.toLocaleString('es-CL')}</dd></div>
+                  <div><dt>Procesados</dt><dd>{run.processed_fragments?.toLocaleString('es-CL') ?? '—'}</dd></div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </details>
       </section>
 
       <section className="t008-section">
@@ -317,17 +320,20 @@ export default function T008DashboardPage() {
           <div><p className="eyebrow">Eventos</p><h2>Últimos checkpoints versionados</h2></div>
           <p>Se muestran eventos del ledger, incluyendo controles globales del lote.</p>
         </div>
-        <ol className="t008-events">
-          {recentEvents.map((event, index) => (
-            <li key={event.UTC + '-' + event.SRA_Run + '-' + event.Stage + '-' + String(index)}>
-              <time>{shortDate(event.UTC)}</time>
-              <code>{event.SRA_Run}</code>
-              <strong>{event.Stage}</strong>
-              <span className={'event-status event-status--' + event.Status.toLowerCase()}>{event.Status}</span>
-              <small>{event.Detail === null ? '—' : String(event.Detail)}</small>
-            </li>
-          ))}
-        </ol>
+        <details className="data-disclosure">
+          <summary>Ver últimos eventos ({recentEvents.length})</summary>
+          <ol className="t008-events t008-events--inside">
+            {recentEvents.map((event, index) => (
+              <li key={event.UTC + '-' + event.SRA_Run + '-' + event.Stage + '-' + String(index)}>
+                <time>{shortDate(event.UTC)}</time>
+                <code>{event.SRA_Run}</code>
+                <strong>{event.Stage}</strong>
+                <span className={'event-status event-status--' + event.Status.toLowerCase()}>{event.Status}</span>
+                <small>{event.Detail === null ? '—' : String(event.Detail)}</small>
+              </li>
+            ))}
+          </ol>
+        </details>
       </section>
 
       <section className="t008-boundary">
