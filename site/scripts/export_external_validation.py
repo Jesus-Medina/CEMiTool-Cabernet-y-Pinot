@@ -116,9 +116,16 @@ def build_external_validation(repo_root: Path) -> dict[str, Any]:
 
     rows = read_tsv(repo_root, "primary_hubs", primary_required)
     for row in rows:
+        # These fields are categorical labels even when Condition is numeric-looking (e.g. "24").
+        # Keep them as strings to match the frontend contract and the canonical TSV semantics.
+        for field in ("Dataset", "Condition", "Platform", "Module", "Gene"):
+            row[field] = str(row[field])
         row["Baseline_Harvest_mean_2012_2014"] = descriptive_baseline_mean(row)
 
     module_summary = read_tsv(repo_root, "module_summary", summary_required)
+    for row in module_summary:
+        for field in ("Dataset", "Condition", "Module"):
+            row[field] = str(row[field])
     source_qc = read_tsv(repo_root, "source_qc", {"Metric", "Value"})
     gse_audit = read_tsv(repo_root, "gse_audit", gse_required)
     rna_audit = read_tsv(repo_root, "rna_audit", rna_required)
