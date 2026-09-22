@@ -432,7 +432,7 @@ export default function M5NetworkExplorer({
       <section className="m5-section network-section" id="network">
         <div className="section-heading section-heading--controls">
           <div>
-            <p className="eyebrow">Coexpression network</p>
+            <p className="eyebrow">Red de coexpresión</p>
             <h2>M5 · estructura de la red beta10</h2>
           </div>
           <p>
@@ -507,7 +507,7 @@ export default function M5NetworkExplorer({
               </div>
 
               <aside className="network-inspector">
-                <p className="eyebrow">Node inspector</p>
+                <p className="eyebrow">Inspector del nodo</p>
                 {selected ? (
                   <>
                     <h3>{categoryLabel(selected)}</h3>
