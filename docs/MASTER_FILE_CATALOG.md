@@ -1,6 +1,6 @@
 # Catálogo maestro de archivos
 
-Auditoría del árbol GitHub actual. Total: **535 archivos**, de los cuales **281 canónicos** y **254 históricos** bajo `history/`.
+Auditoría del árbol GitHub actual. Total: **539 archivos**, de los cuales **285 canónicos** y **254 históricos** bajo `history/`.
 
 El catálogo enumera todos los archivos canónicos del árbol. El subárbol `history/local_workspace/` contiene copias históricas preservadas y no se duplica línea por línea aquí; su función es trazabilidad, no fuente vigente.
 
@@ -95,9 +95,13 @@ El catálogo enumera todos los archivos canónicos del árbol. El subárbol `his
 | `docs/FUTURE_VISION.md` | 2932 | documentación | canónico |
 | `docs/LOCAL_PROJECT_INVENTORY.md` | 5569 | documentación | canónico |
 | `docs/MASTER_DATA_LINEAGE.md` | 4390 | documentación | canónico |
+| `docs/MASTER_EVIDENCE_MATRIX.md` | 5565 | documentación | canónico |
+| `docs/MASTER_FILE_CATALOG.md` | 30366 | documentación | canónico |
+| `docs/MASTER_GLOSSARY.md` | 11106 | documentación | canónico |
 | `docs/MASTER_PROJECT_EXPLANATION.md` | 23918 | documentación | canónico |
 | `docs/MASTER_PROJECT_HISTORY.md` | 5727 | documentación | canónico |
 | `docs/MASTER_SCRIPT_CATALOG.md` | 7509 | documentación | canónico |
+| `docs/MASTER_TABLE_CATALOG.md` | 11538 | documentación | canónico |
 | `docs/PROJECT_CONTEXT.md` | 7649 | documentación | canónico |
 | `docs/SYNC_POLICY.md` | 2753 | documentación | canónico |
 | `docs/T003_QC_REVIEW.md` | 6381 | documentación | canónico |
