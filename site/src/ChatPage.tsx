@@ -211,7 +211,7 @@ export default function ChatPage() {
                         <Link
                           className="chat-citation-link"
                           key={citation.fileName + '-' + (citation.source ?? '')}
-                          to={'/evidence?q=' + encodeURIComponent(citation.fileName)}
+                          to={'/reproducibility?q=' + encodeURIComponent(citation.fileName)}
                         >
                           <span>{citation.fileName}</span>
                           <small>Ver evidencia →</small>
