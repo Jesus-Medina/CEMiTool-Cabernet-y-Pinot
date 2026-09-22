@@ -590,3 +590,14 @@
 .enrichment-hero p:last-child {
   color: var(--muted);
 }
+
+
+.coverage-strip article {
+  border-color: transparent;
+  background: #f6f4f5;
+  box-shadow: none;
+}
+
+.coverage-strip .coverage-warning {
+  border: 1px solid rgba(138,92,22,.16);
+}
