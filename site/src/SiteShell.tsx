@@ -9,6 +9,7 @@ const navigation = [
   { to: '/t008', label: 'T-008' },
   { to: '/methods', label: 'Métodos' },
   { to: '/evidence', label: 'Evidencia' },
+  { to: '/chat', label: 'Chat' },
 ]
 
 export default function SiteShell() {
