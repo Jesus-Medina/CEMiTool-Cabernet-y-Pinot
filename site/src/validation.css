@@ -415,3 +415,10 @@
   border-color: var(--border);
   background: #fbfafb;
 }
+
+
+.validation-summary-grid article {
+  border-color: transparent;
+  background: #f6f4f5;
+  box-shadow: none;
+}
