@@ -281,7 +281,19 @@ def main() -> None:
         "t008": t008["summary"],
     }
 
-    module_counts = Counter(str(row["modules"]) for row in module_rows)
+    module_counts_all = Counter(str(row["modules"]) for row in module_rows)
+    expected_biological_modules = {f"M{i}" for i in range(1, 11)}
+    source_groups = set(module_counts_all)
+    expected_groups = expected_biological_modules | {"Not.Correlated"}
+    if source_groups != expected_groups:
+        raise ValueError(
+            f"Unexpected beta10 module groups: {sorted(source_groups)}; expected {sorted(expected_groups)}"
+        )
+    module_counts = {
+        module: count
+        for module, count in module_counts_all.items()
+        if module in expected_biological_modules
+    }
     interaction_fdr = {
         str(row["Module"]): row["FDR"]
         for row in anova_rows
