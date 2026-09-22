@@ -16,6 +16,8 @@ npm run dev
 
 ## Validación
 
+El workflow `.github/workflows/site-check.yml` ejecuta estas comprobaciones en cada cambio del frontend.
+
 ```bash
 npm run lint
 npm run typecheck
