@@ -8,7 +8,10 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint src --max-warnings=0",
-    "typecheck": "tsc --noEmit --pretty false"
+    "typecheck": "tsc --noEmit --pretty false",
+    "qa:scientific": "python scripts/qa_scientific_values.py",
+    "qa:bundle": "python scripts/check_bundle_size.py",
+    "qa:e2e": "playwright test"
   },
   "dependencies": {
     "react": "19.1.1",
@@ -25,6 +28,7 @@
     "globals": "16.3.0",
     "typescript": "5.9.2",
     "typescript-eslint": "8.42.0",
-    "vite": "7.1.7"
+    "vite": "7.1.7",
+    "@playwright/test": "1.55.0"
   }
 }

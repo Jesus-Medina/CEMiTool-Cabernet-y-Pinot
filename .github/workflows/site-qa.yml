@@ -1,0 +1,80 @@
+name: WEB-011 scientific and browser QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'data/metadata/samples.tsv'
+      - 'results/beta10/tables/**'
+      - 'results/module_statistics_beta10/**'
+      - 'results/year_robustness_beta10/**'
+      - 'results/functional_enrichment_beta10/**'
+      - 'results/go_ora_beta10/**'
+      - 'results/hub_prioritization_beta10/**'
+      - 'results/external_skin_validation_beta10/**'
+      - 'results/fastq_reprocessing_t008/**'
+      - '.github/workflows/site-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Export canonical site data
+        run: python scripts/export_site_data.py
+
+      - name: Validate generated data
+        run: python scripts/validate_site_data.py
+
+      - name: Scientific value QA
+        run: python scripts/qa_scientific_values.py
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Bundle performance budget
+        run: npm run qa:bundle
+
+      - name: Install QA browsers
+        run: npx playwright install --with-deps chromium firefox chrome
+
+      - name: Chrome, Firefox and mobile QA
+        run: npm run qa:e2e
+
+      - name: Upload Playwright traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-qa-artifacts
+          path: site/test-results/
+          if-no-files-found: ignore
