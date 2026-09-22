@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import time
 import urllib.request
 from pathlib import Path
 
@@ -59,12 +60,36 @@ def main() -> None:
                 continue
             raise ValueError(f"Existing FASTQ fails size/MD5; inspect manually: {path}")
         partial = out / (name + ".part")
-        if partial.exists():
-            raise ValueError(f"Incomplete prior download exists; inspect manually: {partial}")
-        request = urllib.request.Request(url, headers={"User-Agent": "CEMiTool-T008/1.0"})
-        with urllib.request.urlopen(request, timeout=120) as response, partial.open("wb") as handle:
-            while chunk := response.read(8 * 1024 * 1024):
-                handle.write(chunk)
+        expected_size = int(size)
+        if partial.exists() and partial.stat().st_size > expected_size:
+            raise ValueError(f"Partial download exceeds ENA size: {partial}")
+        for attempt in range(1, 6):
+            offset = partial.stat().st_size if partial.exists() else 0
+            if offset == expected_size:
+                break
+            headers = {"User-Agent": "CEMiTool-T008/1.0", "Accept-Encoding": "identity"}
+            if offset:
+                headers["Range"] = f"bytes={offset}-"
+            request = urllib.request.Request(url, headers=headers)
+            try:
+                with urllib.request.urlopen(request, timeout=120) as response:
+                    if offset:
+                        expected_range = f"bytes {offset}-"
+                        if response.status != 206 or not response.headers.get("Content-Range", "").startswith(expected_range):
+                            raise ValueError("Server did not honor exact resume range; refusing to append")
+                    elif response.status != 200:
+                        raise ValueError(f"Unexpected initial HTTP status {response.status}")
+                    with partial.open("ab" if offset else "wb") as handle:
+                        while chunk := response.read(8 * 1024 * 1024):
+                            handle.write(chunk)
+                if partial.stat().st_size == expected_size:
+                    break
+                raise IOError("Download ended before advertised ENA byte count")
+            except (OSError, TimeoutError) as exc:
+                if attempt == 5:
+                    raise
+                print(f"Download interruption for {args.run}, attempt {attempt}/5: {exc}; retaining .part")
+                time.sleep(min(2 ** attempt, 30))
         if partial.stat().st_size != int(size) or md5(partial) != checksum:
             raise ValueError(f"Downloaded FASTQ fails ENA size/MD5: {partial}")
         partial.replace(path)

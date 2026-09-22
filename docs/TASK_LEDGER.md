@@ -279,13 +279,15 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-008 — Modern FASTQ reprocessing
 
-**Status:** IN PROGRESS (2026-09-22); source/run/reference audit and single-FASTQ technical pilot only. No 54-sample quantification or module-preservation result yet.
+**Status:** IN PROGRESS (2026-09-22); source/run/reference audit and 2/54 verified FASTQ/quantifications. No 54-sample matrix or module-preservation result yet.
 
 **Goal:** reprocess raw reads with a modern pipeline and current Vitis annotation, then determine whether the important modules/candidates are preserved.
 
 **This step should compare against, not erase, the historical RPKM baseline.**
 
 **Preparation record:** `scripts/post/17_t008_audit_raw_run_manifest.py` matched all 54 frozen GSM to 54 single-end SRR via GEO SRX and ENA, checked original sample characteristics, and pinned FASTQ URLs, sizes and MD5. The selected compressed data total 140.160.608.633 bytes and 1.625.172.664 reads. `scripts/post/18_t008_prepare_t2t_reference.py` verified Grapedia T2T v5.1 genome/GFF3/all-transcript FASTA by SHA-256 and matched 56.910 transcript IDs to 47.971 genes; the old→new reciprocal crosswalk covers 1.922/3.050 beta10 genes. The smallest FASTQ (`SRR5560506`) passed size, MD5, gzip, record-structure and exact read-count QC. A Salmon 1.12.1 full-genome-decoy index completed after resolving a missing WSL `en_US.UTF-8` locale. The single-library quantification passed transcript, read-count, TPM and index-hash QC (88.67% mapped; zero quantification errors). A second prior for fragment length found material TPM sensitivity, less for gene estimated counts; see D-016 and `docs/T008_RAW_REPROCESSING.md`. Do **not** mark DONE until the full 54-run and preservation criteria there are met.
+
+**Full-batch checkpoint:** the user authorized continuing through completion while preserving source data. `SRR5560667` joined the pilot as a second independently verified run (19.514.717 reads, 84.94% mapped); an interrupted download was resumed and accepted only after complete ENA MD5. Scripts 19/20/25/26 implement resumable verified retrieval, read-quality probe, per-run Salmon QC/archive and fail-stop checkpointed processing. Script 27 is prepared to assemble modern matrices **only after** all 54 PASS. No raw FASTQ is deleted; T-008 is not DONE.
 
 ---
 

@@ -37,17 +37,31 @@ def main() -> None:
         actual_md5 = hashlib.file_digest(handle, "md5").hexdigest()
     if actual_md5 != checksums[0]:
         raise ValueError("FASTQ MD5 differs from ENA")
+    probe_records = min(10_000, int(row["Read_Count"]))
+    q20 = q30 = bases = n_bases = 0
+    read_lengths: list[int] = []
     with gzip.open(path, "rb") as handle:
-        for i in range(1000):
+        for i in range(probe_records):
             record = [handle.readline() for _ in range(4)]
             if not all(record) or not record[0].startswith(b"@") or not record[2].startswith(b"+"):
-                raise ValueError(f"Malformed FASTQ record among first 1000: {i + 1}")
-            if len(record[1].rstrip(b"\r\n")) != len(record[3].rstrip(b"\r\n")):
+                raise ValueError(f"Malformed FASTQ record among first {probe_records}: {i + 1}")
+            sequence = record[1].rstrip(b"\r\n")
+            quality = record[3].rstrip(b"\r\n")
+            if len(sequence) != len(quality):
                 raise ValueError("FASTQ sequence/quality length mismatch")
+            if any(base not in b"ACGTNacgtn" for base in sequence):
+                raise ValueError("Unexpected non-IUPAC-ACGTN sequence character in quality probe")
+            if any(q < 33 or q > 126 for q in quality):
+                raise ValueError("Quality probe contains bytes outside printable Phred+33 range")
+            read_lengths.append(len(sequence))
+            bases += len(sequence)
+            n_bases += sum(base in b"Nn" for base in sequence)
+            q20 += sum(q >= 53 for q in quality)
+            q30 += sum(q >= 63 for q in quality)
         remaining_lines = 0
         while chunk := handle.read(8 * 1024 * 1024):
             remaining_lines += chunk.count(b"\n")
-    lines = 4000 + remaining_lines
+    lines = probe_records * 4 + remaining_lines
     if lines % 4 or lines // 4 != int(row["Read_Count"]):
         raise ValueError(f"FASTQ record count disagrees with ENA: {lines // 4} vs {row['Read_Count']}")
     out = ROOT / "results/fastq_reprocessing_t008" / f"{args.run}_fastq_qc.tsv"
@@ -61,7 +75,15 @@ def main() -> None:
             {"Metric": "MD5", "Value": actual_md5},
             {"Metric": "FASTQ_Records", "Value": lines // 4},
             {"Metric": "Expected_ENA_Read_Count", "Value": row["Read_Count"]},
-            {"Metric": "First_1000_records_structure", "Value": "PASS"},
+            {"Metric": "First_10000_records_structure", "Value": "PASS"},
+            {"Metric": "Quality_probe_records", "Value": probe_records},
+            {"Metric": "Quality_probe_scope", "Value": "first_reads_only_not_random"},
+            {"Metric": "Quality_probe_read_length_min", "Value": min(read_lengths)},
+            {"Metric": "Quality_probe_read_length_max", "Value": max(read_lengths)},
+            {"Metric": "Quality_probe_read_length_mean", "Value": f"{sum(read_lengths)/probe_records:.4f}"},
+            {"Metric": "Quality_probe_Q20_fraction", "Value": f"{q20/bases:.6f}"},
+            {"Metric": "Quality_probe_Q30_fraction", "Value": f"{q30/bases:.6f}"},
+            {"Metric": "Quality_probe_N_fraction", "Value": f"{n_bases/bases:.6f}"},
             {"Metric": "GZIP_CRC", "Value": "PASS"},
         ])
     print(f"{args.run}: {lines // 4} FASTQ records, MD5/GZIP/structure PASS")
