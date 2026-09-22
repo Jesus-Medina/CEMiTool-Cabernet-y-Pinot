@@ -75,7 +75,7 @@ export default function SiteShell() {
       pathname.startsWith('/results/genes') ||
       pathname.startsWith('/genes')
     ) {
-      breadcrumbItems.push({ label: 'Genes', to: '/search?q=gene' })
+      breadcrumbItems.push({ label: 'Genes', to: '/results/genes' })
       const geneId =
         pathname.startsWith('/results/genes/')
           ? segments[2]
@@ -226,7 +226,7 @@ export default function SiteShell() {
                 Validación
               </NavLink>
               <NavLink
-                to="/search?q=VIT_"
+                to="/results/genes"
                 className={pathname.startsWith('/results/genes') || pathname.startsWith('/genes') ? 'result-context-link result-context-link--active' : 'result-context-link'}
               >
                 Genes
