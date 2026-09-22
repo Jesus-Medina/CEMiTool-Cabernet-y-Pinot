@@ -254,7 +254,7 @@ export default function EnrichmentPage() {
     <div className="enrichment-page">
       <section className="enrichment-hero">
         <div>
-          <p className="eyebrow">WEB-006 · Functional enrichment</p>
+          <p className="eyebrow">Resultados · Función</p>
           <h1>¿Qué funciones aparecen sobrerrepresentadas?</h1>
           <p>
             Explora el ORA de módulos beta10 con MapMan v3, MapMan v5.1 y el GO corregido por la auditoría T-005A.
@@ -262,6 +262,15 @@ export default function EnrichmentPage() {
           </p>
         </div>
       </section>
+
+      <div className="explorer-context-banner">
+        <div>
+          <span>Contexto activo</span>
+          <strong>{module}</strong>
+          <small>Los filtros y resultados de esta vista corresponden al módulo seleccionado.</small>
+        </div>
+        <Link to={'/modules/' + module}>Volver a {module} →</Link>
+      </div>
 
       {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando enriquecimiento canónico…</div>}
       {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
