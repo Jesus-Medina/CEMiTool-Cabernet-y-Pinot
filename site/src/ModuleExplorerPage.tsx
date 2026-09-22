@@ -168,7 +168,7 @@ function ContrastMatrix({
   const years = [2012, 2013, 2014]
 
   return (
-    <section className="module-detail-section">
+    <section className="module-detail-section" id="module-contrasts">
       <div className="module-section-heading">
         <div>
           <p className="eyebrow">Robustez anual</p>
@@ -230,7 +230,7 @@ function ModuleHubs({
   if (rows.length === 0) return null
 
   return (
-    <section className="module-detail-section">
+    <section className="module-detail-section" id="module-hubs">
       <div className="module-section-heading">
         <div>
           <p className="eyebrow">Hub ranking</p>
@@ -285,7 +285,7 @@ function ModuleFunctionalSummary({
     .slice(0, 5)
 
   return (
-    <section className="module-detail-section">
+    <section className="module-detail-section" id="module-function">
       <div className="module-section-heading">
         <div>
           <p className="eyebrow">Función</p>
@@ -323,7 +323,7 @@ function ModuleExternalSummary({
   const rows = external.module_summary.filter((row) => row.Module === module)
   if (rows.length === 0) {
     return (
-      <section className="module-detail-section">
+      <section className="module-detail-section" id="module-validation">
         <div className="module-empty">
           La validación externa prioritaria se concentró en M5/M10/M2; {module} no tiene resumen equivalente en ese conjunto congelado.
         </div>
@@ -332,7 +332,7 @@ function ModuleExternalSummary({
   }
 
   return (
-    <section className="module-detail-section">
+    <section className="module-detail-section" id="module-validation">
       <div className="module-section-heading">
         <div>
           <p className="eyebrow">Piel externa</p>
@@ -511,6 +511,13 @@ export function ModuleExplorerDetailPage() {
 
       {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando detalle de {module}…</div>}
       {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
+
+      <nav className="module-section-nav" aria-label={'Secciones de ' + module}>
+        <a href="#module-contrasts">Contrastes</a>
+        <a href="#module-function">Función</a>
+        <a href="#module-hubs">Hubs</a>
+        <a href="#module-validation">Validación</a>
+      </nav>
 
       {data && summary && (
         <>
