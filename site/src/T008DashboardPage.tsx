@@ -72,7 +72,7 @@ function DesignMatrix({ runs }: { runs: T008Run[] }) {
                 <div className="t008-mini-progress" aria-label={String(pass) + ' de ' + String(cell.length) + ' validadas'}>
                   <i style={{ width: String((100 * pass) / Math.max(cell.length, 1)) + '%' }} />
                 </div>
-                <small>{fail > 0 ? String(fail) + ' FAIL' : progress > 0 ? String(progress) + ' en progreso' : 'QC PASS'}</small>
+                <small>{fail > 0 ? String(fail) + ' FAIL' : progress > 0 ? String(progress) + ' en progreso' : pass === cell.length ? 'QC PASS' : String(cell.length - pass) + ' pendientes'}</small>
               </article>
             )
           }),
