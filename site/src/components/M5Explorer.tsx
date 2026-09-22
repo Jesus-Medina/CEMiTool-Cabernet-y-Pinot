@@ -380,54 +380,59 @@ function HubsTable({ hubs }: { hubs: HubRow[] }) {
         </p>
       </div>
 
-      <div className="table-toolbar">
-        <label>
-          <span>Buscar gen o etiqueta</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="VIT_… / NAC / CuAO / CHS"
-          />
-        </label>
-        {!normalized && (
-          <button className="button button--secondary" type="button" onClick={() => setShowAll((value) => !value)}>
-            {showAll ? 'Mostrar top 15' : `Mostrar los ${m5Hubs.length}`}
-          </button>
-        )}
-      </div>
+      <details className="data-disclosure hub-ranking-disclosure">
+        <summary>Ver ranking de hubs ({m5Hubs.length})</summary>
+        <div className="hub-ranking-body">
+          <div className="table-toolbar">
+            <label>
+              <span>Buscar gen o etiqueta</span>
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="VIT_… / NAC / CuAO / CHS"
+              />
+            </label>
+            {!normalized && (
+              <button className="button button--secondary" type="button" onClick={() => setShowAll((value) => !value)}>
+                {showAll ? 'Mostrar top 15' : `Mostrar los ${m5Hubs.length}`}
+              </button>
+            )}
+          </div>
 
-      <div className="scientific-table-wrap">
-        <table className="scientific-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Gen</th>
-              <th>Señal</th>
-              <th>kWithin</th>
-              <th>kME</th>
-              <th>Harvest 2012</th>
-              <th>2013</th>
-              <th>2014</th>
-            </tr>
-          </thead>
-          <tbody>
-            {visible.map((row) => (
-              <tr key={row.Gene}>
-                <td>{row.Rank_kWithin}</td>
-                <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
-                <td>{hubLabel(row) ?? '—'}</td>
-                <td>{formatDecimal(row.kWithin, 3)}</td>
-                <td>{formatDecimal(row.kME_signed, 3)}</td>
-                <td>{formatDecimal(row.Harvest_CS_minus_PN_2012, 2)}</td>
-                <td>{formatDecimal(row.Harvest_CS_minus_PN_2013, 2)}</td>
-                <td>{formatDecimal(row.Harvest_CS_minus_PN_2014, 2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="table-note">Mostrando {visible.length} de {filtered.length} genes M5.</p>
+          <div className="scientific-table-wrap">
+            <table className="scientific-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Gen</th>
+                  <th>Señal</th>
+                  <th>kWithin</th>
+                  <th>kME</th>
+                  <th>Harvest 2012</th>
+                  <th>2013</th>
+                  <th>2014</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visible.map((row) => (
+                  <tr key={row.Gene}>
+                    <td>{row.Rank_kWithin}</td>
+                    <td><Link to={`/results/genes/${row.Gene}`}><code>{row.Gene}</code></Link></td>
+                    <td>{hubLabel(row) ?? '—'}</td>
+                    <td>{formatDecimal(row.kWithin, 3)}</td>
+                    <td>{formatDecimal(row.kME_signed, 3)}</td>
+                    <td>{formatDecimal(row.Harvest_CS_minus_PN_2012, 2)}</td>
+                    <td>{formatDecimal(row.Harvest_CS_minus_PN_2013, 2)}</td>
+                    <td>{formatDecimal(row.Harvest_CS_minus_PN_2014, 2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="table-note">Mostrando {visible.length} de {filtered.length} genes M5.</p>
+        </div>
+      </details>
     </section>
   )
 }
