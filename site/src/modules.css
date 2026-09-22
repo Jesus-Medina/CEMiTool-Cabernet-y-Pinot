@@ -918,3 +918,10 @@
   background: #f6f4f5;
   box-shadow: none;
 }
+
+
+.module-section-nav-link--active {
+  color: var(--cabernet-deep) !important;
+  background: #f0eaed !important;
+  box-shadow: inset 0 0 0 1px rgba(107,41,66,.08);
+}
