@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useCanonicalData } from './hooks/useCanonicalData'
+import { formatDecimal, formatScientific } from './utils/format'
 
 type PageIntroProps = {
   eyebrow: string
@@ -44,7 +46,61 @@ function PlaceholderPanel({
   )
 }
 
+function DataState({
+  loading,
+  error,
+}: {
+  loading: boolean
+  error: string | null
+}) {
+  if (loading) {
+    return (
+      <div className="data-state" role="status">
+        <span className="data-state-dot" aria-hidden="true" />
+        Cargando resultados canónicos…
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="data-state data-state--error" role="alert">
+        <strong>No se pudieron cargar los datos generados.</strong>
+        <span>{error}</span>
+      </div>
+    )
+  }
+
+  return null
+}
+
+function EvidenceBoundary() {
+  return (
+    <section className="boundary-grid" aria-label="Límites de interpretación">
+      <article className="boundary-card boundary-card--supported">
+        <p className="eyebrow">Qué sí muestra</p>
+        <h2>Programas transcriptómicos diferenciales</h2>
+        <p>
+          El proyecto compara programas de coexpresión entre cultivares y etapas,
+          revisa su robustez entre años y busca apoyo independiente en piel.
+        </p>
+      </article>
+      <article className="boundary-card boundary-card--limit">
+        <p className="eyebrow">Qué no demuestra</p>
+        <h2>No es una prueba causal de grosor de piel</h2>
+        <p>
+          El baseline proviene de pericarpio y no contiene una medición directa de
+          grosor de piel. Un hub o un eigengene tampoco equivale a un mecanismo causal.
+        </p>
+      </article>
+    </section>
+  )
+}
+
 export function HomePage() {
+  const { project, modules, loading, error } = useCanonicalData()
+  const m5 = modules?.modules.find((row) => row.module === 'M5') ?? null
+
   return (
     <div className="page-stack">
       <section className="hero">
@@ -52,13 +108,14 @@ export function HomePage() {
           <p className="eyebrow">Interactive scientific explorer</p>
           <h1>Cabernet Sauvignon <span>×</span> Pinot noir</h1>
           <p className="hero-lede">
-            Una interfaz para recorrer la historia científica, explorar resultados y
-            rastrear cada visualización hasta su evidencia reproducible.
+            Trayectorias de coexpresión, robustez interanual, metabolismo fenólico,
+            hubs y validación externa, conectados directamente con la evidencia del repositorio.
           </p>
           <div className="hero-actions">
             <Link className="button button--primary" to="/story">Entrar a la historia</Link>
             <Link className="button button--secondary" to="/evidence">Ver evidencia</Link>
           </div>
+          <p className="authorship">Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong></p>
         </div>
 
         <div className="hero-orbit" aria-label="Estructura conceptual del sitio">
@@ -74,15 +131,57 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="scaffold-note" aria-labelledby="scaffold-title">
-        <p className="eyebrow">WEB-001</p>
-        <h2 id="scaffold-title">La estructura está lista para recibir datos</h2>
-        <p>
-          Esta primera capa solo define navegación, diseño base y páginas. En WEB-002
-          los componentes comenzarán a leer resultados canónicos exportados desde el
-          repositorio, sin duplicar cifras manualmente.
-        </p>
-      </section>
+      <DataState loading={loading} error={error} />
+
+      {project && (
+        <>
+          <section className="metrics-grid" aria-label="Resumen del proyecto">
+            <article className="metric-card">
+              <p>Diseño</p>
+              <strong>{project.design.sample_count}</strong>
+              <span>
+                {project.design.cultivars.length} cultivares · {project.design.stages.length} etapas · {project.design.years.length} años
+              </span>
+            </article>
+            <article className="metric-card">
+              <p>Red principal</p>
+              <strong>β = {project.network.primary_beta}</strong>
+              <span>R² scale-free {formatDecimal(project.network.scale_free_r2, 3)}</span>
+            </article>
+            <article className="metric-card metric-card--accent">
+              <p>Foco actual</p>
+              <strong>{m5?.module ?? 'M5'}</strong>
+              <span>FDR Cultivar×Stage {formatScientific(m5?.cultivar_stage_fdr)}</span>
+            </article>
+            <article className="metric-card">
+              <p>T-008 moderno</p>
+              <strong>{project.t008.validated_runs}/{project.t008.total_runs}</strong>
+              <span>{project.t008.complete ? 'Completo' : 'Aún sin matriz moderna completa'}</span>
+            </article>
+          </section>
+
+          <section className="development-section">
+            <div>
+              <p className="eyebrow">Diseño biológico</p>
+              <h2>Una misma pregunta a través de la maduración</h2>
+              <p>
+                Las etapas visibles aquí vienen del diseño canónico exportado desde el repositorio.
+                El sitio no inventa ni reetiqueta muestras.
+              </p>
+            </div>
+            <ol className="stage-flow">
+              {project.design.stages.map((stage, index) => (
+                <li key={stage}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{stage}</strong>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </>
+      )}
+
+      <EvidenceBoundary />
 
       <section className="portal-grid" aria-label="Áreas del explorador">
         <Link className="portal-card" to="/modules">
@@ -103,16 +202,133 @@ export function HomePage() {
 }
 
 export function StoryPage() {
+  const { project, modules, m5, loading, error } = useCanonicalData()
+  const m5Summary = modules?.modules.find((row) => row.module === 'M5') ?? null
+  const harvest = m5?.contrasts.filter((row) => row.Stage === 'Harvest') ?? []
+  const harvestNegativeAllYears =
+    harvest.length > 0 && harvest.every((row) => row.estimate < 0)
+
   return (
     <div className="page-stack">
       <PageIntro
         eyebrow="STORY"
         title="Historia científica"
-        description="Aquí vivirá la narrativa visual del proyecto, desde la pregunta y el diseño hasta la interpretación integrada."
+        description="Una lectura guiada del proyecto, construida sobre datos exportados desde las tablas canónicas."
+        status="Datos reales"
       />
-      <PlaceholderPanel title="Narrativa pendiente de WEB-003">
-        La historia se conectará a los resultados validados después de construir la capa de exportación canónica.
-      </PlaceholderPanel>
+
+      <DataState loading={loading} error={error} />
+
+      {project && (
+        <section className="story-timeline">
+          <article className="story-step">
+            <span>01</span>
+            <div>
+              <p className="eyebrow">Pregunta</p>
+              <h2>Comparar programas, no buscar un “gen de piel gruesa”</h2>
+              <p>
+                La pregunta operacional es qué programas de coexpresión cambian de manera
+                distinta entre Cabernet Sauvignon y Pinot noir durante el desarrollo, cuáles
+                se repiten entre años y qué candidatos encuentran apoyo en piel aislada.
+              </p>
+            </div>
+          </article>
+
+          <article className="story-step">
+            <span>02</span>
+            <div>
+              <p className="eyebrow">Diseño</p>
+              <h2>{project.design.sample_count} muestras balanceadas</h2>
+              <p>
+                {project.design.cultivars.length} cultivares × {project.design.stages.length} etapas × {project.design.years.length} años
+                {project.design.replicates_per_cell_values.length === 1
+                  ? ` × ${project.design.replicates_per_cell_values[0]} réplicas biológicas por celda.`
+                  : '.'}
+              </p>
+              <div className="story-tags">
+                {project.design.cultivars.map((item) => <span key={item}>{item}</span>)}
+                {project.design.years.map((item) => <span key={item}>{item}</span>)}
+              </div>
+            </div>
+          </article>
+
+          <article className="story-step">
+            <span>03</span>
+            <div>
+              <p className="eyebrow">Red de coexpresión</p>
+              <h2>β = {project.network.primary_beta} como red principal</h2>
+              <p>
+                El sitio lee el beta primario desde los diagnósticos canónicos. El ajuste
+                scale-free exportado para esta red es R² {formatDecimal(project.network.scale_free_r2, 3)}.
+                La red beta=7 permanece como análisis de sensibilidad, no como una red reemplazada.
+              </p>
+            </div>
+          </article>
+
+          <article className="story-step story-step--focus">
+            <span>04</span>
+            <div>
+              <p className="eyebrow">Resultado central</p>
+              <h2>M5 emerge como foco principal</h2>
+              <p>
+                Su interacción Cultivar×Stage tiene FDR {formatScientific(m5Summary?.cultivar_stage_fdr)}.
+                La clasificación de robustez exportada conserva la cautela de que el módulo
+                puede depender del año a nivel global.
+              </p>
+              {harvest.length > 0 && (
+                <p className="story-evidence-line">
+                  Harvest disponible para {harvest.length} años en la tabla canónica:
+                  {' '}
+                  <strong>{harvestNegativeAllYears ? 'Cabernet − Pinot mantiene dirección negativa en todos ellos.' : 'la dirección no es idéntica en todos los años.'}</strong>
+                </p>
+              )}
+              <Link className="inline-link" to="/modules/M5">Abrir M5 →</Link>
+            </div>
+          </article>
+
+          <article className="story-step">
+            <span>05</span>
+            <div>
+              <p className="eyebrow">Interpretación funcional</p>
+              <h2>La función se evalúa a nivel de módulo</h2>
+              <p>
+                El enriquecimiento y los hubs se mantienen separados de la inferencia causal.
+                La web hará visible el conflicto de anotación CHS/STS en vez de esconderlo
+                detrás de una única etiqueta.
+              </p>
+            </div>
+          </article>
+
+          <article className="story-step">
+            <span>06</span>
+            <div>
+              <p className="eyebrow">Piel aislada</p>
+              <h2>La validación externa es otra capa de evidencia</h2>
+              <p>
+                Las fuentes externas no se agregan a las {project.design.sample_count} muestras
+                del baseline como si fueran réplicas equivalentes. Se presentan por separado
+                para evaluar concordancia observacional.
+              </p>
+            </div>
+          </article>
+
+          <article className="story-step">
+            <span>07</span>
+            <div>
+              <p className="eyebrow">T-008</p>
+              <h2>{project.t008.validated_runs} de {project.t008.total_runs} corridas validadas</h2>
+              <p>
+                {project.t008.complete
+                  ? 'El exportador reporta el lote moderno como completo.'
+                  : 'El lote moderno sigue incompleto; por eso la web no presenta todavía una conclusión de preservación moderna.'}
+              </p>
+              <Link className="inline-link" to="/t008">Ver estado T-008 →</Link>
+            </div>
+          </article>
+        </section>
+      )}
+
+      <EvidenceBoundary />
     </div>
   )
 }
@@ -125,8 +341,8 @@ export function ModulesPage() {
         title="Explorador de módulos"
         description="Vista comparativa de módulos, efectos, robustez, enriquecimiento y estado interpretativo."
       />
-      <PlaceholderPanel title="Datos pendientes de WEB-002">
-        Esta página no contiene todavía números científicos escritos a mano. La tabla se generará desde fuentes canónicas.
+      <PlaceholderPanel title="Siguiente capa de exploración">
+        Los datos ya están conectados por WEB-002. La interfaz comparativa completa de M1–M10 se implementará en WEB-007.
       </PlaceholderPanel>
     </div>
   )
@@ -158,7 +374,7 @@ export function GeneDetailPage() {
         description="Ficha individual para integrar centralidad, anotaciones, posición y evidencia externa sin inventar información ausente."
       />
       <PlaceholderPanel title="Ficha preparada">
-        El contenido aparecerá únicamente cuando WEB-002 exponga los campos verificados correspondientes.
+        El contenido aparecerá únicamente a partir de los campos verificados exportados por la capa canónica.
       </PlaceholderPanel>
     </div>
   )
@@ -189,7 +405,7 @@ export function T008Page() {
         status="En desarrollo"
       />
       <PlaceholderPanel title="Progreso dinámico pendiente de WEB-009">
-        El estado se leerá automáticamente desde el ledger canónico de T-008 después de implementar el exportador.
+        WEB-002 ya genera el estado desde el manifiesto y QC canónicos; WEB-009 convertirá esos datos en el tablero interactivo.
       </PlaceholderPanel>
     </div>
   )
@@ -218,8 +434,8 @@ export function EvidencePage() {
         title="Evidencia y trazabilidad"
         description="El futuro visor de provenance conectará afirmaciones y gráficos con tablas, scripts, inputs y commits."
       />
-      <PlaceholderPanel title="Provenance pendiente de WEB-002 / WEB-010">
-        El esquema se generará de forma automática para evitar referencias manuales que puedan quedar obsoletas.
+      <PlaceholderPanel title="Provenance disponible como datos">
+        WEB-002 ya construye el manifiesto con hashes SHA-256 y commit. WEB-010 transformará esa base en un navegador de evidencia.
       </PlaceholderPanel>
     </div>
   )
