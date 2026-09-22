@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-09-22 — WEB-007 all-module explorer completed
+
+- Replaced the modules placeholder with a full M1–M10 explorer backed by canonical `modules.json`, `module_contrasts.json`, enrichment, hubs and external-validation data.
+- Added filters for Cultivar×Stage FDR significance, T-004 reproducibility class, year dependence, significant MapMan v3 ORA and external skin evidence, without introducing an artificial aggregate module score.
+- Added per-module Stage × Year Cabernet-minus-Pinot contrast matrices, functional summaries, top-hub tables and external-coverage summaries where the underlying evidence exists.
+- Preserved interpretation state explicitly: M10 is shown as reproducible under the prespecified T-004 rule without assigning a resolved function, while M2 carries a visible provisional warning pending T-008 because of the documented historical zero-expression/reference-mapping concern.
+- Kept the richer dedicated M5 Explorer as the M5 detail route while extending comparable evidence navigation to the remaining biological modules.
+- Commit `37e868ad`; CI run `35756864399` passed export/validation/lint/typecheck/build; Pages run `35756864291` deployed successfully.
+- WEB-010 Evidence Browser is now the next functional web phase. No scientific result, network, model, annotation or T-008 conclusion changed.
+
 ## 2026-09-22 — WEB-005 M5 network and chromosome-16 explorer completed
 
 - Added Cytoscape.js to the M5 Explorer using the frozen beta10 intramodular edge table; no network or centrality values are recalculated in the browser.
