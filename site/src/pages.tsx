@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import M5Explorer from './components/M5Explorer'
+import ExternalValidationPage from './ExternalValidationPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
 import { formatDecimal, formatScientific } from './utils/format'
 
@@ -388,18 +389,7 @@ export function GeneDetailPage() {
 }
 
 export function ValidationPage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="EXTERNAL EVIDENCE"
-        title="Validación externa"
-        description="Espacio reservado para separar claramente el baseline de las fuentes externas de piel."
-      />
-      <PlaceholderPanel title="Validación pendiente de WEB-008">
-        Los datasets y sus limitaciones se presentarán como evidencia externa, nunca como réplicas adicionales del baseline.
-      </PlaceholderPanel>
-    </div>
-  )
+  return <ExternalValidationPage />
 }
 
 export function T008Page() {

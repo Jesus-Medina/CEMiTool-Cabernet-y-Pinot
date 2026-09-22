@@ -120,25 +120,82 @@ export type HubsPayload = {
 }
 
 export type ExternalValidationRow = {
-  Dataset: string
+  Dataset: 'GSE72421' | 'PRJNA260535'
   Condition: string
   Platform: string
-  Module: string
+  Module: 'M5' | 'M10' | 'M2'
   Gene: string
   Rank_kWithin: number
   Top_decile_kWithin: boolean
+  Primary_Harvest_CS_minus_PN_2012: number | null
+  Primary_Harvest_CS_minus_PN_2013: number | null
+  Primary_Harvest_CS_minus_PN_2014: number | null
+  Baseline_Harvest_mean_2012_2014: number | null
   Primary_Harvest_sign_stable: boolean
   Assayed: boolean
   Complete_data: boolean
+  CS_observed_replicates: number
+  PN_observed_replicates: number
+  Mean_CS: number | null
+  Mean_PN: number | null
   Mean_CS_minus_PN: number | null
+  Welch_p: number | null
+  Welch_CI95_lower: number | null
+  Welch_CI95_upper: number | null
   Direction_matches_stable_primary: boolean | null
+  CS_replicates: number
+  PN_replicates: number
+  CS_log2CPM_ge_0_replicates: number | null
+  PN_log2CPM_ge_0_replicates: number | null
   BH_priority_361: number | null
   BH_prespecified_top37: number | null
 }
 
+export type ExternalModuleSummary = {
+  Dataset: 'GSE72421' | 'PRJNA260535'
+  Condition: string
+  Module: 'M5' | 'M10' | 'M2'
+  Module_genes: number
+  Assayed_genes: number
+  Complete_data_genes: number
+  Stable_primary_assayed_genes: number
+  Direction_matched_stable_genes: number
+  Top_hubs: number
+  Assayed_top_hubs: number
+  Complete_data_top_hubs: number
+  Direction_matched_stable_top_hubs: number
+  Top_hubs_BH37_lt_005: number
+  Top_hubs_BH361_lt_005: number
+}
+
+export type ExternalDatasetSummary = {
+  label: string
+  platform: string
+  year: number
+  tissue: string
+  primary_condition: string
+  sensitivity_conditions: string[]
+  audit_rows: number
+  primary_target_samples: number
+  primary_samples_by_cultivar: Record<string, number>
+  stage_label: string
+}
+
 export type ExternalValidationPayload = {
-  schema_version: number
+  schema_version: 2
   rows: ExternalValidationRow[]
+  module_summary: ExternalModuleSummary[]
+  source_qc: Array<{ Metric: string; Value: string | number | boolean | null }>
+  datasets: {
+    GSE72421: ExternalDatasetSummary
+    PRJNA260535: ExternalDatasetSummary
+  }
+  summary: {
+    primary_hub_rows: number
+    frozen_priority_genes: number | null
+    frozen_top_decile_hubs: number | null
+    comparison_rows: number | null
+  }
 }
 
 export type ProvenanceFile = {

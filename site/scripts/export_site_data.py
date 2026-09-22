@@ -12,6 +12,7 @@ from typing import Any
 
 from build_provenance_manifest import build_manifest
 from export_functional_enrichment import FUNCTIONAL_SOURCE_PATHS, build_functional_enrichment
+from export_external_validation import EXTERNAL_SOURCE_PATHS, build_external_validation
 
 SITE_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = SITE_DIR.parent
@@ -34,7 +35,6 @@ SOURCES = {
     "m5_hubs": "results/hub_prioritization_beta10/m5_full_hub_ranking.tsv",
     "m10_m2_hubs": "results/hub_prioritization_beta10/m10_m2_full_hub_ranking.tsv",
     "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
-    "external": "results/external_skin_validation_beta10/primary_external_condition_hubs.tsv",
     "t008_manifest": "results/fastq_reprocessing_t008/selected_54_gsm_to_srr.tsv",
     "t008_events": "results/fastq_reprocessing_t008/t008_batch_progress.tsv",
 }
@@ -52,7 +52,6 @@ REQUIRED_COLUMNS = {
     "m5_hubs": {"Gene", "Rank_kWithin", "kWithin", "kME_signed", "Top_decile_kWithin"},
     "m10_m2_hubs": {"Module", "Gene", "Rank_kWithin", "kWithin", "kME_signed", "Top_decile_kWithin"},
     "m5_edges": {"Gene1", "Gene2", "Pearson_r", "Beta10_unsigned_adjacency", "Pair_group"},
-    "external": {"Dataset", "Condition", "Platform", "Module", "Gene", "Assayed", "Complete_data", "Mean_CS_minus_PN"},
     "t008_manifest": {"GSM", "Cultivar", "Stage", "Year", "Replicate", "SRA_Run"},
     "t008_events": {"UTC", "SRA_Run", "Stage", "Status", "Detail"},
 }
@@ -221,7 +220,7 @@ def main() -> None:
     m5_hubs = loaded["m5_hubs"]
     m10_m2_hubs = loaded["m10_m2_hubs"]
     m5_edges = loaded["m5_edges"]
-    external_rows = loaded["external"]
+    external_validation = build_external_validation(REPO_ROOT)
     functional_enrichment = build_functional_enrichment(REPO_ROOT)
     t008 = build_t008(loaded["t008_manifest"], loaded["t008_events"])
 
@@ -361,9 +360,17 @@ def main() -> None:
             "parameters": {"module": "M5", "network": "beta10 unsigned adjacency"},
         },
         "external_validation": {
-            "sources": [SOURCES["external"]],
-            "scripts": ["scripts/post/16_t007_external_skin_validation.R"],
-            "parameters": {"scope": "primary_external_condition_hubs"},
+            "sources": list(EXTERNAL_SOURCE_PATHS.values()),
+            "scripts": [
+                "scripts/post/15_prepare_t007_external_skin.py",
+                "scripts/post/16_t007_external_skin_validation.R",
+            ],
+            "parameters": {
+                "scope": "primary_external_condition_hubs",
+                "primary_conditions": {"GSE72421": "WW", "PRJNA260535": "24"},
+                "fdr_families": ["prespecified_top37", "priority_361"],
+                "baseline_display_metric": "descriptive mean of 2012/2013/2014 Harvest CS-PN gene effects",
+            },
         },
         "t008_progress": {
             "sources": [SOURCES["t008_manifest"], SOURCES["t008_events"]] + t008_qc_sources,
@@ -381,7 +388,7 @@ def main() -> None:
         "functional_enrichment.json": functional_enrichment,
         "hubs.json": {"schema_version": 1, "rows": hubs},
         "m5_network.json": {"schema_version": 1, "edges": m5_edges},
-        "external_validation.json": {"schema_version": 1, "rows": external_rows},
+        "external_validation.json": external_validation,
         "t008_progress.json": {"schema_version": 1, **t008},
         "provenance.json": build_manifest(REPO_ROOT, artifacts),
     }

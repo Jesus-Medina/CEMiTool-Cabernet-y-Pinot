@@ -29,6 +29,10 @@ SOURCE_PATHS = {
     "m10_m2_hubs": "results/hub_prioritization_beta10/m10_m2_full_hub_ranking.tsv",
     "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
     "external": "results/external_skin_validation_beta10/primary_external_condition_hubs.tsv",
+    "external_module_summary": "results/external_skin_validation_beta10/module_coverage_direction_summary.tsv",
+    "external_source_qc": "results/external_skin_validation_beta10/external_source_qc.tsv",
+    "external_gse_audit": "results/external_skin_validation_beta10/gse72421_sample_audit.tsv",
+    "external_rna_audit": "results/external_skin_validation_beta10/prjna260535_sample_audit.tsv",
     "t008_manifest": "results/fastq_reprocessing_t008/selected_54_gsm_to_srr.tsv",
 }
 
@@ -118,6 +122,20 @@ def main() -> None:
         if len(payloads[json_name][key]) != len(read_rows(source)):
             raise AssertionError(f"{json_name} row count does not match {source}")
 
+    external = payloads["external_validation.json"]
+    if external["schema_version"] != 2:
+        raise AssertionError("external_validation schema_version must be 2")
+    if len(external["module_summary"]) != len(read_rows(SOURCE_PATHS["external_module_summary"])):
+        raise AssertionError("external_validation module_summary count does not match canonical source")
+    if len(external["source_qc"]) != len(read_rows(SOURCE_PATHS["external_source_qc"])):
+        raise AssertionError("external_validation source_qc count does not match canonical source")
+    if external["summary"]["primary_hub_rows"] != len(read_rows(SOURCE_PATHS["external"])):
+        raise AssertionError("external_validation primary_hub_rows summary mismatch")
+    if external["datasets"]["GSE72421"]["audit_rows"] != len(read_rows(SOURCE_PATHS["external_gse_audit"])):
+        raise AssertionError("GSE72421 sample-audit count mismatch")
+    if external["datasets"]["PRJNA260535"]["audit_rows"] != len(read_rows(SOURCE_PATHS["external_rna_audit"])):
+        raise AssertionError("PRJNA260535 sample-audit count mismatch")
+
     enrichment = payloads["functional_enrichment.json"]
     expected_tested = {
         "v3_mapman": sum(1 for row in read_rows(SOURCE_PATHS["v3_mapman_all"]) if row["Tested"].upper() == "TRUE"),
@@ -171,6 +189,7 @@ def main() -> None:
         "Validated site data: "
         f"samples={sample_count}; modules={module_source_count}; "
         f"hubs={expected_hubs}; enrichment_terms={sum(expected_tested.values())}; "
+        f"external_hubs={external['summary']['primary_hub_rows']}; "
         f"t008={t008['validated_runs']}/{t008['total_runs']}"
     )
 
