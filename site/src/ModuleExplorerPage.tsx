@@ -28,6 +28,10 @@ type ModuleExplorerData = {
 
 type ModuleFilter = 'all' | 'significant' | 'reproducible' | 'year-dependent' | 'enriched' | 'external'
 
+function scrollToModuleSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 function useModuleExplorerData() {
   const [data, setData] = useState<ModuleExplorerData | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -513,10 +517,10 @@ export function ModuleExplorerDetailPage() {
       {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
 
       <nav className="module-section-nav" aria-label={'Secciones de ' + module}>
-        <a href="#module-contrasts">Contrastes</a>
-        <a href="#module-function">Función</a>
-        <a href="#module-hubs">Hubs</a>
-        <a href="#module-validation">Validación</a>
+        <button type="button" onClick={() => scrollToModuleSection('module-contrasts')}>Contrastes</button>
+        <button type="button" onClick={() => scrollToModuleSection('module-function')}>Función</button>
+        <button type="button" onClick={() => scrollToModuleSection('module-hubs')}>Hubs</button>
+        <button type="button" onClick={() => scrollToModuleSection('module-validation')}>Validación</button>
       </nav>
 
       {data && summary && (
