@@ -108,42 +108,50 @@ function ModuleCard({
 
   return (
     <article className={priority ? 'module-card module-card--priority' : 'module-card'}>
-      <div className="module-card-head">
+      <div className="module-card-identity">
         <div>
           <span className="module-id">{row.module}</span>
-          <span className="module-status">{statusLabel(row)}</span>
+          {priority && <span className="priority-pill">prioridad</span>}
         </div>
-        {priority && <span className="priority-pill">prioridad</span>}
+        <span className="module-status">{statusLabel(row)}</span>
       </div>
 
-      <div className="module-card-main">
+      <div className="module-row-stat">
+        <span>Genes</span>
         <strong>{row.gene_count}</strong>
-        <span>genes</span>
       </div>
 
-      <dl className="module-card-stats">
-        <div>
-          <dt>FDR Cultivar×Stage</dt>
-          <dd>{formatScientific(row.cultivar_stage_fdr)}</dd>
-        </div>
-        <div>
-          <dt>ORA v3 FDR&lt;0,05</dt>
-          <dd>{significantTerms}</dd>
-        </div>
-        <div>
-          <dt>Hubs top decile</dt>
-          <dd>{topHubs || '—'}</dd>
-        </div>
-        <div>
-          <dt>Filas externas evaluables</dt>
-          <dd>{evaluable || '—'}</dd>
-        </div>
-      </dl>
+      <div className="module-row-stat">
+        <span>Cultivar×Stage</span>
+        <strong>{formatScientific(row.cultivar_stage_fdr)}</strong>
+        <small>{row.cultivar_stage_significant_fdr05 ? 'FDR < 0,05' : 'sin señal global FDR<0,05'}</small>
+      </div>
 
-      <p>{row.robustness_note ?? 'Sin nota de robustez prioritaria para este módulo.'}</p>
-      <Link className="button button--secondary module-card-link" to={`/modules/${row.module}`}>
-        Abrir {row.module}
+      <div className="module-row-stat">
+        <span>ORA v3</span>
+        <strong>{significantTerms}</strong>
+        <small>términos globales</small>
+      </div>
+
+      <div className="module-row-stat">
+        <span>Hubs</span>
+        <strong>{topHubs || '—'}</strong>
+        <small>top decile</small>
+      </div>
+
+      <div className="module-row-stat">
+        <span>Evidencia externa</span>
+        <strong>{evaluable || '—'}</strong>
+        <small>filas evaluables</small>
+      </div>
+
+      <Link className="button button--secondary module-card-link" to={'/modules/' + row.module}>
+        Abrir
       </Link>
+
+      <p className="module-card-note">
+        {row.robustness_note ?? 'Sin nota de robustez prioritaria para este módulo.'}
+      </p>
     </article>
   )
 }
@@ -374,11 +382,11 @@ export function ModulesExplorerPage() {
     <div className="modules-page">
       <section className="modules-hero">
         <div>
-          <p className="eyebrow">WEB-007 · Module Explorer</p>
-          <h1>La red completa, no solo M5</h1>
+          <p className="eyebrow">Resultados · Módulos</p>
+          <h1>Comparar los diez módulos</h1>
           <p>
-            Compara los diez módulos biológicos beta10 preservando tamaño, interacción Cultivar×Stage,
-            robustez anual, enriquecimiento y disponibilidad de evidencia externa.
+            Tamaño, interacción Cultivar×Stage, robustez anual, enriquecimiento y evidencia externa,
+            lado a lado y sin convertir esas dimensiones en un ranking artificial.
           </p>
         </div>
       </section>
