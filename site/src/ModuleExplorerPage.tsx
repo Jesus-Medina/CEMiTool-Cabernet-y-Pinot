@@ -16,7 +16,7 @@ import {
   type FunctionalEnrichmentPayload,
 } from './data/enrichmentData'
 import { formatDecimal, formatScientific } from './utils/format'
-import './results/modules.css'
+import './modules.css'
 
 type ModuleExplorerData = {
   modules: ModulesPayload
