@@ -115,7 +115,7 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
     }
   })
   page.on('response', (response) => {
-    if (response.status() >= 400) errors.push(\`HTTP \${response.status()} \${response.url()}\`)
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
   })
 
   await page.goto('reports/gsea_ora_year_profiles.html')
