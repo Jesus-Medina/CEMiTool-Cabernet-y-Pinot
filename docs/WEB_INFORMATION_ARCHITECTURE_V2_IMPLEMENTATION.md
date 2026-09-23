@@ -9,7 +9,7 @@
 | Fase | Estado | Alcance |
 |---|---|---|
 | F0 | DONE | Auditoría de arquitectura y definición V2 |
-| F1 | IN PROGRESS | Resumen / Home visual y navegación primaria |
+| F1 | CODE COMPLETE · QA PENDING | Resumen / Home visual y navegación primaria |
 | F2 | TODO | Resultados M1–M10 |
 | F3 | TODO | Module Workspace |
 | F4 | TODO | Module Summary |
@@ -58,4 +58,26 @@ Replicar la dirección visual aprobada para la primera pantalla sin alterar resu
 
 ## Commits
 
-Se completarán durante la implementación.
+- `17903b5` — crea tracker de implementación V2.
+- `81da283` — publica asset visual del hero y gráfico M5 canónico para Home.
+- `b573434` — reconstruye Home con la jerarquía científica aprobada.
+- `0610d18` — alinea header con el mockup aprobado.
+- `901f1f8` — replica el lenguaje visual editorial de la portada.
+- `b7bcc68` — añade QA específico para la portada V2 y sus assets.
+
+## Estado F1
+
+Código terminado. Validaciones ya aprobadas:
+- export canónico;
+- validación de datos;
+- scientific value QA;
+- lint;
+- TypeScript;
+- build;
+- bundle performance budget;
+- checks del chatbot.
+
+Pendiente al momento de este registro:
+- instalación de navegadores del workflow;
+- Chrome / Firefox / mobile QA;
+- deploy final de GitHub Pages.
