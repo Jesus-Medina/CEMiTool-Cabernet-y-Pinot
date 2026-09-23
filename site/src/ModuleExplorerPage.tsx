@@ -29,6 +29,7 @@ type ModuleExplorerData = {
 type ModuleFilter = 'all' | 'significant' | 'reproducible' | 'year-dependent' | 'enriched' | 'external'
 
 const PROFILE_MODULES = Array.from({ length: 10 }, (_, index) => `M${index + 1}`)
+const MODULE_IDS = PROFILE_MODULES
 
 function scrollToModuleSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -509,6 +510,9 @@ export function ModuleExplorerDetailPage() {
   const summary = data?.modules.modules.find((row) => row.module === module)
   const v3Hits = data ? significantV3Count(data.enrichment, module) : 0
   const externalRows = data ? externalEvaluableCount(data.external, module) : 0
+  const moduleIndex = MODULE_IDS.indexOf(module)
+  const previousModule = moduleIndex > 0 ? MODULE_IDS[moduleIndex - 1] : null
+  const nextModule = moduleIndex >= 0 && moduleIndex < MODULE_IDS.length - 1 ? MODULE_IDS[moduleIndex + 1] : null
   const [activeSection, setActiveSection] = useState('module-contrasts')
 
   useEffect(() => {
@@ -559,6 +563,14 @@ export function ModuleExplorerDetailPage() {
           <span><strong>{externalRows || '—'}</strong> filas externas evaluables</span>
         </div>
       </section>
+
+      <nav className="module-detail-pager" aria-label={'Navegación entre módulos'}>
+        <Link className="module-detail-back" to="/results/modules">← Todos los módulos</Link>
+        <div>
+          {previousModule ? <Link to={'/results/modules/' + previousModule}>← {previousModule}</Link> : <span />}
+          {nextModule ? <Link to={'/results/modules/' + nextModule}>{nextModule} →</Link> : <span />}
+        </div>
+      </nav>
 
       {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando detalle de {module}…</div>}
       {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
