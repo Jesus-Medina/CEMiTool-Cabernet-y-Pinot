@@ -144,13 +144,10 @@ export default function MethodsPage() {
   return (
     <div className="methods-page">
       <div className="methods-vine-decoration" aria-hidden="true">
-        {Array.from({ length: 8 }, (_, index) => (
-          <img
-            key={index}
-            src={`${import.meta.env.BASE_URL}assets/methods/vine-decoration.png`}
-            alt=""
-          />
-        ))}
+        <img
+          src={`${import.meta.env.BASE_URL}assets/methods/vine-decoration-continuous.png`}
+          alt=""
+        />
       </div>
       <header className="methods-intro">
         <div>
