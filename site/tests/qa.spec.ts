@@ -133,6 +133,15 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   await expect(page.locator('#oraBars .barrow').first()).toBeVisible()
   await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
 
+  await expect(page.locator('#oraThemeView .card')).toHaveCount(4)
+  await expect(page.locator('#oraQcCoverage .card')).toHaveCount(10)
+  await expect(page.locator('#oraQcTable tr')).toHaveCount(30)
+  await expect(page.locator('#oraM5v3')).toContainText(/stilbenoid|Secondary metabolism/i)
+  await expect(page.locator('#oraM5v5')).not.toBeEmpty()
+  await expect(page.locator('#oraGoCards .card')).toHaveCount(4)
+  await expect(page.locator('#oraGoBars .barrow')).toHaveCount(6)
+  await expect(page.locator('a[href="ora_beta10.html"]')).toHaveCount(0)
+
   await expect(page.locator('#hubCoreCards .card')).toHaveCount(4)
   await expect(page.locator('#hubCoreSummary tr')).toHaveCount(10)
   await expect(page.locator('#hubCoreSummary tr').filter({ hasText: 'M5' })).toContainText('11')
