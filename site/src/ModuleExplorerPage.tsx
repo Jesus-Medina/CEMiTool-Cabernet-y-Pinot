@@ -1,24 +1,18 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {
-  loadExternalValidation,
-  loadHubs,
-  loadModuleContrasts,
-  loadModules,
-  type ExternalValidationPayload,
-  type HubsPayload,
-  type ModuleContrast,
-  type ModuleSummary,
-  type ModulesPayload,
+import type {
+  ExternalValidationPayload,
+  HubsPayload,
+  ModuleContrast,
+  ModuleSummary,
 } from './data/siteData'
-import {
-  loadFunctionalEnrichment,
-  type FunctionalEnrichmentPayload,
+import type {
+  FunctionalEnrichmentPayload,
 } from './data/enrichmentData'
 import { formatDecimal, formatScientific } from './utils/format'
 import './modules.css'
 
-import { useModuleExplorerData, type ModuleExplorerData } from './hooks/useModuleExplorerData'
+import { useModuleExplorerData } from './hooks/useModuleExplorerData'
 
 type ModuleFilter = 'all' | 'significant' | 'reproducible' | 'year-dependent' | 'enriched' | 'external'
 
