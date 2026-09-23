@@ -106,6 +106,41 @@ test.describe('WEB-011 route and browser QA', () => {
   }
 })
 
+test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
+      errors.push(message.text())
+    }
+  })
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
+  })
+
+  await page.goto('reports/ora_beta10.html')
+  await expect(page.getByRole('heading', { level: 1, name: /ORA interactivo de los diez módulos beta10/i })).toBeVisible()
+
+  await expect(page.locator('#summaryCards .card')).toHaveCount(4)
+  await expect(page.locator('#overviewBars .bar-row')).toHaveCount(10)
+
+  await page.getByRole('button', { name: 'ORA por término' }).click()
+  await expect(page.locator('#oraChart .bar-row').first()).toBeVisible()
+  await page.locator('#oraModule').selectOption('M5')
+  await page.locator('#oraSource').selectOption('v3_mapman')
+  await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
+
+  await page.getByRole('button', { name: 'M5 · auditoría' }).click()
+  await expect(page.locator('#m5v3 .audit-term').first()).toBeVisible()
+  await expect(page.locator('#m5v5 .audit-term').first()).toBeVisible()
+
+  await page.getByRole('button', { name: 'GO auditado' }).click()
+  await expect(page.locator('#goCards .card')).toHaveCount(4)
+  await expect(page.locator('#goBars .bar-row')).toHaveCount(6)
+
+  expect(errors).toEqual([])
+})
+
 test('summary page matches the V2 scientific information hierarchy', async ({ page }) => {
   await page.goto(url('/'))
 
