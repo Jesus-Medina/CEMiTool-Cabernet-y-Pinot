@@ -574,6 +574,14 @@ export default function M5Explorer() {
         </div>
       </section>
 
+      <nav className="module-detail-pager" aria-label="Navegación entre módulos">
+        <Link className="module-detail-back" to="/results/modules">← Todos los módulos</Link>
+        <div>
+          <Link to="/results/modules/M4">← M4</Link>
+          <Link to="/results/modules/M6">M6 →</Link>
+        </div>
+      </nav>
+
       <DataState loading={loading} error={error} />
 
       <nav className="m5-section-nav" aria-label="Secciones de M5">
