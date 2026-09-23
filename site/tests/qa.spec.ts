@@ -212,6 +212,30 @@ test('integrated report switches completely between Spanish and curated scientif
   await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon y Pinot noir durante la maduración/i })).toBeVisible()
 })
 
+test('English report has no mixed Spanish in generated profile cards and full PDF mode exposes all tables', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html?lang=en')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon and Pinot noir during ripening/i })).toBeVisible()
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+
+  const profileText = await page.locator('#profileGrid').innerText()
+  expect(profileText).toContain('Canonical eigengene')
+  expect(profileText).toContain('Descriptive interpretation')
+  expect(profileText).not.toMatch(/Eigengene canónico|Interpretación descriptiva|La mayor separación descriptiva|La dirección de esa diferencia|todos los genes del módulo|Año 20\d\d/i)
+
+  await expect(page.getByRole('button', { name: /Download complete PDF/i })).toBeVisible()
+
+  await page.evaluate(() => {
+    window.print = () => {
+      document.body.dataset.printCalled = 'true'
+    }
+  })
+  await page.getByRole('button', { name: /Download complete PDF/i }).click()
+  await expect.poll(() => page.locator('body').getAttribute('data-print-called')).toBe('true')
+  await expect(page.locator('#printAppendixContent .print-table')).toHaveCount(10)
+  await expect(page.locator('details').first()).toHaveAttribute('open', '')
+  await expect(page.locator('#printAppendixContent')).toContainText(/Complete profiles|Selected hub genes|Complete contrasts|Complete coverage audit/i)
+})
+
 test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
