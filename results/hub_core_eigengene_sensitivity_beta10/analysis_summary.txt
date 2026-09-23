@@ -1,0 +1,14 @@
+GSE98923 beta10 hub-core eigengene sensitivity
+method=PC1 of top-decile kWithin genes within each frozen beta10 module
+hub_definition=Top_decile_kWithin using unsigned Pearson adjacency abs(correlation)^10
+hub_threshold=rank_kWithin <= ceiling(module_gene_count * 0.1)
+samples=54
+years=2012,2013,2014
+modules=M1-M10
+expression=log2(RPKM+1)
+pc1_preprocessing=centered_and_scaled_genes
+pc1_sign=aligned_to_positive_correlation_with_canonical_module_eigengene
+canonical_eigengene=unchanged PC1 of all variable genes in each module
+network_rerun=FALSE
+module_membership_changed=FALSE
+purpose=sensitivity analysis; Hub-core PC1 does not replace canonical eigengene
