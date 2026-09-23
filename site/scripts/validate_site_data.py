@@ -44,6 +44,7 @@ EXPECTED_JSON = {
     "enrichments.json",
     "functional_enrichment.json",
     "gsea_year_profiles.json",
+    "year_completeness_audit.json",
     "hubs.json",
     "m5_network.json",
     "external_validation.json",
@@ -189,6 +190,43 @@ def main() -> None:
         raise AssertionError("Yearly module profiles must include 2012, 2013 and 2014")
     if integrated["profiles"]["modules"] != [f"M{i}" for i in range(1, 11)]:
         raise AssertionError("Yearly module profiles must include M1-M10")
+
+    audit = payloads["year_completeness_audit.json"]
+    if audit["status"] not in {"PASS", "ATTENTION"}:
+        raise AssertionError(f"Year completeness audit has invalid status: {audit['status']}")
+    if audit["hard_errors"]:
+        raise AssertionError(
+            "Year completeness audit contains hard errors: "
+            + " | ".join(audit["hard_errors"])
+        )
+    if audit["years"] != [2012, 2013, 2014]:
+        raise AssertionError("Year completeness audit must cover exactly 2012, 2013 and 2014")
+    if audit["design"]["samples"] != 54 or audit["design"]["balanced"] is not True:
+        raise AssertionError("Year completeness audit must preserve the balanced 54-sample design")
+    if audit["gsea"]["replicates_per_year_per_class"] != 3:
+        raise AssertionError("Each GSEA class must retain three samples from each year")
+    unexpected_gsea_missing = set(audit["gsea"]["biological_modules_missing"]) - {"M1"}
+    if unexpected_gsea_missing:
+        raise AssertionError(
+            f"Unexpected biological modules missing from native GSEA: {sorted(unexpected_gsea_missing)}"
+        )
+    if audit["ora"]["v3_modules_present"] != [f"M{i}" for i in range(1, 11)]:
+        raise AssertionError("MapMan v3 ORA must cover M1-M10")
+    if audit["ora"]["v5_modules_present"] != [f"M{i}" for i in range(1, 11)]:
+        raise AssertionError("MapMan v5.1 ORA must cover M1-M10")
+    if audit["ora"]["go_modules_present"] != [f"M{i}" for i in range(1, 11)]:
+        raise AssertionError("Current GO ORA QC must cover M1-M10")
+    if audit["profiles"]["rows"] != 180 or audit["profiles"]["all_modules_complete"] is not True:
+        raise AssertionError("Year-explicit profiles must contain all 180 expected cells")
+    if audit["contrasts"]["rows"] != 90 or audit["contrasts"]["all_modules_complete"] is not True:
+        raise AssertionError("Stage×Year contrast audit must contain all 90 expected contrasts")
+    if len(audit["module_audit"]) != 10:
+        raise AssertionError("Year completeness audit must contain M1-M10")
+    for row in audit["module_audit"]:
+        if row["profile_years"] != [2012, 2013, 2014]:
+            raise AssertionError(f"{row['module']} profile years are incomplete")
+        if row["contrast_years"] != [2012, 2013, 2014]:
+            raise AssertionError(f"{row['module']} contrast years are incomplete")
 
     expected_hubs = len(read_rows(SOURCE_PATHS["m5_hubs"])) + len(read_rows(SOURCE_PATHS["m10_m2_hubs"]))
     if len(payloads["hubs.json"]["rows"]) != expected_hubs:
