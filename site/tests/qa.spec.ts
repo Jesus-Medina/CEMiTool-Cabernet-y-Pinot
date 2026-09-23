@@ -106,6 +106,39 @@ test.describe('WEB-011 route and browser QA', () => {
   }
 })
 
+test('integrated GSEA ORA and yearly profiles report preserves year scope', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
+      errors.push(message.text())
+    }
+  })
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
+  })
+
+  await page.goto('reports/gsea_ora_year_profiles.html')
+  await expect(page.getByRole('heading', { level: 1, name: /GSEA, ORA y trayectoria anual/i })).toBeVisible()
+
+  await expect(page.locator('#gseaComposition .composition-card')).toHaveCount(6)
+  await expect(page.locator('#gseaMatrix tbody tr')).toHaveCount(10)
+  await expect(page.locator('#gseaMissing')).toContainText('M1')
+
+  await expect(page.locator('#oraBars .barrow').first()).toBeVisible()
+  await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
+
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+  await page.getByRole('button', { name: '2012', exact: true }).click()
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+  await expect(page.locator('#profileGrid')).toContainText('Año 2012')
+
+  await page.getByRole('button', { name: '2014', exact: true }).click()
+  await expect(page.locator('#profileGrid')).toContainText('Año 2014')
+
+  expect(errors).toEqual([])
+})
+
 test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
