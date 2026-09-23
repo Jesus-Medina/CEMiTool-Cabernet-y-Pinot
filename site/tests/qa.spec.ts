@@ -106,26 +106,51 @@ test.describe('WEB-011 route and browser QA', () => {
   }
 })
 
-test('module filters reflect generated canonical flags', async ({ page }) => {
+test('CEMiTool module figure and filters reflect generated canonical flags', async ({ page }) => {
   await page.goto(url('/results/modules'))
-  await expect(page.locator('.module-card')).toHaveCount(modules.modules.length)
+
+  await expect(page.locator('.cemitool-profile-tile')).toHaveCount(10)
+  await expect(page.locator('.cemitool-profile-tile img')).toHaveCount(10)
+  await expect(page.getByRole('link', { name: /Abrir PDF original/i })).toBeVisible()
+
+  const imageFailures = await page.locator('.cemitool-profile-tile img').evaluateAll((images) =>
+    images
+      .filter((image) => !(image instanceof HTMLImageElement) || image.naturalWidth === 0)
+      .map((image) => image.getAttribute('src')),
+  )
+  expect(imageFailures).toEqual([])
+
+  const rows = page.locator('.module-data-table tbody tr')
+  await expect(rows).toHaveCount(modules.modules.length)
 
   const significant = modules.modules.filter((row) => row.cultivar_stage_significant_fdr05).length
   await page.getByRole('button', { name: 'Interacción FDR<0,05' }).click()
-  await expect(page.locator('.module-card')).toHaveCount(significant)
+  await expect(rows).toHaveCount(significant)
 
   const reproducible = modules.modules.filter((row) => row.robustness_classification === 'reproducible').length
   await page.getByRole('button', { name: 'Reproducible', exact: true }).click()
-  await expect(page.locator('.module-card')).toHaveCount(reproducible)
+  await expect(rows).toHaveCount(reproducible)
 
   const yearDependent = modules.modules.filter((row) => row.robustness_classification === 'year-dependent').length
   await page.getByRole('button', { name: 'Dependiente del año' }).click()
-  await expect(page.locator('.module-card')).toHaveCount(yearDependent)
+  await expect(rows).toHaveCount(yearDependent)
 
   await page.getByRole('button', { name: 'Todos', exact: true }).click()
   await page.getByRole('searchbox', { name: 'Buscar módulo' }).fill('M10')
-  await expect(page.locator('.module-card')).toHaveCount(1)
-  await expect(page.locator('.module-card')).toContainText('M10')
+  await expect(rows).toHaveCount(1)
+  await expect(rows.first()).toContainText('M10')
+})
+
+test('results navigation stays shallow and breadcrumbs appear only on detail views', async ({ page }) => {
+  await page.goto(url('/results/modules'))
+  await expect(page.locator('.result-context-bar')).toBeVisible()
+  await expect(page.locator('.result-context-link')).toHaveCount(4)
+  await expect(page.locator('.breadcrumb-bar')).toHaveCount(0)
+
+  await page.goto(url('/results/modules/M10'))
+  await expect(page.locator('.breadcrumb-bar')).toContainText('Resultados')
+  await expect(page.locator('.breadcrumb-bar')).toContainText('Módulos')
+  await expect(page.locator('.breadcrumb-bar')).toContainText('M10')
 })
 
 test('M5 year and replicate filters alter the view, not the source data', async ({ page }) => {
