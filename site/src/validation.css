@@ -411,9 +411,9 @@
 }
 
 .external-badge {
-  color: var(--cabernet-deep);
-  border-color: var(--border);
-  background: #fbfafb;
+  color: var(--color-brand-deep);
+  border-color: var(--color-border);
+  background: var(--color-status-info-soft);
 }
 
 

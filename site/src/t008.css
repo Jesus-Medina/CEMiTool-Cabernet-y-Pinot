@@ -48,13 +48,13 @@
   padding: 28px 32px;
   border: 1px solid rgba(138,92,22,.28);
   border-radius: var(--radius-md);
-  background: rgba(138,92,22,.06);
+  background: var(--color-status-warning-soft);
 }
-.t008-gate--complete { border-color: rgba(47,107,87,.28); background: rgba(47,107,87,.06); }
+.t008-gate--complete { border-color: rgba(47,107,87,.28); background: var(--color-status-success-soft); }
 .t008-gate h2 { margin: 0; color: var(--cabernet-deep); }
 .t008-gate p:last-child { max-width: 820px; color: var(--muted); line-height: 1.65; }
-.t008-gate-badge { flex: 0 0 auto; padding: 10px 13px; border-radius: 999px; color: var(--warning); background: rgba(138,92,22,.1); font-size: .68rem; font-weight: 850; letter-spacing: .08em; }
-.t008-gate--complete .t008-gate-badge { color: var(--success); background: rgba(47,107,87,.1); }
+.t008-gate-badge { flex: 0 0 auto; padding: 10px 13px; border-radius: 999px; color: var(--color-status-warning); background: var(--color-status-warning-soft); font-size: var(--text-micro); font-weight: 850; letter-spacing: .08em; }
+.t008-gate--complete .t008-gate-badge { color: var(--color-status-success); background: var(--color-status-success-soft); }
 .t008-progress-panel, .t008-section, .t008-provenance {
   padding: 32px;
   border: 1px solid var(--border);
@@ -70,11 +70,11 @@
 .t008-status-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 .t008-status-grid article { display: flex; justify-content: space-between; align-items: center; padding: 14px; border: 1px solid var(--border); border-radius: 13px; }
 .t008-status-grid article strong { color: var(--cabernet-deep); font-size: 1.35rem; }
-.t008-status { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: 999px; font-size: .65rem; font-weight: 850; white-space: nowrap; }
-.t008-status--pass { color: var(--success); background: rgba(47,107,87,.1); }
-.t008-status--fail { color: #8b2e2e; background: rgba(139,46,46,.1); }
-.t008-status--in-progress { color: var(--warning); background: rgba(138,92,22,.1); }
-.t008-status--pending { color: var(--muted); background: var(--surface-alt); }
+.t008-status { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: 999px; font-size: var(--text-micro); font-weight: 850; white-space: nowrap; }
+.t008-status--pass { color: var(--color-status-success); background: var(--color-status-success-soft); }
+.t008-status--fail { color: var(--color-status-danger); background: var(--color-status-danger-soft); }
+.t008-status--in-progress { color: var(--color-status-warning); background: var(--color-status-warning-soft); }
+.t008-status--pending { color: var(--color-text-muted); background: var(--color-surface-muted); }
 .t008-scale-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
 .t008-scale-grid article { min-height: 150px; display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
 .t008-scale-grid span { color: var(--muted); font-size: .72rem; font-weight: 750; }
@@ -105,10 +105,10 @@
 .t008-events li { display: grid; grid-template-columns: 175px 110px 120px 100px minmax(0,1fr); gap: 10px; align-items: center; padding: 12px 14px; background: white; font-size: .74rem; }
 .t008-events time, .t008-events small { color: var(--muted); }
 .event-status { font-size: .66rem; font-weight: 850; }
-.event-status--pass { color: var(--success); }
-.event-status--start { color: var(--warning); }
-.event-status--stop_after { color: var(--muted); }
-.event-status--fail { color: #8b2e2e; }
+.event-status--pass { color: var(--color-status-success); }
+.event-status--start { color: var(--color-status-warning); }
+.event-status--stop_after { color: var(--color-text-muted); }
+.event-status--fail { color: var(--color-status-danger); }
 .t008-boundary { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .t008-boundary article { padding: 28px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
 .t008-boundary article:last-child { border-color: rgba(138,92,22,.25); background: rgba(138,92,22,.05); }

@@ -8,6 +8,7 @@ import {
   type ProvenancePayload,
 } from './data/siteData'
 import { formatDecimal, formatScientific } from './utils/format'
+import { AsyncState, EmptyState, FilterBar, TableFrame } from './components/ui'
 import './validation.css'
 
 type DatasetId = 'GSE72421' | 'PRJNA260535'
@@ -39,7 +40,7 @@ function Scatter({ rows, dataset }: { rows: ExternalValidationRow[]; dataset: Da
   )
 
   if (plottable.length === 0) {
-    return <p className="validation-empty">No hay genes evaluables bajo estos filtros.</p>
+    return <EmptyState className="validation-empty" title="Sin genes evaluables">Ajusta los filtros o cambia de dataset.</EmptyState>
   }
 
   const width = 780
@@ -311,10 +312,10 @@ export default function ExternalValidationPage() {
   }, [data, dataset, module, status, query])
 
   if (!data && !error) {
-    return <div className="data-state" role="status"><span className="data-state-dot" />Cargando validación externa desde datos canónicos…</div>
+    return <AsyncState state="loading">Cargando validación externa desde datos canónicos…</AsyncState>
   }
   if (error || !data) {
-    return <div className="data-state data-state--error" role="alert"><strong>No se pudo cargar la validación externa.</strong><span>{error}</span></div>
+    return <AsyncState state="error" title="No se pudo cargar la validación externa.">{error}</AsyncState>
   }
 
   const datasetInfo = data.datasets[dataset]
@@ -383,7 +384,7 @@ export default function ExternalValidationPage() {
         })}
       </section>
 
-      <section className="validation-controls">
+      <FilterBar className="validation-controls">
         <div className="validation-control-group">
           <span>Módulo</span>
           <div className="segmented-control">
@@ -412,7 +413,7 @@ export default function ExternalValidationPage() {
           <span>Buscar gen</span>
           <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="VIT_…" />
         </label>
-      </section>
+      </FilterBar>
 
       <section className="validation-summary-grid">
         <article><span>Hubs preseleccionados</span><strong>{summaryTotals.top}</strong><small>de {module === 'all' ? 'M5+M10+M2' : module}</small></article>
@@ -451,7 +452,7 @@ export default function ExternalValidationPage() {
         </div>
         <details className="data-disclosure">
           <summary>Ver tabla de genes ({filtered.length})</summary>
-          <div className="scientific-table-wrap">
+          <TableFrame label="Genes bajo los filtros de validación externa">
             <table className="scientific-table validation-table">
               <thead>
                 <tr>
@@ -475,7 +476,7 @@ export default function ExternalValidationPage() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableFrame>
         </details>
       </section>
 

@@ -8,6 +8,7 @@ import {
   type T008RunStatus,
 } from './data/siteData'
 import { formatDecimal } from './utils/format'
+import { Badge } from './components/ui'
 import './t008.css'
 
 type StatusFilter = 'all' | T008RunStatus
@@ -188,7 +189,9 @@ export default function T008DashboardPage() {
               : 'Mientras falte una sola corrida validada, la web no presenta preservación moderna de M5/M10/M2 ni contrasta cultivares con esta cuantificación.'}
           </p>
         </div>
-        <span className="t008-gate-badge">{summary.complete ? 'QC DE CORRIDAS COMPLETO' : 'SIN CONCLUSIÓN DE PRESERVACIÓN'}</span>
+        <Badge tone={summary.complete ? 'success' : 'warning'} className="t008-gate-badge">
+          {summary.complete ? 'QC DE CORRIDAS COMPLETO' : 'SIN CONCLUSIÓN DE PRESERVACIÓN'}
+        </Badge>
       </section>
 
       <section className="t008-progress-panel">

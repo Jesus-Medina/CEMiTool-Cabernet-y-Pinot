@@ -1,5 +1,145 @@
 # Changelog
 
+## 2026-09-23 — Decorative Methods vine
+
+- Added the user-provided transparent vine branch as a vertical environmental motif in the Methods left gutter.
+- Alternated and overlapped repeated branches, with edge masks and restrained opacity, so joins and image boundaries disappear naturally.
+- Kept the decoration behind the interface, outside scientific cards and navigation, and disabled it at widths of 900 px or less.
+- Visually inspected the running Methods page; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — New grape–DNA brand mark and favicon
+
+- Replaced the legacy geometric grape symbol in the global header with the user-provided grape–DNA mark.
+- Preserved transparency, removed only empty canvas space and optimized the header asset to 350×512 px.
+- Added a centered 256×256 PNG favicon and matching Apple touch icon, with a Vite-base-safe path for local and deployed builds.
+- Verified the header image loads at its expected dimensions; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX05A-04 canonical M5 highlight
+
+- Replaced the static Home M5 image with three responsive SVG small multiples generated from all 18 canonical cultivar-stage-year means.
+- Added visible M5 gene count, Cultivar×Stage FDR and Harvest year coverage, plus accessible point-level values.
+- Paired the Harvest directional takeaway with a prominent caveat that M5 remains year-dependent globally and does not establish causality, skin thickness or CHS/STS identity.
+- Verified three panels, six lines, 18 points, no alerts and no body overflow from 320–1440 px; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX05A-03 explicit experimental design
+
+- Replaced the abstract Home study flow with the canonical equation: 2 cultivars × 3 stages × 3 years × 3 biological replicates = 54 samples.
+- Added an accessible cultivar-by-stage matrix showing six balanced cells of nine samples and retained Year and whole-pericarp interpretation boundaries.
+- Adapted the matrix into readable cultivar cards on mobile without duplicating data or introducing hard-coded scientific values.
+- Verified two cultivar rows, six cells, the 54-sample total, no alerts and no body overflow from 320–1440 px; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX05A-02 integrated evidence story
+
+- Replaced the separate historical Story implementation with a compact four-step evidence path inside Home.
+- Preserved the scientific distinctions between beta10/beta7, annual robustness, module-level function, CHS/STS ambiguity, independent skin evidence and incomplete T-008 reprocessing.
+- Kept `/story` as a backwards-compatible redirect to Home and removed the dead component and its local CSS.
+- Verified one H1, four evidence steps, no alerts and no body overflow from 320–1440 px; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX05A-01 Home scientific narrative hierarchy
+
+- Reframed the Home hero as an explicit scientific question about cultivar-specific coexpression programs during ripening.
+- Reordered the semantic DOM to question → study design → findings → M5 case study → interpretation limits.
+- Preserved the approved grape-image composition and all scientific boundaries while reducing one additional legacy button implementation.
+- Verified heading order, one primary hero action and no overflow at 320–1440 px; UI QA, scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX04-08 design-system contract and CI guardrail
+
+- Added `docs/WEB_DESIGN_SYSTEM.md` with canonical token, primitive, navigation, context, responsive, accessibility and migration rules.
+- Added a portable UI-consistency checker that freezes legacy-pattern budgets and prohibits reintroducing local equivalents for migrated filters and empty states.
+- Added `npm run qa:ui` to the site workflow so pull requests fail when UI debt increases or required shared primitives disappear.
+- Verified the new guardrail on Windows paths containing spaces; UI QA, scientific QA, lint, typecheck and production build pass.
+
+## 2026-09-23 — UX04-07 consolidated scientific context
+
+- Replaced separate dataset, module-workspace and breadcrumb strips with one responsive scientific context rail.
+- Preserved explicit baseline/external-evidence identity, interpretation limits, module workspace layers and accessible route hierarchy.
+- Reduced stacked chrome above module and gene content while retaining a second route row inside the same surface when width requires it.
+- Verified module, gene and external-validation routes at 320–1440 px with no document overflow; scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX04-06 global responsive header
+
+- Consolidated the header around four primary destinations and a separate utility group for search, grounded questions and GitHub.
+- Added explicit mobile navigation/tool labels, active-route treatment and a compact right-aligned tablet menu that becomes full-width on phones.
+- Added focus transfer on open, Escape and outside-click dismissal, focus restoration and automatic close after route changes.
+- Verified desktop/mobile parity and responsive behavior at 320, 390, 768, 980, 981, 1024 and 1440 px; scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX04-05 scientific display primitives
+
+- Added shared `ChartCard`, `TableFrame`, `FilterBar`, `AsyncState` and `EmptyState` components.
+- Migrated M5 trajectory charts, module/validation filters and tables, and the first loading/error/empty states to the common layer.
+- Made horizontally scrollable scientific tables labelled, keyboard-focusable regions with visible focus and contained overscroll.
+- Verified Home, Modules, M2, M5, Validation and T-008 at 320–1440 px; SVGs, filters and tables remain functional, and scientific QA, lint, typecheck and build pass.
+
+## 2026-09-23 — UX04-04 shared interface primitives
+
+- Added typed shared primitives for buttons, semantic badges, scientific callouts, action links and interactive cards.
+- Migrated Home/M5 actions, M2/M10 interpretation callouts, module-priority badges and the T-008 gate to the shared system.
+- Fixed mobile document overflow caused by wide scientific tables inside disclosures while retaining contained horizontal table scrolling.
+- Verified six routes at 320, 390, 768 and 1440 px with no document overflow or UI alerts; keyboard focus, scientific QA, lint, typecheck and production build pass.
+
+## 2026-09-23 — UX04-03 responsive spacing and layout foundations
+
+- Added a shared 4–64 px spacing scale, fluid page gutter, 1240 px layout maximum, 720 px reading measure, panel padding and 44 px control-height tokens.
+- Migrated the shell, Home, dataset/module context strips and the first module-workspace layer to the shared spacing model, including an explicit compact mobile density.
+- Verified Home, Modules, M5, Validation and T-008 at 320, 390, 768, 1024 and 1440 px with no horizontal overflow or UI alerts; scientific QA, lint, typecheck and production build pass.
+
+## 2026-09-23 — UX04-02 semantic color and focus foundations
+
+- Added semantic tokens for brand, text, surfaces, borders, success, warning, danger, information, selection and keyboard focus while retaining temporary legacy aliases.
+- Migrated the shell, Home, context strips, module/M5 workspace, T-008 states and external-validation badge to semantic colors.
+- Replaced translucent global focus styling with a solid 3 px focus ring and aligned form-control focus with the same token.
+- Verified core foreground/background pairs at 5.43:1–16.92:1 contrast.
+- Scientific QA, lint, typecheck and production build pass; Home, M5, Validation and T-008 show no document overflow or runtime alerts at 390 and 1440 px in Microsoft Edge.
+- No scientific value, classification or interpretation changed.
+
+## 2026-09-23 — UX04-01 typography foundations
+
+- Added locally bundled variable fonts: Source Serif 4 for scientific/editorial headings and Inter for body copy, navigation, controls and data-dense UI.
+- Introduced semantic typography tokens for families, display/heading/body sizes, line height and tracking.
+- Migrated the global shell, Home, dataset/module context strips and module/M5 headings to the shared type system, replacing the previous Georgia-versus-Inter split.
+- Raised critical Home and context metadata to the 13 px minimum token and retained monospace only for technical identifiers and paths.
+- Scientific QA, lint, typecheck and production build pass; local font loading and 390 px Home/M5 overflow checks pass in Microsoft Edge.
+- The full Playwright matrix remains unavailable locally because its Chrome/Firefox browser binaries are not installed; no scientific result changed.
+
+## 2026-09-23 — Future scientific portal opportunity portfolio
+
+- Extended the UX/UI master roadmap with a separate `FUT-01`–`FUT-24` opportunity portfolio based on the repository's tables, scripts, reports, documentation and analysis objects.
+- Prioritized semantic catalog/search, provenance graph, shareable snapshots, figure export, sample atlas, gene-list exploration, report generation, RO-Crate packaging, browser notebooks, grounded assistance and machine-readable life-science metadata.
+- Added dependencies, scientific boundaries, implementation horizons and an explicit gate preventing exploratory features from being presented as canonical inference.
+- Kept `UX04-01` as the immediate next task; no scientific result or site behavior changed.
+
+## 2026-09-23 — UX/UI implementation master roadmap
+
+- Added `docs/WEB_UX_UI_IMPLEMENTATION_ROADMAP.md` as the operational source of truth for the full interface redesign.
+- Consolidated the current audit, historical functionality recovery, target information architecture, visual-system proposal, phased task IDs, dependencies and acceptance criteria.
+- Defined `UX04-01 — Fundamentos tipográficos y tokens` as the next executable task and preserved all scientific invariants; no analysis result or frontend behavior changed.
+
+## 2026-09-23 — Responsive navbar visibility fix
+
+- Restored the full primary and utility navigation at desktop widths.
+- Kept the compact `Menú` control for tablet and mobile breakpoints, with the same links inside the opened panel.
+- Verified the desktop DOM exposes both navigation groups and the production build remains clean.
+
+## 2026-09-23 — UX-04 module workspace context
+
+- Added a compact module-workspace context strip for M5 and the other module detail routes.
+- The strip keeps the active module and its available evidence layers visible while the existing section navigation handles in-page exploration.
+- Route checks for M5, lint, typecheck, production build and diff validation pass.
+
+## 2026-09-23 — UX-04 dataset context surface
+
+- Added a persistent context strip to result routes so visitors can distinguish the GSE98923 pericarp baseline from external isolated-skin validation while navigating.
+- The strip is responsive, absent from the overview, and preserves the scientific boundary that external evidence does not add to the baseline N=54.
+- Lint, typecheck, production build and route-level browser checks pass; no canonical result or interpretation changed.
+
+## 2026-09-23 — WEB-012 compact header consistency
+
+- Applied the approved compact header treatment across desktop, tablet and mobile breakpoints.
+- Kept the brand mark and `Menú` control visible at all widths; primary, utility and GitHub links remain available inside the opened menu.
+- Preserved the two-column hero composition and moved the study summary below the grape image so it never overlays the visual.
+- Changed the grape hero asset to a centered, contained rendering with internal spacing so the transparent-cutout composition is never cropped at the edges.
+- Preserved the sticky header, skip link, route structure and scientific content. Lint, typecheck and production build pass.
+
 ## 2026-09-22 — WEB-010 global Evidence Browser completed
 
 - Replaced the Evidence placeholder with a global provenance browser powered by the generated `provenance.json` manifest.

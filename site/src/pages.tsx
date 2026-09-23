@@ -7,32 +7,9 @@ import EvidenceBrowserPage from './EvidenceBrowserPage'
 import MethodsPageView from './MethodsPage'
 import GeneDetailPageView from './GeneDetailPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
-import { formatDecimal, formatScientific } from './utils/format'
-
-type PageIntroProps = {
-  eyebrow: string
-  title: string
-  description: string
-  status?: string
-}
-
-function PageIntro({
-  eyebrow,
-  title,
-  description,
-  status = 'Scaffold',
-}: PageIntroProps) {
-  return (
-    <section className="page-intro">
-      <div>
-        <p className="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p className="lede">{description}</p>
-      </div>
-      <span className="status-pill">{status}</span>
-    </section>
-  )
-}
+import { ActionCard, ActionLink, AsyncState, ButtonLink } from './components/ui'
+import type { M5Profile } from './data/siteData'
+import { formatScientific } from './utils/format'
 
 function DataState({
   loading,
@@ -42,77 +19,111 @@ function DataState({
   error: string | null
 }) {
   if (loading) {
-    return (
-      <div className="data-state" role="status">
-        <span className="data-state-dot" aria-hidden="true" />
-        Cargando resultados canónicos…
-      </div>
-    )
+    return <AsyncState state="loading">Cargando resultados canónicos…</AsyncState>
   }
 
   if (error) {
-    return (
-      <div className="data-state data-state--error" role="alert">
-        <strong>No se pudieron cargar los datos generados.</strong>
-        <span>{error}</span>
-      </div>
-    )
+    return <AsyncState state="error" title="No se pudieron cargar los datos generados.">{error}</AsyncState>
   }
 
   return null
 }
 
-function EvidenceBoundary() {
+function M5MiniTrajectory({ profiles }: { profiles: M5Profile[] }) {
+  const preferredStages = ['FruitSet', 'Veraison', 'Harvest']
+  const stages = preferredStages.filter((stage) => profiles.some((row) => row.Stage === stage))
+  const years = [...new Set(profiles.map((row) => row.Year))].sort((a, b) => a - b)
+  const cultivars = [...new Set(profiles.map((row) => row.Cultivar))]
+  const values = profiles.map((row) => row.Mean)
+  const rawMin = Math.min(0, ...values)
+  const rawMax = Math.max(0, ...values)
+  const padding = Math.max(2, (rawMax - rawMin) * 0.08)
+  const yMin = rawMin - padding
+  const yMax = rawMax + padding
+  const xAt = (index: number) => 20 + index * 80
+  const yAt = (value: number) => 112 - ((value - yMin) / (yMax - yMin || 1)) * 92
+
   return (
-    <section className="boundary-grid" aria-label="Límites de interpretación">
-      <article className="boundary-card boundary-card--supported">
-        <p className="eyebrow">Qué sí muestra</p>
-        <h2>Programas transcriptómicos diferenciales</h2>
-        <p>
-          El proyecto compara programas de coexpresión entre cultivares y etapas,
-          revisa su robustez entre años y busca apoyo independiente en piel.
-        </p>
-      </article>
-      <article className="boundary-card boundary-card--limit">
-        <p className="eyebrow">Qué no demuestra</p>
-        <h2>No es una prueba causal de grosor de piel</h2>
-        <p>
-          El baseline proviene de pericarpio y no contiene una medición directa de
-          grosor de piel. Un hub o un eigengene tampoco equivale a un mecanismo causal.
-        </p>
-      </article>
-    </section>
+    <div className="home-v2-m5-mini-chart">
+      <div className="home-v2-m5-legend" aria-label="Leyenda de cultivares">
+        {cultivars.map((cultivar, index) => (
+          <span key={cultivar} className={index === 0 ? 'is-cabernet' : 'is-pinot'}>
+            <i aria-hidden="true" />{cultivar}
+          </span>
+        ))}
+      </div>
+      <div className="home-v2-m5-panels">
+        {years.map((year) => (
+          <figure key={year}>
+            <figcaption>{year}</figcaption>
+            <svg viewBox="0 0 200 145" role="img" aria-label={`Trayectoria media M5 en ${year}`}>
+              <line className="home-v2-m5-zero" x1="16" x2="184" y1={yAt(0)} y2={yAt(0)} />
+              {cultivars.map((cultivar, cultivarIndex) => {
+                const rows = stages
+                  .map((stage) => profiles.find((row) => row.Year === year && row.Cultivar === cultivar && row.Stage === stage))
+                  .filter((row): row is M5Profile => Boolean(row))
+                const points = rows.map((row) => `${xAt(stages.indexOf(row.Stage))},${yAt(row.Mean)}`).join(' ')
+                const cultivarClass = cultivarIndex === 0 ? 'is-cabernet' : 'is-pinot'
+                return (
+                  <g key={cultivar} className={cultivarClass}>
+                    <polyline points={points} />
+                    {rows.map((row) => (
+                      <circle key={`${cultivar}-${row.Stage}`} cx={xAt(stages.indexOf(row.Stage))} cy={yAt(row.Mean)} r="4">
+                        <title>{cultivar}, {row.Stage}: media {row.Mean.toFixed(2)}</title>
+                      </circle>
+                    ))}
+                  </g>
+                )
+              })}
+              {stages.map((stage, index) => (
+                <text key={stage} x={xAt(index)} y="137" textAnchor="middle">
+                  {stage === 'FruitSet' ? 'FruitSet' : stage === 'Veraison' ? 'Veraison' : 'Harvest'}
+                </text>
+              ))}
+            </svg>
+          </figure>
+        ))}
+      </div>
+      <p>Media del eigengene M5 por cultivar, etapa y año; la línea discontinua marca cero.</p>
+    </div>
   )
 }
 
 export function HomePage() {
-  const { project, modules, loading, error } = useCanonicalData()
+  const { project, modules, m5: m5Trajectory, loading, error } = useCanonicalData()
   const m5 = modules?.modules.find((row) => row.module === 'M5') ?? null
   const m10 = modules?.modules.find((row) => row.module === 'M10') ?? null
   const moduleCount = modules?.modules.length ?? 10
+  const significantModuleCount = modules?.modules.filter((row) => row.cultivar_stage_significant_fdr05).length ?? 5
   const replicates = project?.design.replicates_per_cell_values[0] ?? 3
+  const samplesPerCultivarStage = project
+    ? project.design.years.length * replicates
+    : 9
+  const m5HarvestContrasts = m5Trajectory?.contrasts.filter((row) => row.Stage === 'Harvest') ?? []
+  const m5HarvestNegativeAllYears =
+    m5HarvestContrasts.length > 0 && m5HarvestContrasts.every((row) => row.estimate < 0)
 
   return (
     <div className="home-v2">
       <section className="home-v2-hero">
         <div className="home-v2-hero-copy">
-          <p className="home-v2-kicker">Caracterización transcriptómica comparativa</p>
+          <p className="home-v2-kicker">Pregunta científica</p>
           <h1>
-            Comparar programas de coexpresión entre{' '}
-            <span>Cabernet Sauvignon</span> y <span>Pinot noir.</span>
+            ¿Cómo difieren los programas de coexpresión entre{' '}
+            <span>Cabernet Sauvignon</span> y <span>Pinot noir</span> durante la maduración?
           </h1>
           <p className="home-v2-lede">
-            CEMiTool Explorer identifica programas de coexpresión que divergen durante la
-            maduración de la baya, evalúa su robustez entre años y explora el apoyo externo
+            El estudio parte de 54 muestras de pericarpio, compara cultivares y etapas,
+            evalúa la robustez entre años y después busca apoyo observacional independiente
             en piel de uva.
           </p>
           <div className="home-v2-actions">
-            <Link className="home-v2-button home-v2-button--primary" to="/results">
+            <ButtonLink variant="primary" to="/results">
               Explorar resultados <span aria-hidden="true">→</span>
-            </Link>
-            <Link className="home-v2-button home-v2-button--secondary" to="/methods">
+            </ButtonLink>
+            <ButtonLink variant="secondary" to="/methods">
               Ver métodos
-            </Link>
+            </ButtonLink>
           </div>
         </div>
 
@@ -161,10 +172,70 @@ export function HomePage() {
 
       <DataState loading={loading} error={error} />
 
+      {project && (
+        <section className="home-v2-section home-v2-design" aria-labelledby="home-v2-design-title">
+          <div className="home-v2-section-heading">
+            <p>Diseño del estudio</p>
+            <h2 id="home-v2-design-title">Un diseño balanceado de {project.design.sample_count} muestras</h2>
+          </div>
+          <div className="home-v2-design-equation" aria-label={`${project.design.cultivars.length} cultivares por ${project.design.stages.length} etapas por ${project.design.years.length} años por ${replicates} réplicas equivalen a ${project.design.sample_count} muestras`}>
+            <span><strong>{project.design.cultivars.length}</strong> cultivares</span>
+            <b aria-hidden="true">×</b>
+            <span><strong>{project.design.stages.length}</strong> etapas</span>
+            <b aria-hidden="true">×</b>
+            <span><strong>{project.design.years.length}</strong> años</span>
+            <b aria-hidden="true">×</b>
+            <span><strong>{replicates}</strong> réplicas</span>
+            <b aria-hidden="true">=</b>
+            <span className="home-v2-design-total"><strong>{project.design.sample_count}</strong> muestras</span>
+          </div>
+
+          <div className="home-v2-design-layout">
+            <div className="home-v2-design-table-wrap">
+              <table className="home-v2-design-matrix">
+                <caption>
+                  Distribución de muestras por cultivar y etapa; cada celda reúne los tres años.
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Cultivar</th>
+                    {project.design.stages.map((stage) => <th scope="col" key={stage}>{stage}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.design.cultivars.map((cultivar) => (
+                    <tr key={cultivar}>
+                      <th scope="row">{cultivar}</th>
+                      {project.design.stages.map((stage) => (
+                        <td key={`${cultivar}-${stage}`} data-stage={stage}>
+                          <strong>{samplesPerCultivarStage} muestras</strong>
+                          <span>{project.design.years.length} años × {replicates} réplicas</span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <aside className="home-v2-design-note" aria-label="Cómo leer el diseño">
+              <p>Cómo leerlo</p>
+              <strong>{project.design.balanced ? 'Todas las combinaciones están balanceadas.' : 'El exportador no marca este diseño como balanceado.'}</strong>
+              <ul>
+                <li>Cada cruce cultivar × etapa contiene {samplesPerCultivarStage} muestras.</li>
+                <li>Los años {project.design.years.join(', ')} permanecen explícitos en los modelos.</li>
+                <li>El tejido del baseline es pericarpio completo, no piel aislada.</li>
+              </ul>
+              <ActionLink to="/methods">Ver selección y modelo</ActionLink>
+            </aside>
+          </div>
+        </section>
+      )}
+
       <section className="home-v2-section home-v2-findings" aria-labelledby="home-v2-findings-title">
         <div className="home-v2-section-heading">
           <p>Hallazgos principales</p>
-          <h2 id="home-v2-findings-title">Cuatro conclusiones clave</h2>
+          <h2 id="home-v2-findings-title">Qué encontró el análisis</h2>
         </div>
         <div className="home-v2-finding-row">
           <article>
@@ -187,41 +258,58 @@ export function HomePage() {
       </section>
 
       {project && (
-        <section className="home-v2-section home-v2-design" aria-labelledby="home-v2-design-title">
+        <section className="home-v2-section home-v2-evidence-path" aria-labelledby="home-v2-evidence-title">
           <div className="home-v2-section-heading">
-            <p>Diseño del estudio</p>
-            <h2 id="home-v2-design-title">De las muestras a los módulos</h2>
+            <p>Ruta de evidencia</p>
+            <h2 id="home-v2-evidence-title">Cómo se acumula la evidencia</h2>
           </div>
-          <ol className="home-v2-flow">
+          <ol className="home-v2-evidence-ladder">
             <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">● ●</span>
-              <strong>Cabernet Sauvignon<br />y Pinot noir</strong>
-              <small>{project.design.cultivars.length} cultivares</small>
+              <span>01</span>
+              <div>
+                <h3>Red principal y sensibilidad</h3>
+                <p>
+                  β{project.network.primary_beta} es la red principal
+                  {project.network.scale_free_r2 != null
+                    ? ` (R² ${project.network.scale_free_r2.toFixed(3)})`
+                    : ''}; β7 conserva el papel de análisis de sensibilidad.
+                </p>
+                <ActionLink to="/methods">Revisar método</ActionLink>
+              </div>
             </li>
             <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">● ● ●</span>
-              <strong>{project.design.stages.length} etapas</strong>
-              <small>{project.design.stages.join(' · ')}</small>
+              <span>02</span>
+              <div>
+                <h3>Robustez entre años</h3>
+                <p>
+                  M10 cumple la regla de reproducibilidad. M5 depende del año a nivel global,
+                  aunque Harvest mantiene dirección negativa en 2012, 2013 y 2014.
+                </p>
+                <ActionLink to="/results/modules">Comparar módulos</ActionLink>
+              </div>
             </li>
             <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">▣</span>
-              <strong>{project.design.years.length} años</strong>
-              <small>{project.design.years.join(', ')}</small>
+              <span>03</span>
+              <div>
+                <h3>Función e identidad</h3>
+                <p>
+                  El enriquecimiento interpreta módulos completos. La identidad CHS frente a
+                  STS continúa ambigua y se muestra como límite, no como etiqueta resuelta.
+                </p>
+                <ActionLink to="/results/function">Explorar función</ActionLink>
+              </div>
             </li>
             <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">Ⅱ</span>
-              <strong>{replicates} réplicas</strong>
-              <small>por condición</small>
-            </li>
-            <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">▰</span>
-              <strong>GSE98923</strong>
-              <small>{project.design.sample_count} muestras</small>
-            </li>
-            <li>
-              <span className="home-v2-flow-icon" aria-hidden="true">⌘</span>
-              <strong>Red de coexpresión<br />CEMiTool</strong>
-              <small>módulos y programas</small>
+              <span>04</span>
+              <div>
+                <h3>Validación y reprocesamiento</h3>
+                <p>
+                  La evidencia en piel aislada permanece separada. T-008 lleva{' '}
+                  {project.t008.validated_runs}/{project.t008.total_runs} corridas validadas;
+                  aún no permite concluir preservación moderna.
+                </p>
+                <ActionLink to="/status/t008">Ver estado T-008</ActionLink>
+              </div>
             </li>
           </ol>
         </section>
@@ -230,182 +318,78 @@ export function HomePage() {
       <section className="home-v2-section home-v2-m5" aria-labelledby="home-v2-m5-title">
         <div className="home-v2-m5-copy">
           <p className="home-v2-section-kicker">Resultado destacado</p>
-          <h2 id="home-v2-m5-title">Resultado destacado: <span>M5</span></h2>
+          <h2 id="home-v2-m5-title"><span>M5</span> concentra la interacción más fuerte</h2>
           <p>
-            M5 se presenta como caso de estudio porque combina una interacción
-            Cultivar×Stage destacada con interpretación funcional y de red, mientras
-            mantiene dependencia anual a nivel de módulo.
+            Su trayectoria cambia de forma distinta entre cultivares durante la maduración.
+            {m5HarvestNegativeAllYears
+              ? ' En Harvest, el contraste Cabernet − Pinot conserva dirección negativa en los tres años.'
+              : ' La dirección de Harvest debe revisarse por año.'}
           </p>
-          <Link className="home-v2-button home-v2-button--primary" to="/results/modules/M5">
+          <dl className="home-v2-m5-metrics">
+            <div><dt>Genes</dt><dd>{m5?.gene_count ?? 108}</dd></div>
+            <div><dt>FDR Cultivar×Stage</dt><dd>{formatScientific(m5?.cultivar_stage_fdr)}</dd></div>
+            <div><dt>Años con Harvest</dt><dd>{m5HarvestContrasts.length}/3</dd></div>
+          </dl>
+          <ButtonLink variant="primary" to="/results/modules/M5">
             Ver detalle de M5 <span aria-hidden="true">→</span>
-          </Link>
+          </ButtonLink>
         </div>
 
         <figure className="home-v2-m5-chart">
-          <figcaption>M5 · Trayectoria por etapa y año</figcaption>
-          <img
-            src={import.meta.env.BASE_URL + 'assets/home/m5-stage-by-year.png'}
-            alt="Trayectorias observadas del eigengene M5 por etapa, cultivar y año"
-            loading="lazy"
-          />
+          <figcaption>
+            <span>Trayectoria observada</span>
+            <strong>M5 por etapa y año</strong>
+          </figcaption>
+          {m5Trajectory?.profiles.length
+            ? <M5MiniTrajectory profiles={m5Trajectory.profiles} />
+            : <AsyncState state="loading">Cargando trayectoria M5…</AsyncState>}
         </figure>
 
-        <aside className="home-v2-m5-summary">
-          <h3>M5 en síntesis</h3>
-          <ul>
-            <li><span aria-hidden="true">⌁</span><strong>{m5?.gene_count ?? 108} genes</strong></li>
-            <li><span aria-hidden="true">▥</span><strong>Interacción Cultivar×Stage</strong></li>
-            <li><span aria-hidden="true">□</span><strong>Year-dependent</strong></li>
-            <li><span aria-hidden="true">◒</span><strong>Harvest conserva señal en los tres años</strong></li>
-          </ul>
-          <Link to="/results/modules/M5">Ver detalle de M5 →</Link>
+        <aside className="home-v2-m5-caveat">
+          <p>Límite de interpretación</p>
+          <h3>Fuerte no significa estable en todo el desarrollo</h3>
+          <p>
+            M5 es <strong>dependiente del año a nivel global</strong>. La consistencia de
+            Harvest no autoriza a generalizar todas las etapas ni demuestra causalidad,
+            grosor de piel o identidad funcional CHS/STS.
+          </p>
+          <ActionLink to="/results/modules/M5">Revisar robustez</ActionLink>
         </aside>
       </section>
 
       <section className="home-v2-section home-v2-limits" aria-labelledby="home-v2-limits-title">
         <div className="home-v2-section-heading">
-          <p>Qué no demuestra este análisis</p>
-          <h2 id="home-v2-limits-title">Cuatro consideraciones importantes</h2>
+          <p>Frontera de la evidencia</p>
+          <h2 id="home-v2-limits-title">Qué sabemos y qué todavía no sabemos</h2>
         </div>
-        <div className="home-v2-limit-row">
-          <article><span aria-hidden="true">⌁</span><div><strong>Eigengene ≠ expresión de un gen</strong><p>Resume el patrón del módulo, no la expresión de un gen individual.</p></div></article>
-          <article><span aria-hidden="true">⌘</span><div><strong>Hub ≠ causalidad</strong><p>Centralidad en la red no demuestra regulación causal.</p></div></article>
-          <article><span aria-hidden="true">◒</span><div><strong>Pericarpio ≠ piel aislada</strong><p>El baseline analiza pericarpio completo; la piel externa es otra capa de evidencia.</p></div></article>
-          <article><span aria-hidden="true">△</span><div><strong>Expresión ≠ actividad proteica</strong><p>ARNm y actividad de proteína no son medidas equivalentes.</p></div></article>
+        <div className="home-v2-knowledge-grid">
+          <article className="home-v2-knowledge-panel home-v2-knowledge-panel--known">
+            <header>
+              <span aria-hidden="true">✓</span>
+              <div><p>Respaldado</p><h3>Qué sabemos</h3></div>
+            </header>
+            <ul>
+              <li><strong>Diseño verificable.</strong> Hay {project?.design.sample_count ?? 54} muestras balanceadas de pericarpio completo.</li>
+              <li><strong>Diferencias de programa.</strong> {significantModuleCount} módulos muestran interacción Cultivar×Stage con FDR&lt;0,05.</li>
+              <li><strong>Robustez diferenciada.</strong> M10 cumple la regla anual; M5 conserva la dirección de Harvest en los tres años.</li>
+              <li><strong>Apoyo externo separado.</strong> Algunos hubs encuentran concordancia observacional en datasets de piel aislada.</li>
+            </ul>
+          </article>
+
+          <article className="home-v2-knowledge-panel home-v2-knowledge-panel--unknown">
+            <header>
+              <span aria-hidden="true">?</span>
+              <div><p>No demostrado</p><h3>Qué todavía no sabemos</h3></div>
+            </header>
+            <ul>
+              <li><strong>Grosor de piel y causalidad.</strong> GSE98923 no mide grosor ni permite atribuirlo a un módulo o hub.</li>
+              <li><strong>Especificidad de tejido.</strong> La señal del baseline no puede considerarse exclusiva de piel.</li>
+              <li><strong>Identidad CHS/STS.</strong> La anotación disponible no resuelve con certeza esta familia en M5.</li>
+              <li><strong>Preservación moderna.</strong> T-008 lleva {project?.t008.validated_runs ?? 2}/{project?.t008.total_runs ?? 54} corridas; aún no existe una comparación completa.</li>
+            </ul>
+          </article>
         </div>
       </section>
-    </div>
-  )
-}
-
-export function StoryPage() {
-  const { project, modules, m5, loading, error } = useCanonicalData()
-  const m5Summary = modules?.modules.find((row) => row.module === 'M5') ?? null
-  const harvest = m5?.contrasts.filter((row) => row.Stage === 'Harvest') ?? []
-  const harvestNegativeAllYears =
-    harvest.length > 0 && harvest.every((row) => row.estimate < 0)
-
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="STORY"
-        title="Historia científica"
-        description="Una lectura guiada del proyecto, construida sobre datos exportados desde las tablas canónicas."
-        status="Datos reales"
-      />
-
-      <DataState loading={loading} error={error} />
-
-      {project && (
-        <section className="story-timeline">
-          <article className="story-step">
-            <span>01</span>
-            <div>
-              <p className="eyebrow">Pregunta</p>
-              <h2>Comparar programas, no buscar un “gen de piel gruesa”</h2>
-              <p>
-                La pregunta operacional es qué programas de coexpresión cambian de manera
-                distinta entre Cabernet Sauvignon y Pinot noir durante el desarrollo, cuáles
-                se repiten entre años y qué candidatos encuentran apoyo en piel aislada.
-              </p>
-            </div>
-          </article>
-
-          <article className="story-step">
-            <span>02</span>
-            <div>
-              <p className="eyebrow">Diseño</p>
-              <h2>{project.design.sample_count} muestras balanceadas</h2>
-              <p>
-                {project.design.cultivars.length} cultivares × {project.design.stages.length} etapas × {project.design.years.length} años
-                {project.design.replicates_per_cell_values.length === 1
-                  ? ` × ${project.design.replicates_per_cell_values[0]} réplicas biológicas por celda.`
-                  : '.'}
-              </p>
-              <div className="story-tags">
-                {project.design.cultivars.map((item) => <span key={item}>{item}</span>)}
-                {project.design.years.map((item) => <span key={item}>{item}</span>)}
-              </div>
-            </div>
-          </article>
-
-          <article className="story-step">
-            <span>03</span>
-            <div>
-              <p className="eyebrow">Red de coexpresión</p>
-              <h2>β = {project.network.primary_beta} como red principal</h2>
-              <p>
-                El sitio lee el beta primario desde los diagnósticos canónicos. El ajuste
-                scale-free exportado para esta red es R² {formatDecimal(project.network.scale_free_r2, 3)}.
-                La red beta=7 permanece como análisis de sensibilidad, no como una red reemplazada.
-              </p>
-            </div>
-          </article>
-
-          <article className="story-step story-step--focus">
-            <span>04</span>
-            <div>
-              <p className="eyebrow">Resultado central</p>
-              <h2>M5 emerge como foco principal</h2>
-              <p>
-                Su interacción Cultivar×Stage tiene FDR {formatScientific(m5Summary?.cultivar_stage_fdr)}.
-                La clasificación de robustez exportada conserva la cautela de que el módulo
-                puede depender del año a nivel global.
-              </p>
-              {harvest.length > 0 && (
-                <p className="story-evidence-line">
-                  Harvest disponible para {harvest.length} años en la tabla canónica:
-                  {' '}
-                  <strong>{harvestNegativeAllYears ? 'Cabernet − Pinot mantiene dirección negativa en todos ellos.' : 'la dirección no es idéntica en todos los años.'}</strong>
-                </p>
-              )}
-              <Link className="inline-link" to="/results/modules/M5">Abrir M5 →</Link>
-            </div>
-          </article>
-
-          <article className="story-step">
-            <span>05</span>
-            <div>
-              <p className="eyebrow">Interpretación funcional</p>
-              <h2>La función se evalúa a nivel de módulo</h2>
-              <p>
-                El enriquecimiento y los hubs se mantienen separados de la inferencia causal.
-                La web hace visible el conflicto de anotación CHS/STS en vez de esconderlo
-                detrás de una única etiqueta.
-              </p>
-            </div>
-          </article>
-
-          <article className="story-step">
-            <span>06</span>
-            <div>
-              <p className="eyebrow">Piel aislada</p>
-              <h2>La validación externa es otra capa de evidencia</h2>
-              <p>
-                Las fuentes externas no se agregan a las {project.design.sample_count} muestras
-                del baseline como si fueran réplicas equivalentes. Se presentan por separado
-                para evaluar concordancia observacional.
-              </p>
-            </div>
-          </article>
-
-          <article className="story-step">
-            <span>07</span>
-            <div>
-              <p className="eyebrow">T-008</p>
-              <h2>{project.t008.validated_runs} de {project.t008.total_runs} corridas validadas</h2>
-              <p>
-                {project.t008.complete
-                  ? 'El exportador reporta el lote moderno como completo.'
-                  : 'El lote moderno sigue incompleto; por eso la web no presenta todavía una conclusión de preservación moderna.'}
-              </p>
-              <Link className="inline-link" to="/status/t008">Ver estado T-008 →</Link>
-            </div>
-          </article>
-        </section>
-      )}
-
-      <EvidenceBoundary />
     </div>
   )
 }
@@ -441,7 +425,7 @@ export function ResultsLandingPage() {
       <DataState loading={loading} error={error} />
 
       <section className="results-destination-grid" aria-label="Áreas de resultados">
-        <Link to="/results/modules" className="results-destination-card results-destination-card--primary">
+        <ActionCard to="/results/modules" featured className="results-destination-card results-destination-card--primary">
           <div>
             <span>01</span>
             <h2>Módulos</h2>
@@ -450,9 +434,9 @@ export function ResultsLandingPage() {
             </p>
           </div>
           <strong>Comparar módulos →</strong>
-        </Link>
+        </ActionCard>
 
-        <Link to="/results/validation" className="results-destination-card">
+        <ActionCard to="/results/validation" className="results-destination-card">
           <div>
             <span>02</span>
             <h2>Validación</h2>
@@ -461,9 +445,9 @@ export function ResultsLandingPage() {
             </p>
           </div>
           <strong>Abrir validación →</strong>
-        </Link>
+        </ActionCard>
 
-        <Link to="/results/genes" className="results-destination-card">
+        <ActionCard to="/results/genes" className="results-destination-card">
           <div>
             <span>03</span>
             <h2>Genes</h2>
@@ -472,7 +456,7 @@ export function ResultsLandingPage() {
             </p>
           </div>
           <strong>Buscar genes →</strong>
-        </Link>
+        </ActionCard>
       </section>
 
       <section className="results-secondary-path">
@@ -484,9 +468,9 @@ export function ResultsLandingPage() {
             transversal, aunque su contexto natural sea cada módulo.
           </p>
         </div>
-        <Link className="button button--secondary" to="/results/function">
+        <ButtonLink to="/results/function">
           Abrir función
-        </Link>
+        </ButtonLink>
       </section>
 
       <section className="results-guidance">
@@ -548,8 +532,8 @@ export function NotFoundPage() {
           Puedes volver al overview o entrar directamente a los resultados del estudio.
         </p>
         <div className="not-found-actions">
-          <Link className="button button--primary" to="/">Ir al resumen</Link>
-          <Link className="button button--secondary" to="/results/modules">Ver resultados</Link>
+          <ButtonLink variant="primary" to="/">Ir al resumen</ButtonLink>
+          <ButtonLink to="/results/modules">Ver resultados</ButtonLink>
         </div>
       </div>
     </section>

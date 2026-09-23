@@ -19,3 +19,4 @@ chatbot/worker/node_modules/
 chatbot/indexer/.venv/
 chatbot/indexer/.file-search-store
 site/.env.local
+site/test-results/

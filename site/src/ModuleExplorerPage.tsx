@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { ActionLink, AsyncState, Badge, ButtonLink, Callout, EmptyState, FilterBar, TableFrame } from './components/ui'
 import {
   loadExternalValidation,
   loadHubs,
@@ -335,8 +336,8 @@ export function ModulesExplorerPage() {
         </div>
       </section>
 
-      {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando módulos canónicos…</div>}
-      {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
+      {!data && !error && <AsyncState state="loading">Cargando módulos canónicos…</AsyncState>}
+      {error && <AsyncState state="error" title="Error de datos">{error}</AsyncState>}
 
       {data && (
         <>
@@ -401,7 +402,7 @@ export function ModulesExplorerPage() {
               <p>Filtra la tabla sin alterar la figura CEMiTool original.</p>
             </div>
 
-            <div className="module-filter-panel">
+            <FilterBar className="module-filter-panel">
               <div className="module-filter-buttons" aria-label="Filtros de módulos">
                 {([
                   ['all', 'Todos'],
@@ -431,9 +432,9 @@ export function ModulesExplorerPage() {
                   placeholder="M5, M10…"
                 />
               </label>
-            </div>
+            </FilterBar>
 
-            <div className="scientific-table-wrap module-data-table-wrap">
+            <TableFrame className="module-data-table-wrap" label="Comparación de los diez módulos">
               <table className="scientific-table module-data-table">
                 <thead>
                   <tr>
@@ -456,7 +457,7 @@ export function ModulesExplorerPage() {
                           <Link className="module-table-id" to={'/results/modules/' + row.module}>
                             {row.module}
                           </Link>
-                          {priority && <span className="priority-pill">prioridad</span>}
+                          {priority && <Badge tone="brand" className="priority-pill">prioridad</Badge>}
                         </td>
                         <td>{row.gene_count}</td>
                         <td>
@@ -473,11 +474,11 @@ export function ModulesExplorerPage() {
                   })}
                 </tbody>
               </table>
-            </div>
+            </TableFrame>
           </section>
 
           {filtered.length === 0 && (
-            <div className="module-empty">No hay módulos que cumplan los filtros actuales.</div>
+            <EmptyState title="Sin módulos coincidentes">No hay módulos que cumplan los filtros actuales.</EmptyState>
           )}
 
           <section className="module-boundary">
@@ -541,7 +542,7 @@ export function ModuleExplorerDetailPage() {
     return (
       <div className="modules-page">
         <section className="modules-hero"><div><p className="eyebrow">MODULE</p><h1>Módulo no reconocido</h1></div></section>
-        <Link className="button button--primary button--fit" to="/results/modules">Volver a módulos</Link>
+        <ButtonLink variant="primary" fit to="/results/modules">Volver a módulos</ButtonLink>
       </div>
     )
   }
@@ -572,8 +573,8 @@ export function ModuleExplorerDetailPage() {
         </div>
       </nav>
 
-      {!data && !error && <div className="data-state" role="status"><span className="data-state-dot" />Cargando detalle de {module}…</div>}
-      {error && <div className="data-state data-state--error" role="alert"><strong>Error de datos</strong><span>{error}</span></div>}
+      {!data && !error && <AsyncState state="loading">Cargando detalle de {module}…</AsyncState>}
+      {error && <AsyncState state="error" title="Error de datos">{error}</AsyncState>}
 
       <nav className="module-section-nav" aria-label={'Secciones de ' + module}>
         <button
@@ -625,25 +626,21 @@ export function ModuleExplorerDetailPage() {
       {data && summary && (
         <>
           {module === 'M2' && (
-            <section className="module-provisional-warning">
-              <p className="eyebrow">Estado provisional</p>
-              <h2>M2 no debe cerrarse interpretativamente antes de T-008</h2>
+            <Callout className="module-provisional-warning" tone="warning" eyebrow="Estado provisional" title="M2 no debe cerrarse interpretativamente antes de T-008">
               <p>
                 El proyecto documenta una sensibilidad histórica relacionada con ceros de expresión y posibles efectos de referencia/mapeo.
                 La web conserva M2 como candidato, pero no lo presenta como una conclusión moderna establecida.
               </p>
-              <Link className="inline-link" to="/status/t008">Ver progreso T-008 →</Link>
-            </section>
+              <ActionLink to="/status/t008">Ver progreso T-008</ActionLink>
+            </Callout>
           )}
 
           {module === 'M10' && (
-            <section className="module-highlight">
-              <p className="eyebrow">Robustez</p>
-              <h2>M10 está clasificado como reproducible bajo la regla preespecificada</h2>
+            <Callout className="module-highlight" tone="success" eyebrow="Robustez" title="M10 está clasificado como reproducible bajo la regla preespecificada">
               <p>
                 Esa etiqueta describe repetición anual del patrón relevante; no asigna por sí sola una función biológica específica.
               </p>
-            </section>
+            </Callout>
           )}
 
           <ContrastMatrix rows={data.contrasts} module={module} />

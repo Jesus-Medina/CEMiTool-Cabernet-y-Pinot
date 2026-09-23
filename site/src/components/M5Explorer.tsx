@@ -11,6 +11,7 @@ import type {
 } from '../data/siteData'
 import { useM5ExplorerData } from '../hooks/useM5ExplorerData'
 import { formatDecimal, formatScientific } from '../utils/format'
+import { AsyncState, ButtonLink, ChartCard, TableFrame } from './ui'
 
 const STAGES = ['FruitSet', 'Veraison', 'Harvest'] as const
 const CULTIVARS = ['Cabernet Sauvignon', 'Pinot noir'] as const
@@ -27,21 +28,11 @@ function scrollToM5Section(id: string) {
 
 function DataState({ loading, error }: { loading: boolean; error: string | null }) {
   if (loading) {
-    return (
-      <div className="data-state" role="status">
-        <span className="data-state-dot" aria-hidden="true" />
-        Cargando M5 desde datos canónicos…
-      </div>
-    )
+    return <AsyncState state="loading">Cargando M5 desde datos canónicos…</AsyncState>
   }
 
   if (error) {
-    return (
-      <div className="data-state data-state--error" role="alert">
-        <strong>No se pudo construir el explorador M5.</strong>
-        <span>{error}</span>
-      </div>
-    )
+    return <AsyncState state="error" title="No se pudo construir el explorador M5.">{error}</AsyncState>
   }
 
   return null
@@ -105,17 +96,17 @@ function TrajectorySvg({
   }
 
   return (
-    <div className="trajectory-chart-card">
-      <div className="chart-card-header">
-        <div>
-          <p className="eyebrow">Trayectoria M5</p>
-          <h3>{year}</h3>
-        </div>
+    <ChartCard
+      className="trajectory-chart-card"
+      eyebrow="Trayectoria M5"
+      title={year}
+      actions={
         <div className="chart-legend" aria-label="Leyenda">
           <span><i className="legend-line legend-line--cabernet" />Cabernet Sauvignon</span>
           <span><i className="legend-line legend-line--pinot" />Pinot noir</span>
         </div>
-      </div>
+      }
+    >
 
       <svg
         className="trajectory-svg"
@@ -236,7 +227,7 @@ function TrajectorySvg({
           Eigengene M5
         </text>
       </svg>
-    </div>
+    </ChartCard>
   )
 }
 
@@ -400,7 +391,7 @@ function HubsTable({ hubs }: { hubs: HubRow[] }) {
             )}
           </div>
 
-          <div className="scientific-table-wrap">
+          <TableFrame label="Ranking de hubs M5">
             <table className="scientific-table">
               <thead>
                 <tr>
@@ -429,7 +420,7 @@ function HubsTable({ hubs }: { hubs: HubRow[] }) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableFrame>
           <p className="table-note">Mostrando {visible.length} de {filtered.length} genes M5.</p>
         </div>
       </details>
@@ -656,8 +647,8 @@ export default function M5Explorer() {
       <div className="m5-crosslink">
         <span>Sigue la evidencia de M5 hacia función y piel aislada.</span>
         <div className="m5-crosslink-actions">
-          <Link className="button button--secondary" to="/results/function?module=M5">Enriquecimiento funcional</Link>
-          <Link className="button button--secondary" to="/results/validation?module=M5">Validación en piel</Link>
+          <ButtonLink to="/results/function?module=M5">Enriquecimiento funcional</ButtonLink>
+          <ButtonLink to="/results/validation?module=M5">Validación en piel</ButtonLink>
         </div>
       </div>
 
@@ -712,7 +703,7 @@ export default function M5Explorer() {
             <div className="chart-data-actions">
               <details>
                 <summary>Ver datos mostrados</summary>
-                <div className="scientific-table-wrap">
+                <TableFrame label="Datos mostrados en la trayectoria M5">
                   <table className="scientific-table scientific-table--compact">
                     <thead>
                       <tr><th>Año</th><th>Cultivar</th><th>Etapa</th><th>Media</th><th>SE</th><th>N</th></tr>
@@ -726,7 +717,7 @@ export default function M5Explorer() {
                       ))}
                     </tbody>
                   </table>
-                </div>
+                </TableFrame>
               </details>
               <button
                 type="button"
