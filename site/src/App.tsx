@@ -11,6 +11,7 @@ import {
   ModuleDetailPage,
   ModulesPage,
   NotFoundPage,
+  ResultsLandingPage,
   T008Page,
   ValidationPage,
 } from './pages'
@@ -21,7 +22,7 @@ export default function App() {
       <Route element={<SiteShell />}>
         <Route index element={<HomePage />} />
         <Route path="story" element={<Navigate to="/" replace />} />
-        <Route path="results" element={<Navigate to="/results/modules" replace />} />
+        <Route path="results" element={<ResultsLandingPage />} />
         <Route path="results/modules" element={<ModulesPage />} />
         <Route path="results/modules/:moduleId" element={<ModuleDetailPage />} />
         <Route path="results/function" element={<EnrichmentPage />} />

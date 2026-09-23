@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-09-23 — UX05B-01 Results landing activation
+
+- Replaced the `/results` redirect with the existing scientific Results landing.
+- Exposed Modules, Validation and Genes as explicit result families, with Function as a secondary cross-cutting layer.
+- Kept canonical module/significance/reproducibility counts and guidance toward M5 and provenance.
+
+## 2026-09-23 — UX05A-06 Home action hierarchy
+
+- Kept “Explorar resultados” as the only primary action on Home.
+- Demoted the M5 deep link to the shared contextual-link treatment while retaining Methods as the sole secondary hero button.
+- Closed the UX-05A Home narrative phase and advanced the roadmap to the Results landing redesign.
+
+## 2026-09-23 — UX05A-05 evidence boundary
+
+- Replaced the unfinished Home limitations treatment with paired “Qué sabemos” and “Qué todavía no sabemos” panels.
+- Separated supported evidence about design, cultivar-stage programs, annual robustness and external concordance from unresolved causality, tissue specificity, CHS/STS identity and modern reprocessing.
+- Preserved canonical dynamic counts and the same scientific reading order on desktop and mobile.
+
 ## 2026-09-23 — Decorative Methods vine
 
 - Added the user-provided transparent vine branch as a vertical environmental motif in the Methods left gutter.

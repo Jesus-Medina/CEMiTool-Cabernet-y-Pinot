@@ -5235,46 +5235,117 @@ body {
   background: linear-gradient(180deg, var(--color-surface-brand), var(--color-surface-panel));
 }
 
-.home-v2-limit-row {
+.home-v2-knowledge-grid {
   display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: var(--grid-gap);
 }
 
-.home-v2-limit-row article {
-  display: grid;
-  grid-template-columns: 30px minmax(0,1fr);
+.home-v2-knowledge-panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.home-v2-knowledge-panel > header {
+  display: flex;
+  align-items: center;
   gap: var(--space-3);
-  min-height: 92px;
-  padding: var(--space-1) var(--space-5) var(--space-1) 0;
-  border-right: 1px solid var(--color-border-warm);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.home-v2-limit-row article + article {
-  padding-left: var(--space-5);
-}
-
-.home-v2-limit-row article:last-child {
-  border-right: 0;
-}
-
-.home-v2-limit-row article > span {
-  color: var(--color-brand-action);
-  font-size: 1.15rem;
-}
-
-.home-v2-limit-row strong {
-  display: block;
-  color: var(--color-brand-primary);
+.home-v2-knowledge-panel > header > span {
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-surface-panel);
+  font-family: var(--font-sans);
   font-size: var(--text-small);
+  font-weight: 850;
+}
+
+.home-v2-knowledge-panel header p {
+  margin: 0 0 2px;
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  font-weight: 850;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.home-v2-knowledge-panel h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: var(--text-h3);
   line-height: 1.2;
 }
 
-.home-v2-limit-row p {
-  margin: 6px 0 0;
+.home-v2-knowledge-panel ul {
+  margin: 0;
+  padding: var(--space-2) var(--space-5) var(--space-4);
+  list-style: none;
+}
+
+.home-v2-knowledge-panel li {
+  position: relative;
+  padding: var(--space-3) 0 var(--space-3) var(--space-4);
   color: var(--color-text-muted);
   font-family: var(--font-sans);
   font-size: var(--text-small);
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+.home-v2-knowledge-panel li + li {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.home-v2-knowledge-panel li::before {
+  position: absolute;
+  top: 1.15rem;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  content: '';
+  opacity: .6;
+}
+
+.home-v2-knowledge-panel li strong {
+  color: var(--color-text);
+}
+
+.home-v2-knowledge-panel--known {
+  border-top: 4px solid var(--color-status-success);
+}
+
+.home-v2-knowledge-panel--known > header {
+  background: var(--color-status-success-soft);
+}
+
+.home-v2-knowledge-panel--known > header > span,
+.home-v2-knowledge-panel--known header p {
+  color: var(--color-status-success);
+}
+
+.home-v2-knowledge-panel--unknown {
+  border-top: 4px solid var(--color-status-warning);
+}
+
+.home-v2-knowledge-panel--unknown > header {
+  background: var(--color-status-warning-soft);
+}
+
+.home-v2-knowledge-panel--unknown > header > span,
+.home-v2-knowledge-panel--unknown header p {
+  color: var(--color-status-warning);
 }
 
 .site-footer {
@@ -5382,18 +5453,6 @@ body {
   }
 
 
-  .home-v2-limit-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .home-v2-limit-row article:nth-child(2) {
-    border-right: 0;
-  }
-
-  .home-v2-limit-row article:nth-child(n+3) {
-    border-top: 1px solid #e9e3e1;
-    padding-top: var(--space-4);
-  }
 }
 
 @media (max-width: 620px) {
@@ -5454,7 +5513,7 @@ body {
   }
 
   .home-v2-finding-row,
-  .home-v2-limit-row,
+  .home-v2-knowledge-grid,
   .home-v2-evidence-ladder {
     grid-template-columns: 1fr;
   }
@@ -5474,18 +5533,20 @@ body {
   }
 
   .home-v2-finding-row article,
-  .home-v2-finding-row article + article,
-  .home-v2-limit-row article,
-  .home-v2-limit-row article + article {
+  .home-v2-finding-row article + article {
     min-height: 0;
     padding: var(--space-4) 0;
     border-right: 0;
     border-top: 1px solid #ece7e5;
   }
 
-  .home-v2-finding-row article:first-child,
-  .home-v2-limit-row article:first-child {
+  .home-v2-finding-row article:first-child {
     border-top: 0;
+  }
+
+  .home-v2-knowledge-panel > header,
+  .home-v2-knowledge-panel ul {
+    padding-inline: var(--space-4);
   }
 
   .home-v2-design-equation {

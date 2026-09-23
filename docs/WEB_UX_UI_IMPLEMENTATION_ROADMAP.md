@@ -3,7 +3,7 @@
 **Estado:** ACTIVO  
 **Fecha base:** 2026-09-23  
 **Alcance:** arquitectura de información, sistema visual, navegación, presentación científica, recuperación de funcionalidades históricas y QA UX.  
-**Siguiente tarea ejecutable:** `UX05A-05 — Restaurar “qué sabemos / qué no sabemos”`.
+**Siguiente tarea ejecutable:** `UX05B-02 — Convertir cards M1–M10 en comparación compacta y accesible`.
 
 Este documento es la fuente operativa para implementar el rediseño por fases. Complementa, pero no reemplaza, la auditoría, los flujos y los wireframes existentes:
 
@@ -217,8 +217,8 @@ Los estados permitidos son `PENDING`, `IN PROGRESS`, `BLOCKED` y `DONE`. Una tar
 | UX05A-02 | DONE | Integrar la Story histórica en bloques breves, sin ruta primaria duplicada | UX05A-01 |
 | UX05A-03 | DONE | Mostrar diseño 2×3×3, etapas y N=54 desde datos canónicos | UX05A-01 |
 | UX05A-04 | DONE | Presentar M5 como resultado destacado con mini trayectoria y caveat | UX05A-01 |
-| UX05A-05 | PENDING | Restaurar “qué sabemos / qué no sabemos” | UX05A-01 |
-| UX05A-06 | PENDING | Reducir CTAs a una ruta principal y acciones secundarias claras | UX05A-01–05 |
+| UX05A-05 | DONE | Restaurar “qué sabemos / qué no sabemos” | UX05A-01 |
+| UX05A-06 | DONE | Reducir CTAs a una ruta principal y acciones secundarias claras | UX05A-01–05 |
 
 **Aceptación de fase:** pregunta, dataset, hallazgo y límites se identifican en menos de 60 segundos; sólo hay una acción primaria; pericarpio/piel y causalidad quedan inequívocos; desktop y móvil respetan el mismo orden narrativo.
 
@@ -228,7 +228,7 @@ Los estados permitidos son `PENDING`, `IN PROGRESS`, `BLOCKED` y `DONE`. Una tar
 
 | ID | Estado | Tarea | Dependencia |
 |---|---|---|---|
-| UX05B-01 | PENDING | Crear landing Results con Modules, Validation y Genes como subfamilias | UX-04 |
+| UX05B-01 | DONE | Crear landing Results con Modules, Validation y Genes como subfamilias | UX-04 |
 | UX05B-02 | PENDING | Convertir cards M1–M10 en comparación compacta y accesible | UX05B-01 |
 | UX05B-03 | PENDING | Estandarizar filtros y conservar estado científico en URL | UX04-05 |
 | UX05B-04 | PENDING | Añadir explicación de columnas, robustez y ausencia de score total | UX05B-02 |

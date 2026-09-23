@@ -330,9 +330,7 @@ export function HomePage() {
             <div><dt>FDR Cultivar×Stage</dt><dd>{formatScientific(m5?.cultivar_stage_fdr)}</dd></div>
             <div><dt>Años con Harvest</dt><dd>{m5HarvestContrasts.length}/3</dd></div>
           </dl>
-          <ButtonLink variant="primary" to="/results/modules/M5">
-            Ver detalle de M5 <span aria-hidden="true">→</span>
-          </ButtonLink>
+          <ActionLink to="/results/modules/M5">Ver detalle de M5</ActionLink>
         </div>
 
         <figure className="home-v2-m5-chart">

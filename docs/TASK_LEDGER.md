@@ -395,6 +395,12 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Methods vine decoration (2026-09-23):** la rama de vid transparente proporcionada por el usuario se integró como motivo ambiental vertical en el margen izquierdo de Métodos. La composición repite y alterna la rama con solapamiento, máscara gradual y baja intensidad para ocultar uniones y extremos sin cubrir el índice ni la evidencia; se elimina en pantallas de hasta 900 px. `qa:ui`, `qa:scientific`, lint, typecheck y build pasaron. La siguiente tarea del roadmap sigue siendo `UX05A-05`.
 
+**UX05A-05 completion (2026-09-23):** Home separa la frontera de evidencia en dos paneles paralelos: cuatro afirmaciones respaldadas y cuatro preguntas todavía abiertas. El bloque distingue diseño, interacción, robustez y apoyo externo de causalidad/grosor, especificidad de piel, identidad CHS/STS y preservación moderna incompleta. Los valores dinámicos permanecen conectados a los datos canónicos; en móvil los paneles conservan el mismo orden narrativo. Siguiente tarea: `UX05A-06`.
+
+**UX05A-06 completion (2026-09-23):** la portada conserva una sola acción primaria, `Explorar resultados`. `Ver métodos` permanece como botón secundario y las aperturas de diseño, evidencia, función, T-008 y M5 usan enlaces contextuales sin competir con la ruta principal. Con esto UX-05A queda cerrada: pregunta, diseño, hallazgos, M5 y límites comparten el mismo orden en desktop y móvil. Siguiente tarea: `UX05B-01`.
+
+**UX05B-01 completion (2026-09-23):** `/results` dejó de redirigir automáticamente a Módulos y ahora abre la landing de familias científicas. Módulos es la ruta destacada; Validación y Genes son destinos pares, mientras Función queda como capa transversal secundaria. La cabecera resume módulos, interacciones significativas y reproducibilidad desde datos canónicos, con orientación hacia M5 y Reproducibilidad. Siguiente tarea: `UX05B-02`.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;
