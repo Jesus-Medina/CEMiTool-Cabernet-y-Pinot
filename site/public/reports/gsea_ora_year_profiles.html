@@ -59,7 +59,7 @@ body{font-size:16px;line-height:1.55}
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>GSEA · ORA · perfiles por año</strong><small>CEMiTool beta10 · GSE98923</small></div></div><nav class="headnav"><a href="../">Explorador</a><a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a></nav></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>GSEA · ORA · perfiles por año</strong><small>CEMiTool beta10 · GSE98923</small></div></div></div></header>
 
 <section class="hero"><div class="wrap"><p class="eyebrow">Reporte integrado · una sola página</p><h1>GSEA · ORA · Perfiles</h1><p class="lede">Explora los resultados de M1–M10 en un recorrido científico único: primero GSEA, después ORA y finalmente los perfiles temporales de Cabernet Sauvignon y Pinot noir.</p>
 <div class="flow-intro"><a class="flow-step" href="#gsea"><b>01 · GSEA</b><strong>Enriquecimiento por clase</strong><small>Qué módulos cambian entre Cultivar × Stage · 3 años agrupados</small></a><a class="flow-step" href="#ora"><b>02 · ORA</b><strong>Función biológica</strong><small>Qué procesos están representados en los módulos · 3 años integrados</small></a><a class="flow-step" href="#profiles"><b>03 · PERFILES</b><strong>Trayectoria temporal</strong><small>Cómo se comportan M1–M10 · 2012, 2013 y 2014 explícitos</small></a></div></div></section>
@@ -118,7 +118,7 @@ body{font-size:16px;line-height:1.55}
 <div class="panel-intro"><h3>Panorama del enriquecimiento</h3><p>Recuentos globales y distribución de hits MapMan v3 por módulo.</p></div>
 <div id="oraSummaryCards" class="cards"></div>
 <div id="oraOverviewBars" class="barbox" style="margin-top:12px"></div>
-<div class="notice" style="margin-top:12px"><strong>Lectura:</strong> un mayor número de términos enriquecidos no convierte un módulo en “mejor”. La cobertura de anotación y la redundancia de términos deben leerse junto a la significancia.</div>
+<div class="notice" style="margin-top:12px"><strong>Interpretación:</strong> un mayor número de términos enriquecidos no significa por sí solo que un módulo sea biológicamente más importante. La significancia debe interpretarse junto con la cobertura de anotación y la redundancia entre términos.</div>
 </div>
 
 <div class="inner-panel" id="ora-terms" data-inner-group="ora">
@@ -162,7 +162,7 @@ body{font-size:16px;line-height:1.55}
 </div>
 
 <div class="inner-panel" id="ora-go" data-inner-group="ora">
-<div class="panel-intro"><h3>Gene Ontology auditado · T-005A</h3><p>La capa vigente excluye términos obsoletos y conserva la cobertura limitada como caveat.</p></div>
+<div class="panel-intro"><h3>Gene Ontology (GO)</h3><p>La capa vigente excluye términos obsoletos y conserva la cobertura limitada como caveat.</p></div>
 <div id="oraGoCards" class="cards"></div>
 <div id="oraGoBars" class="barbox" style="margin-top:12px"></div>
 </div>
@@ -175,12 +175,12 @@ body{font-size:16px;line-height:1.55}
 <div class="card"><span>Corrección</span><strong>BH / FDR</strong><small>Inferencia principal módulo×término por fuente.</small></div>
 <div class="card"><span>Límite</span><strong>ORA ≠ causalidad</strong><small>Tampoco identifica por sí sola el driver temporal de un módulo.</small></div>
 </div>
-<div class="notice" style="margin-top:12px"><strong>Fuentes:</strong> <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, scripts T-005/T-005A.</div>
+<div class="notice" style="margin-top:12px"><strong>Fuentes:</strong> <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, scripts de análisis reproducible.</div>
 </div>
 </div></section>
 
 <section id="profiles" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico y sensibilidad Hub-core</h2></div><p>El eigengene canónico permanece como PC1 de todos los genes. Hub-core PC1 usa el top 10% por kWithin como sensibilidad separada; no reemplaza resultados T-003/T-004.</p></div>
+<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico y sensibilidad Hub-core</h2></div><p>El eigengene canónico permanece como PC1 de todos los genes. Hub-core PC1 usa el top 10% por kWithin como sensibilidad separada; se presenta como análisis de sensibilidad complementario.</p></div>
 <div class="notice notice--ok"><strong>2012, 2013 y 2014 permanecen explícitos</strong> tanto en el eigengene canónico como en Hub-core. La nueva interfaz también muestra exactamente qué hubs centrales entraron a cada Hub-core PC1.</div>
 <div class="notice" style="margin-top:10px"><strong>Eigengene vs hubs:</strong> el eigengene canónico sigue siendo PC1 de todos los genes del módulo. Hub-core PC1 es una sensibilidad separada calculada con el top 10% por kWithin. Por eso los hubs no se mezclan como una columna del eigengene: se muestran como el conjunto que define esa sensibilidad, junto a sus gráficos y contrastes.</div>
 
@@ -233,7 +233,7 @@ body{font-size:16px;line-height:1.55}
 <div class="card"><span>Canónico</span><strong>PC1 de todos los genes</strong><small>Es el eigengene del módulo usado en los análisis principales.</small></div>
 <div class="card"><span>Hub-core</span><strong>Top 10% kWithin</strong><small>PC1 centrado/escalado de genes centrales; sensibilidad adicional.</small></div>
 <div class="card"><span>Selección hubs</span><strong>kWithin</strong><small>Suma de adyacencias intramodulares en la red beta10 congelada.</small></div>
-<div class="card"><span>Regla</span><strong>No reemplaza T-004</strong><small>Sirve para comprobar cuánto depende la trayectoria de genes periféricos.</small></div>
+<div class="card"><span>Regla</span><strong>Análisis complementario</strong><small>Sirve para comprobar cuánto depende la trayectoria de genes periféricos.</small></div>
 </div>
 <div class="notice" style="margin-top:12px"><strong>Importante:</strong> recalcular un “eigengene solo con hubs” y usarlo como si fuera el eigengene original cambiaría la definición científica. Por eso aquí se conserva como análisis de sensibilidad separado.</div>
 </div>
@@ -241,7 +241,7 @@ body{font-size:16px;line-height:1.55}
 </main>
 
 <section id="audit" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">0 · Auditoría de completitud</p><h2>M1–M10 × análisis × año</h2></div><p>Esta tabla verifica inclusión y estructura. No convierte automáticamente un módulo en “robusto”: la robustez biológica se evalúa con los perfiles, contrastes y el modelo de T-004.</p></div>
+<div class="section-head"><div><p class="eyebrow">0 · Auditoría de completitud</p><h2>M1–M10 × análisis × año</h2></div><p>Esta tabla verifica inclusión y estructura. No convierte automáticamente un módulo en “robusto”: la robustez biológica se evalúa con los perfiles, contrastes y el modelo estadístico del estudio.</p></div>
 <div id="auditSummary" class="cards"></div>
 <div id="auditNotice" class="notice notice--warn" style="margin-top:12px"></div>
 <div class="subsection"><div class="subhead"><h3>Cobertura módulo por módulo</h3><p>PASS significa que la capa contiene el módulo con el alcance esperado. ATTENTION identifica una excepción conocida sin rellenar datos artificialmente.</p></div>
@@ -249,7 +249,7 @@ body{font-size:16px;line-height:1.55}
 <div class="subsection"><div class="notice"><strong>Regla de seguridad:</strong> esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.</div></div>
 </div></section>
 
-<footer><div class="wrap">Fuentes canónicas: <code>results/beta10/tables/enrichment_*.tsv</code>, <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, <code>results/year_robustness_beta10/</code> y <code>results/hub_core_eigengene_sensitivity_beta10/</code>. El Hub-core PC1 es una sensibilidad adicional y no reemplaza el eigengene canónico.</div></footer>
+<footer><div class="wrap">Fuentes canónicas: <code>results/beta10/tables/enrichment_*.tsv</code>, <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, <code>results/year_robustness_beta10/</code> y <code>results/hub_core_eigengene_sensitivity_beta10/</code>. El Hub-core PC1 es una sensibilidad adicional y complementa el eigengene del módulo.</div></footer>
 
 <script>
 const INTEGRATED_URL='../data/gsea_year_profiles.json';
@@ -453,7 +453,7 @@ function renderProfiles(){
   const sm=HUB.summary.find(r=>r.Module===m);
   const sub=yearFilter==='all'?'2012 · 2013 · 2014':'Año '+yearFilter;
   const modeNote=scoreMode==='canonical'?'todos los genes del módulo':sm.Hub_core_genes+' hubs / '+sm.Genes_in_module+' genes';
-  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div><a href="#'+m.toLowerCase()+'">#</a></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><details class="canonical"><summary>Ver PNG canónico T-004 con los tres años</summary><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil canónico por año del módulo '+m+'"></details></article>'
+  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><div class="canonical"><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil por año del módulo '+m+'"></div></article>'
  }).join('');
 }
 function initProfiles(){
@@ -502,7 +502,7 @@ function renderOraOverview(){
  const cards=[
   ['Tests MapMan v3',O.summary.tested_terms.v3_mapman,'módulo×término testados'],
   ['Hits MapMan v3',O.summary.global_fdr05_hits.v3_mapman,'FDR global < 0,05'],
-  ['Tests GO vigente',O.summary.tested_terms.go,'tras auditoría T-005A'],
+  ['Tests GO vigente',O.summary.tested_terms.go,'tras control de calidad GO'],
   ['Hits GO vigente',O.summary.global_fdr05_hits.go,'concentrados en M9']
  ];
  document.getElementById('oraSummaryCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
