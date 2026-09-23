@@ -176,6 +176,23 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   expect(errors).toEqual([])
 })
 
+test('integrated report highlights the current scientific section in the sticky navigation', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html')
+
+  const gsea = page.locator('.anchors a[href="#gsea"]')
+  const ora = page.locator('.anchors a[href="#ora"]')
+  const profiles = page.locator('.anchors a[href="#profiles"]')
+  const audit = page.locator('.anchors a[href="#audit"]')
+
+  await expect(gsea).toHaveClass(/active/)
+  await page.locator('#ora').scrollIntoViewIfNeeded()
+  await expect(ora).toHaveClass(/active/)
+  await page.locator('#profiles').scrollIntoViewIfNeeded()
+  await expect(profiles).toHaveClass(/active/)
+  await page.locator('#audit').scrollIntoViewIfNeeded()
+  await expect(audit).toHaveClass(/active/)
+})
+
 test('integrated report switches completely between Spanish and curated scientific English', async ({ page }) => {
   await page.goto('reports/gsea_ora_year_profiles.html?utm_source=chatgpt.com')
   await expect(page.getByText(/Catalina Constanza Marchant Hurtado/i)).toBeVisible()
