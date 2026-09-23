@@ -27,6 +27,10 @@ SOURCE_PATHS = {
     "go_qc": "results/go_ora_beta10/go_annotation_and_test_qc.tsv",
     "m5_hubs": "results/hub_prioritization_beta10/m5_full_hub_ranking.tsv",
     "m10_m2_hubs": "results/hub_prioritization_beta10/m10_m2_full_hub_ranking.tsv",
+    "hub_core_summary": "results/hub_core_eigengene_sensitivity_beta10/hub_core_module_summary.tsv",
+    "hub_core_profiles": "results/hub_core_eigengene_sensitivity_beta10/hub_core_cell_profiles.tsv",
+    "hub_core_contrasts": "results/hub_core_eigengene_sensitivity_beta10/hub_core_stage_year_contrasts.tsv",
+    "hub_core_ranking": "results/hub_core_eigengene_sensitivity_beta10/hub_core_gene_ranking.tsv",
     "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
     "external": "results/external_skin_validation_beta10/primary_external_condition_hubs.tsv",
     "external_module_summary": "results/external_skin_validation_beta10/module_coverage_direction_summary.tsv",
@@ -44,6 +48,7 @@ EXPECTED_JSON = {
     "enrichments.json",
     "functional_enrichment.json",
     "gsea_year_profiles.json",
+    "hub_core_sensitivity.json",
     "year_completeness_audit.json",
     "hubs.json",
     "m5_network.json",
@@ -190,6 +195,55 @@ def main() -> None:
         raise AssertionError("Yearly module profiles must include 2012, 2013 and 2014")
     if integrated["profiles"]["modules"] != [f"M{i}" for i in range(1, 11)]:
         raise AssertionError("Yearly module profiles must include M1-M10")
+
+    hub_core = payloads["hub_core_sensitivity.json"]
+    if hub_core["schema_version"] != 1:
+        raise AssertionError("hub_core_sensitivity schema_version must be 1")
+    if hub_core["method"]["canonical_replaced"] is not False:
+        raise AssertionError("Hub-core sensitivity must never replace the canonical eigengene")
+    if hub_core["method"]["network_rerun"] is not False:
+        raise AssertionError("Hub-core sensitivity must not rerun the beta10 network")
+    if len(hub_core["summary"]) != 10:
+        raise AssertionError("Hub-core sensitivity must summarize M1-M10")
+    if len(hub_core["profiles"]) != 180:
+        raise AssertionError("Hub-core sensitivity must contain 180 module×cultivar×stage×year profiles")
+    if len(hub_core["contrasts"]) != 90:
+        raise AssertionError("Hub-core sensitivity must contain 90 Stage×Year contrasts")
+    hub_modules = [row["Module"] for row in hub_core["summary"]]
+    if hub_modules != [f"M{i}" for i in range(1, 11)]:
+        raise AssertionError("Hub-core summary must be ordered M1-M10")
+
+    source_summary = read_rows(SOURCE_PATHS["hub_core_summary"])
+    source_profiles = read_rows(SOURCE_PATHS["hub_core_profiles"])
+    source_contrasts = read_rows(SOURCE_PATHS["hub_core_contrasts"])
+    source_ranking = read_rows(SOURCE_PATHS["hub_core_ranking"])
+    if len(source_summary) != 10 or len(source_profiles) != 180 or len(source_contrasts) != 90:
+        raise AssertionError("Hub-core exported row counts do not match canonical sensitivity tables")
+    if len(source_ranking) != biological_source_count:
+        raise AssertionError("Hub-core ranking must cover every biological beta10 module gene")
+
+    # The hub definition must remain identical to the already audited T-006
+    # rankings for M5, M10 and M2.
+    selected_new = {
+        (row["Module"], row["Gene"])
+        for row in source_ranking
+        if row["Hub_core_selected"].upper() == "TRUE"
+    }
+    selected_existing = {
+        ("M5", row["Gene"])
+        for row in read_rows(SOURCE_PATHS["m5_hubs"])
+        if row["Top_decile_kWithin"].upper() == "TRUE"
+    }
+    selected_existing |= {
+        (row["Module"], row["Gene"])
+        for row in read_rows(SOURCE_PATHS["m10_m2_hubs"])
+        if row["Top_decile_kWithin"].upper() == "TRUE"
+    }
+    for module in {"M5", "M10", "M2"}:
+        if {gene for mod, gene in selected_new if mod == module} != {
+            gene for mod, gene in selected_existing if mod == module
+        }:
+            raise AssertionError(f"Hub-core {module} top-decile genes differ from T-006")
 
     audit = payloads["year_completeness_audit.json"]
     if audit["status"] not in {"PASS", "ATTENTION"}:
