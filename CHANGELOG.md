@@ -1,6 +1,6 @@
 # Changelog
 
-- Sustituye el mosaico repetido del margen de Métodos por una vid vertical continua, transparente y sin costuras visibles.
+- Reemplaza el asset canónico del margen de Métodos por una vid vertical continua, transparente y sin costuras visibles.
 - Ajusta la matriz del diseño experimental de Home a la altura real de sus dos filas, eliminando el área vacía que hacía parecer que la tabla estaba cortada.
 
 ## 2026-09-23 — Home editorial breathing room

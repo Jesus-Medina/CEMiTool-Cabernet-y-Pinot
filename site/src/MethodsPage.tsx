@@ -145,7 +145,7 @@ export default function MethodsPage() {
     <div className="methods-page">
       <div className="methods-vine-decoration" aria-hidden="true">
         <img
-          src={`${import.meta.env.BASE_URL}assets/methods/vine-decoration-continuous.png`}
+          src={`${import.meta.env.BASE_URL}assets/methods/vine-decoration.png`}
           alt=""
         />
       </div>

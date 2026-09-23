@@ -413,7 +413,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Home design matrix height follow-up (2026-09-23):** la matriz del diseño experimental dejó de estirarse artificialmente hasta la altura de la nota lateral. Su marco termina ahora al finalizar las dos filas reales de cultivares, evitando que el espacio vacío se interprete como contenido cortado o faltante.
 
-**Methods continuous vine follow-up (2026-09-23):** el motivo botánico lateral de Métodos dejó de ensamblarse con ocho copias rotadas de la rama original. Se generó e integró una pieza vertical transparente de 724×2172 px con una única vid conectada, sin costuras ni repetición perceptible; la decoración continúa oculta en pantallas de hasta 900 px y no altera el contenido científico.
+**Methods continuous vine follow-up (2026-09-23):** el motivo botánico lateral de Métodos dejó de ensamblarse con ocho copias rotadas de la rama original. El asset canónico `vine-decoration.png` fue reemplazado por una pieza vertical transparente de 724×2172 px con una única vid conectada, sin costuras ni repetición perceptible; la decoración continúa oculta en pantallas de hasta 900 px y no altera el contenido científico.
 
 **Acceptance criteria for T-010 DONE:**
 
