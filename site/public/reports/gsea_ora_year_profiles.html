@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GSEA · ORA · perfiles por año | CEMiTool beta10</title>
-<meta name="description" content="Reporte integrado de GSEA CEMiTool, ORA funcional y perfiles del eigengene por año para M1-M10.">\n<!-- presentation-clean-v2: standalone report, no internal task labels -->
+<meta name="description" content="Reporte integrado de GSEA CEMiTool, ORA funcional y perfiles del eigengene por año para M1-M10.">
+<!-- presentation-clean-v3: scientist-facing hierarchy -->
 <style>
 :root{--wine:#7d1737;--wine2:#a82550;--pinot:#a45d71;--ink:#21191d;--muted:#746970;--line:#e8e1e4;--soft:#f8f5f6;--soft2:#fcfafb;--blue:#4c6f91;--ok:#285f4b;--warn:#8a5c16}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#fcfbfb;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--wine)}button,input,select{font:inherit}.wrap{width:min(1460px,calc(100% - 32px));margin:0 auto}
@@ -30,40 +31,65 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 .panel-intro p{max-width:900px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.55}.panel-intro h3{margin:0;font-family:Georgia,serif;font-size:1.45rem}.panel-intro p{max-width:860px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.5}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.download-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.compact-table td,.compact-table th{font-size:.64rem}.hub-list-table td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.status-pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;font-size:.6rem;font-weight:850}.status-pill.good{background:#edf7f2}.status-pill.warn{background:#fff5e6}@media(max-width:760px){.mini-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.mini-grid{grid-template-columns:1fr}}footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.65rem;line-height:1.5;background:#fff}
 @media(max-width:1000px){.section-head{grid-template-columns:1fr}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr 1fr}.composition-grid{grid-template-columns:repeat(3,1fr)}.profile-grid{grid-template-columns:1fr}.controls,.ora-controls{grid-template-columns:1fr 1fr}.barrow{grid-template-columns:1fr}.stats{justify-content:flex-start}}
 @media(max-width:620px){.wrap{width:min(100% - 20px,1460px)}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr}.composition-grid{grid-template-columns:1fr 1fr}.controls,.ora-controls{grid-template-columns:1fr}.native-figure{padding:10px}.native-figure figcaption{flex-direction:column}.matrix td{min-width:105px}.profile-card{padding:11px}.anchorbar{top:58px}}
+
+/* Scientist-facing presentation layer */
+body{font-size:16px;line-height:1.55}
+.wrap{width:min(1260px,calc(100% - 36px))}
+.hero{padding:38px 0 30px}
+.hero h1{max-width:1040px;font-size:clamp(2.45rem,4.7vw,4.8rem);line-height:1.01}
+.hero .lede{max-width:900px;font-size:1.08rem;line-height:1.65}
+.eyebrow{font-size:.76rem}
+.scope{padding:18px}.scope span{font-size:.72rem}.scope strong{font-size:1.08rem}.scope small{font-size:.8rem;line-height:1.5}
+.anchors{justify-content:center}.anchors a{font-size:.84rem;padding:10px 16px}
+.section-head{grid-template-columns:minmax(0,1fr) minmax(280px,.55fr);gap:36px}
+.section-head p,.panel-intro p,.subhead p{font-size:.88rem;line-height:1.58}
+.card span,.control label{font-size:.72rem}.card small{font-size:.79rem;line-height:1.48}
+.notice{font-size:.87rem;line-height:1.58}
+.notice--interpretation{border-color:#e6ccd5;background:#fff7fa;color:#633548}
+.notice--method{border-color:#dbe2e8;background:#f7f9fb;color:#45515d}
+.notice--limit{border-color:#eadfca;background:#fffaf0;color:#76561d}
+.table,.matrix{font-size:.78rem}.barlabel strong{font-size:.84rem}.barlabel small,.stats{font-size:.72rem}
+.profile-card small,.profile-legend,.native-figure figcaption{font-size:.75rem}
+.profile-grid{gap:16px}
+.profile-card{padding:18px}
+.profile-interpretation{margin-top:12px;padding:12px 13px;border-left:3px solid var(--wine);border-radius:0 8px 8px 0;background:#fff8fa;color:#5d3a48;font-size:.79rem;line-height:1.5}
+.profile-interpretation strong{display:block;margin-bottom:3px;font-family:Georgia,serif;color:var(--wine)}
+.profile-interpretation small{display:block;margin-top:5px;color:var(--muted);font-size:.72rem}
+.data-details{margin-top:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.data-details>summary{cursor:pointer;padding:12px 14px;color:var(--wine);font-weight:850;font-size:.82rem;list-style:none}
+.data-details>summary::-webkit-details-marker{display:none}
+.data-details>summary:before{content:"＋";display:inline-block;width:1.3em}
+.data-details[open]>summary:before{content:"−"}
+.data-details .details-body{padding:0 14px 14px}
+.presentation-kicker{margin:0 0 10px;color:var(--muted);font-size:.82rem;font-weight:750}
+#audit{background:var(--soft2)}
+@media(max-width:760px){.anchors{justify-content:flex-start}.wrap{width:min(100% - 22px,1260px)}}
+
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>GSEA · ORA · perfiles por año</strong><small>CEMiTool beta10 · GSE98923</small></div></div></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div></div></header>
 
-<section class="hero"><div class="wrap"><p class="eyebrow">Reporte integrado · una sola página</p><h1>GSEA, ORA y trayectoria anual de M1–M10</h1><p class="lede">Tres capas distintas del mismo estudio, presentadas en el orden solicitado. El GSEA es la salida nativa de CEMiTool; el ORA es un análisis funcional posterior sobre módulos beta10; y los perfiles anuales muestran medias observadas del eigengene por Cultivar × Stage × Year.</p>
+<section class="hero"><div class="wrap"><p class="eyebrow">Caracterización transcriptómica comparativa</p><h1>Cabernet Sauvignon y Pinot noir durante la maduración</h1><p class="lede">Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
 
-<div class="anchorbar"><nav class="wrap anchors"><a href="#audit">0 · Auditoría</a><a href="#gsea">1 · GSEA</a><a href="#ora">2 · ORA</a><a href="#profiles">3 · Perfiles por año</a></nav></div>
+<div class="anchorbar"><nav class="wrap anchors" aria-label="Recorrido científico"><a href="#gsea">1 · GSEA</a><a href="#ora">2 · ORA</a><a href="#profiles">3 · Perfiles</a><a href="#audit">Métodos y control de calidad</a></nav></div>
 
 <main>
-<section id="audit" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">0 · Auditoría de completitud</p><h2>M1–M10 × análisis × año</h2></div><p>Esta tabla verifica inclusión y estructura. No convierte automáticamente un módulo en “robusto”: la robustez biológica se evalúa con los perfiles, contrastes y el modelo estadístico principal.</p></div>
-<div id="auditSummary" class="cards"></div>
-<div id="auditNotice" class="notice notice--warn" style="margin-top:12px"></div>
-<div class="subsection"><div class="subhead"><h3>Cobertura módulo por módulo</h3><p>PASS significa que la capa contiene el módulo con el alcance esperado. ATTENTION identifica una excepción conocida sin rellenar datos artificialmente.</p></div>
-<div class="tablewrap"><table class="table"><thead><tr><th>Módulo</th><th>GSEA nativo</th><th>GSEA usa 3 años</th><th>ORA v3</th><th>ORA v5.1</th><th>ORA GO</th><th>Perfiles 2012–2014</th><th>Contrastes 2012–2014</th><th>Estado</th></tr></thead><tbody id="auditTable"></tbody></table></div></div>
-<div class="subsection"><div class="notice"><strong>Regla de seguridad:</strong> esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.</div></div>
-</div></section>
-
 <section id="gsea" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por clase Cultivar × Stage</h2></div><p>El GSEA nativo se conserva intacto. La interfaz siguiente expone la figura original, ES, NES, p ajustado y la composición de años sin recalcular nada.</p></div>
+<div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por cultivar y etapa de desarrollo</h2></div><p>El GSEA nativo se conserva intacto. La interfaz siguiente expone la figura original, ES, NES, p ajustado y la composición de años sin recalcular nada.</p></div>
 <div class="notice notice--ok"><strong>Verificación de años:</strong> cada una de las seis clases contiene exactamente 9 muestras = 3 de 2012 + 3 de 2013 + 3 de 2014. Los años están agrupados dentro de Cultivar × Stage; no son GSEA separados por año.</div>
 
-<div class="inner-panel active" id="gsea-overview" data-inner-group="gsea">
+<div class="inner-panel active" id="gsea-figure" data-inner-group="gsea">
+<div class="panel-intro"><h3>Figura nativa de CEMiTool</h3><p>PNG y PDF vectorial exportados directamente del objeto de CEMiTool.</p></div>
+<figure class="native-figure"><img src="../assets/integrated/gsea_cemitool.png" alt="Figura GSEA nativa de CEMiTool beta10"><figcaption><span>Salida nativa CEMiTool · beta10</span><a href="../assets/integrated/gsea_cemitool.pdf" target="_blank" rel="noreferrer">Abrir PDF vectorial original ↗</a></figcaption></figure><div class="notice notice--interpretation" style="margin-top:12px"><strong>Interpretación:</strong> esta figura resume la respuesta de los módulos frente a las seis clases Cultivar × Stage. La matriz interactiva de la sección siguiente permite inspeccionar ES, NES y p ajustado sin modificar la salida original.</div>
+</div>
+
+<div class="inner-panel" id="gsea-overview" data-inner-group="gsea">
 <div class="panel-intro"><h3>Resumen GSEA</h3><p>Qué entra al análisis, qué exportó CEMiTool y qué excepción permanece explícita.</p></div>
 <div id="gseaOverviewCards" class="cards"></div>
 <div id="gseaOverviewModuleTable" class="tablewrap" style="margin-top:12px"></div>
 <div id="gseaMissing" class="notice notice--warn" style="margin-top:12px"></div>
-</div>
-
-<div class="inner-panel" id="gsea-figure" data-inner-group="gsea">
-<div class="panel-intro"><h3>Figura nativa de CEMiTool</h3><p>PNG y PDF vectorial exportados directamente del objeto beta10.</p></div>
-<figure class="native-figure"><img src="../assets/integrated/gsea_cemitool.png" alt="Figura GSEA nativa de CEMiTool beta10"><figcaption><span>Salida nativa CEMiTool · beta10</span><a href="../assets/integrated/gsea_cemitool.pdf" target="_blank" rel="noreferrer">Abrir PDF vectorial original ↗</a></figcaption></figure>
 </div>
 
 <div class="inner-panel" id="gsea-matrix" data-inner-group="gsea">
@@ -96,14 +122,14 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 </div></section>
 
 <section id="ora" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">2 · ORA funcional</p><h2>ORA completo dentro del reporte integrado</h2></div><p>La misma profundidad funcional del reporte ORA standalone, ahora embebida aquí: resumen, términos, temas MapMan, QC, auditoría M5, GO y método.</p></div>
+<div class="section-head"><div><p class="eyebrow">2 · ORA funcional</p><h2>Funciones sobrerrepresentadas en los módulos</h2></div><p>El ORA resume qué funciones están sobrerrepresentadas en cada módulo y permite profundizar en términos, temas MapMan, Gene Ontology y cobertura de anotación.</p></div>
 <div class="notice"><strong>Relación con los años:</strong> los módulos fueron inferidos con las 54 muestras de 2012–2014. ORA analiza membresía génica + anotación funcional y no tiene una dimensión Year propia.</div>
 
 <div class="inner-panel active" id="ora-overview" data-inner-group="ora">
 <div class="panel-intro"><h3>Panorama del enriquecimiento</h3><p>Recuentos globales y distribución de hits MapMan v3 por módulo.</p></div>
 <div id="oraSummaryCards" class="cards"></div>
 <div id="oraOverviewBars" class="barbox" style="margin-top:12px"></div>
-<div class="notice" style="margin-top:12px"><strong>Interpretación:</strong> un mayor número de términos enriquecidos no convierte un módulo en “mejor”. La cobertura de anotación y la redundancia de términos deben leerse junto a la significancia.</div>
+<div class="notice notice--interpretation" style="margin-top:12px"><strong>Interpretación:</strong> un mayor número de términos enriquecidos no convierte un módulo en “mejor”. La cobertura de anotación y la redundancia de términos deben leerse junto a la significancia.</div>
 </div>
 
 <div class="inner-panel" id="ora-terms" data-inner-group="ora">
@@ -117,7 +143,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 </div>
 <div id="oraCoverage" class="coverage-strip"></div>
 <div id="oraBars" class="barbox" style="margin-top:12px"></div>
-<div class="subsection"><div class="subhead"><h3>Tabla ORA filtrada</h3><p id="oraCount"></p></div><div class="tablewrap"><table class="table"><thead><tr><th>Término</th><th>ID</th><th>Módulo</th><th>Overlap</th><th>Fold</th><th>p</th><th>FDR global</th><th>Aspect</th></tr></thead><tbody id="oraTable"></tbody></table></div></div>
+<details class="data-details"><summary>Ver datos completos del ORA</summary><div class="details-body"><div class="subhead"><h3>Tabla ORA filtrada</h3><p id="oraCount"></p></div><div class="tablewrap"><table class="table"><thead><tr><th>Término</th><th>ID</th><th>Módulo</th><th>Overlap</th><th>Fold</th><th>p</th><th>FDR global</th><th>Aspect</th></tr></thead><tbody id="oraTable"></tbody></table></div></div></details>
 </div>
 
 <div class="inner-panel" id="ora-themes" data-inner-group="ora">
@@ -143,7 +169,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <article class="card"><span>MapMan v3 · hits M5</span><div id="oraM5v3" style="margin-top:10px"></div></article>
 <article class="card"><span>MapMan v5.1 · hits M5</span><div id="oraM5v5" style="margin-top:10px"></div></article>
 </div>
-<div class="notice notice--warn" style="margin-top:12px"><strong>Interpretación segura:</strong> la discordancia entre versiones es un conflicto de anotación y no una validación independiente.</div>
+<div class="notice notice--limit" style="margin-top:12px"><strong>Limitación:</strong> la discordancia entre versiones es un conflicto de anotación y no una validación independiente.</div>
 </div>
 
 <div class="inner-panel" id="ora-go" data-inner-group="ora">
@@ -165,21 +191,21 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 </div></section>
 
 <section id="profiles" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico y sensibilidad Hub-core</h2></div><p>El eigengene canónico permanece como PC1 de todos los genes. Hub-core PC1 usa el top 10% por kWithin como sensibilidad separada; se presenta como un análisis de sensibilidad complementario.</p></div>
+<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Perfiles de expresión de los módulos M1–M10</h2></div><p>Comparación temporal entre Cabernet Sauvignon y Pinot noir. El eigengene resume la trayectoria de cada módulo y Hub-core evalúa si el patrón se mantiene al centrarse en sus genes más conectados.</p></div>
 <div class="notice notice--ok"><strong>2012, 2013 y 2014 permanecen explícitos</strong> tanto en el eigengene canónico como en Hub-core. La nueva interfaz también muestra exactamente qué hubs centrales entraron a cada Hub-core PC1.</div>
 <div class="notice" style="margin-top:10px"><strong>Eigengene vs hubs:</strong> el eigengene canónico sigue siendo PC1 de todos los genes del módulo. Hub-core PC1 es una sensibilidad separada calculada con el top 10% por kWithin. Por eso los hubs no se mezclan como una columna del eigengene: se muestran como el conjunto que define esa sensibilidad, junto a sus gráficos y contrastes.</div>
 
-<div class="inner-panel active" id="profiles-overview" data-inner-group="profiles">
-<div class="panel-intro"><h3>Sensibilidad por módulo</h3><p>Correlación Hub-core PC1 vs eigengene canónico y concordancia de dirección en los nueve contrastes Stage × Year.</p></div>
-<div id="hubCoreCards" class="cards"></div>
-<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Genes totales</th><th>Hubs usados</th><th>Fracción</th><th>Correlación 54 muestras</th><th>Correlación medias</th><th>Dirección igual</th></tr></thead><tbody id="hubCoreSummary"></tbody></table></div>
-</div>
-
-<div class="inner-panel" id="profiles-charts" data-inner-group="profiles">
+<div class="inner-panel active" id="profiles-charts" data-inner-group="profiles">
 <div class="panel-intro"><h3>Trayectorias por módulo y año</h3><p>Alterna entre el resumen canónico y la sensibilidad Hub-core; filtra 2012, 2013 o 2014.</p></div>
 <div class="profile-toolbar" id="scoreButtons"></div>
 <div class="profile-toolbar" id="yearButtons"></div>
 <div id="profileGrid" class="profile-grid"></div>
+</div>
+
+<div class="inner-panel" id="profiles-overview" data-inner-group="profiles">
+<div class="panel-intro"><h3>Sensibilidad por módulo</h3><p>Correlación Hub-core PC1 vs eigengene canónico y concordancia de dirección en los nueve contrastes Stage × Year.</p></div>
+<div id="hubCoreCards" class="cards"></div>
+<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Genes totales</th><th>Hubs usados</th><th>Fracción</th><th>Correlación 54 muestras</th><th>Correlación medias</th><th>Dirección igual</th></tr></thead><tbody id="hubCoreSummary"></tbody></table></div>
 </div>
 
 <div class="inner-panel" id="profiles-data" data-inner-group="profiles">
@@ -190,7 +216,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <div class="control"><label>Score</label><select id="profileDataScore"><option value="canonical">Canónico</option><option value="hub">Hub-core</option></select></div>
 <button id="profileDownloadCsv" class="button">Descargar CSV</button>
 </div>
-<div class="tablewrap" style="margin-top:12px"><table class="table compact-table"><thead><tr><th>Módulo</th><th>Cultivar</th><th>Stage</th><th>Año</th><th>Media</th><th>SD</th><th>N</th><th>SE</th><th>Score</th></tr></thead><tbody id="profileDataTable"></tbody></table></div>
+<details class="data-details"><summary>Ver tabla completa de perfiles</summary><div class="details-body"><div class="tablewrap"><table class="table compact-table"><thead><tr><th>Módulo</th><th>Cultivar</th><th>Stage</th><th>Año</th><th>Media</th><th>SD</th><th>N</th><th>SE</th><th>Score</th></tr></thead><tbody id="profileDataTable"></tbody></table></div></div></details>
 </div>
 
 <div class="inner-panel" id="profiles-hubs" data-inner-group="profiles">
@@ -200,7 +226,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <button id="hubDownloadCsv" class="button">Descargar hubs CSV</button>
 </div>
 <div id="hubListSummary" class="coverage-strip"></div>
-<div class="tablewrap" style="margin-top:12px"><table class="table hub-list-table"><thead><tr><th>Gen</th><th>Módulo</th><th>Rank kWithin</th><th>kWithin</th><th>kWithin / arista posible</th></tr></thead><tbody id="hubListTable"></tbody></table></div>
+<details class="data-details"><summary>Ver genes hub seleccionados</summary><div class="details-body"><div class="tablewrap"><table class="table hub-list-table"><thead><tr><th>Gen</th><th>Módulo</th><th>Rank kWithin</th><th>kWithin</th><th>kWithin / arista posible</th></tr></thead><tbody id="hubListTable"></tbody></table></div></div></details>
 </div>
 
 <div class="inner-panel" id="profiles-contrasts" data-inner-group="profiles">
@@ -209,7 +235,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <div class="control"><label>Módulo</label><select id="contrastModule"></select></div>
 <button id="contrastDownloadCsv" class="button">Descargar contrastes CSV</button>
 </div>
-<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Stage</th><th>Año</th><th>Canónico CS−PN</th><th>Hub-core CS−PN</th><th>Misma dirección</th></tr></thead><tbody id="contrastTable"></tbody></table></div>
+<details class="data-details"><summary>Ver contrastes completos</summary><div class="details-body"><div class="tablewrap"><table class="table"><thead><tr><th>Módulo</th><th>Stage</th><th>Año</th><th>Canónico CS−PN</th><th>Hub-core CS−PN</th><th>Misma dirección</th></tr></thead><tbody id="contrastTable"></tbody></table></div></div></details>
 </div>
 
 <div class="inner-panel" id="profiles-method" data-inner-group="profiles">
@@ -217,15 +243,24 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <div class="cards">
 <div class="card"><span>Canónico</span><strong>PC1 de todos los genes</strong><small>Es el eigengene del módulo usado en los análisis principales.</small></div>
 <div class="card"><span>Hub-core</span><strong>Top 10% kWithin</strong><small>PC1 centrado/escalado de genes centrales; sensibilidad adicional.</small></div>
-<div class="card"><span>Selección hubs</span><strong>kWithin</strong><small>Suma de adyacencias intramodulares en la red beta10 congelada.</small></div>
+<div class="card"><span>Selección hubs</span><strong>kWithin</strong><small>Suma de adyacencias intramodulares en la red de coexpresión utilizada en el estudio.</small></div>
 <div class="card"><span>Regla</span><strong>Análisis complementario</strong><small>Sirve para comprobar cuánto depende la trayectoria de genes periféricos.</small></div>
 </div>
-<div class="notice" style="margin-top:12px"><strong>Importante:</strong> recalcular un “eigengene solo con hubs” y usarlo como si fuera el eigengene original cambiaría la definición científica. Por eso aquí se conserva como análisis de sensibilidad separado.</div>
+<div class="notice notice--method" style="margin-top:12px"><strong>Método:</strong> recalcular un “eigengene solo con hubs” y usarlo como si fuera el eigengene original cambiaría la definición científica. Por eso aquí se conserva como análisis de sensibilidad separado.</div>
 </div>
 </div></section>
+<section id="audit" class="major"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow">Métodos y control de calidad</p><h2>Trazabilidad y completitud del análisis</h2></div><p>Esta capa documenta la cobertura de módulos, años y análisis. Sirve como respaldo metodológico de los resultados mostrados arriba, no como resultado biológico independiente.</p></div>
+<div id="auditSummary" class="cards"></div>
+<div id="auditNotice" class="notice notice--warn" style="margin-top:12px"></div>
+<div class="subsection"><div class="subhead"><h3>Cobertura módulo por módulo</h3><p>PASS significa que la capa contiene el módulo con el alcance esperado. ATTENTION identifica una excepción conocida sin rellenar datos artificialmente.</p></div>
+<details class="data-details"><summary>Ver auditoría módulo por módulo</summary><div class="details-body"><div class="tablewrap"><table class="table"><thead><tr><th>Módulo</th><th>GSEA nativo</th><th>GSEA usa 3 años</th><th>ORA v3</th><th>ORA v5.1</th><th>ORA GO</th><th>Perfiles 2012–2014</th><th>Contrastes 2012–2014</th><th>Estado</th></tr></thead><tbody id="auditTable"></tbody></table></div></div></details></div>
+<div class="subsection"><div class="notice notice--method"><strong>Regla de seguridad:</strong> esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.</div></div>
+</div></section>
+
 </main>
 
-<footer><div class="wrap">Fuentes canónicas: <code>results/beta10/tables/enrichment_*.tsv</code>, <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, <code>results/year_robustness_beta10/</code> y <code>results/hub_core_eigengene_sensitivity_beta10/</code>. El Hub-core PC1 es una sensibilidad adicional y no reemplaza el eigengene canónico.</div></footer>
+<footer><div class="wrap">GSE98923 · análisis de coexpresión con CEMiTool, enriquecimiento funcional y perfiles temporales de Cabernet Sauvignon y Pinot noir. Los controles metodológicos y las limitaciones se mantienen explícitos dentro del reporte.</div></footer>
 
 <script>
 const INTEGRATED_URL='../data/gsea_year_profiles.json';
@@ -421,6 +456,28 @@ function renderHubCoreSummary(){
  document.getElementById('hubCoreCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
  document.getElementById('hubCoreSummary').innerHTML=HUB.summary.map(r=>'<tr><td><strong>'+r.Module+'</strong></td><td>'+r.Genes_in_module+'</td><td>'+r.Hub_core_genes+'</td><td>'+fmt(Number(r.Hub_core_fraction)*100,1)+'%</td><td class="'+(Number(r.Correlation_HubCore_vs_Canonical_54samples)>=.95?'good':'warn')+'">'+fmt(r.Correlation_HubCore_vs_Canonical_54samples,3)+'</td><td>'+fmt(r.Correlation_cell_means,3)+'</td><td>'+r.Same_direction_stage_year_contrasts+'/'+r.Total_stage_year_contrasts+'</td></tr>').join('');
 }
+
+function profileInterpretation(module,year){
+ const rows=profileRows(module,year);
+ const years=[...new Set(rows.map(r=>Number(r.Year)))].sort();
+ const summaries=STAGES.map(stage=>{
+  const diffs=years.map(yr=>{
+   const cs=rows.find(r=>Number(r.Year)===yr&&r.Cultivar==='Cabernet Sauvignon'&&r.Stage===stage);
+   const pn=rows.find(r=>Number(r.Year)===yr&&r.Cultivar==='Pinot noir'&&r.Stage===stage);
+   return cs&&pn?Number(cs.Mean)-Number(pn.Mean):null;
+  }).filter(v=>v!=null);
+  const mean=diffs.length?diffs.reduce((a,b)=>a+b,0)/diffs.length:0;
+  const sign=Math.sign(mean);
+  const concordant=sign===0?diffs.length:diffs.filter(v=>Math.sign(v)===sign).length;
+  return {stage,mean,concordant,total:diffs.length};
+ }).sort((a,b)=>Math.abs(b.mean)-Math.abs(a.mean));
+ const best=summaries[0];
+ const who=best.mean>=0?'Cabernet Sauvignon':'Pinot noir';
+ const period=year==='all'?'entre los años mostrados':'en '+year;
+ const consistency=best.total>1?' La dirección de esa diferencia coincide en '+best.concordant+' de '+best.total+' años.':'';
+ return 'La mayor separación descriptiva entre cultivares aparece en <strong>'+best.stage+'</strong> ('+who+' presenta el valor medio más alto, Δ CS−PN = '+fmt(best.mean,2)+') '+period+'.'+consistency;
+}
+
 function renderProfiles(){
  document.querySelectorAll('#scoreButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.score===scoreMode));
  document.querySelectorAll('#yearButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.year===String(yearFilter)));
@@ -429,7 +486,7 @@ function renderProfiles(){
   const sm=HUB.summary.find(r=>r.Module===m);
   const sub=yearFilter==='all'?'2012 · 2013 · 2014':'Año '+yearFilter;
   const modeNote=scoreMode==='canonical'?'todos los genes del módulo':sm.Hub_core_genes+' hubs / '+sm.Genes_in_module+' genes';
-  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><div class="canonical"><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil por año del módulo '+m+'"></div></article>'
+  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><div class="profile-interpretation"><strong>Interpretación descriptiva</strong>'+profileInterpretation(m,yearFilter)+'<small>Resumen visual; la inferencia formal se conserva en la sección de contrastes.</small></div><div class="canonical"><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil por año del módulo '+m+'"></div></article>'
  }).join('');
 }
 function initProfiles(){
