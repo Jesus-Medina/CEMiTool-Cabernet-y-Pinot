@@ -585,6 +585,102 @@
   font-size: 1.65rem;
 }
 
+.module-data-table caption {
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  line-height: 1.45;
+  text-align: left;
+}
+
+.module-data-table th[scope="row"] {
+  min-width: 7.5rem;
+  background: var(--color-surface-panel);
+  text-align: left;
+}
+
+.module-data-table tbody tr:hover th[scope="row"] {
+  background: var(--color-surface-brand);
+}
+
+.module-result-count {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  text-align: right;
+}
+
+.module-column-guide {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background: var(--color-surface-muted);
+}
+
+.module-column-guide summary {
+  min-height: var(--control-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  color: var(--color-brand-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 800;
+}
+
+.module-column-guide dl {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.module-column-guide dl div {
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  background: var(--color-surface-panel);
+}
+
+.module-column-guide dt {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  font-weight: 800;
+}
+
+.module-column-guide dd,
+.module-column-guide > p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  line-height: 1.45;
+}
+
+.module-column-guide > p {
+  margin: 0 var(--space-4) var(--space-4);
+  color: var(--color-brand-deep);
+  font-weight: 750;
+}
+
+@media (max-width: 1050px) {
+  .module-column-guide dl {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .module-column-guide dl {
+    grid-template-columns: 1fr;
+  }
+}
+
 .module-card-grid {
   grid-template-columns: 1fr;
   gap: 8px;

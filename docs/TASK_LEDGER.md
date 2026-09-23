@@ -401,6 +401,12 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **UX05B-01 completion (2026-09-23):** `/results` dejó de redirigir automáticamente a Módulos y ahora abre la landing de familias científicas. Módulos es la ruta destacada; Validación y Genes son destinos pares, mientras Función queda como capa transversal secundaria. La cabecera resume módulos, interacciones significativas y reproducibilidad desde datos canónicos, con orientación hacia M5 y Reproducibilidad. Siguiente tarea: `UX05B-02`.
 
+**UX05B-02 completion (2026-09-23):** M1–M10 se comparan en una tabla compacta única por genes, FDR Cultivar×Stage, robustez, ORA v3, hubs y evidencia externa, sin score agregado. La tabla incorpora caption descriptivo, encabezados de columna con alcance, cada módulo como encabezado de fila y un contador vivo de resultados filtrados. Las figuras originales de CEMiTool se conservan como evidencia canónica enlazada. Siguiente tarea: `UX05B-03`.
+
+**UX05B-03 completion (2026-09-23):** el filtro de módulos y la búsqueda se sincronizan con los parámetros `filter` y `q` de la URL. Las vistas filtradas pueden compartirse y sobreviven recarga/navegación; valores de filtro desconocidos vuelven de forma segura a `Todos`. El filtrado sigue siendo puramente de presentación y no modifica los datos canónicos. Siguiente tarea: `UX05B-04`.
+
+**UX05B-04 completion (2026-09-23):** la comparación incorpora una guía desplegable que define FDR Cultivar×Stage, robustez anual, ORA v3, hubs top-decile y evidencia externa, junto con sus límites. La guía declara explícitamente que no existe un score total y que cada columna responde una pregunta científica diferente. Siguiente tarea: `UX05B-05`.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;

@@ -3,7 +3,7 @@
 **Estado:** ACTIVO  
 **Fecha base:** 2026-09-23  
 **Alcance:** arquitectura de información, sistema visual, navegación, presentación científica, recuperación de funcionalidades históricas y QA UX.  
-**Siguiente tarea ejecutable:** `UX05B-02 — Convertir cards M1–M10 en comparación compacta y accesible`.
+**Siguiente tarea ejecutable:** `UX05B-05 — Diseñar lista móvil sin depender de tabla horizontal dominante`.
 
 Este documento es la fuente operativa para implementar el rediseño por fases. Complementa, pero no reemplaza, la auditoría, los flujos y los wireframes existentes:
 
@@ -229,9 +229,9 @@ Los estados permitidos son `PENDING`, `IN PROGRESS`, `BLOCKED` y `DONE`. Una tar
 | ID | Estado | Tarea | Dependencia |
 |---|---|---|---|
 | UX05B-01 | DONE | Crear landing Results con Modules, Validation y Genes como subfamilias | UX-04 |
-| UX05B-02 | PENDING | Convertir cards M1–M10 en comparación compacta y accesible | UX05B-01 |
-| UX05B-03 | PENDING | Estandarizar filtros y conservar estado científico en URL | UX04-05 |
-| UX05B-04 | PENDING | Añadir explicación de columnas, robustez y ausencia de score total | UX05B-02 |
+| UX05B-02 | DONE | Convertir cards M1–M10 en comparación compacta y accesible | UX05B-01 |
+| UX05B-03 | DONE | Estandarizar filtros y conservar estado científico en URL | UX04-05 |
+| UX05B-04 | DONE | Añadir explicación de columnas, robustez y ausencia de score total | UX05B-02 |
 | UX05B-05 | PENDING | Diseñar lista móvil sin depender de tabla horizontal dominante | UX05B-02–04 |
 
 **Aceptación de fase:** se comparan módulos por genes, Cultivar×Stage, robustez, función y evidencia externa; M2/M5/M10 conservan sus límites; filtros son compartibles; móvil no requiere comprender una tabla de escritorio reducida.

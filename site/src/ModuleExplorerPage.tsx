@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { ActionLink, AsyncState, Badge, ButtonLink, Callout, EmptyState, FilterBar, TableFrame } from './components/ui'
 import {
   loadExternalValidation,
@@ -28,6 +28,8 @@ type ModuleExplorerData = {
 }
 
 type ModuleFilter = 'all' | 'significant' | 'reproducible' | 'year-dependent' | 'enriched' | 'external'
+
+const MODULE_FILTERS: ModuleFilter[] = ['all', 'significant', 'reproducible', 'year-dependent', 'enriched', 'external']
 
 const PROFILE_MODULES = Array.from({ length: 10 }, (_, index) => `M${index + 1}`)
 const MODULE_IDS = PROFILE_MODULES
@@ -301,8 +303,26 @@ function ModuleExternalSummary({
 
 export function ModulesExplorerPage() {
   const { data, error } = useModuleExplorerData()
-  const [filter, setFilter] = useState<ModuleFilter>('all')
-  const [query, setQuery] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requestedFilter = searchParams.get('filter')
+  const filter: ModuleFilter = MODULE_FILTERS.includes(requestedFilter as ModuleFilter)
+    ? requestedFilter as ModuleFilter
+    : 'all'
+  const query = searchParams.get('q') ?? ''
+
+  function updateSearch(next: { filter?: ModuleFilter; query?: string }) {
+    const updated = new URLSearchParams(searchParams)
+    const nextFilter = next.filter ?? filter
+    const nextQuery = next.query ?? query
+
+    if (nextFilter === 'all') updated.delete('filter')
+    else updated.set('filter', nextFilter)
+
+    if (nextQuery.trim()) updated.set('q', nextQuery)
+    else updated.delete('q')
+
+    setSearchParams(updated, { replace: true })
+  }
 
   const filtered = useMemo(() => {
     if (!data) return []
@@ -402,6 +422,33 @@ export function ModulesExplorerPage() {
               <p>Filtra la tabla sin alterar la figura CEMiTool original.</p>
             </div>
 
+            <details className="module-column-guide">
+              <summary>Cómo leer las columnas</summary>
+              <dl>
+                <div>
+                  <dt>FDR Cultivar×Stage</dt>
+                  <dd>Interacción del modelo aditivo ajustada por BH; no mide estabilidad entre años.</dd>
+                </div>
+                <div>
+                  <dt>Robustez</dt>
+                  <dd>Clasificación derivada de la revisión anual; “dependiente del año” no significa ausencia de señal.</dd>
+                </div>
+                <div>
+                  <dt>ORA v3</dt>
+                  <dd>Número de términos MapMan v3 significativos a FDR global, evaluados para el módulo completo.</dd>
+                </div>
+                <div>
+                  <dt>Hubs top decile</dt>
+                  <dd>Genes priorizados por centralidad intramodular; centralidad no implica causalidad.</dd>
+                </div>
+                <div>
+                  <dt>Evidencia externa</dt>
+                  <dd>Filas evaluables en datasets independientes de piel; no se suman al baseline de 54 muestras.</dd>
+                </div>
+              </dl>
+              <p>No existe un score total: cada columna responde una pregunta científica distinta.</p>
+            </details>
+
             <FilterBar className="module-filter-panel">
               <div className="module-filter-buttons" aria-label="Filtros de módulos">
                 {([
@@ -416,7 +463,7 @@ export function ModulesExplorerPage() {
                     type="button"
                     key={value}
                     className={filter === value ? 'module-filter module-filter--active' : 'module-filter'}
-                    onClick={() => setFilter(value)}
+                    onClick={() => updateSearch({ filter: value })}
                     aria-pressed={filter === value}
                   >
                     {label}
@@ -428,7 +475,7 @@ export function ModulesExplorerPage() {
                 <input
                   type="search"
                   value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => updateSearch({ query: event.target.value })}
                   placeholder="M5, M10…"
                 />
               </label>
@@ -436,16 +483,20 @@ export function ModulesExplorerPage() {
 
             <TableFrame className="module-data-table-wrap" label="Comparación de los diez módulos">
               <table className="scientific-table module-data-table">
+                <caption>
+                  Comparación de módulos por tamaño, interacción Cultivar×Stage, robustez anual,
+                  enriquecimiento funcional, hubs y evidencia externa.
+                </caption>
                 <thead>
                   <tr>
-                    <th>Módulo</th>
-                    <th>Genes</th>
-                    <th>FDR Cultivar×Stage</th>
-                    <th>Robustez</th>
-                    <th>ORA v3</th>
-                    <th>Hubs top decile</th>
-                    <th>Evidencia externa</th>
-                    <th />
+                    <th scope="col">Módulo</th>
+                    <th scope="col">Genes</th>
+                    <th scope="col">FDR Cultivar×Stage</th>
+                    <th scope="col">Robustez</th>
+                    <th scope="col">ORA v3</th>
+                    <th scope="col">Hubs top decile</th>
+                    <th scope="col">Evidencia externa</th>
+                    <th scope="col"><span className="visually-hidden">Acción</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -453,12 +504,12 @@ export function ModulesExplorerPage() {
                     const priority = ['M5', 'M10', 'M2'].includes(row.module)
                     return (
                       <tr key={row.module}>
-                        <td>
+                        <th scope="row">
                           <Link className="module-table-id" to={'/results/modules/' + row.module}>
                             {row.module}
                           </Link>
                           {priority && <Badge tone="brand" className="priority-pill">prioridad</Badge>}
-                        </td>
+                        </th>
                         <td>{row.gene_count}</td>
                         <td>
                           <strong>{formatScientific(row.cultivar_stage_fdr)}</strong>
@@ -475,6 +526,9 @@ export function ModulesExplorerPage() {
                 </tbody>
               </table>
             </TableFrame>
+            <p className="module-result-count" role="status" aria-live="polite">
+              Mostrando {filtered.length} de {data.modules.modules.length} módulos.
+            </p>
           </section>
 
           {filtered.length === 0 && (

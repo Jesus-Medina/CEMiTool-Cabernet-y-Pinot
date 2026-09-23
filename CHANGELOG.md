@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-09-23 — UX05B-04 module comparison glossary
+
+- Added a progressive-disclosure guide defining interaction FDR, annual robustness, ORA, hub centrality and external evidence.
+- States the interpretation boundary for each dimension and explicitly rejects an aggregate “best module” score.
+- Adapts the glossary from five columns to two and then one across responsive breakpoints.
+
+## 2026-09-23 — UX05B-03 shareable module filters
+
+- Synchronized module filter and search state with the `filter` and `q` URL parameters.
+- Made filtered comparisons shareable and persistent across reload and browser navigation.
+- Safely falls back to the complete module set for unknown filter values without changing canonical data.
+
+## 2026-09-23 — UX05B-02 accessible module comparison
+
+- Consolidated M1–M10 into one compact comparison across genes, interaction FDR, annual robustness, ORA, hubs and external evidence.
+- Added a descriptive caption, scoped column and row headers, and a live filtered-result count.
+- Preserved the original CEMiTool profile panels as linked canonical evidence without introducing an aggregate module score.
+
 ## 2026-09-23 — UX05B-01 Results landing activation
 
 - Replaced the `/results` redirect with the existing scientific Results landing.
