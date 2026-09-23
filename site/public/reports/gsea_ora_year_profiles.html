@@ -132,7 +132,7 @@ body{font-size:16px;line-height:1.55}
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div><div class="header-actions"><button id="languageToggle" class="language-toggle" type="button" aria-label="Cambiar idioma a inglés"><span class="language-icon" aria-hidden="true">文</span><span id="languageToggleLabel">English</span></button><button id="downloadPdf" class="language-toggle pdf-toggle" type="button" aria-label="Descargar PDF completo"><span class="language-icon" aria-hidden="true">↓</span><span id="downloadPdfLabel">PDF completo</span></button></div></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div><div class="header-actions"><button id="languageToggle" class="language-toggle" type="button" aria-label="Cambiar idioma a inglés"><span class="language-icon" aria-hidden="true">文</span><span id="languageToggleLabel">English</span></button><button id="downloadPdf" class="language-toggle pdf-toggle" type="button" aria-label="Descargar PDF completo"><span class="language-icon" aria-hidden="true">↓</span><span id="downloadPdfLabel">PDF completo</span></button><button id="downloadWebPdf" class="language-toggle pdf-toggle" type="button" aria-label="Descargar PDF vista web"><span class="language-icon" aria-hidden="true">▤</span><span id="downloadWebPdfLabel">PDF vista web</span></button></div></div></header>
 
 <section class="hero"><div class="wrap"><p class="eyebrow">Caracterización transcriptómica comparativa</p><h1>Cabernet Sauvignon y Pinot noir durante la maduración</h1><p class="lede">Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.</p><p class="byline">Análisis realizado por Catalina Constanza Marchant Hurtado · Ingeniera en Biotecnología · UTEM</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
@@ -492,6 +492,8 @@ const EN={
 'English':'English',
 'Español':'Español',
 'PDF completo':'Full PDF',
+'PDF vista web':'Web-view PDF',
+'Descargar PDF vista web':'Download web-view PDF',
 'Descargar PDF completo':'Download complete PDF',
 'Apéndice completo de datos':'Complete data appendix',
 'Apéndice completo de datos y tablas':'Complete data and tables appendix',
@@ -684,6 +686,8 @@ function applyLanguage(){
  const label=document.getElementById('languageToggleLabel');
  const pdf=document.getElementById('downloadPdf');
  const pdfLabel=document.getElementById('downloadPdfLabel');
+ const webPdf=document.getElementById('downloadWebPdf');
+ const webPdfLabel=document.getElementById('downloadWebPdfLabel');
  if(PAGE_LANG==='en'){
    document.documentElement.lang='en';
    document.title='GSEA · ORA · yearly profiles | CEMiTool beta10';
@@ -694,6 +698,8 @@ function applyLanguage(){
    if(toggle)toggle.setAttribute('aria-label','Switch language to Spanish');
    if(pdfLabel)pdfLabel.textContent='Full PDF';
    if(pdf)pdf.setAttribute('aria-label','Download complete PDF');
+   if(webPdfLabel)webPdfLabel.textContent='Web-view PDF';
+   if(webPdf)webPdf.setAttribute('aria-label','Download web-view PDF');
    const observer=new MutationObserver(mutations=>{
      mutations.forEach(m=>{
        if(m.type==='childList')m.addedNodes.forEach(n=>{
@@ -710,6 +716,8 @@ function applyLanguage(){
    if(toggle)toggle.setAttribute('aria-label','Cambiar idioma a inglés');
    if(pdfLabel)pdfLabel.textContent='PDF completo';
    if(pdf)pdf.setAttribute('aria-label','Descargar PDF completo');
+   if(webPdfLabel)webPdfLabel.textContent='PDF vista web';
+   if(webPdf)webPdf.setAttribute('aria-label','Descargar PDF vista web');
  }
  toggle?.addEventListener('click',()=>{
    const u=new URL(window.location.href);
@@ -748,6 +756,13 @@ async function ensurePdfLibraries(){
  }
  if(!window.jspdf?.jsPDF||!window.jspdf.jsPDF.API.autoTable)throw new Error('PDF libraries unavailable');
 }
+async function ensureWebPdfLibraries(){
+ await ensurePdfLibraries();
+ if(!window.html2canvas){
+  await loadExternalScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+ }
+ if(!window.html2canvas)throw new Error('html2canvas unavailable');
+}
 function blobToDataUrl(blob){
  return new Promise((resolve,reject)=>{
   const reader=new FileReader();
@@ -784,6 +799,116 @@ function reportLanguage(es,en){return PAGE_LANG==='en'?en:es}
 function reportFileName(){
  return PAGE_LANG==='en'?'Cabernet_Sauvignon_Pinot_noir_complete_report_EN.pdf':'Cabernet_Sauvignon_Pinot_noir_reporte_completo_ES.pdf';
 }
+
+function webViewPdfFileName(){
+ return PAGE_LANG==='en'?'Cabernet_Sauvignon_Pinot_noir_web_view_EN.pdf':'Cabernet_Sauvignon_Pinot_noir_vista_web_ES.pdf';
+}
+async function canvasToPdfPages(doc,canvas,{firstPage=false}={}){
+ const pageW=doc.internal.pageSize.getWidth();
+ const pageH=doc.internal.pageSize.getHeight();
+ const margin=24;
+ const usableW=pageW-margin*2;
+ const usableH=pageH-margin*2;
+ const ratio=usableW/canvas.width;
+ const slicePx=Math.max(1,Math.floor(usableH/ratio));
+ let offset=0;
+ let pageIndex=0;
+
+ while(offset<canvas.height){
+  const currentH=Math.min(slicePx,canvas.height-offset);
+  const slice=document.createElement('canvas');
+  slice.width=canvas.width;
+  slice.height=currentH;
+  const ctx=slice.getContext('2d');
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(0,0,slice.width,slice.height);
+  ctx.drawImage(canvas,0,offset,canvas.width,currentH,0,0,canvas.width,currentH);
+  const image=slice.toDataURL('image/jpeg',0.84);
+  if(!(firstPage&&pageIndex===0))doc.addPage();
+  const renderedH=currentH*ratio;
+  doc.addImage(image,'JPEG',margin,margin,usableW,renderedH,undefined,'FAST');
+  offset+=currentH;
+  pageIndex+=1;
+ }
+}
+async function downloadWebViewPdf(){
+ const button=document.getElementById('downloadWebPdf');
+ const label=document.getElementById('downloadWebPdfLabel');
+ if(!D||!O||!A||!HUB){
+  alert(reportLanguage('Los datos del reporte todavía están cargando. Inténtalo nuevamente en un momento.','The report data are still loading. Please try again in a moment.'));
+  return;
+ }
+ const originalLabel=label?.textContent||'PDF';
+ const previousScroll=window.scrollY;
+ const header=document.querySelector('header');
+ const anchor=document.querySelector('.anchorbar');
+ const targets=[
+  document.querySelector('header'),
+  document.querySelector('.hero'),
+  document.querySelector('.anchorbar'),
+  document.querySelector('#gsea'),
+  document.querySelector('#ora'),
+  document.querySelector('#profiles'),
+  document.querySelector('#audit'),
+  document.querySelector('footer')
+ ].filter(Boolean);
+ const savedStyles=targets.map(el=>({el,position:el.style.position,top:el.style.top,transform:el.style.transform}));
+ try{
+  if(button)button.disabled=true;
+  if(label)label.textContent=reportLanguage('Generando vista…','Generating view…');
+  await ensureWebPdfLibraries();
+
+  // Capture the report exactly as the web version is currently shown.
+  // We only neutralize sticky positioning so no header/nav is duplicated over section screenshots.
+  if(header){header.style.position='static';header.style.top='auto'}
+  if(anchor){anchor.style.position='static';anchor.style.top='auto'}
+  window.scrollTo(0,0);
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'pt',format:'a3',compress:true,putOnlyUsedFonts:true});
+  // Remove the blank initial page only after first target is ready.
+  let first=true;
+
+  for(const target of targets){
+   if(!target.offsetParent&&target.tagName!=='HEADER'&&target.tagName!=='FOOTER')continue;
+   const canvas=await window.html2canvas(target,{
+    backgroundColor:'#ffffff',
+    scale:1.2,
+    useCORS:true,
+    allowTaint:false,
+    logging:false,
+    imageTimeout:12000,
+    scrollX:0,
+    scrollY:-window.scrollY,
+    windowWidth:Math.max(document.documentElement.clientWidth,1440),
+    onclone:(clonedDoc)=>{
+      clonedDoc.querySelectorAll('.header-actions').forEach(node=>node.style.display='none');
+    }
+   });
+   await canvasToPdfPages(doc,canvas,{firstPage:first});
+   first=false;
+  }
+
+  if(first)throw new Error('No visible report sections could be captured');
+  doc.deletePage(1); // jsPDF starts with a blank page; captured pages begin after it.
+  doc.save(webViewPdfFileName());
+ }catch(error){
+  console.error('Web-view PDF generation failed',error);
+  alert(reportLanguage(
+   'No se pudo generar el PDF de vista web. Prueba nuevamente después de recargar la página.',
+   'The web-view PDF could not be generated. Please reload the page and try again.'
+  ));
+ }finally{
+  savedStyles.forEach(({el,position,top,transform})=>{el.style.position=position;el.style.top=top;el.style.transform=transform});
+  window.scrollTo(0,previousScroll);
+  if(button)button.disabled=false;
+  if(label)label.textContent=PAGE_LANG==='en'?'Web-view PDF':'PDF vista web';
+ }
+}
+window.generateWebViewReportPdf=downloadWebViewPdf;
+document.getElementById('downloadWebPdf')?.addEventListener('click',downloadWebViewPdf);
+
 async function downloadCompletePdf(){
  const button=document.getElementById('downloadPdf');
  const label=document.getElementById('downloadPdfLabel');
