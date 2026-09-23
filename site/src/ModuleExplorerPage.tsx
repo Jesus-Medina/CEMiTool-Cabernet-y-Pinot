@@ -28,6 +28,8 @@ type ModuleExplorerData = {
 
 type ModuleFilter = 'all' | 'significant' | 'reproducible' | 'year-dependent' | 'enriched' | 'external'
 
+const PROFILE_MODULES = Array.from({ length: 10 }, (_, index) => `M${index + 1}`)
+
 function scrollToModuleSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -92,72 +94,6 @@ function statusLabel(row: ModuleSummary) {
   if (row.robustness_classification === 'reproducible') return 'Reproducible'
   if (row.robustness_classification === 'year-dependent') return 'Dependiente del año'
   return 'Sin clasificación prioritaria'
-}
-
-function ModuleCard({
-  row,
-  enrichment,
-  external,
-  hubs,
-}: {
-  row: ModuleSummary
-  enrichment: FunctionalEnrichmentPayload
-  external: ExternalValidationPayload
-  hubs: HubsPayload
-}) {
-  const significantTerms = significantV3Count(enrichment, row.module)
-  const evaluable = externalEvaluableCount(external, row.module)
-  const topHubs = topHubCount(hubs, row.module)
-  const priority = ['M5', 'M10', 'M2'].includes(row.module)
-
-  return (
-    <article className={priority ? 'module-card module-card--priority' : 'module-card'}>
-      <div className="module-card-identity">
-        <div>
-          <span className="module-id">{row.module}</span>
-          {priority && <span className="priority-pill">prioridad</span>}
-        </div>
-        <span className="module-status">{statusLabel(row)}</span>
-      </div>
-
-      <div className="module-row-stat">
-        <span>Genes</span>
-        <strong>{row.gene_count}</strong>
-      </div>
-
-      <div className="module-row-stat">
-        <span>Cultivar×Stage</span>
-        <strong>{formatScientific(row.cultivar_stage_fdr)}</strong>
-        <small>{row.cultivar_stage_significant_fdr05 ? 'FDR < 0,05' : 'sin señal global FDR<0,05'}</small>
-      </div>
-
-      <div className="module-row-stat">
-        <span>ORA v3</span>
-        <strong>{significantTerms}</strong>
-        <small>términos globales</small>
-      </div>
-
-      <div className="module-row-stat">
-        <span>Hubs</span>
-        <strong>{topHubs || '—'}</strong>
-        <small>top decile</small>
-      </div>
-
-      <div className="module-row-stat">
-        <span>Evidencia externa</span>
-        <strong>{evaluable || '—'}</strong>
-        <small>filas evaluables</small>
-      </div>
-
-      <Link className="button button--secondary module-card-link" to={'/results/modules/' + row.module}>
-        Abrir
-      </Link>
-
-      <p className="module-card-note">
-        {row.robustness_note ?? 'Sin nota de robustez prioritaria para este módulo.'}
-      </p>
-    </article>
-  )
 }
 
 function ContrastMatrix({
@@ -403,55 +339,140 @@ export function ModulesExplorerPage() {
 
       {data && (
         <>
-          <section className="module-filter-panel">
-            <div className="module-filter-buttons" aria-label="Filtros de módulos">
-              {([
-                ['all', 'Todos'],
-                ['significant', 'Interacción FDR<0,05'],
-                ['reproducible', 'Reproducible'],
-                ['year-dependent', 'Dependiente del año'],
-                ['enriched', 'Con ORA v3'],
-                ['external', 'Con evidencia externa'],
-              ] as Array<[ModuleFilter, string]>).map(([value, label]) => (
-                <button
-                  type="button"
-                  key={value}
-                  className={filter === value ? 'module-filter module-filter--active' : 'module-filter'}
-                  onClick={() => setFilter(value)}
-                  aria-pressed={filter === value}
-                >
-                  {label}
-                </button>
-              ))}
+          <section className="cemitool-profile-panel">
+            <div className="module-section-heading">
+              <div>
+                <p className="eyebrow">Salida original · CEMiTool β10</p>
+                <h2>Perfiles de los diez módulos</h2>
+              </div>
+              <p>
+                Estos paneles son las imágenes canónicas exportadas por CEMiTool para M1–M10.
+                La web no recalcula ni redibuja esta figura.
+              </p>
             </div>
-            <label className="module-search">
-              <span>Buscar módulo</span>
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="M5, M10…"
-              />
-            </label>
+
+            <figure className="cemitool-profile-figure">
+              <div className="cemitool-profile-grid">
+                {PROFILE_MODULES.map((moduleId) => (
+                  <Link
+                    key={moduleId}
+                    className="cemitool-profile-tile"
+                    to={'/results/modules/' + moduleId}
+                    aria-label={'Abrir detalle de ' + moduleId}
+                  >
+                    <img
+                      src={import.meta.env.BASE_URL + 'assets/cemitool/profile_' + moduleId + '.png'}
+                      alt={'Perfil CEMiTool del módulo ' + moduleId}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span>{moduleId}</span>
+                  </Link>
+                ))}
+              </div>
+              <figcaption>
+                Figura CEMiTool beta10. Cada panel enlaza al detalle del módulo.
+                {' '}
+                <a
+                  href={import.meta.env.BASE_URL + 'assets/cemitool/profile_beta10.pdf'}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Abrir PDF original ↗
+                </a>
+              </figcaption>
+            </figure>
           </section>
 
-          <section className="module-overview-strip">
-            <article><strong>{data.modules.modules.length}</strong><span>módulos biológicos</span></article>
+          <section className="module-overview-strip" aria-label="Resumen global de módulos">
+            <article><strong>{data.modules.modules.length}</strong><span>módulos</span></article>
             <article><strong>{data.modules.modules.filter((row) => row.cultivar_stage_significant_fdr05).length}</strong><span>interacción FDR&lt;0,05</span></article>
-            <article><strong>{data.modules.modules.filter((row) => row.robustness_classification === 'reproducible').length}</strong><span>clasificados reproducibles</span></article>
+            <article><strong>{data.modules.modules.filter((row) => row.robustness_classification === 'reproducible').length}</strong><span>reproducibles</span></article>
             <article><strong>{data.modules.modules.filter((row) => significantV3Count(data.enrichment, row.module) > 0).length}</strong><span>con ORA v3 global</span></article>
           </section>
 
-          <section className="module-card-grid">
-            {filtered.map((row) => (
-              <ModuleCard
-                key={row.module}
-                row={row}
-                enrichment={data.enrichment}
-                external={data.external}
-                hubs={data.hubs}
-              />
-            ))}
+          <section className="module-data-panel">
+            <div className="module-section-heading">
+              <div>
+                <p className="eyebrow">Datos por módulo</p>
+                <h2>Las cifras detrás de M1–M10</h2>
+              </div>
+              <p>Filtra la tabla sin alterar la figura CEMiTool original.</p>
+            </div>
+
+            <div className="module-filter-panel">
+              <div className="module-filter-buttons" aria-label="Filtros de módulos">
+                {([
+                  ['all', 'Todos'],
+                  ['significant', 'Interacción FDR<0,05'],
+                  ['reproducible', 'Reproducible'],
+                  ['year-dependent', 'Dependiente del año'],
+                  ['enriched', 'Con ORA v3'],
+                  ['external', 'Con evidencia externa'],
+                ] as Array<[ModuleFilter, string]>).map(([value, label]) => (
+                  <button
+                    type="button"
+                    key={value}
+                    className={filter === value ? 'module-filter module-filter--active' : 'module-filter'}
+                    onClick={() => setFilter(value)}
+                    aria-pressed={filter === value}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <label className="module-search">
+                <span>Buscar módulo</span>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="M5, M10…"
+                />
+              </label>
+            </div>
+
+            <div className="scientific-table-wrap module-data-table-wrap">
+              <table className="scientific-table module-data-table">
+                <thead>
+                  <tr>
+                    <th>Módulo</th>
+                    <th>Genes</th>
+                    <th>FDR Cultivar×Stage</th>
+                    <th>Robustez</th>
+                    <th>ORA v3</th>
+                    <th>Hubs top decile</th>
+                    <th>Evidencia externa</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((row) => {
+                    const priority = ['M5', 'M10', 'M2'].includes(row.module)
+                    return (
+                      <tr key={row.module}>
+                        <td>
+                          <Link className="module-table-id" to={'/results/modules/' + row.module}>
+                            {row.module}
+                          </Link>
+                          {priority && <span className="priority-pill">prioridad</span>}
+                        </td>
+                        <td>{row.gene_count}</td>
+                        <td>
+                          <strong>{formatScientific(row.cultivar_stage_fdr)}</strong>
+                          <small>{row.cultivar_stage_significant_fdr05 ? 'FDR < 0,05' : 'no significativo a 0,05'}</small>
+                        </td>
+                        <td>{statusLabel(row)}</td>
+                        <td>{significantV3Count(data.enrichment, row.module)}</td>
+                        <td>{topHubCount(data.hubs, row.module) || '—'}</td>
+                        <td>{externalEvaluableCount(data.external, row.module) || '—'}</td>
+                        <td><Link className="inline-link" to={'/results/modules/' + row.module}>Abrir →</Link></td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           {filtered.length === 0 && (
