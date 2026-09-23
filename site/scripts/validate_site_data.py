@@ -43,6 +43,7 @@ EXPECTED_JSON = {
     "module_contrasts.json",
     "enrichments.json",
     "functional_enrichment.json",
+    "gsea_year_profiles.json",
     "hubs.json",
     "m5_network.json",
     "external_validation.json",
@@ -168,6 +169,26 @@ def main() -> None:
     for source, expected in expected_tested.items():
         if enrichment["summary"]["tested_terms"][source] != expected:
             raise AssertionError(f"functional_enrichment summary count mismatch for {source}")
+
+    integrated = payloads["gsea_year_profiles.json"]
+    if integrated["gsea"]["years_included"] != [2012, 2013, 2014]:
+        raise AssertionError("GSEA integrated report must document 2012, 2013 and 2014")
+    if integrated["gsea"]["years_separated"] is not False:
+        raise AssertionError("Native GSEA must remain documented as pooled across Year")
+    if any(
+        row["years"] != {"2012": 3, "2013": 3, "2014": 3} or row["total"] != 9
+        for row in integrated["gsea"]["sample_composition"]
+    ):
+        raise AssertionError("Each native GSEA class must contain 3 samples from each year")
+    if integrated["ora_year_scope"]["year_specific"] is not False:
+        raise AssertionError("ORA must not be mislabeled as year-specific")
+    profile_rows = integrated["profiles"]["rows"]
+    if len(profile_rows) != 180:
+        raise AssertionError("Integrated report must expose 180 module×cultivar×stage×year profile cells")
+    if integrated["profiles"]["years"] != [2012, 2013, 2014]:
+        raise AssertionError("Yearly module profiles must include 2012, 2013 and 2014")
+    if integrated["profiles"]["modules"] != [f"M{i}" for i in range(1, 11)]:
+        raise AssertionError("Yearly module profiles must include M1-M10")
 
     expected_hubs = len(read_rows(SOURCE_PATHS["m5_hubs"])) + len(read_rows(SOURCE_PATHS["m10_m2_hubs"]))
     if len(payloads["hubs.json"]["rows"]) != expected_hubs:
