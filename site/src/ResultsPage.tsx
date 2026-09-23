@@ -58,7 +58,7 @@ export default function ResultsPage() {
           borderRadius: '8px'
         }}>
           {orderedModules.map(m => (
-            <Link to={`/modules/${m}`} key={m} className="composition-item" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to={`/results/modules/${m}`} key={m} className="composition-item" style={{ textDecoration: 'none', color: 'inherit' }}>
               <img 
                 src={`/figures/profile_${m}.png`} 
                 alt={`Perfil CEMiTool original para ${m}`} 
@@ -135,7 +135,7 @@ export default function ResultsPage() {
                   return (
                     <tr key={m}>
                       <td>
-                        <Link to={`/modules/${m}`}><strong>{m}</strong></Link>
+                        <Link to={`/results/modules/${m}`}><strong>{m}</strong></Link>
                       </td>
                       <td>{row.gene_count}</td>
                       <td>{formatScientific(row.cultivar_stage_fdr)}</td>
@@ -149,6 +149,19 @@ export default function ResultsPage() {
             </table>
           </div>
         )}
+      </section>
+
+      {/* 7. Exploración transversal */}
+      <section className="cross-module-exploration" style={{ marginTop: '3rem', padding: '1.5rem', background: 'var(--surface-sunken)', borderRadius: '8px' }}>
+        <h3>Exploración Transversal</h3>
+        <p>
+          Además de revisar cada módulo en detalle, puedes consultar la evidencia de forma global:
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          <Link to="/validation" className="button button--secondary">Ver Validación Externa Global</Link>
+          <Link to="/enrichment" className="button button--secondary">Ver Enriquecimiento Global (ORA)</Link>
+          <Link to="/genes" className="button button--secondary">Buscador de Genes</Link>
+        </div>
       </section>
 
     </div>

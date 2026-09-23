@@ -70,3 +70,14 @@
 ## Archivos Modificados (Registro de Commits)
 - `feat(nav): implement V2 global information architecture`: `App.tsx`, `SiteShell.tsx`, `pages.tsx`, `WEB_INFORMATION_ARCHITECTURE_V2_IMPLEMENTATION.md`.
 - `feat(results): rebuild M1-M10 scientific overview`: `ResultsPage.tsx`, `hooks/useModuleExplorerData.ts`, copia de assets canónicos.
+
+### Fase 8: Vistas Globales de Exploración (Enrichment y Validation)
+- [x] Ocultar de la navegación primaria.
+- [x] Refinar acceso vía `ResultsPage` (`/validation` y `/enrichment`).
+- [x] Mantener capacidad de comparar transversalmente entre M1-M10.
+
+### Fase 9: Ficha Individual de Gen y Buscador
+- [x] Crear `GeneExplorerPage.tsx`.
+- [x] Implementar `/results/genes` (Buscador/Tabla general de genes priorizados).
+- [x] Implementar `/results/genes/:geneId` (Ficha individual con métricas de robustez, anotaciones v3/v5 y métricas externas).
+- [x] Enlazar desde los módulos hacia la ficha individual.

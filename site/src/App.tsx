@@ -4,6 +4,7 @@ import EnrichmentPage from './EnrichmentPage'
 import ChatPage from './ChatPage'
 import {
   EvidencePage,
+  GeneSearchPage,
   GeneDetailPage,
   HomePage,
   MethodsPage,
@@ -23,6 +24,9 @@ export default function App() {
         {/* V2 Primary Routes */}
         <Route index element={<HomePage />} />
         <Route path="results" element={<ResultsPage />} />
+        <Route path="results/modules/:moduleId" element={<ModuleDetailPage />} />
+        <Route path="results/genes" element={<GeneSearchPage />} />
+        <Route path="results/genes/:geneId" element={<GeneDetailPage />} />
         <Route path="methods" element={<MethodsPage />} />
         <Route path="reproducibility" element={<EvidencePage />} /> {/* Temporalmente usamos EvidencePage */}
         

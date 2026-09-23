@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ModuleWorkspace from './ModuleWorkspace'
 import ExternalValidationPage from './ExternalValidationPage'
 import T008DashboardPage from './T008DashboardPage'
@@ -117,7 +117,7 @@ export function HomePage() {
           </p>
           <div className="hero-actions">
             <Link className="button button--primary" to="/story">Entrar a la historia</Link>
-            <Link className="button button--secondary" to="/modules/M5">Explorar M5</Link>
+            <Link className="button button--secondary" to="/results/modules/M5">Explorar M5</Link>
             <Link className="button button--secondary" to="/evidence">Ver evidencia</Link>
           </div>
           <p className="authorship">Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong></p>
@@ -189,7 +189,7 @@ export function HomePage() {
       <EvidenceBoundary />
 
       <section className="portal-grid" aria-label="Áreas del explorador">
-        <Link className="portal-card" to="/modules/M5">
+        <Link className="portal-card" to="/results/modules/M5">
           <span>01</span><h2>M5 Explorer</h2><p>Trayectorias, contrastes, hubs y provenance.</p>
         </Link>
         <Link className="portal-card" to="/validation">
@@ -290,7 +290,7 @@ export function StoryPage() {
                   <strong>{harvestNegativeAllYears ? 'Cabernet − Pinot mantiene dirección negativa en todos ellos.' : 'la dirección no es idéntica en todos los años.'}</strong>
                 </p>
               )}
-              <Link className="inline-link" to="/modules/M5">Abrir M5 →</Link>
+              <Link className="inline-link" to="/results/modules/M5">Abrir M5 →</Link>
             </div>
           </article>
 
@@ -353,21 +353,7 @@ export function ModuleDetailPage() {
   return <ModuleWorkspace />
 }
 
-export function GeneDetailPage() {
-  const { geneId } = useParams()
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="GENE"
-        title={geneId ?? 'Gen'}
-        description="Ficha individual para integrar centralidad, anotaciones, posición y evidencia externa sin inventar información ausente."
-      />
-      <PlaceholderPanel title="Ficha completa pendiente">
-        WEB-004 ya enlaza NAC, CuAO y genes CHS/STS hacia esta ruta. La ficha detallada reutilizable se completará junto con el explorador de genes.
-      </PlaceholderPanel>
-    </div>
-  )
-}
+export { GeneSearchPage, GeneDetailPage } from './GeneExplorerPage'
 
 export function ValidationPage() {
   return <ExternalValidationPage />
