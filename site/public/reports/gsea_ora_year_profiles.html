@@ -891,7 +891,6 @@ async function downloadWebViewPdf(){
   }
 
   if(first)throw new Error('No visible report sections could be captured');
-  doc.deletePage(1); // jsPDF starts with a blank page; captured pages begin after it.
   doc.save(webViewPdfFileName());
  }catch(error){
   console.error('Web-view PDF generation failed',error);
