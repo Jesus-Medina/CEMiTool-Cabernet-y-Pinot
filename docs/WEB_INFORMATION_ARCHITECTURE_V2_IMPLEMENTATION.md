@@ -32,9 +32,9 @@
 
 ## Progreso de Tareas
 
-- [ ] Fase 0: Auditoría y plan
-- [ ] Fase 1: Nuevo Shell y navegación
-- [ ] Fase 2: Resultados M1–M10
+- [x] Fase 0: Auditoría y plan
+- [x] Fase 1: Nuevo Shell y navegación
+- [x] Fase 2: Resultados M1–M10
 - [ ] Fase 3: Module Workspace
 - [ ] Fase 4: Module Summary
 - [ ] Fase 5: Trajectory
@@ -42,4 +42,5 @@
 - [ ] Fase 7: Validación del módulo
 
 ## Archivos Modificados (Registro de Commits)
-*(Se actualizará progresivamente)*
+- `feat(nav): implement V2 global information architecture`: `App.tsx`, `SiteShell.tsx`, `pages.tsx`, `WEB_INFORMATION_ARCHITECTURE_V2_IMPLEMENTATION.md`.
+- `feat(results): rebuild M1-M10 scientific overview`: `ResultsPage.tsx`, `hooks/useModuleExplorerData.ts`, copia de assets canónicos.
