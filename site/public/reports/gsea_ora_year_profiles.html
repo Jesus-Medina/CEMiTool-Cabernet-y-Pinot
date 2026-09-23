@@ -29,7 +29,7 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>GSEA · ORA · perfiles por año</strong><small>CEMiTool beta10 · GSE98923</small></div></div><nav class="headnav"><a href="../">Explorador</a><a href="ora_beta10.html">ORA completo</a><a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a></nav></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>GSEA · ORA · perfiles por año</strong><small>CEMiTool beta10 · GSE98923</small></div></div><nav class="headnav"><a href="../">Explorador</a><a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a></nav></div></header>
 
 <section class="hero"><div class="wrap"><p class="eyebrow">Reporte integrado · una sola página</p><h1>GSEA, ORA y trayectoria anual de M1–M10</h1><p class="lede">Tres capas distintas del mismo estudio, presentadas en el orden solicitado. El GSEA es la salida nativa de CEMiTool; el ORA es un análisis funcional posterior sobre módulos beta10; y los perfiles anuales muestran medias observadas del eigengene por Cultivar × Stage × Year.</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
@@ -79,7 +79,43 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div id="oraCoverage" class="coverage-strip"></div>
 <div id="oraBars" class="barbox" style="margin-top:12px"></div>
 <div class="subsection"><div class="subhead"><h3>Tabla ORA filtrada</h3><p id="oraCount"></p></div><div class="tablewrap"><table class="table"><thead><tr><th>Término</th><th>ID</th><th>Módulo</th><th>Overlap</th><th>Fold</th><th>p</th><th>FDR global</th><th>Aspect</th></tr></thead><tbody id="oraTable"></tbody></table></div></div>
-<div style="margin-top:12px"><a href="ora_beta10.html">Abrir el reporte ORA completo con QC, temas MapMan y auditoría M5 →</a></div>
+
+<div class="subsection"><div class="subhead"><h3>Temas MapMan preespecificados</h3><p>Cutícula/cera, epidermis, pared celular, pectina, celulosa/hemicelulosa, lignina, fenilpropanoides, flavonoides y antocianinas. Esta vista incluye también resultados no significativos o no testables.</p></div>
+<div class="controls" style="grid-template-columns:1fr 1fr 1.5fr">
+<div class="control"><label>Fuente</label><select id="oraThemeSource"><option value="v3_mapman">MapMan v3</option><option value="v5_mapman">MapMan v5.1</option></select></div>
+<div class="control"><label>Módulo</label><select id="oraThemeModule"></select></div>
+<div class="control"><label>Tema</label><select id="oraThemeName"></select></div>
+</div>
+<div id="oraThemeView" class="cards" style="margin-top:12px"></div>
+</div>
+
+<div class="subsection"><div class="subhead"><h3>Cobertura y QC del ORA</h3><p>La cobertura de anotación se muestra separada de la significancia. Una ausencia de hits con cobertura baja no equivale a ausencia biológica.</p></div>
+<div id="oraQcSources" class="profile-toolbar"></div>
+<div id="oraQcCoverage" class="coverage-strip"></div>
+<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Fuente</th><th>Módulo</th><th>Genes módulo</th><th>Anotados</th><th>Cobertura</th><th>Background</th><th>Tests</th><th>Hits</th><th>Warning</th></tr></thead><tbody id="oraQcTable"></tbody></table></div>
+</div>
+
+<div class="subsection"><div class="subhead"><h3>M5 · auditoría MapMan v3 vs v5.1</h3><p>Los mismos genes pueden recibir etiquetas distintas entre versiones. Esta comparación mantiene explícito el conflicto CHS/STS sin adjudicar una identidad enzimática causal.</p></div>
+<div class="cards" style="grid-template-columns:1fr 1fr">
+<article class="card"><span>MapMan v3 · hits M5</span><div id="oraM5v3" style="margin-top:10px"></div></article>
+<article class="card"><span>MapMan v5.1 · hits M5</span><div id="oraM5v5" style="margin-top:10px"></div></article>
+</div>
+<div class="notice notice--warn" style="margin-top:12px"><strong>Interpretación segura:</strong> M5 contiene un bloque enriquecido de metabolismo fenólico. La discordancia de etiquetas entre versiones es un conflicto de anotación y no una validación independiente.</div>
+</div>
+
+<div class="subsection"><div class="subhead"><h3>GO auditado · T-005A</h3><p>La capa GO vigente excluye términos obsoletos antes de recalcular el ORA. Los seis hits globales actuales están en M9 y varios comparten genes.</p></div>
+<div id="oraGoCards" class="cards"></div>
+<div id="oraGoBars" class="barbox" style="margin-top:12px"></div>
+</div>
+
+<div class="subsection"><div class="subhead"><h3>Método y límites del ORA</h3><p>La página muestra el ORA completo sin recalcularlo en el navegador.</p></div>
+<div class="cards">
+<div class="card"><span>Universo</span><strong>3.050 genes</strong><small>Módulos beta10 congelados; el fondo depende de la cobertura de cada fuente.</small></div>
+<div class="card"><span>Prueba</span><strong>Hipergeométrica</strong><small>Unilateral de sobrerrepresentación.</small></div>
+<div class="card"><span>Corrección</span><strong>BH / FDR</strong><small>Inferencia principal sobre módulo×término por fuente.</small></div>
+<div class="card"><span>Límite</span><strong>ORA ≠ causalidad</strong><small>Enriquecimiento de módulo completo tampoco identifica por sí solo el driver de una etapa/año.</small></div>
+</div>
+</div>
 </div>
 </div></section>
 
@@ -183,6 +219,73 @@ function renderOra(){
  document.getElementById('oraTable').innerHTML=rows.slice(0,250).map(r=>'<tr><td>'+esc(r.TermName)+'</td><td><code>'+esc(r.TermID)+'</code></td><td>'+r.Module+'</td><td>'+r.Overlap_k+'/'+r.Module_n+'</td><td>'+fmt(r.Fold_enrichment,2)+'</td><td>'+sci(r.p_value)+'</td><td class="'+(r.FDR_global_module_terms<.05?'good':'')+'">'+sci(r.FDR_global_module_terms)+'</td><td>'+esc(r.Aspect||'—')+'</td></tr>').join('');
 }
 
+function refreshOraThemeNames(){
+ const source=document.getElementById('oraThemeSource').value;
+ const module=document.getElementById('oraThemeModule').value;
+ const names=[...new Set(O.themes.filter(r=>r.Source===source&&r.Module===module).map(r=>r.Theme))];
+ const select=document.getElementById('oraThemeName');
+ const previous=select.value;
+ select.innerHTML=names.map(n=>'<option value="'+esc(n)+'">'+esc(String(n).replaceAll('_',' '))+'</option>').join('');
+ if(names.includes(previous))select.value=previous;
+ renderOraTheme();
+}
+function renderOraTheme(){
+ const source=document.getElementById('oraThemeSource').value;
+ const module=document.getElementById('oraThemeModule').value;
+ const name=document.getElementById('oraThemeName').value;
+ const row=O.themes.find(r=>r.Source===source&&r.Module===module&&r.Theme===name);
+ const el=document.getElementById('oraThemeView');
+ if(!row){el.innerHTML='<div class="notice">No hay tema disponible bajo estos filtros.</div>';return}
+ const cards=[
+  ['Tema',String(row.Theme).replaceAll('_',' '),(row.Matched_MapMan_terms??0)+' categorías MapMan'],
+  ['Overlap',(row.Overlap_k??0)+'/'+(row.Module_n??0),'genes anotados del módulo'],
+  ['Fold',fmt(row.Fold_enrichment,2),'sobrerrepresentación'],
+  ['FDR global temas',sci(row.FDR_global_themes),row.Tested?'testado':('no testado: '+esc(row.Reason_if_not_tested||''))]
+ ];
+ el.innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+}
+let oraQcSource='v3_mapman';
+function renderOraQc(){
+ document.querySelectorAll('#oraQcSources .button').forEach(b=>b.classList.toggle('active',b.dataset.source===oraQcSource));
+ const rows=O.qc.filter(r=>r.Source===oraQcSource).sort((a,b)=>Number(String(a.Module).slice(1))-Number(String(b.Module).slice(1)));
+ document.getElementById('oraQcCoverage').innerHTML=rows.map(r=>'<div class="card"><span>'+r.Module+'</span><strong>'+fmt(r.Coverage_percent,1)+'%</strong><small>'+r.Annotated_module_genes+'/'+r.Assigned_module_genes+' genes'+(r.Coverage_warning?' · ⚠ cobertura limitada':'')+'</small></div>').join('');
+ document.getElementById('oraQcTable').innerHTML=O.qc.map(r=>'<tr><td>'+SOURCE_LABEL[r.Source]+'</td><td><strong>'+r.Module+'</strong></td><td>'+r.Assigned_module_genes+'</td><td>'+r.Annotated_module_genes+'</td><td class="'+(r.Coverage_warning?'warn':'good')+'">'+fmt(r.Coverage_percent,1)+'%</td><td>'+r.Background_annotated_genes+'</td><td>'+r.Terms_tested+'</td><td>'+r.Global_FDR_hits+'</td><td>'+(r.Coverage_warning?'Sí':'No')+'</td></tr>').join('');
+}
+function renderOraM5Audit(){
+ [['oraM5v3','v3_mapman'],['oraM5v5','v5_mapman']].forEach(([id,source])=>{
+  const rows=O.terms.filter(r=>r.Source===source&&r.Module==='M5'&&r.FDR_global_module_terms!=null&&r.FDR_global_module_terms<.05).sort((a,b)=>a.FDR_global_module_terms-b.FDR_global_module_terms).slice(0,10);
+  document.getElementById(id).innerHTML=rows.length?rows.map(r=>'<div style="padding:8px 0;border-top:1px solid #f1ecee"><strong style="display:block;font-size:.72rem">'+esc(r.TermName)+'</strong><small>'+esc(r.TermID)+' · FDR '+sci(r.FDR_global_module_terms)+' · fold '+fmt(r.Fold_enrichment,2)+'</small></div>').join(''):'<div class="notice">Sin hits FDR global.</div>';
+ });
+}
+function renderOraGo(){
+ const a=O.summary.go_audit;
+ const cards=[
+  ['Términos Grapedia',a.Grapedia_GO_terms_with_selected_gene,'con genes beta10'],
+  ['Background GO',a.valid_GO_annotated_background_genes,'genes anotados vigentes'],
+  ['Tests vigentes',a.tested_module_terms,'módulo×término'],
+  ['Hits globales',a.global_FDR05_hits,'FDR global < 0,05']
+ ];
+ document.getElementById('oraGoCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ const rows=O.terms.filter(r=>r.Source==='go'&&r.FDR_global_module_terms!=null&&r.FDR_global_module_terms<.05).sort((a,b)=>a.FDR_global_module_terms-b.FDR_global_module_terms);
+ if(!rows.length){document.getElementById('oraGoBars').innerHTML='<div class="notice">Sin hits GO globales.</div>';return}
+ const max=Math.max(...rows.map(r=>neglog(r.FDR_global_module_terms)),1);
+ document.getElementById('oraGoBars').innerHTML='<div class="bars">'+rows.map(r=>{const score=neglog(r.FDR_global_module_terms);return '<div class="barrow"><div class="barlabel"><strong>'+esc(r.TermName)+'</strong><small>'+esc(r.TermID)+' · '+r.Module+'</small></div><div class="track"><div class="fill" style="width:'+Math.max(score/max*100,1.5)+'%"></div></div><div class="stats"><span>−log10 FDR <strong>'+fmt(score,2)+'</strong></span><span>fold <strong>'+fmt(r.Fold_enrichment,2)+'</strong></span></div></div>'}).join('')+'</div>';
+}
+function initOraExpanded(){
+ document.getElementById('oraThemeModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');
+ document.getElementById('oraThemeModule').value='M5';
+ document.getElementById('oraThemeSource').addEventListener('change',refreshOraThemeNames);
+ document.getElementById('oraThemeModule').addEventListener('change',refreshOraThemeNames);
+ document.getElementById('oraThemeName').addEventListener('change',renderOraTheme);
+ refreshOraThemeNames();
+
+ document.getElementById('oraQcSources').innerHTML=['v3_mapman','v5_mapman','go'].map(source=>'<button class="button '+(source===oraQcSource?'active':'')+'" data-source="'+source+'">'+SOURCE_LABEL[source]+'</button>').join('');
+ document.querySelectorAll('#oraQcSources .button').forEach(b=>b.addEventListener('click',()=>{oraQcSource=b.dataset.source;renderOraQc()}));
+ renderOraQc();
+ renderOraM5Audit();
+ renderOraGo();
+}
+
 function profileRows(module,year){
  if(scoreMode==='canonical'){
   return D.profiles.rows
@@ -258,6 +361,7 @@ async function init(){
  renderComposition();
  const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();
  document.getElementById('oraModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');document.getElementById('oraModule').value='M5';['oraSource','oraModule','oraScope'].forEach(id=>document.getElementById(id).addEventListener('change',renderOra));document.getElementById('oraQuery').addEventListener('input',renderOra);renderOra();
+ initOraExpanded();
  initProfiles();
 }
 init().catch(err=>{document.querySelector('main').innerHTML='<div class="wrap major"><div class="notice notice--warn"><strong>Error al cargar el reporte:</strong> '+esc(err.message)+'</div></div>'});
