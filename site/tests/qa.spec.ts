@@ -106,6 +106,30 @@ test.describe('WEB-011 route and browser QA', () => {
   }
 })
 
+test('summary page matches the V2 scientific information hierarchy', async ({ page }) => {
+  await page.goto(url('/'))
+
+  await expect(page.getByRole('heading', { level: 1, name: /Comparar programas de coexpresión/i })).toBeVisible()
+  await expect(page.locator('.home-v2-study-card .home-v2-fact')).toHaveCount(8)
+  await expect(page.locator('.home-v2-finding-row article')).toHaveCount(4)
+  await expect(page.locator('.home-v2-flow li')).toHaveCount(6)
+  await expect(page.locator('.home-v2-limit-row article')).toHaveCount(4)
+
+  const heroImage = page.locator('.home-v2-grapes img')
+  await expect(heroImage).toBeVisible()
+  await expect.poll(
+    () => heroImage.evaluate((node) => node instanceof HTMLImageElement && node.complete && node.naturalWidth > 0),
+    { message: 'Home hero visual should load' },
+  ).toBe(true)
+
+  const m5Image = page.locator('.home-v2-m5-chart img')
+  await m5Image.scrollIntoViewIfNeeded()
+  await expect.poll(
+    () => m5Image.evaluate((node) => node instanceof HTMLImageElement && node.complete && node.naturalWidth > 0),
+    { message: 'Canonical M5 chart should load' },
+  ).toBe(true)
+})
+
 test('CEMiTool module figure and filters reflect generated canonical flags', async ({ page }) => {
   await page.goto(url('/results/modules'))
 
