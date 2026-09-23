@@ -176,6 +176,25 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   expect(errors).toEqual([])
 })
 
+test('integrated report switches completely between Spanish and curated scientific English', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html?utm_source=chatgpt.com')
+  await expect(page.getByText(/Catalina Constanza Marchant Hurtado/i)).toBeVisible()
+  await expect(page.getByRole('button', { name: /Cambiar idioma a inglés/i })).toBeVisible()
+
+  await page.getByRole('button', { name: /Cambiar idioma a inglés/i }).click()
+  await page.waitForURL(/lang=en/)
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon and Pinot noir during ripening/i })).toBeVisible()
+  await expect(page.getByText('Methods and quality control', { exact: true }).first()).toBeVisible()
+  await expect(page.getByText('Expression profiles of modules M1–M10', { exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Switch language to Spanish/i })).toBeVisible()
+  await expect(page).not.toHaveURL(/utm_source/)
+
+  await page.getByRole('button', { name: /Switch language to Spanish/i }).click()
+  await expect(page.locator('html')).toHaveAttribute('lang', 'es')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon y Pinot noir durante la maduración/i })).toBeVisible()
+})
+
 test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
