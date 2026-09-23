@@ -33,8 +33,6 @@ export default function SiteShell() {
   const inResults = ['/results', '/modules', '/enrichment', '/validation', '/genes'].some((prefix) =>
     pathname.startsWith(prefix),
   )
-  const showResultsContext = inResults && pathname !== '/results'
-
   const segments = pathname.split('/').filter(Boolean)
   const breadcrumbItems: Array<{ label: string; to?: string }> = []
 
@@ -46,6 +44,12 @@ export default function SiteShell() {
     pathname.startsWith('/results/genes/') ? segments[2] :
     pathname.startsWith('/genes/') ? segments[1] :
     null
+
+  const showResultsContext =
+    inResults &&
+    pathname !== '/results' &&
+    !moduleId &&
+    !geneId
 
   if (moduleId) {
     breadcrumbItems.push({ label: 'Resultados', to: '/results' })
