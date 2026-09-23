@@ -401,6 +401,27 @@ def main() -> None:
                 "global_fdr_threshold": 0.05,
             },
         },
+        "year_completeness_audit": {
+            "sources": [
+                "data/metadata/samples.tsv",
+                "data/metadata/phenotypes.tsv",
+                "results/beta10/tables/module.tsv",
+                "results/beta10/tables/enrichment_es.tsv",
+                "results/beta10/tables/enrichment_nes.tsv",
+                "results/beta10/tables/enrichment_padj.tsv",
+                "results/functional_enrichment_beta10/annotation_and_test_qc.tsv",
+                "results/go_ora_beta10/go_annotation_and_test_qc.tsv",
+                "results/year_robustness_beta10/cell_profiles.tsv",
+                "results/year_robustness_beta10/cabernet_vs_pinot_by_stage_year.tsv",
+            ],
+            "scripts": ["site/scripts/audit_year_completeness.py"],
+            "parameters": {
+                "expected_years": [2012, 2013, 2014],
+                "expected_modules": [f"M{i}" for i in range(1, 11)],
+                "expected_replicates_per_cultivar_stage_year": 3,
+                "known_native_gsea_exception": "M1 row absent; do not impute",
+            },
+        },
         "hubs": {
             "sources": [SOURCES["m5_hubs"], SOURCES["m10_m2_hubs"]],
             "scripts": ["scripts/post/13_m5_hub_prioritization_beta10.R", "scripts/post/14_m10_m2_hub_prioritization_beta10.R"],
