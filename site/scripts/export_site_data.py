@@ -403,6 +403,25 @@ def main() -> None:
                 "global_fdr_threshold": 0.05,
             },
         },
+        "hub_core_sensitivity": {
+            "sources": [
+                "results/hub_core_eigengene_sensitivity_beta10/hub_core_gene_ranking.tsv",
+                "results/hub_core_eigengene_sensitivity_beta10/hub_core_sample_scores.tsv",
+                "results/hub_core_eigengene_sensitivity_beta10/hub_core_cell_profiles.tsv",
+                "results/hub_core_eigengene_sensitivity_beta10/hub_core_stage_year_contrasts.tsv",
+                "results/hub_core_eigengene_sensitivity_beta10/hub_core_module_summary.tsv",
+            ],
+            "scripts": [
+                "scripts/post/28_hub_core_eigengene_sensitivity.R",
+                "site/scripts/export_hub_core_sensitivity.py",
+            ],
+            "parameters": {
+                "role": "sensitivity_analysis",
+                "hub_metric": "kWithin",
+                "hub_definition": "top_decile",
+                "canonical_eigengene_replaced": False,
+            },
+        },
         "year_completeness_audit": {
             "sources": [
                 "data/metadata/samples.tsv",
