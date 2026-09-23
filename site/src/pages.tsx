@@ -88,164 +88,192 @@ function EvidenceBoundary() {
 export function HomePage() {
   const { project, modules, loading, error } = useCanonicalData()
   const m5 = modules?.modules.find((row) => row.module === 'M5') ?? null
-  const robustness =
-    m5?.robustness_classification === 'reproducible'
-      ? 'Reproducible'
-      : m5?.robustness_classification === 'year-dependent'
-        ? 'Dependiente del año'
-        : 'En revisión'
+  const m10 = modules?.modules.find((row) => row.module === 'M10') ?? null
+  const moduleCount = modules?.modules.length ?? 10
+  const replicates = project?.design.replicates_per_cell_values[0] ?? 3
 
   return (
-    <div className="overview-page">
-      <section className="overview-hero">
-        <div className="overview-hero-copy">
-          <p className="eyebrow">Resumen científico</p>
-          <h1>Comparar programas de coexpresión durante la maduración.</h1>
-          <p className="overview-lede">
-            Cabernet Sauvignon y Pinot noir se comparan a través de etapas y años
-            para identificar programas transcriptómicos diferenciales, revisar su
-            robustez y buscar apoyo independiente en piel.
+    <div className="home-v2">
+      <section className="home-v2-hero">
+        <div className="home-v2-hero-copy">
+          <p className="home-v2-kicker">Caracterización transcriptómica comparativa</p>
+          <h1>
+            Comparar programas de coexpresión entre{' '}
+            <span>Cabernet Sauvignon</span> y <span>Pinot noir.</span>
+          </h1>
+          <p className="home-v2-lede">
+            CEMiTool Explorer identifica programas de coexpresión que divergen durante la
+            maduración de la baya, evalúa su robustez entre años y explora el apoyo externo
+            en piel de uva.
           </p>
-          <div className="hero-actions">
-            <Link className="button button--primary" to="/results/modules">Explorar resultados</Link>
-            <Link className="button button--secondary" to="/methods">Ver métodos</Link>
+          <div className="home-v2-actions">
+            <Link className="home-v2-button home-v2-button--primary" to="/results">
+              Explorar resultados <span aria-hidden="true">→</span>
+            </Link>
+            <Link className="home-v2-button home-v2-button--secondary" to="/methods">
+              Ver métodos
+            </Link>
           </div>
-          <p className="authorship">
-            Proyecto científico de <strong>Catalina Constanza Marchant Hurtado</strong>
-          </p>
         </div>
 
-        <dl className="overview-facts" aria-label="Diseño del estudio">
-          <div>
-            <dt>Muestras baseline</dt>
-            <dd>{project?.design.sample_count ?? '54'}</dd>
+        <figure className="home-v2-grapes">
+          <img
+            src={import.meta.env.BASE_URL + 'assets/home/grapes-hero.jpg'}
+            alt="Racimos de uva tinta y rosada usados como recurso visual para representar Cabernet Sauvignon y Pinot noir"
+          />
+        </figure>
+
+        <aside className="home-v2-study-card" aria-label="Resumen del diseño experimental">
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">◫</span>
+            <div><strong>GSE98923</strong><small>Conjunto de datos GEO</small></div>
           </div>
-          <div>
-            <dt>Tejido</dt>
-            <dd>Pericarpio</dd>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">◎</span>
+            <div><strong>{project?.design.sample_count ?? 54} muestras</strong><small>Expresión transcriptómica</small></div>
           </div>
-          <div>
-            <dt>Diseño</dt>
-            <dd>
-              {project
-                ? [project.design.cultivars.length, project.design.stages.length, project.design.years.length].join(' × ')
-                : '2 × 3 × 3'}
-            </dd>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">◒</span>
+            <div><strong>{project?.design.cultivars.length ?? 2} cultivares</strong><small>Cabernet Sauvignon y Pinot noir</small></div>
           </div>
-          <div>
-            <dt>Red principal</dt>
-            <dd>β={project?.network.primary_beta ?? 10}</dd>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">▥</span>
+            <div><strong>{project?.design.stages.length ?? 3} etapas</strong><small>{project?.design.stages.join(', ') ?? 'FruitSet, Veraison, Harvest'}</small></div>
           </div>
-        </dl>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">□</span>
+            <div><strong>{project?.design.years.length ?? 3} años</strong><small>{project?.design.years.join(', ') ?? '2012, 2013, 2014'}</small></div>
+          </div>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">✤</span>
+            <div><strong>Pericarpio completo</strong><small>Tejido del baseline</small></div>
+          </div>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">⚙</span>
+            <div><strong>β{project?.network.primary_beta ?? 10} principal</strong><small>Construcción de la red</small></div>
+          </div>
+          <div className="home-v2-fact">
+            <span className="home-v2-fact-icon" aria-hidden="true">⚙</span>
+            <div><strong>β7 sensibilidad</strong><small>Análisis complementario</small></div>
+          </div>
+        </aside>
       </section>
 
       <DataState loading={loading} error={error} />
 
+      <section className="home-v2-section home-v2-findings" aria-labelledby="home-v2-findings-title">
+        <div className="home-v2-section-heading">
+          <p>Hallazgos principales</p>
+          <h2 id="home-v2-findings-title">Cuatro conclusiones clave</h2>
+        </div>
+        <div className="home-v2-finding-row">
+          <article>
+            <span className="home-v2-round-icon" aria-hidden="true">⌘</span>
+            <div><strong>{moduleCount} módulos β10</strong><p>La red principal identifica diez programas de coexpresión.</p></div>
+          </article>
+          <article>
+            <span className="home-v2-round-icon" aria-hidden="true">◇</span>
+            <div><strong>M10 reproducible</strong><p>{m10 ? 'Cumple la regla preespecificada de reproducibilidad anual.' : 'Clasificación reproducible en la capa de robustez anual.'}</p></div>
+          </article>
+          <article>
+            <span className="home-v2-round-icon" aria-hidden="true">▥</span>
+            <div><strong>M5, M2, M3 y M1</strong><p>Muestran dependencia anual a nivel de módulo.</p></div>
+          </article>
+          <article>
+            <span className="home-v2-round-icon" aria-hidden="true">▤</span>
+            <div><strong>Validación en piel</strong><p>Es externa y permanece separada del baseline de 54 muestras.</p></div>
+          </article>
+        </div>
+      </section>
+
       {project && (
-        <>
-          <section className="overview-design" aria-labelledby="overview-design-title">
-            <div>
-              <p className="eyebrow">Diseño experimental</p>
-              <h2 id="overview-design-title">La misma comparación a través de tres etapas y tres años</h2>
-              <p>
-                {project.design.cultivars.join(' vs ')} · {project.design.years.join(', ')} ·
-                {' '}{project.design.replicates_per_cell_values[0] ?? 3} réplicas por celda.
-              </p>
-            </div>
-            <ol className="overview-stage-flow">
-              {project.design.stages.map((stage, index) => (
-                <li key={stage}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{stage}</strong>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section className="overview-findings" aria-labelledby="overview-findings-title">
-            <div className="overview-section-heading">
-              <div>
-                <p className="eyebrow">Hallazgos principales</p>
-                <h2 id="overview-findings-title">Tres ideas para orientarse antes de explorar</h2>
-              </div>
-            </div>
-
-            <div className="overview-finding-grid">
-              <article>
-                <span>01</span>
-                <strong>M5</strong>
-                <h3>Interacción Cultivar×Stage destacada</h3>
-                <p>
-                  FDR {formatScientific(m5?.cultivar_stage_fdr)} en el resumen canónico del módulo.
-                </p>
-                <Link to="/results/modules/M5">Abrir M5 →</Link>
-              </article>
-
-              <article>
-                <span>02</span>
-                <strong>{robustness}</strong>
-                <h3>La robustez anual se evalúa por separado</h3>
-                <p>
-                  Significancia global y repetición entre años responden preguntas distintas.
-                </p>
-                <Link to="/results/modules">Comparar módulos →</Link>
-              </article>
-
-              <article>
-                <span>03</span>
-                <strong>Piel externa</strong>
-                <h3>La validación no se mezcla con el baseline</h3>
-                <p>
-                  Los datasets de piel aislada se usan como evidencia observacional independiente.
-                </p>
-                <Link to="/results/validation">Ver validación →</Link>
-              </article>
-            </div>
-          </section>
-
-          <section className="overview-m5-highlight">
-            <div>
-              <p className="eyebrow">Resultado destacado</p>
-              <h2>M5 concentra la exploración más profunda del sitio</h2>
-              <p>
-                {m5?.gene_count ?? '—'} genes · FDR Cultivar×Stage{' '}
-                {formatScientific(m5?.cultivar_stage_fdr)} · {robustness.toLowerCase()}.
-                Su workspace conecta trayectoria, hubs, red, función y evidencia externa
-                sin convertir coexpresión en causalidad.
-              </p>
-              <div className="overview-inline-actions">
-                <Link className="button button--primary" to="/results/modules/M5">Explorar M5</Link>
-                <Link className="button button--secondary" to="/reproducibility">Auditar evidencia</Link>
-              </div>
-            </div>
-            <div className="overview-m5-metrics">
-              <div><span>Genes</span><strong>{m5?.gene_count ?? '—'}</strong></div>
-              <div><span>Red principal</span><strong>β={project.network.primary_beta}</strong></div>
-              <div><span>Scale-free R²</span><strong>{formatDecimal(project.network.scale_free_r2, 3)}</strong></div>
-            </div>
-          </section>
-
-          <section className="overview-validation-band">
-            <div>
-              <p className="eyebrow">Evidencia externa</p>
-              <h2>Baseline en pericarpio → comparación independiente en piel</h2>
-              <p>
-                La validación externa pregunta por concordancia de expresión en otro tejido/plataforma;
-                no suma nuevas réplicas al diseño de 54 muestras.
-              </p>
-            </div>
-            <Link className="button button--secondary" to="/results/validation">Abrir validación</Link>
-          </section>
-        </>
+        <section className="home-v2-section home-v2-design" aria-labelledby="home-v2-design-title">
+          <div className="home-v2-section-heading">
+            <p>Diseño del estudio</p>
+            <h2 id="home-v2-design-title">De las muestras a los módulos</h2>
+          </div>
+          <ol className="home-v2-flow">
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">● ●</span>
+              <strong>Cabernet Sauvignon<br />y Pinot noir</strong>
+              <small>{project.design.cultivars.length} cultivares</small>
+            </li>
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">● ● ●</span>
+              <strong>{project.design.stages.length} etapas</strong>
+              <small>{project.design.stages.join(' · ')}</small>
+            </li>
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">▣</span>
+              <strong>{project.design.years.length} años</strong>
+              <small>{project.design.years.join(', ')}</small>
+            </li>
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">Ⅱ</span>
+              <strong>{replicates} réplicas</strong>
+              <small>por condición</small>
+            </li>
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">▰</span>
+              <strong>GSE98923</strong>
+              <small>{project.design.sample_count} muestras</small>
+            </li>
+            <li>
+              <span className="home-v2-flow-icon" aria-hidden="true">⌘</span>
+              <strong>Red de coexpresión<br />CEMiTool</strong>
+              <small>módulos y programas</small>
+            </li>
+          </ol>
+        </section>
       )}
 
-      <EvidenceBoundary />
+      <section className="home-v2-section home-v2-m5" aria-labelledby="home-v2-m5-title">
+        <div className="home-v2-m5-copy">
+          <p className="home-v2-section-kicker">Resultado destacado</p>
+          <h2 id="home-v2-m5-title">Resultado destacado: <span>M5</span></h2>
+          <p>
+            M5 se presenta como caso de estudio porque combina una interacción
+            Cultivar×Stage destacada con interpretación funcional y de red, mientras
+            mantiene dependencia anual a nivel de módulo.
+          </p>
+          <Link className="home-v2-button home-v2-button--primary" to="/results/modules/M5">
+            Ver detalle de M5 <span aria-hidden="true">→</span>
+          </Link>
+        </div>
 
-      <nav className="overview-next" aria-label="Continuar explorando">
-        <Link to="/results/modules"><span>Resultados</span><strong>Comparar módulos</strong></Link>
-        <Link to="/methods"><span>Métodos</span><strong>Cómo se construyó la evidencia</strong></Link>
-        <Link to="/reproducibility"><span>Reproducibilidad</span><strong>Fuentes, scripts y artefactos</strong></Link>
-      </nav>
+        <figure className="home-v2-m5-chart">
+          <figcaption>M5 · Trayectoria por etapa y año</figcaption>
+          <img
+            src={import.meta.env.BASE_URL + 'assets/home/m5-stage-by-year.png'}
+            alt="Trayectorias observadas del eigengene M5 por etapa, cultivar y año"
+            loading="lazy"
+          />
+        </figure>
+
+        <aside className="home-v2-m5-summary">
+          <h3>M5 en síntesis</h3>
+          <ul>
+            <li><span aria-hidden="true">⌁</span><strong>{m5?.gene_count ?? 108} genes</strong></li>
+            <li><span aria-hidden="true">▥</span><strong>Interacción Cultivar×Stage</strong></li>
+            <li><span aria-hidden="true">□</span><strong>Year-dependent</strong></li>
+            <li><span aria-hidden="true">◒</span><strong>Harvest conserva señal en los tres años</strong></li>
+          </ul>
+          <Link to="/results/modules/M5">Ver detalle de M5 →</Link>
+        </aside>
+      </section>
+
+      <section className="home-v2-section home-v2-limits" aria-labelledby="home-v2-limits-title">
+        <div className="home-v2-section-heading">
+          <p>Qué no demuestra este análisis</p>
+          <h2 id="home-v2-limits-title">Cuatro consideraciones importantes</h2>
+        </div>
+        <div className="home-v2-limit-row">
+          <article><span aria-hidden="true">⌁</span><div><strong>Eigengene ≠ expresión de un gen</strong><p>Resume el patrón del módulo, no la expresión de un gen individual.</p></div></article>
+          <article><span aria-hidden="true">⌘</span><div><strong>Hub ≠ causalidad</strong><p>Centralidad en la red no demuestra regulación causal.</p></div></article>
+          <article><span aria-hidden="true">◒</span><div><strong>Pericarpio ≠ piel aislada</strong><p>El baseline analiza pericarpio completo; la piel externa es otra capa de evidencia.</p></div></article>
+          <article><span aria-hidden="true">△</span><div><strong>Expresión ≠ actividad proteica</strong><p>ARNm y actividad de proteína no son medidas equivalentes.</p></div></article>
+        </div>
+      </section>
     </div>
   )
 }
