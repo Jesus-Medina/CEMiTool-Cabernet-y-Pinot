@@ -466,14 +466,159 @@ function initProfiles(){
  renderProfiles();
 }
 
+
+function initInnerTabs(){
+ document.querySelectorAll('.inner-tab').forEach(button=>{
+  button.addEventListener('click',()=>{
+   const group=button.dataset.group,panel=button.dataset.panel;
+   document.querySelectorAll('.inner-tab[data-group="'+group+'"]').forEach(b=>b.classList.toggle('active',b===button));
+   document.querySelectorAll('[data-inner-group="'+group+'"]').forEach(p=>p.classList.toggle('active',p.id===panel));
+  });
+ });
+}
+
+function csvEscape(value){
+ const text=String(value??'');
+ return '"'+text.replaceAll('"','""')+'"';
+}
+function downloadCsv(rows,columns,filename){
+ const csv=[columns.map(c=>csvEscape(c.label)).join(','),...rows.map(row=>columns.map(c=>csvEscape(typeof c.value==='function'?c.value(row):row[c.value])).join(','))].join('\n');
+ const href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=href;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(href);
+}
+
+function renderGseaOverview(){
+ const biological=D.gsea.nes.filter(r=>/^M\d+$/.test(r.pathway));
+ const cards=[
+  ['Muestras',54,'18 por año · diseño balanceado'],
+  ['Clases GSEA',D.gsea.classes.length,'Cultivar × Stage'],
+  ['Módulos exportados',biological.length+'/10','M1 ausente en salida nativa'],
+  ['Años por clase','3 + 3 + 3','2012 · 2013 · 2014']
+ ];
+ document.getElementById('gseaOverviewCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ const rows=MODULES.map(module=>{
+  const nes=D.gsea.nes.find(r=>r.pathway===module);
+  const padj=D.gsea.padj.find(r=>r.pathway===module);
+  const maxNes=nes?Math.max(...Object.values(nes.values).filter(v=>v!=null).map(v=>Math.abs(Number(v)))):null;
+  const minPadj=padj?Math.min(...Object.values(padj.values).filter(v=>v!=null).map(Number)):null;
+  return {module,present:Boolean(nes),maxNes,minPadj};
+ });
+ document.getElementById('gseaOverviewModuleTable').innerHTML='<table class="table"><thead><tr><th>Módulo</th><th>Fila GSEA</th><th>Máx |NES|</th><th>Min padj</th><th>Años de input</th></tr></thead><tbody>'+rows.map(r=>'<tr><td><strong>'+r.module+'</strong></td><td class="'+(r.present?'good':'warn')+'">'+(r.present?'PRESENTE':'AUSENTE')+'</td><td>'+fmt(r.maxNes,3)+'</td><td>'+sci(r.minPadj)+'</td><td>2012 + 2013 + 2014</td></tr>').join('')+'</tbody></table>';
+}
+
+function renderOraOverview(){
+ const cards=[
+  ['Tests MapMan v3',O.summary.tested_terms.v3_mapman,'módulo×término testados'],
+  ['Hits MapMan v3',O.summary.global_fdr05_hits.v3_mapman,'FDR global < 0,05'],
+  ['Tests GO vigente',O.summary.tested_terms.go,'tras auditoría T-005A'],
+  ['Hits GO vigente',O.summary.global_fdr05_hits.go,'concentrados en M9']
+ ];
+ document.getElementById('oraSummaryCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ const counts=MODULES.map(module=>({module,count:O.terms.filter(r=>r.Source==='v3_mapman'&&r.Module===module&&r.FDR_global_module_terms!=null&&r.FDR_global_module_terms<.05).length}));
+ const max=Math.max(...counts.map(r=>r.count),1);
+ document.getElementById('oraOverviewBars').innerHTML='<div class="subhead"><h3>Hits globales MapMan v3 por módulo</h3><p>Conteo descriptivo; no es ranking de calidad.</p></div><div class="bars">'+counts.map(r=>'<div class="barrow"><div class="barlabel"><strong>'+r.module+'</strong><small>FDR global &lt; 0,05</small></div><div class="track"><div class="fill" style="width:'+Math.max(r.count/max*100,1)+'%"></div></div><div class="stats"><strong>'+r.count+' hits</strong></div></div>').join('')+'</div>';
+}
+
+function wireDownloads(){
+ document.getElementById('gseaDownloadCsv').addEventListener('click',()=>{
+  const metric=document.getElementById('gseaMetric').value,rows=metricRows(),classes=D.gsea.classes;
+  downloadCsv(rows,[{label:'Pathway',value:'pathway'},...classes.map(c=>({label:c,value:r=>r.values[c]}))],'gsea_'+metric+'_beta10.csv');
+ });
+ document.getElementById('oraDownloadCsv').addEventListener('click',()=>{
+  downloadCsv(filteredOra(),[
+   {label:'Source',value:'Source'},{label:'Module',value:'Module'},{label:'Aspect',value:'Aspect'},
+   {label:'TermID',value:'TermID'},{label:'TermName',value:'TermName'},{label:'Background_N',value:'Background_N'},
+   {label:'Module_n',value:'Module_n'},{label:'Term_background_K',value:'Term_background_K'},{label:'Overlap_k',value:'Overlap_k'},
+   {label:'Expected_overlap',value:'Expected_overlap'},{label:'Fold_enrichment',value:'Fold_enrichment'},
+   {label:'p_value',value:'p_value'},{label:'FDR_within_module',value:'FDR_within_module'},
+   {label:'FDR_global_module_terms',value:'FDR_global_module_terms'}
+  ],'ora_'+document.getElementById('oraSource').value+'_'+document.getElementById('oraModule').value+'.csv');
+ });
+}
+
+function profileDataRows(){
+ const module=document.getElementById('profileDataModule').value,year=document.getElementById('profileDataYear').value,score=document.getElementById('profileDataScore').value;
+ return HUB.profiles.filter(r=>(module==='all'||r.Module===module)&&(year==='all'||Number(r.Year)===Number(year))).map(r=>({
+  Module:r.Module,Cultivar:r.Cultivar,Stage:r.Stage,Year:r.Year,N:r.N,
+  Mean:score==='canonical'?r.Canonical_Mean:r.HubCore_Mean,
+  SD:score==='canonical'?r.Canonical_SD:r.HubCore_SD,
+  SE:score==='canonical'?r.Canonical_SE:r.HubCore_SE,
+  Score:score==='canonical'?'Eigengene canónico':'Hub-core PC1'
+ }));
+}
+function renderProfileData(){
+ const rows=profileDataRows();
+ document.getElementById('profileDataTable').innerHTML=rows.map(r=>'<tr><td><strong>'+r.Module+'</strong></td><td>'+esc(r.Cultivar)+'</td><td>'+r.Stage+'</td><td>'+r.Year+'</td><td>'+fmt(r.Mean,4)+'</td><td>'+fmt(r.SD,4)+'</td><td>'+r.N+'</td><td>'+fmt(r.SE,4)+'</td><td>'+r.Score+'</td></tr>').join('');
+}
+
+function selectedHubRows(){
+ const module=document.getElementById('hubListModule').value;
+ return (HUB.selected_hubs[module]||[]).slice().sort((a,b)=>Number(a.Rank_kWithin)-Number(b.Rank_kWithin));
+}
+function renderHubList(){
+ const module=document.getElementById('hubListModule').value,rows=selectedHubRows(),sm=HUB.summary.find(r=>r.Module===module);
+ const values=rows.map(r=>Number(r.kWithin));
+ document.getElementById('hubListSummary').innerHTML=[
+  ['Módulo',module,sm.Genes_in_module+' genes totales'],
+  ['Hubs usados',rows.length,'top decil por kWithin'],
+  ['Fracción',fmt(Number(sm.Hub_core_fraction)*100,1)+'%','del módulo'],
+  ['kWithin máx',fmt(Math.max(...values),3),'entre hubs seleccionados']
+ ].map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ document.getElementById('hubListTable').innerHTML=rows.map(r=>'<tr><td>'+esc(r.Gene)+'</td><td>'+r.Module+'</td><td>'+r.Rank_kWithin+'</td><td>'+fmt(r.kWithin,5)+'</td><td>'+fmt(r.kWithin_per_possible_edge,5)+'</td></tr>').join('');
+}
+
+function selectedContrastRows(){
+ const module=document.getElementById('contrastModule').value;
+ return HUB.contrasts.filter(r=>r.Module===module);
+}
+function renderContrastTable(){
+ const rows=selectedContrastRows();
+ document.getElementById('contrastTable').innerHTML=rows.map(r=>'<tr><td><strong>'+r.Module+'</strong></td><td>'+r.Stage+'</td><td>'+r.Year+'</td><td>'+fmt(r.Canonical_CS_minus_PN,5)+'</td><td>'+fmt(r.HubCore_CS_minus_PN,5)+'</td><td class="'+(r.Same_direction?'good':'warn')+'">'+(r.Same_direction?'Sí':'No')+'</td></tr>').join('');
+}
+
+function initProfileTables(){
+ const moduleOptions='<option value="all">Todos</option>'+MODULES.map(m=>'<option>'+m+'</option>').join('');
+ document.getElementById('profileDataModule').innerHTML=moduleOptions;
+ document.getElementById('profileDataModule').value='all';
+ ['profileDataModule','profileDataYear','profileDataScore'].forEach(id=>document.getElementById(id).addEventListener('change',renderProfileData));
+ renderProfileData();
+
+ document.getElementById('hubListModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');
+ document.getElementById('hubListModule').value='M5';
+ document.getElementById('hubListModule').addEventListener('change',renderHubList);
+ renderHubList();
+
+ document.getElementById('contrastModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');
+ document.getElementById('contrastModule').value='M5';
+ document.getElementById('contrastModule').addEventListener('change',renderContrastTable);
+ renderContrastTable();
+
+ document.getElementById('profileDownloadCsv').addEventListener('click',()=>downloadCsv(profileDataRows(),[
+  {label:'Module',value:'Module'},{label:'Cultivar',value:'Cultivar'},{label:'Stage',value:'Stage'},{label:'Year',value:'Year'},
+  {label:'Mean',value:'Mean'},{label:'SD',value:'SD'},{label:'N',value:'N'},{label:'SE',value:'SE'},{label:'Score',value:'Score'}
+ ],'module_profiles_'+document.getElementById('profileDataScore').value+'.csv'));
+
+ document.getElementById('hubDownloadCsv').addEventListener('click',()=>downloadCsv(selectedHubRows(),[
+  {label:'Module',value:'Module'},{label:'Gene',value:'Gene'},{label:'Rank_kWithin',value:'Rank_kWithin'},
+  {label:'kWithin',value:'kWithin'},{label:'kWithin_per_possible_edge',value:'kWithin_per_possible_edge'}
+ ],'hub_core_'+document.getElementById('hubListModule').value+'.csv'));
+
+ document.getElementById('contrastDownloadCsv').addEventListener('click',()=>downloadCsv(selectedContrastRows(),[
+  {label:'Module',value:'Module'},{label:'Stage',value:'Stage'},{label:'Year',value:'Year'},
+  {label:'Canonical_CS_minus_PN',value:'Canonical_CS_minus_PN'},{label:'HubCore_CS_minus_PN',value:'HubCore_CS_minus_PN'},
+  {label:'Same_direction',value:'Same_direction'}
+ ],'hub_core_contrasts_'+document.getElementById('contrastModule').value+'.csv'));
+}
+
 async function init(){
  const [a,b,c,d]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'}),fetch(AUDIT_URL,{cache:'no-store'}),fetch(HUB_CORE_URL,{cache:'no-store'})]);if(!a.ok||!b.ok||!c.ok||!d.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();A=await c.json();HUB=await d.json();
+ initInnerTabs();
  renderAudit();
  renderComposition();
- const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();
+ const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();renderGseaOverview();
  document.getElementById('oraModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');document.getElementById('oraModule').value='M5';['oraSource','oraModule','oraScope'].forEach(id=>document.getElementById(id).addEventListener('change',renderOra));document.getElementById('oraQuery').addEventListener('input',renderOra);renderOra();
- initOraExpanded();
- initProfiles();
+ initOraExpanded();renderOraOverview();wireDownloads();
+ initProfiles();initProfileTables();
 }
 init().catch(err=>{document.querySelector('main').innerHTML='<div class="wrap major"><div class="notice notice--warn"><strong>Error al cargar el reporte:</strong> '+esc(err.message)+'</div></div>'});
 </script>
