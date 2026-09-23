@@ -13,6 +13,7 @@ from typing import Any
 from build_provenance_manifest import build_manifest
 from export_functional_enrichment import FUNCTIONAL_SOURCE_PATHS, build_functional_enrichment
 from export_external_validation import EXTERNAL_SOURCE_PATHS, build_external_validation
+from export_gsea_year_profiles import build_gsea_year_profiles
 
 SITE_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = SITE_DIR.parent
@@ -253,6 +254,7 @@ def main() -> None:
     m5_edges = loaded["m5_edges"]
     external_validation = build_external_validation(REPO_ROOT)
     functional_enrichment = build_functional_enrichment(REPO_ROOT)
+    gsea_year_profiles = build_gsea_year_profiles(REPO_ROOT)
     t008 = build_t008(loaded["t008_manifest"], loaded["t008_events"])
 
     beta_row = next((row for row in beta_rows if row["Power"] == PRIMARY_BETA), None)
@@ -429,6 +431,7 @@ def main() -> None:
         "module_contrasts.json": {"schema_version": 1, "contrasts": contrast_rows},
         "enrichments.json": {"schema_version": 1, "rows": enrichment_rows},
         "functional_enrichment.json": functional_enrichment,
+        "gsea_year_profiles.json": gsea_year_profiles,
         "hubs.json": {"schema_version": 1, "rows": hubs},
         "m5_network.json": {"schema_version": 1, "edges": m5_edges},
         "external_validation.json": external_validation,
