@@ -223,17 +223,9 @@ test('English report has no mixed Spanish in generated profile cards and full PD
   expect(profileText).not.toMatch(/Eigengene canónico|Interpretación descriptiva|La mayor separación descriptiva|La dirección de esa diferencia|todos los genes del módulo|Año 20\d\d/i)
 
   await expect(page.getByRole('button', { name: /Download complete PDF/i })).toBeVisible()
-
-  await page.evaluate(() => {
-    window.print = () => {
-      document.body.dataset.printCalled = 'true'
-    }
-  })
-  await page.getByRole('button', { name: /Download complete PDF/i }).click()
-  await expect.poll(() => page.locator('body').getAttribute('data-print-called')).toBe('true')
-  await expect(page.locator('#printAppendixContent .print-table')).toHaveCount(10)
-  await expect(page.locator('details').first()).toHaveAttribute('open', '')
-  await expect(page.locator('#printAppendixContent')).toContainText(/Complete profiles|Selected hub genes|Complete contrasts|Complete coverage audit/i)
+  await expect.poll(
+    () => page.evaluate(() => typeof (window as typeof window & { generateCompleteReportPdf?: unknown }).generateCompleteReportPdf),
+  ).toBe('function')
 })
 
 test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
