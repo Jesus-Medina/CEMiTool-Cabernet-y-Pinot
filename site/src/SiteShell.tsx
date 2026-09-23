@@ -52,11 +52,9 @@ export default function SiteShell() {
     !geneId
 
   if (moduleId) {
-    breadcrumbItems.push({ label: 'Resultados', to: '/results' })
     breadcrumbItems.push({ label: 'Módulos', to: '/results/modules' })
     breadcrumbItems.push({ label: moduleId.toUpperCase() })
   } else if (geneId) {
-    breadcrumbItems.push({ label: 'Resultados', to: '/results' })
     breadcrumbItems.push({ label: 'Genes', to: '/results/genes' })
     breadcrumbItems.push({ label: geneId })
   }
