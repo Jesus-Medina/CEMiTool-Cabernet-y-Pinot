@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-23 — Home editorial breathing room
+
+- Added a fluid 20–44 px internal gutter to the Home hero copy, study summary and narrative sections.
+- Kept the grape visual aligned with the outer composition while moving headings and body copy away from the canvas edge.
+- Preserved the existing mobile page gutter instead of reducing the small-screen content width.
+
 ## 2026-09-23 — UX05B-05 mobile module list
 
 - Replaced the horizontally dominant module table with stacked comparison cards below 650 px.
