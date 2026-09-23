@@ -73,10 +73,66 @@ body{font-size:16px;line-height:1.55}
 .byline{margin:12px 0 0;color:var(--muted);font-size:.76rem;line-height:1.45}
 @media(max-width:620px){.language-toggle{padding:0 10px}.language-icon{display:none}.byline{font-size:.72rem}}
 
+
+.header-actions{display:flex;align-items:center;gap:8px}
+.pdf-toggle{color:var(--ink)}
+.print-appendix{display:none}
+.print-appendix h2{margin:0 0 8px;font-family:Georgia,serif;font-size:2rem}
+.print-appendix h3{margin:24px 0 8px;font-family:Georgia,serif;font-size:1.25rem}
+.print-appendix p{margin:0 0 10px;color:var(--muted);font-size:.82rem}
+.print-table{width:100%;border-collapse:collapse;table-layout:auto;font-size:.68rem}
+.print-table th,.print-table td{padding:5px 6px;border:1px solid #ddd4d8;vertical-align:top;text-align:left}
+.print-table th{background:#f7f3f5;font-weight:850}
+.print-table code{white-space:normal;overflow-wrap:anywhere}
+@media(max-width:620px){.header-actions{gap:5px}.pdf-toggle .language-icon{display:none}}
+@media print{
+ @page{size:A4 landscape;margin:9mm}
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ html,body{background:#fff!important}
+ body{font-size:9pt;color:#111}
+ header{position:static!important;border-bottom:1px solid #ddd!important;box-shadow:none!important}
+ .head{min-height:42px}
+ .header-actions,.anchorbar,.profile-toolbar,.controls,.download-row,.button{display:none!important}
+ .hero{padding:20px 0 16px!important}
+ .hero h1{font-size:28pt!important;max-width:none!important}
+ .hero .lede{font-size:10.5pt!important;max-width:none!important}
+ .wrap{width:100%!important;max-width:none!important}
+ main{padding-bottom:0!important}
+ .major{scroll-margin-top:0!important;padding:18px 0!important;border-bottom:1px solid #ddd!important}
+ .major>.wrap>.section-head{grid-template-columns:1fr!important;gap:8px!important}
+ .section-head h2{font-size:22pt!important}
+ .section-head p,.panel-intro p,.subhead p,.notice,.card small{font-size:8.5pt!important}
+ .cards,.scope-grid,.coverage-strip{gap:6px!important}
+ .card,.scope,.notice,.native-figure,.profile-card,.barbox,.tablewrap,.matrix-wrap,.data-details{box-shadow:none!important}
+ .profile-grid{display:block!important}
+ .profile-card{margin:0 0 10mm!important;break-inside:avoid-page!important;page-break-inside:avoid!important}
+ .profile-chart{min-height:0!important;height:auto!important}
+ .canonical img,.native-figure img{max-height:none!important;page-break-inside:avoid!important}
+ .inner-panel{display:block!important;margin-top:12px!important;padding-top:12px!important}
+ .data-details{border:0!important;background:transparent!important;margin-top:8px!important}
+ .data-details>summary{display:none!important}
+ .data-details .details-body{display:block!important;padding:0!important}
+ details:not([open])>*:not(summary){display:block!important}
+ .tablewrap,.matrix-wrap{overflow:visible!important;border:0!important}
+ .table,.matrix{font-size:6.7pt!important;width:100%!important}
+ .table th,.table td,.matrix th,.matrix td{padding:4px 5px!important;white-space:normal!important;position:static!important;min-width:0!important}
+ table{page-break-inside:auto!important}
+ thead{display:table-header-group!important}
+ tfoot{display:table-footer-group!important}
+ tr{page-break-inside:avoid!important;break-inside:avoid!important}
+ .barrow{grid-template-columns:minmax(120px,1fr) minmax(180px,2fr) minmax(110px,.7fr)!important}
+ .print-appendix{display:block!important;break-before:page!important;page-break-before:always!important;padding:18px 0 0!important}
+ .print-appendix .print-table{font-size:6.3pt!important}
+ .print-appendix h2{font-size:22pt!important}
+ .print-appendix h3{break-after:avoid-page!important;page-break-after:avoid!important}
+ footer{padding:12px 0!important;font-size:7pt!important}
+ a{text-decoration:none!important;color:inherit!important}
+}
+
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div><button id="languageToggle" class="language-toggle" type="button" aria-label="Cambiar idioma a inglés"><span class="language-icon" aria-hidden="true">文</span><span id="languageToggleLabel">English</span></button></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div><div class="header-actions"><button id="languageToggle" class="language-toggle" type="button" aria-label="Cambiar idioma a inglés"><span class="language-icon" aria-hidden="true">文</span><span id="languageToggleLabel">English</span></button><button id="downloadPdf" class="language-toggle pdf-toggle" type="button" aria-label="Descargar PDF completo"><span class="language-icon" aria-hidden="true">↓</span><span id="downloadPdfLabel">PDF completo</span></button></div></div></header>
 
 <section class="hero"><div class="wrap"><p class="eyebrow">Caracterización transcriptómica comparativa</p><h1>Cabernet Sauvignon y Pinot noir durante la maduración</h1><p class="lede">Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.</p><p class="byline">Análisis realizado por Catalina Constanza Marchant Hurtado · Ingeniera en Biotecnología · UTEM</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
@@ -265,6 +321,7 @@ body{font-size:16px;line-height:1.55}
 <details class="data-details"><summary>Ver auditoría módulo por módulo</summary><div class="details-body"><div class="tablewrap"><table class="table"><thead><tr><th>Módulo</th><th>GSEA nativo</th><th>GSEA usa 3 años</th><th>ORA v3</th><th>ORA v5.1</th><th>ORA GO</th><th>Perfiles 2012–2014</th><th>Contrastes 2012–2014</th><th>Estado</th></tr></thead><tbody id="auditTable"></tbody></table></div></div></details></div>
 <div class="subsection"><div class="notice notice--method"><strong>Regla de seguridad:</strong> esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.</div></div>
 </div></section>
+<section id="printAppendix" class="print-appendix" aria-label="Apéndice completo de datos"><div class="wrap" id="printAppendixContent"></div></section>
 
 </main>
 
@@ -434,6 +491,30 @@ const EN={
 'Cambiar idioma a español':'Switch language to Spanish',
 'English':'English',
 'Español':'Español',
+'PDF completo':'Full PDF',
+'Descargar PDF completo':'Download complete PDF',
+'Apéndice completo de datos':'Complete data appendix',
+'Apéndice completo de datos y tablas':'Complete data and tables appendix',
+'Este apéndice se genera para el PDF e incluye los datos completos detrás de los filtros interactivos.':'This appendix is generated for the PDF and includes the complete data behind the interactive filters.',
+'Diseño':'Design',
+'Contrastes':'Contrasts',
+'Sin excepciones de completitud.':'No completeness exceptions.',
+'Estado global:':'Overall status:',
+'FDR global temas':'Global theme FDR',
+'no testado:':'not tested:',
+'Términos Grapedia':'Grapedia terms',
+'Background GO':'GO background',
+'Tests MapMan v3':'MapMan v3 tests',
+'Hits MapMan v3':'MapMan v3 hits',
+'Tests GO vigente':'Current GO tests',
+'Hits GO vigente':'Current GO hits',
+'tras control de calidad GO':'after GO quality control',
+'concentrados en M9':'concentrated in M9',
+'genes centrales usados entre M1-M10':'central genes used across M1–M10',
+'top decil por kWithin':'top kWithin decile',
+'Hub-core vs canónico · 54 muestras':'Hub-core vs canonical · 54 samples',
+'Concordancia 9/9':'9/9 concordance',
+'kWithin máx':'Max kWithin',
 'Figura GSEA nativa de CEMiTool beta10':'Native CEMiTool beta10 GSEA figure',
 'Perfil por año del módulo':'Yearly profile for module',
 'Sin fila exportada para':'No exported row for',
@@ -494,6 +575,40 @@ const EN={
 
 function enDynamic(text){
  let x=text;
+ const replacements=[
+  ['La mayor separación descriptiva entre cultivares aparece en','The largest descriptive separation between cultivars occurs at'],
+  ['La dirección de esa diferencia coincide en','The direction of this difference is concordant in'],
+  ['presenta el valor medio más alto','has the higher mean value'],
+  ['entre los años mostrados','across the displayed years'],
+  ['Eigengene canónico','Canonical eigengene'],
+  ['todos los genes del módulo','all genes in the module'],
+  ['Hub-core vs canónico','Hub-core vs canonical'],
+  ['genes centrales usados entre M1-M10','central genes used across M1–M10'],
+  ['top decil por kWithin','top kWithin decile'],
+  ['módulo con mayor cambio relativo','module with the largest relative change'],
+  ['misma dirección en los 9 Stage×Year','same direction across all 9 Stage × Year contrasts'],
+  ['tras control de calidad GO','after GO quality control'],
+  ['concentrados en M9','concentrated in M9'],
+  ['módulo×término testados','module × term tests'],
+  ['cobertura limitada','limited coverage'],
+  ['Sin excepciones de completitud.','No completeness exceptions.'],
+  ['Estado global:','Overall status:'],
+  ['revisar diseño','review design'],
+  ['muestras balanceadas','balanced samples'],
+  ['balanceados en cada clase','balanced within each class'],
+  ['celdas','cells'],
+  ['FDR global temas','Global theme FDR'],
+  ['no testado:','not tested:'],
+  ['Términos Grapedia','Grapedia terms'],
+  ['Background GO','GO background'],
+  ['Tests vigentes','Current tests'],
+  ['Hits globales','Global hits'],
+  ['kWithin máx','Max kWithin'],
+  ['Años por clase','Years per class'],
+  ['Años de input','Input years'],
+  ['Fila GSEA','GSEA row']
+ ];
+ replacements.forEach(([es,en])=>{x=x.split(es).join(en)});
  x=x.replace(/^(\d+) muestras$/, '$1 samples');
  x=x.replace(/^(\d+) términos bajo los filtros actuales$/, '$1 terms under the current filters');
  x=x.replace(/^(\d+) categorías MapMan$/, '$1 MapMan categories');
@@ -517,6 +632,15 @@ function enDynamic(text){
  x=x.replace(/^Longitud = magnitud absoluta; color vino = positivo, azul = negativo\.$/, 'Length = absolute magnitude; wine = positive, blue = negative.');
  x=x.replace(/^2012 \+ 2013 \+ 2014 agrupados$/, '2012 + 2013 + 2014 pooled');
  x=x.replace(/^(\d+)\/10 módulos$/, '$1/10 modules');
+ x=x.replace(/(\d+) muestras/g,'$1 samples');
+ x=x.replace(/(\d+) módulos/g,'$1 modules');
+ x=x.replace(/(\d+) años/g,'$1 years');
+ x=x.replace(/Año (\d{4})/g,'Year $1');
+ x=x.replace(/(\d+) genes totales/g,'$1 total genes');
+ x=x.replace(/del módulo/g,'of the module');
+ x=x.replace(/entre hubs seleccionados/g,'among selected hubs');
+ x=x.replace(/Sí/g,'Yes');
+ x=x.replace(/REVISAR/g,'REVIEW');
  return x;
 }
 
@@ -558,6 +682,8 @@ function applyLanguage(){
  cleanTrackingParams();
  const toggle=document.getElementById('languageToggle');
  const label=document.getElementById('languageToggleLabel');
+ const pdf=document.getElementById('downloadPdf');
+ const pdfLabel=document.getElementById('downloadPdfLabel');
  if(PAGE_LANG==='en'){
    document.documentElement.lang='en';
    document.title='GSEA · ORA · yearly profiles | CEMiTool beta10';
@@ -566,6 +692,8 @@ function applyLanguage(){
    translateNodeTree(document.body);
    if(label)label.textContent='Español';
    if(toggle)toggle.setAttribute('aria-label','Switch language to Spanish');
+   if(pdfLabel)pdfLabel.textContent='Full PDF';
+   if(pdf)pdf.setAttribute('aria-label','Download complete PDF');
    const observer=new MutationObserver(mutations=>{
      mutations.forEach(m=>{
        if(m.type==='childList')m.addedNodes.forEach(n=>{
@@ -580,6 +708,8 @@ function applyLanguage(){
    document.documentElement.lang='es';
    if(label)label.textContent='English';
    if(toggle)toggle.setAttribute('aria-label','Cambiar idioma a inglés');
+   if(pdfLabel)pdfLabel.textContent='PDF completo';
+   if(pdf)pdf.setAttribute('aria-label','Descargar PDF completo');
  }
  toggle?.addEventListener('click',()=>{
    const u=new URL(window.location.href);
@@ -590,6 +720,112 @@ function applyLanguage(){
  });
 }
 applyLanguage();
+
+
+function printTable(headers,rows){
+ return '<table class="print-table"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(cell=>'<td>'+String(cell??'—')+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function metricPrintRows(metric){
+ return D.gsea[metric].map(r=>[esc(r.pathway),...D.gsea.classes.map(c=>metric==='padj'?sci(r.values[c]):fmt(r.values[c],4))]);
+}
+function buildPrintAppendix(){
+ if(!D||!O||!A||!HUB)return;
+ const L=(es,en)=>PAGE_LANG==='en'?en:es;
+ const classes=D.gsea.classes;
+ const oraTerms=O.terms.slice().sort((a,b)=>String(a.Source).localeCompare(String(b.Source))||String(a.Module).localeCompare(String(b.Module))||String(a.TermID).localeCompare(String(b.TermID)));
+ const themes=O.themes.slice().sort((a,b)=>String(a.Source).localeCompare(String(b.Source))||String(a.Module).localeCompare(String(b.Module))||String(a.Theme).localeCompare(String(b.Theme)));
+ const qc=O.qc.slice().sort((a,b)=>String(a.Source).localeCompare(String(b.Source))||String(a.Module).localeCompare(String(b.Module)));
+ const profiles=HUB.profiles.slice().sort((a,b)=>String(a.Module).localeCompare(String(b.Module))||Number(a.Year)-Number(b.Year)||String(a.Cultivar).localeCompare(String(b.Cultivar))||String(a.Stage).localeCompare(String(b.Stage)));
+ const hubs=MODULES.flatMap(module=>(HUB.selected_hubs[module]||[]).map(r=>({...r,Module:module}))).sort((a,b)=>String(a.Module).localeCompare(String(b.Module))||Number(a.Rank_kWithin)-Number(b.Rank_kWithin));
+ const contrasts=HUB.contrasts.slice().sort((a,b)=>String(a.Module).localeCompare(String(b.Module))||Number(a.Year)-Number(b.Year)||String(a.Stage).localeCompare(String(b.Stage)));
+ const audit=A.module_audit||[];
+ const chunks=[];
+ chunks.push('<h2>'+L('Apéndice completo de datos y tablas','Complete data and tables appendix')+'</h2><p>'+L('Este apéndice se genera para el PDF e incluye los datos completos detrás de los filtros interactivos.','This appendix is generated for the PDF and includes the complete data behind the interactive filters.')+'</p>');
+
+ ['es','nes','padj'].forEach(metric=>{
+   chunks.push('<h3>GSEA · '+metric.toUpperCase()+'</h3>');
+   chunks.push(printTable(['Pathway',...classes],metricPrintRows(metric)));
+ });
+
+ chunks.push('<h3>'+L('ORA · todos los términos','ORA · all terms')+'</h3>');
+ chunks.push(printTable(
+   ['Source','Module','Aspect','Term ID','Term name','Background N','Module n','Term background K','Overlap k','Expected overlap','Fold enrichment','p-value','FDR within module','Global FDR'],
+   oraTerms.map(r=>[esc(r.Source),esc(r.Module),esc(r.Aspect||'—'),esc(r.TermID),esc(r.TermName),r.Background_N,r.Module_n,r.Term_background_K,r.Overlap_k,fmt(r.Expected_overlap,4),fmt(r.Fold_enrichment,4),sci(r.p_value),sci(r.FDR_within_module),sci(r.FDR_global_module_terms)])
+ ));
+
+ chunks.push('<h3>'+L('ORA · temas MapMan completos','ORA · complete MapMan themes')+'</h3>');
+ chunks.push(printTable(
+   ['Source','Module','Theme','Matched MapMan terms','Overlap k','Module n','Fold enrichment','Global theme FDR','Tested','Reason'],
+   themes.map(r=>[esc(r.Source),esc(r.Module),esc(String(r.Theme).replaceAll('_',' ')),r.Matched_MapMan_terms,r.Overlap_k,r.Module_n,fmt(r.Fold_enrichment,4),sci(r.FDR_global_themes),r.Tested?L('Sí','Yes'):L('No','No'),esc(r.Reason_if_not_tested||'—')])
+ ));
+
+ chunks.push('<h3>'+L('Cobertura de anotación y control de calidad ORA','ORA annotation coverage and quality control')+'</h3>');
+ chunks.push(printTable(
+   ['Source','Module','Assigned module genes','Annotated module genes','Coverage %','Background annotated genes','Terms tested','Global FDR hits','Coverage warning'],
+   qc.map(r=>[esc(r.Source),esc(r.Module),r.Assigned_module_genes,r.Annotated_module_genes,fmt(r.Coverage_percent,2),r.Background_annotated_genes,r.Terms_tested,r.Global_FDR_hits,r.Coverage_warning?L('Sí','Yes'):L('No','No')])
+ ));
+
+ chunks.push('<h3>'+L('Perfiles completos · eigengene canónico y Hub-core','Complete profiles · canonical eigengene and Hub-core')+'</h3>');
+ chunks.push(printTable(
+   ['Module','Cultivar','Stage','Year','N','Canonical mean','Canonical SD','Canonical SE','Hub-core mean','Hub-core SD','Hub-core SE'],
+   profiles.map(r=>[esc(r.Module),esc(r.Cultivar),esc(r.Stage),r.Year,r.N,fmt(r.Canonical_Mean,5),fmt(r.Canonical_SD,5),fmt(r.Canonical_SE,5),fmt(r.HubCore_Mean,5),fmt(r.HubCore_SD,5),fmt(r.HubCore_SE,5)])
+ ));
+
+ chunks.push('<h3>'+L('Genes hub seleccionados · todos los módulos','Selected hub genes · all modules')+'</h3>');
+ chunks.push(printTable(
+   ['Module','Gene','kWithin rank','kWithin','kWithin / possible edge'],
+   hubs.map(r=>[esc(r.Module),'<code>'+esc(r.Gene)+'</code>',r.Rank_kWithin,fmt(r.kWithin,6),fmt(r.kWithin_per_possible_edge,6)])
+ ));
+
+ chunks.push('<h3>'+L('Contrastes completos · todos los módulos','Complete contrasts · all modules')+'</h3>');
+ chunks.push(printTable(
+   ['Module','Stage','Year','Canonical CS−PN','Hub-core CS−PN',L('Misma dirección','Same direction')],
+   contrasts.map(r=>[esc(r.Module),esc(r.Stage),r.Year,fmt(r.Canonical_CS_minus_PN,6),fmt(r.HubCore_CS_minus_PN,6),r.Same_direction?L('Sí','Yes'):L('No','No')])
+ ));
+
+ chunks.push('<h3>'+L('Auditoría completa de cobertura','Complete coverage audit')+'</h3>');
+ chunks.push(printTable(
+   ['Module','Native GSEA row','GSEA year balance','ORA v3','ORA v5.1','ORA GO','Profiles 2012–2014','Contrasts 2012–2014','Status'],
+   audit.map(r=>[
+     esc(r.module),r.gsea_native_row_present?'PASS':'ATTENTION',r.gsea_year_balance_verified?'2012 · 2013 · 2014':'REVIEW',
+     r.ora_v3_module_present?'PASS':'REVIEW',r.ora_v5_module_present?'PASS':'REVIEW',r.ora_go_module_present?'PASS':'REVIEW',
+     r.profile_all_three_years?'PASS':'REVIEW',r.contrast_all_three_years?'PASS':'REVIEW',esc(r.coverage_status)
+   ])
+ ));
+
+ const root=document.getElementById('printAppendixContent');
+ if(root)root.innerHTML=chunks.join('');
+}
+
+let printState=null;
+async function prepareCompletePrint(){
+ if(!D||!O||!A||!HUB){
+   alert(PAGE_LANG==='en'?'The report data are still loading. Please try again in a moment.':'Los datos del reporte todavía están cargando. Inténtalo nuevamente en un momento.');
+   return;
+ }
+ buildPrintAppendix();
+ const details=[...document.querySelectorAll('details')];
+ const images=[...document.images];
+ printState={details:details.map(d=>d.open),title:document.title,bodyClass:document.body.className};
+ details.forEach(d=>d.open=true);
+ images.forEach(img=>img.loading='eager');
+ document.body.classList.add('print-all');
+ document.title=PAGE_LANG==='en'?'Cabernet_Sauvignon_Pinot_noir_complete_report_EN':'Cabernet_Sauvignon_Pinot_noir_reporte_completo_ES';
+ await Promise.all(images.map(img=>img.complete?Promise.resolve():new Promise(resolve=>{
+   const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});setTimeout(resolve,2500);
+ })));
+ await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+ window.print();
+}
+function restoreAfterPrint(){
+ if(!printState)return;
+ [...document.querySelectorAll('details')].forEach((d,i)=>{d.open=Boolean(printState.details[i])});
+ document.title=printState.title;
+ document.body.className=printState.bodyClass;
+ printState=null;
+}
+window.addEventListener('afterprint',restoreAfterPrint);
+document.getElementById('downloadPdf')?.addEventListener('click',prepareCompletePrint);
 
 function initActiveSectionNav(){
  const links=[...document.querySelectorAll('.anchors a[href^="#"]')];
@@ -642,7 +878,7 @@ const HUB_CORE_URL='../data/hub_core_sensitivity.json';
 let D=null,O=null,A=null,HUB=null,yearFilter='all',scoreMode='canonical';
 const MODULES=Array.from({length:10},(_,i)=>'M'+(i+1));
 const STAGES=['FruitSet','Veraison','Harvest'];
-const SOURCE_LABEL={v3_mapman:'MapMan v3',v5_mapman:'MapMan v5.1',go:'GO auditado'};
+const SOURCE_LABEL={v3_mapman:'MapMan v3',v5_mapman:'MapMan v5.1',go:PAGE_LANG==='en'?'audited GO':'GO auditado'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const fmt=(v,d=2)=>v==null?'—':Number(v).toLocaleString(PAGE_LANG==='en'?'en-US':'es-CL',{maximumFractionDigits:d});
 const sci=v=>v==null?'—':Number(v).toExponential(2);
@@ -799,7 +1035,7 @@ function lineSvg(module,year){
  const vals=rows.map(r=>r.Mean);let min=Math.min(...vals),max=Math.max(...vals);if(min===max){min-=1;max+=1}const extra=(max-min)*.12;min-=extra;max+=extra;
  const x=i=>pad.l+i*((W-pad.l-pad.r)/(STAGES.length-1));const y=v=>pad.t+(max-v)/(max-min)*(H-pad.t-pad.b);
  const yearOffsets=years.length===3?[-7,0,7]:[0];
- const scoreLabel=scoreMode==='canonical'?'Eigengene canónico':'Hub-core PC1';
+ const scoreLabel=scoreMode==='canonical'?(PAGE_LANG==='en'?'Canonical eigengene':'Eigengene canónico'):'Hub-core PC1';
  let svg='<svg class="profile-chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+module+' '+scoreLabel+' '+(year==='all'?'2012 a 2014':year)+'">';
  for(let i=0;i<STAGES.length;i++){svg+='<line x1="'+x(i)+'" y1="'+pad.t+'" x2="'+x(i)+'" y2="'+(H-pad.b)+'" stroke="#f0eaed"/><text x="'+x(i)+'" y="'+(H-16)+'" text-anchor="middle" font-size="11" fill="#746970">'+STAGES[i]+'</text>'}
  if(min<0&&max>0){svg+='<line x1="'+pad.l+'" y1="'+y(0)+'" x2="'+(W-pad.r)+'" y2="'+y(0)+'" stroke="#c8bec2" stroke-dasharray="4 4"/>'}
@@ -845,6 +1081,11 @@ function profileInterpretation(module,year){
  }).sort((a,b)=>Math.abs(b.mean)-Math.abs(a.mean));
  const best=summaries[0];
  const who=best.mean>=0?'Cabernet Sauvignon':'Pinot noir';
+ if(PAGE_LANG==='en'){
+  const period=year==='all'?'across the displayed years':'in '+year;
+  const consistency=best.total>1?' The direction of this difference is concordant in '+best.concordant+' of '+best.total+' years.':'';
+  return 'The largest descriptive separation between cultivars occurs at <strong>'+best.stage+'</strong> ('+who+' has the higher mean value, Δ CS−PN = '+fmt(best.mean,2)+') '+period+'.'+consistency;
+ }
  const period=year==='all'?'entre los años mostrados':'en '+year;
  const consistency=best.total>1?' La dirección de esa diferencia coincide en '+best.concordant+' de '+best.total+' años.':'';
  return 'La mayor separación descriptiva entre cultivares aparece en <strong>'+best.stage+'</strong> ('+who+' presenta el valor medio más alto, Δ CS−PN = '+fmt(best.mean,2)+') '+period+'.'+consistency;
@@ -853,20 +1094,20 @@ function profileInterpretation(module,year){
 function renderProfiles(){
  document.querySelectorAll('#scoreButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.score===scoreMode));
  document.querySelectorAll('#yearButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.year===String(yearFilter)));
- const label=scoreMode==='canonical'?'Eigengene canónico':'Hub-core PC1';
+ const label=scoreMode==='canonical'?(PAGE_LANG==='en'?'Canonical eigengene':'Eigengene canónico'):'Hub-core PC1';
  document.getElementById('profileGrid').innerHTML=MODULES.map(m=>{
   const sm=HUB.summary.find(r=>r.Module===m);
-  const sub=yearFilter==='all'?'2012 · 2013 · 2014':'Año '+yearFilter;
-  const modeNote=scoreMode==='canonical'?'todos los genes del módulo':sm.Hub_core_genes+' hubs / '+sm.Genes_in_module+' genes';
-  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><div class="profile-interpretation"><strong>Interpretación descriptiva</strong>'+profileInterpretation(m,yearFilter)+'<small>Resumen visual; la inferencia formal se conserva en la sección de contrastes.</small></div><div class="canonical"><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil por año del módulo '+m+'"></div></article>'
+  const sub=yearFilter==='all'?'2012 · 2013 · 2014':(PAGE_LANG==='en'?'Year ':'Año ')+yearFilter;
+  const modeNote=scoreMode==='canonical'?(PAGE_LANG==='en'?'all genes in the module':'todos los genes del módulo'):sm.Hub_core_genes+' hubs / '+sm.Genes_in_module+' genes';
+  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><div class="profile-interpretation"><strong>'+(PAGE_LANG==='en'?'Descriptive interpretation':'Interpretación descriptiva')+'</strong>'+profileInterpretation(m,yearFilter)+'<small>'+(PAGE_LANG==='en'?'Visual summary; formal inference is retained in the contrasts section.':'Resumen visual; la inferencia formal se conserva en la sección de contrastes.')+'</small></div><div class="canonical"><img loading="eager" src="../assets/integrated/'+m+'_stage_by_year.png" alt="'+(PAGE_LANG==='en'?'Yearly profile for module ':'Perfil por año del módulo ')+m+'"></div></article>'
  }).join('');
 }
 function initProfiles(){
  document.getElementById('scoreButtons').innerHTML=[
-  '<button class="button active" data-score="canonical">Eigengene canónico · todos los genes</button>',
+  '<button class="button active" data-score="canonical">'+(PAGE_LANG==='en'?'Canonical eigengene · all genes in the module':'Eigengene canónico · todos los genes del módulo')+'</button>',
   '<button class="button" data-score="hub">Hub-core PC1 · top 10% kWithin</button>'
  ].join('');
- document.getElementById('yearButtons').innerHTML=['all','2012','2013','2014'].map(y=>'<button class="button '+(y==='all'?'active':'')+'" data-year="'+y+'">'+(y==='all'?'Todos los años':y)+'</button>').join('');
+ document.getElementById('yearButtons').innerHTML=['all','2012','2013','2014'].map(y=>'<button class="button '+(y==='all'?'active':'')+'" data-year="'+y+'">'+(y==='all'?(PAGE_LANG==='en'?'All years':'Todos los años'):y)+'</button>').join('');
  document.querySelectorAll('#scoreButtons .button').forEach(b=>b.addEventListener('click',()=>{scoreMode=b.dataset.score;renderProfiles()}));
  document.querySelectorAll('#yearButtons .button').forEach(b=>b.addEventListener('click',()=>{yearFilter=b.dataset.year;renderProfiles()}));
  renderHubCoreSummary();
