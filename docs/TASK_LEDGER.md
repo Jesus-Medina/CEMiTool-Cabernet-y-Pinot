@@ -407,6 +407,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **UX05B-04 completion (2026-09-23):** la comparación incorpora una guía desplegable que define FDR Cultivar×Stage, robustez anual, ORA v3, hubs top-decile y evidencia externa, junto con sus límites. La guía declara explícitamente que no existe un score total y que cada columna responde una pregunta científica diferente. Siguiente tarea: `UX05B-05`.
 
+**UX05B-05 completion (2026-09-23):** bajo 650 px la tabla horizontal se sustituye por una lista de fichas verticales M1–M10. Cada ficha conserva genes, interacción/FDR, robustez, ORA, hubs, evidencia externa, prioridad y acceso al detalle; utiliza los mismos datos y filtros compartibles que la tabla de escritorio. Con esto UX-05B queda cerrada. Siguiente tarea: `UX05C-01`.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;

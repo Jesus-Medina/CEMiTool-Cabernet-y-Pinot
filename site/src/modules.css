@@ -613,6 +613,103 @@
   text-align: right;
 }
 
+.module-mobile-list {
+  display: none;
+}
+
+.module-mobile-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.module-mobile-card--priority {
+  border-color: color-mix(in srgb, var(--color-brand-primary) 35%, var(--color-border-subtle));
+}
+
+.module-mobile-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-muted);
+}
+
+.module-mobile-card header > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.module-mobile-card header a {
+  color: var(--color-brand-deep);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.module-mobile-card header > span {
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+}
+
+.module-mobile-card dl {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+}
+
+.module-mobile-card dl div {
+  min-width: 0;
+  padding: var(--space-3) 0;
+}
+
+.module-mobile-card dl div:nth-child(even) {
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.module-mobile-card dl div:nth-child(n+3) {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.module-mobile-card dt {
+  color: var(--color-text-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.module-mobile-card dd {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.module-mobile-card small {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+}
+
+.module-mobile-card > .ui-action-link {
+  margin: 0 var(--space-4) var(--space-4);
+}
+
 .module-column-guide {
   border: 1px solid var(--color-border-subtle);
   border-radius: 10px;
@@ -676,6 +773,15 @@
 }
 
 @media (max-width: 650px) {
+  .module-data-table-wrap {
+    display: none;
+  }
+
+  .module-mobile-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
   .module-column-guide dl {
     grid-template-columns: 1fr;
   }

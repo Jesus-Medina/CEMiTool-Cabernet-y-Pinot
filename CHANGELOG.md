@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-23 — UX05B-05 mobile module list
+
+- Replaced the horizontally dominant module table with stacked comparison cards below 650 px.
+- Preserved genes, interaction significance, annual robustness, ORA, hubs, external evidence and module priority in each card.
+- Reused the same canonical rows, shareable filters and detail routes as the desktop table, closing the UX-05B phase.
+
 ## 2026-09-23 — UX05B-04 module comparison glossary
 
 - Added a progressive-disclosure guide defining interaction FDR, annual robustness, ORA, hub centrality and external evidence.

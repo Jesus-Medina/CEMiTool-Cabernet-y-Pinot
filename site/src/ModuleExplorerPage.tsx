@@ -526,6 +526,43 @@ export function ModulesExplorerPage() {
                 </tbody>
               </table>
             </TableFrame>
+
+            <div className="module-mobile-list" aria-label="Comparación móvil de módulos">
+              {filtered.map((row) => {
+                const priority = ['M5', 'M10', 'M2'].includes(row.module)
+                return (
+                  <article className={priority ? 'module-mobile-card module-mobile-card--priority' : 'module-mobile-card'} key={row.module}>
+                    <header>
+                      <div>
+                        <Link to={'/results/modules/' + row.module}>{row.module}</Link>
+                        {priority && <Badge tone="brand">prioridad</Badge>}
+                      </div>
+                      <span>{row.gene_count} genes</span>
+                    </header>
+                    <dl>
+                      <div>
+                        <dt>Interacción</dt>
+                        <dd>{formatScientific(row.cultivar_stage_fdr)}</dd>
+                        <small>{row.cultivar_stage_significant_fdr05 ? 'FDR < 0,05' : 'no significativa'}</small>
+                      </div>
+                      <div>
+                        <dt>Robustez</dt>
+                        <dd>{statusLabel(row)}</dd>
+                      </div>
+                      <div>
+                        <dt>Función</dt>
+                        <dd>{significantV3Count(data.enrichment, row.module)} ORA v3</dd>
+                      </div>
+                      <div>
+                        <dt>Evidencia</dt>
+                        <dd>{topHubCount(data.hubs, row.module) || '—'} hubs · {externalEvaluableCount(data.external, row.module) || '—'} externas</dd>
+                      </div>
+                    </dl>
+                    <ActionLink to={'/results/modules/' + row.module}>Abrir módulo</ActionLink>
+                  </article>
+                )
+              })}
+            </div>
             <p className="module-result-count" role="status" aria-live="polite">
               Mostrando {filtered.length} de {data.modules.modules.length} módulos.
             </p>
