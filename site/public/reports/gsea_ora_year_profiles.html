@@ -23,7 +23,11 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 .tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}.table{width:100%;border-collapse:collapse;font-size:.68rem}.table th{position:sticky;top:0;padding:9px 10px;text-align:left;color:#51464b;background:#f7f3f5;border-bottom:1px solid var(--line);white-space:nowrap}.table td{padding:9px 10px;border-bottom:1px solid #f1ecee;vertical-align:top}.table tr:last-child td{border-bottom:0}.good{color:var(--ok);font-weight:850}.warn{color:var(--warn);font-weight:850}
 .ora-controls{grid-template-columns:1fr .7fr .7fr 1.3fr}.coverage-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.coverage-strip .card strong{font-size:1.05rem}
 .profile-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.profile-card{padding:15px;border:1px solid var(--line);border-radius:11px;background:#fff}.profile-card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:8px}.profile-card h3{margin:0;font-family:Georgia,serif;color:var(--wine);font-size:1.2rem}.profile-card small{color:var(--muted);font-size:.61rem}.profile-chart{width:100%;min-height:235px;display:block}.profile-legend{display:flex;gap:14px;color:var(--muted);font-size:.62rem;margin-top:5px}.legendline{width:18px;height:3px;display:inline-block;margin-right:5px;vertical-align:middle;border-radius:999px}.legendline.cs{background:var(--wine)}.legendline.pn{background:var(--blue)}.canonical{margin-top:10px}.canonical summary{cursor:pointer;color:var(--wine);font-size:.66rem;font-weight:800}.canonical img{display:block;width:100%;height:auto;margin-top:10px;border:1px solid var(--line);border-radius:8px}
-.inner-tabs{display:flex;gap:6px;overflow:auto;margin:16px 0;padding:7px;border:1px solid var(--line);border-radius:10px;background:#fff;scrollbar-width:none}.inner-tabs::-webkit-scrollbar{display:none}.inner-tab{flex:0 0 auto;min-height:36px;padding:0 12px;border:0;border-radius:7px;color:var(--muted);background:transparent;font-size:.69rem;font-weight:850;cursor:pointer}.inner-tab.active{color:#fff;background:var(--wine)}.inner-panel{display:none}.inner-panel.active{display:block}.panel-intro{padding:14px 0 4px}.panel-intro h3{margin:0;font-family:Georgia,serif;font-size:1.45rem}.panel-intro p{max-width:860px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.5}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.download-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.compact-table td,.compact-table th{font-size:.64rem}.hub-list-table td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.status-pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;font-size:.6rem;font-weight:850}.status-pill.good{background:#edf7f2}.status-pill.warn{background:#fff5e6}@media(max-width:760px){.mini-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.mini-grid{grid-template-columns:1fr}}footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.65rem;line-height:1.5;background:#fff}
+.inner-panel{display:block;margin-top:30px;padding-top:30px;border-top:1px solid var(--line)}
+#gsea-overview,#ora-overview,#profiles-overview{margin-top:18px;padding-top:0;border-top:0}
+.panel-intro{padding:0 0 12px}
+.panel-intro h3{margin:0;font-family:Georgia,serif;font-size:1.55rem;letter-spacing:-.02em}
+.panel-intro p{max-width:900px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.55}.panel-intro h3{margin:0;font-family:Georgia,serif;font-size:1.45rem}.panel-intro p{max-width:860px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.5}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.download-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.compact-table td,.compact-table th{font-size:.64rem}.hub-list-table td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.status-pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;font-size:.6rem;font-weight:850}.status-pill.good{background:#edf7f2}.status-pill.warn{background:#fff5e6}@media(max-width:760px){.mini-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.mini-grid{grid-template-columns:1fr}}footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.65rem;line-height:1.5;background:#fff}
 @media(max-width:1000px){.section-head{grid-template-columns:1fr}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr 1fr}.composition-grid{grid-template-columns:repeat(3,1fr)}.profile-grid{grid-template-columns:1fr}.controls,.ora-controls{grid-template-columns:1fr 1fr}.barrow{grid-template-columns:1fr}.stats{justify-content:flex-start}}
 @media(max-width:620px){.wrap{width:min(100% - 20px,1460px)}.headnav{display:none}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr}.composition-grid{grid-template-columns:1fr 1fr}.controls,.ora-controls{grid-template-columns:1fr}.native-figure{padding:10px}.native-figure figcaption{flex-direction:column}.matrix td{min-width:105px}.profile-card{padding:11px}.anchorbar{top:58px}}
 </style>
@@ -49,14 +53,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <section id="gsea" class="major"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por clase Cultivar × Stage</h2></div><p>El GSEA nativo se conserva intacto. La interfaz siguiente expone la figura original, ES, NES, p ajustado y la composición de años sin recalcular nada.</p></div>
 <div class="notice notice--ok"><strong>Verificación de años:</strong> cada una de las seis clases contiene exactamente 9 muestras = 3 de 2012 + 3 de 2013 + 3 de 2014. Los años están agrupados dentro de Cultivar × Stage; no son GSEA separados por año.</div>
-
-<div class="inner-tabs" id="gseaTabs" role="tablist" aria-label="Vistas GSEA">
-<button class="inner-tab active" data-group="gsea" data-panel="gsea-overview">Resumen</button>
-<button class="inner-tab" data-group="gsea" data-panel="gsea-figure">Figura CEMiTool</button>
-<button class="inner-tab" data-group="gsea" data-panel="gsea-matrix">Matriz ES / NES / padj</button>
-<button class="inner-tab" data-group="gsea" data-panel="gsea-years">Años y clases</button>
-<button class="inner-tab" data-group="gsea" data-panel="gsea-method">Método y límites</button>
-</div>
+<div class="notice" style="margin-top:10px"><strong>Cómo leer esta sección:</strong> el contenido se presenta en una sola secuencia: resumen → figura original → matriz interactiva → composición de años → método y límites. No hay pestañas porque esas piezas forman una misma evidencia científica.</div>
 
 <div class="inner-panel active" id="gsea-overview" data-inner-group="gsea">
 <div class="panel-intro"><h3>Resumen GSEA</h3><p>Qué entra al análisis, qué exportó CEMiTool y qué excepción permanece explícita.</p></div>
@@ -102,16 +99,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <section id="ora" class="major"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">2 · ORA funcional</p><h2>ORA completo dentro del reporte integrado</h2></div><p>La misma profundidad funcional del reporte ORA standalone, ahora embebida aquí: resumen, términos, temas MapMan, QC, auditoría M5, GO y método.</p></div>
 <div class="notice"><strong>Relación con los años:</strong> los módulos fueron inferidos con las 54 muestras de 2012–2014. ORA analiza membresía génica + anotación funcional y no tiene una dimensión Year propia.</div>
-
-<div class="inner-tabs" id="oraTabs" role="tablist" aria-label="Vistas ORA">
-<button class="inner-tab active" data-group="ora" data-panel="ora-overview">Resumen</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-terms">ORA por término</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-themes">Temas MapMan</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-qc">Cobertura / QC</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-m5">M5 · auditoría</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-go">GO auditado</button>
-<button class="inner-tab" data-group="ora" data-panel="ora-method">Método y límites</button>
-</div>
+<div class="notice" style="margin-top:10px"><strong>Lectura continua:</strong> panorama → términos ORA → temas MapMan → cobertura/QC → auditoría M5 → GO auditado → método. Los filtros cambian datos; no cambian de “página”.</div>
 
 <div class="inner-panel active" id="ora-overview" data-inner-group="ora">
 <div class="panel-intro"><h3>Panorama del enriquecimiento</h3><p>Recuentos globales y distribución de hits MapMan v3 por módulo.</p></div>
@@ -181,15 +169,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 <section id="profiles" class="major"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico y sensibilidad Hub-core</h2></div><p>El eigengene canónico permanece como PC1 de todos los genes. Hub-core PC1 usa el top 10% por kWithin como sensibilidad separada; no reemplaza resultados T-003/T-004.</p></div>
 <div class="notice notice--ok"><strong>2012, 2013 y 2014 permanecen explícitos</strong> tanto en el eigengene canónico como en Hub-core. La nueva interfaz también muestra exactamente qué hubs centrales entraron a cada Hub-core PC1.</div>
-
-<div class="inner-tabs" id="profileTabs" role="tablist" aria-label="Vistas de perfiles">
-<button class="inner-tab active" data-group="profiles" data-panel="profiles-overview">Resumen</button>
-<button class="inner-tab" data-group="profiles" data-panel="profiles-charts">Gráficos</button>
-<button class="inner-tab" data-group="profiles" data-panel="profiles-data">Tabla completa</button>
-<button class="inner-tab" data-group="profiles" data-panel="profiles-hubs">Hubs centrales</button>
-<button class="inner-tab" data-group="profiles" data-panel="profiles-contrasts">Contrastes Hub-core</button>
-<button class="inner-tab" data-group="profiles" data-panel="profiles-method">Método y límites</button>
-</div>
+<div class="notice" style="margin-top:10px"><strong>Eigengene vs hubs:</strong> el eigengene canónico sigue siendo PC1 de todos los genes del módulo. Hub-core PC1 es una sensibilidad separada calculada con el top 10% por kWithin. Por eso los hubs no se mezclan como una columna del eigengene: se muestran como el conjunto que define esa sensibilidad, junto a sus gráficos y contrastes.</div>
 
 <div class="inner-panel active" id="profiles-overview" data-inner-group="profiles">
 <div class="panel-intro"><h3>Sensibilidad por módulo</h3><p>Correlación Hub-core PC1 vs eigengene canónico y concordancia de dirección en los nueve contrastes Stage × Year.</p></div>
@@ -467,16 +447,6 @@ function initProfiles(){
 }
 
 
-function initInnerTabs(){
- document.querySelectorAll('.inner-tab').forEach(button=>{
-  button.addEventListener('click',()=>{
-   const group=button.dataset.group,panel=button.dataset.panel;
-   document.querySelectorAll('.inner-tab[data-group="'+group+'"]').forEach(b=>b.classList.toggle('active',b===button));
-   document.querySelectorAll('[data-inner-group="'+group+'"]').forEach(p=>p.classList.toggle('active',p.id===panel));
-  });
- });
-}
-
 function csvEscape(value){
  const text=String(value??'');
  return '"'+text.replaceAll('"','""')+'"';
@@ -612,8 +582,7 @@ function initProfileTables(){
 
 async function init(){
  const [a,b,c,d]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'}),fetch(AUDIT_URL,{cache:'no-store'}),fetch(HUB_CORE_URL,{cache:'no-store'})]);if(!a.ok||!b.ok||!c.ok||!d.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();A=await c.json();HUB=await d.json();
- initInnerTabs();
- renderAudit();
+renderAudit();
  renderComposition();
  const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();renderGseaOverview();
  document.getElementById('oraModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');document.getElementById('oraModule').value='M5';['oraSource','oraModule','oraScope'].forEach(id=>document.getElementById(id).addEventListener('change',renderOra));document.getElementById('oraQuery').addEventListener('input',renderOra);renderOra();
