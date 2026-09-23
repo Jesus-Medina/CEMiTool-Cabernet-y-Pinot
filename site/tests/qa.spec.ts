@@ -151,7 +151,7 @@ test('results navigation stays shallow and breadcrumbs appear only on detail vie
   await expect(page.locator('.breadcrumb-bar')).toHaveCount(0)
 
   await page.goto(url('/results/modules/M10'))
-  await expect(page.locator('.breadcrumb-bar')).toContainText('Resultados')
+  await expect(page.locator('.breadcrumb-bar')).not.toContainText('Resultados')
   await expect(page.locator('.breadcrumb-bar')).toContainText('Módulos')
   await expect(page.locator('.breadcrumb-bar')).toContainText('M10')
 })
