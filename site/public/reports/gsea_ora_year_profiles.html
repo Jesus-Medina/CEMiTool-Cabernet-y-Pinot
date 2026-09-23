@@ -34,9 +34,18 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <section class="hero"><div class="wrap"><p class="eyebrow">Reporte integrado · una sola página</p><h1>GSEA, ORA y trayectoria anual de M1–M10</h1><p class="lede">Tres capas distintas del mismo estudio, presentadas en el orden solicitado. El GSEA es la salida nativa de CEMiTool; el ORA es un análisis funcional posterior sobre módulos beta10; y los perfiles anuales muestran medias observadas del eigengene por Cultivar × Stage × Year.</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
 
-<div class="anchorbar"><nav class="wrap anchors"><a href="#gsea">1 · GSEA</a><a href="#ora">2 · ORA</a><a href="#profiles">3 · Perfiles por año</a></nav></div>
+<div class="anchorbar"><nav class="wrap anchors"><a href="#audit">0 · Auditoría</a><a href="#gsea">1 · GSEA</a><a href="#ora">2 · ORA</a><a href="#profiles">3 · Perfiles por año</a></nav></div>
 
 <main>
+<section id="audit" class="major"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow">0 · Auditoría de completitud</p><h2>M1–M10 × análisis × año</h2></div><p>Esta tabla verifica inclusión y estructura. No convierte automáticamente un módulo en “robusto”: la robustez biológica se evalúa con los perfiles, contrastes y el modelo de T-004.</p></div>
+<div id="auditSummary" class="cards"></div>
+<div id="auditNotice" class="notice notice--warn" style="margin-top:12px"></div>
+<div class="subsection"><div class="subhead"><h3>Cobertura módulo por módulo</h3><p>PASS significa que la capa contiene el módulo con el alcance esperado. ATTENTION identifica una excepción conocida sin rellenar datos artificialmente.</p></div>
+<div class="tablewrap"><table class="table"><thead><tr><th>Módulo</th><th>GSEA nativo</th><th>GSEA usa 3 años</th><th>ORA v3</th><th>ORA v5.1</th><th>ORA GO</th><th>Perfiles 2012–2014</th><th>Contrastes 2012–2014</th><th>Estado</th></tr></thead><tbody id="auditTable"></tbody></table></div></div>
+<div class="subsection"><div class="notice"><strong>Regla de seguridad:</strong> esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.</div></div>
+</div></section>
+
 <section id="gsea" class="major"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por clase Cultivar × Stage</h2></div><p>Las matrices canónicas exportadas por CEMiTool contienen ES, NES y p ajustado para seis clases. Cada clase reúne 9 muestras: 3 de 2012, 3 de 2013 y 3 de 2014.</p></div>
 <div class="notice notice--ok"><strong>Verificación de años:</strong> el GSEA sí usa los tres años porque las 54 muestras entraron a CEMiTool y cada clase contiene exactamente tres réplicas de cada año. Sin embargo, <strong>Year no fue una columna de clase</strong>; por tanto el GSEA no estima diferencias 2012 vs 2013 vs 2014.</div>
@@ -87,7 +96,8 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <script>
 const INTEGRATED_URL='../data/gsea_year_profiles.json';
 const ORA_URL='../data/functional_enrichment.json';
-let D=null,O=null,yearFilter='all';
+const AUDIT_URL='../data/year_completeness_audit.json';
+let D=null,O=null,A=null,yearFilter='all';
 const MODULES=Array.from({length:10},(_,i)=>'M'+(i+1));
 const STAGES=['FruitSet','Veraison','Harvest'];
 const SOURCE_LABEL={v3_mapman:'MapMan v3',v5_mapman:'MapMan v5.1',go:'GO auditado'};
@@ -95,6 +105,25 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const fmt=(v,d=2)=>v==null?'—':Number(v).toLocaleString('es-CL',{maximumFractionDigits:d});
 const sci=v=>v==null?'—':Number(v).toExponential(2);
 const neglog=v=>v==null||v<=0?0:Math.min(-Math.log10(v),50);
+
+function renderAudit(){
+ const summary=[
+  ['Diseño',A.design.samples+' muestras',A.design.balanced?'54 muestras balanceadas':'revisar diseño'],
+  ['GSEA',A.gsea.biological_modules_present.length+'/10 módulos','2012+2013+2014 balanceados en cada clase'],
+  ['Perfiles',A.profiles.rows+'/'+A.profiles.expected_rows,'10×2×3×3 celdas'],
+  ['Contrastes',A.contrasts.rows+'/'+A.contrasts.expected_rows,'10×3×3 Stage×Year']
+ ];
+ document.getElementById('auditSummary').innerHTML=summary.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ const attention=(A.attention||[]).length?A.attention.join(' '):'Sin excepciones de completitud.';
+ document.getElementById('auditNotice').innerHTML='<strong>Estado global: '+esc(A.status)+'.</strong> '+esc(attention);
+ document.getElementById('auditTable').innerHTML=A.module_audit.map(r=>{
+  const gsea=r.gsea_native_row_present?'PASS':'ATTENTION';
+  const years=r.gsea_year_balance_verified?'2012 · 2013 · 2014':'REVISAR';
+  const profiles=r.profile_all_three_years?'PASS':'REVISAR';
+  const contrasts=r.contrast_all_three_years?'PASS':'REVISAR';
+  return '<tr><td><strong>'+r.module+'</strong></td><td class="'+(gsea==='PASS'?'good':'warn')+'">'+gsea+'</td><td class="'+(r.gsea_year_balance_verified?'good':'warn')+'">'+years+'</td><td class="'+(r.ora_v3_module_present?'good':'warn')+'">'+(r.ora_v3_module_present?'PASS':'REVISAR')+'</td><td class="'+(r.ora_v5_module_present?'good':'warn')+'">'+(r.ora_v5_module_present?'PASS':'REVISAR')+'</td><td class="'+(r.ora_go_module_present?'good':'warn')+'">'+(r.ora_go_module_present?'PASS':'REVISAR')+(r.ora_go_terms_tested===0?' · 0 testables':'')+'</td><td class="'+(profiles==='PASS'?'good':'warn')+'">'+profiles+'</td><td class="'+(contrasts==='PASS'?'good':'warn')+'">'+contrasts+'</td><td class="'+(r.coverage_status==='COMPLETE_ANALYSIS_SCOPE'?'good':'warn')+'">'+esc(r.coverage_status)+'</td></tr>'
+ }).join('');
+}
 
 function renderComposition(){
  document.getElementById('gseaComposition').innerHTML=D.gsea.sample_composition.map(r=>'<div class="composition-card"><strong>'+esc(r.Class)+'</strong>'+[2012,2013,2014].map(y=>'<div class="yr"><span>'+y+'</span><b>'+r.years[y]+' muestras</b></div>').join('')+'<div class="yr" style="border-top:1px solid #eee8ea;margin-top:4px;padding-top:6px"><span>Total</span><b>'+r.total+'</b></div></div>').join('');
@@ -171,7 +200,8 @@ function renderProfiles(){
 function initProfiles(){document.getElementById('yearButtons').innerHTML=['all','2012','2013','2014'].map(y=>'<button class="button '+(y==='all'?'active':'')+'" data-year="'+y+'">'+(y==='all'?'Todos los años':y)+'</button>').join('');document.querySelectorAll('#yearButtons .button').forEach(b=>b.addEventListener('click',()=>{yearFilter=b.dataset.year;renderProfiles()}));renderProfiles()}
 
 async function init(){
- const [a,b]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'})]);if(!a.ok||!b.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();
+ const [a,b,c]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'}),fetch(AUDIT_URL,{cache:'no-store'})]);if(!a.ok||!b.ok||!c.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();A=await c.json();
+ renderAudit();
  renderComposition();
  const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();
  document.getElementById('oraModule').innerHTML=MODULES.map(m=>'<option>'+m+'</option>').join('');document.getElementById('oraModule').value='M5';['oraSource','oraModule','oraScope'].forEach(id=>document.getElementById(id).addEventListener('change',renderOra));document.getElementById('oraQuery').addEventListener('input',renderOra);renderOra();
