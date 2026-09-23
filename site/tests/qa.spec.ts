@@ -228,6 +228,19 @@ test('English report has no mixed Spanish in generated profile cards and full PD
   ).toBe('function')
 })
 
+test('integrated report exposes a lighter web-view PDF export beside the full PDF', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html')
+  await expect(page.getByRole('button', { name: /Descargar PDF completo/i })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Descargar PDF vista web/i })).toBeVisible()
+  await expect.poll(
+    () => page.evaluate(() => typeof (window as typeof window & { generateWebViewReportPdf?: unknown }).generateWebViewReportPdf),
+  ).toBe('function')
+
+  await page.goto('reports/gsea_ora_year_profiles.html?lang=en')
+  await expect(page.getByRole('button', { name: /Download complete PDF/i })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Download web-view PDF/i })).toBeVisible()
+})
+
 test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
