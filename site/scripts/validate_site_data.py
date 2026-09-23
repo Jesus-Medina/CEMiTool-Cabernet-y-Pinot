@@ -312,7 +312,7 @@ def main() -> None:
     provenance_ids = {row["artifact_id"] for row in payloads["provenance.json"]["artifacts"]}
     required_ids = {
         "project_summary", "modules", "m5_trajectory", "module_contrasts",
-        "enrichments", "functional_enrichment", "year_completeness_audit", "hubs", "m5_network", "external_validation", "t008_progress",
+        "enrichments", "functional_enrichment", "hub_core_sensitivity", "year_completeness_audit", "hubs", "m5_network", "external_validation", "t008_progress",
     }
     if not required_ids.issubset(provenance_ids):
         raise AssertionError("provenance.json is missing required artifact records")
