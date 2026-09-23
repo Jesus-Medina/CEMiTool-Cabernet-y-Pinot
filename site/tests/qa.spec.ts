@@ -23,7 +23,7 @@ const t008 = JSON.parse(readFileSync('public/data/t008_progress.json', 'utf8')) 
 
 const routes = [
   ['/', /Comparar programas de coexpresión/i],
-  ['/results', /Elige qué dimensión quieres explorar/i],
+  ['/results', /Comparar los diez módulos/i],
   ['/results/modules', /Comparar los diez módulos/i],
   ['/results/modules/M5', /M5 · fenoles/i],
   ['/results/modules/M10', /^M10$/i],
@@ -151,6 +151,17 @@ test('results navigation stays shallow and breadcrumbs appear only on detail vie
   await expect(page.locator('.breadcrumb-bar')).toContainText('Resultados')
   await expect(page.locator('.breadcrumb-bar')).toContainText('Módulos')
   await expect(page.locator('.breadcrumb-bar')).toContainText('M10')
+})
+
+test('module detail navigation allows direct return and sibling browsing', async ({ page }) => {
+  await page.goto(url('/results/modules/M5'))
+  await expect(page.getByRole('link', { name: /Todos los módulos/i })).toBeVisible()
+  await expect(page.getByRole('link', { name: /M4/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /M6/ })).toBeVisible()
+
+  await page.goto(url('/results/modules/M10'))
+  await expect(page.getByRole('link', { name: /Todos los módulos/i })).toBeVisible()
+  await expect(page.getByRole('link', { name: /M9/ })).toBeVisible()
 })
 
 test('M5 year and replicate filters alter the view, not the source data', async ({ page }) => {
