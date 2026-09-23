@@ -538,7 +538,7 @@ function translateNodeTree(root){
  nodes.forEach(n=>{
    const p=n.parentElement;
    if(!p||['SCRIPT','STYLE','CODE'].includes(p.tagName))return;
-   n.nodeValue=translateString(n.nodeValue||'');
+   const before=n.nodeValue||'';const after=translateString(before);if(after!==before)n.nodeValue=after;
  });
  root.querySelectorAll?.('[aria-label],[placeholder],[title],[alt]').forEach(el=>{
    ['aria-label','placeholder','title','alt'].forEach(attr=>{
@@ -569,10 +569,10 @@ function applyLanguage(){
    const observer=new MutationObserver(mutations=>{
      mutations.forEach(m=>{
        if(m.type==='childList')m.addedNodes.forEach(n=>{
-         if(n.nodeType===Node.TEXT_NODE)n.nodeValue=translateString(n.nodeValue||'');
+         if(n.nodeType===Node.TEXT_NODE){const before=n.nodeValue||'';const after=translateString(before);if(after!==before)n.nodeValue=after;}
          else if(n.nodeType===Node.ELEMENT_NODE)translateNodeTree(n);
        });
-       if(m.type==='characterData'&&m.target.nodeType===Node.TEXT_NODE)m.target.nodeValue=translateString(m.target.nodeValue||'');
+       if(m.type==='characterData'&&m.target.nodeType===Node.TEXT_NODE){const before=m.target.nodeValue||'';const after=translateString(before);if(after!==before)m.target.nodeValue=after;}
      });
    });
    observer.observe(document.body,{subtree:true,childList:true,characterData:true});
