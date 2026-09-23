@@ -411,6 +411,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Home editorial gutter follow-up (2026-09-23):** se añadió un margen interior horizontal fluido de 20–44 px al contenido editorial de Home. El hero, resumen experimental y secciones dejan de apoyar títulos y texto directamente en el borde del lienzo; la imagen principal conserva su alineación visual. En móvil se mantiene el gutter externo existente para no reducir el ancho útil.
 
+**Home design matrix height follow-up (2026-09-23):** la matriz del diseño experimental dejó de estirarse artificialmente hasta la altura de la nota lateral. Su marco termina ahora al finalizar las dos filas reales de cultivares, evitando que el espacio vacío se interprete como contenido cortado o faltante.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;

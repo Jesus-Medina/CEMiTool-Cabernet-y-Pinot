@@ -4922,7 +4922,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, .34fr);
   gap: var(--space-5);
-  align-items: stretch;
+  align-items: start;
 }
 
 .home-v2-design-table-wrap {

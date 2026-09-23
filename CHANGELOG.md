@@ -1,5 +1,7 @@
 # Changelog
 
+- Ajusta la matriz del diseño experimental de Home a la altura real de sus dos filas, eliminando el área vacía que hacía parecer que la tabla estaba cortada.
+
 ## 2026-09-23 — Home editorial breathing room
 
 - Added a fluid 20–44 px internal gutter to the Home hero copy, study summary and narrative sections.
