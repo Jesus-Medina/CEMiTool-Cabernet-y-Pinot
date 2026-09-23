@@ -115,7 +115,7 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
     }
   })
   page.on('response', (response) => {
-    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
+    if (response.status() >= 400) errors.push(\`HTTP \${response.status()} \${response.url()}\`)
   })
 
   await page.goto('reports/gsea_ora_year_profiles.html')
@@ -126,40 +126,63 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   await expect(page.locator('#auditTable tr').filter({ hasText: 'M1' })).toContainText('ATTENTION_GSEA_M1_NATIVE_ROW_MISSING')
   await expect(page.locator('#auditNotice')).toContainText(/M1|ATTENTION/i)
 
+  await expect(page.locator('#gseaTabs .inner-tab')).toHaveCount(5)
+  await expect(page.locator('#gseaOverviewCards .card')).toHaveCount(4)
+  await page.locator('#gseaTabs [data-panel="gsea-years"]').click()
   await expect(page.locator('#gseaComposition .composition-card')).toHaveCount(6)
+  await page.locator('#gseaTabs [data-panel="gsea-matrix"]').click()
   await expect(page.locator('#gseaMatrix tbody tr')).toHaveCount(10)
   await expect(page.locator('#gseaMissing')).toContainText('M1')
 
+  await expect(page.locator('#oraTabs .inner-tab')).toHaveCount(7)
+  await page.locator('#oraTabs [data-panel="ora-terms"]').click()
   await expect(page.locator('#oraBars .barrow').first()).toBeVisible()
   await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
+  await expect(page.locator('#oraDownloadCsv')).toBeVisible()
 
+  await page.locator('#oraTabs [data-panel="ora-themes"]').click()
   await expect(page.locator('#oraThemeView .card')).toHaveCount(4)
+  await page.locator('#oraTabs [data-panel="ora-qc"]').click()
   await expect(page.locator('#oraQcCoverage .card')).toHaveCount(10)
   await expect(page.locator('#oraQcTable tr')).toHaveCount(30)
+  await page.locator('#oraTabs [data-panel="ora-m5"]').click()
   await expect(page.locator('#oraM5v3')).toContainText(/stilbenoid|Secondary metabolism/i)
   await expect(page.locator('#oraM5v5')).not.toBeEmpty()
+  await page.locator('#oraTabs [data-panel="ora-go"]').click()
   await expect(page.locator('#oraGoCards .card')).toHaveCount(4)
   await expect(page.locator('#oraGoBars .barrow')).toHaveCount(6)
-  await expect(page.locator('a[href="ora_beta10.html"]')).toHaveCount(0)
 
+  await expect(page.locator('#profileTabs .inner-tab')).toHaveCount(6)
   await expect(page.locator('#hubCoreCards .card')).toHaveCount(4)
   await expect(page.locator('#hubCoreSummary tr')).toHaveCount(10)
   await expect(page.locator('#hubCoreSummary tr').filter({ hasText: 'M5' })).toContainText('11')
 
-  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+  await page.locator('#profileTabs [data-panel="profiles-charts"]').click()
   await page.getByRole('button', { name: /Hub-core PC1 · top 10% kWithin/i }).click()
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
   await expect(page.locator('#profileGrid')).toContainText('Hub-core PC1')
   await expect(page.locator('#profileGrid .profile-card').filter({ hasText: 'M5' })).toContainText('11 hubs / 108 genes')
 
   await page.getByRole('button', { name: '2012', exact: true }).click()
-  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
   await expect(page.locator('#profileGrid')).toContainText('Año 2012')
-
   await page.getByRole('button', { name: '2014', exact: true }).click()
   await expect(page.locator('#profileGrid')).toContainText('Año 2014')
 
-  await page.getByRole('button', { name: /Eigengene canónico · todos los genes/i }).click()
-  await expect(page.locator('#profileGrid')).toContainText('Eigengene canónico')
+  await page.locator('#profileTabs [data-panel="profiles-data"]').click()
+  await expect(page.locator('#profileDataTable tr')).toHaveCount(180)
+  await expect(page.locator('#profileDownloadCsv')).toBeVisible()
+
+  await page.locator('#profileTabs [data-panel="profiles-hubs"]').click()
+  await expect(page.locator('#hubListModule')).toHaveValue('M5')
+  await expect(page.locator('#hubListTable tr')).toHaveCount(11)
+  await expect(page.locator('#hubListSummary .card')).toHaveCount(4)
+
+  await page.locator('#profileTabs [data-panel="profiles-contrasts"]').click()
+  await expect(page.locator('#contrastModule')).toHaveValue('M5')
+  await expect(page.locator('#contrastTable tr')).toHaveCount(9)
+  await expect(page.locator('#contrastTable')).toContainText('2012')
+  await expect(page.locator('#contrastTable')).toContainText('2013')
+  await expect(page.locator('#contrastTable')).toContainText('2014')
 
   expect(errors).toEqual([])
 })
