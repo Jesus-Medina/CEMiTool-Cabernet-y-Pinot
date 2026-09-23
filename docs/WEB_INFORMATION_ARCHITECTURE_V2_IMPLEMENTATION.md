@@ -81,3 +81,8 @@
 - [x] Implementar `/results/genes` (Buscador/Tabla general de genes priorizados).
 - [x] Implementar `/results/genes/:geneId` (Ficha individual con métricas de robustez, anotaciones v3/v5 y métricas externas).
 - [x] Enlazar desde los módulos hacia la ficha individual.
+
+### Fase 10: Métodos y Reproducibilidad
+- [x] Implementar `MethodsPage.tsx` con el diseño de estudio y decisiones estadísticas invariants (Beta 10, modelo factorial).
+- [x] Enlazar `EvidenceBrowserPage` como `/reproducibility`.
+- [x] Conectar ambas vistas para el tracking transparente de procedencia.

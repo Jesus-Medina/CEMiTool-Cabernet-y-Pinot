@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import ModuleWorkspace from './ModuleWorkspace'
 import ExternalValidationPage from './ExternalValidationPage'
@@ -14,7 +13,7 @@ type PageIntroProps = {
   status?: string
 }
 
-function PageIntro({
+export function PageIntro({
   eyebrow,
   title,
   description,
@@ -32,23 +31,7 @@ function PageIntro({
   )
 }
 
-function PlaceholderPanel({
-  title,
-  children,
-}: {
-  title: string
-  children: ReactNode
-}) {
-  return (
-    <section className="placeholder-panel">
-      <div className="placeholder-icon" aria-hidden="true">↗</div>
-      <div>
-        <h2>{title}</h2>
-        <p>{children}</p>
-      </div>
-    </section>
-  )
-}
+
 
 function DataState({
   loading,
@@ -363,20 +346,7 @@ export function T008Page() {
   return <T008DashboardPage />
 }
 
-export function MethodsPage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="METHODS"
-        title="Métodos y decisiones"
-        description="Puente entre la explicación humana, los parámetros analíticos y los scripts exactos del repositorio."
-      />
-      <PlaceholderPanel title="Métodos interactivos pendientes">
-        Esta sección enlazará decisiones, definiciones y scripts sin ejecutar análisis científicos dentro del navegador.
-      </PlaceholderPanel>
-    </div>
-  )
-}
+export { MethodsPage } from './MethodsPage'
 
 export function EvidencePage() {
   return <EvidenceBrowserPage />
