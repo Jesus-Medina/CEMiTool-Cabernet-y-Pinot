@@ -106,6 +106,176 @@ test.describe('WEB-011 route and browser QA', () => {
   }
 })
 
+test('integrated GSEA ORA and yearly profiles report preserves year scope', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
+      errors.push(message.text())
+    }
+  })
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
+  })
+
+  await page.goto('reports/gsea_ora_year_profiles.html')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon y Pinot noir durante la maduración/i })).toBeVisible()
+
+  await expect(page.locator('#auditSummary .card')).toHaveCount(4)
+  await expect(page.locator('#auditTable tr')).toHaveCount(10)
+  await expect(page.locator('#auditTable tr').filter({ hasText: 'M1' })).toContainText('ATTENTION_GSEA_M1_NATIVE_ROW_MISSING')
+  await expect(page.locator('#auditNotice')).toContainText(/M1|ATTENTION/i)
+
+  await expect(page.locator('.inner-tabs')).toHaveCount(0)
+  await expect(page.locator('#gseaOverviewCards .card')).toHaveCount(4)
+  await expect(page.locator('#gseaComposition .composition-card')).toHaveCount(6)
+  await expect(page.locator('#gseaMatrix tbody tr')).toHaveCount(10)
+  await expect(page.locator('#gseaMissing')).toContainText('M1')
+  await expect(page.locator('#gsea-figure')).toBeVisible()
+  await expect(page.locator('#gsea-method')).toBeVisible()
+
+  await expect(page.locator('#oraBars .barrow').first()).toBeVisible()
+  await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
+  await expect(page.locator('#oraDownloadCsv')).toBeVisible()
+  await expect(page.locator('#oraThemeView .card')).toHaveCount(4)
+  await expect(page.locator('#oraQcCoverage .card')).toHaveCount(10)
+  await expect(page.locator('#oraQcTable tr')).toHaveCount(30)
+  await expect(page.locator('#oraM5v3')).toContainText(/stilbenoid|Secondary metabolism/i)
+  await expect(page.locator('#oraM5v5')).not.toBeEmpty()
+  await expect(page.locator('#oraGoCards .card')).toHaveCount(4)
+  await expect(page.locator('#oraGoBars .barrow')).toHaveCount(6)
+  await expect(page.locator('#ora-method')).toBeVisible()
+
+  await expect(page.locator('#hubCoreCards .card')).toHaveCount(4)
+  await expect(page.locator('#hubCoreSummary tr')).toHaveCount(10)
+  await expect(page.locator('#hubCoreSummary tr').filter({ hasText: 'M5' })).toContainText('11')
+
+  await page.getByRole('button', { name: /Hub-core PC1 · top 10% kWithin/i }).click()
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+  await expect(page.locator('#profileGrid')).toContainText('Hub-core PC1')
+  await expect(page.locator('#profileGrid .profile-card').filter({ hasText: 'M5' })).toContainText('11 hubs / 108 genes')
+
+  await page.getByRole('button', { name: '2012', exact: true }).click()
+  await expect(page.locator('#profileGrid')).toContainText('Año 2012')
+  await page.getByRole('button', { name: '2014', exact: true }).click()
+  await expect(page.locator('#profileGrid')).toContainText('Año 2014')
+
+  await expect(page.locator('#profileDataTable tr')).toHaveCount(180)
+  await expect(page.locator('#profileDownloadCsv')).toBeVisible()
+
+  await expect(page.locator('#hubListModule')).toHaveValue('M5')
+  await expect(page.locator('#hubListTable tr')).toHaveCount(11)
+  await expect(page.locator('#hubListSummary .card')).toHaveCount(4)
+
+  await expect(page.locator('#contrastModule')).toHaveValue('M5')
+  await expect(page.locator('#contrastTable tr')).toHaveCount(9)
+  await expect(page.locator('#contrastTable')).toContainText('2012')
+  await expect(page.locator('#contrastTable')).toContainText('2013')
+  await expect(page.locator('#contrastTable')).toContainText('2014')
+
+  expect(errors).toEqual([])
+})
+
+test('integrated report highlights the current scientific section in the sticky navigation', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html')
+
+  const gsea = page.locator('.anchors a[href="#gsea"]')
+  const ora = page.locator('.anchors a[href="#ora"]')
+  const profiles = page.locator('.anchors a[href="#profiles"]')
+  const audit = page.locator('.anchors a[href="#audit"]')
+
+  await expect(gsea).toHaveClass(/active/)
+  await page.locator('#ora').scrollIntoViewIfNeeded()
+  await expect(ora).toHaveClass(/active/)
+  await page.locator('#profiles').scrollIntoViewIfNeeded()
+  await expect(profiles).toHaveClass(/active/)
+  await page.locator('#audit').scrollIntoViewIfNeeded()
+  await expect(audit).toHaveClass(/active/)
+})
+
+test('integrated report switches completely between Spanish and curated scientific English', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html?utm_source=chatgpt.com')
+  await expect(page.getByText(/Catalina Constanza Marchant Hurtado/i)).toBeVisible()
+  await expect(page.getByRole('button', { name: /Cambiar idioma a inglés/i })).toBeVisible()
+
+  await page.getByRole('button', { name: /Cambiar idioma a inglés/i }).click()
+  await page.waitForURL(/lang=en/)
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon and Pinot noir during ripening/i })).toBeVisible()
+  await expect(page.getByText('Methods and quality control', { exact: true }).first()).toBeVisible()
+  await expect(page.getByText('Expression profiles of modules M1–M10', { exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Switch language to Spanish/i })).toBeVisible()
+  await expect(page).not.toHaveURL(/utm_source/)
+
+  await page.getByRole('button', { name: /Switch language to Spanish/i }).click()
+  await expect(page.locator('html')).toHaveAttribute('lang', 'es')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon y Pinot noir durante la maduración/i })).toBeVisible()
+})
+
+test('English report has no mixed Spanish in generated profile cards and full PDF mode exposes all tables', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html?lang=en')
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon and Pinot noir during ripening/i })).toBeVisible()
+  await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+
+  const profileText = await page.locator('#profileGrid').innerText()
+  expect(profileText).toContain('Canonical eigengene')
+  expect(profileText).toContain('Descriptive interpretation')
+  expect(profileText).not.toMatch(/Eigengene canónico|Interpretación descriptiva|La mayor separación descriptiva|La dirección de esa diferencia|todos los genes del módulo|Año 20\d\d/i)
+
+  await expect(page.getByRole('button', { name: /Download complete PDF/i })).toBeVisible()
+  await expect.poll(
+    () => page.evaluate(() => typeof (window as typeof window & { generateCompleteReportPdf?: unknown }).generateCompleteReportPdf),
+  ).toBe('function')
+})
+
+test('integrated report exposes a lighter web-view PDF export beside the full PDF', async ({ page }) => {
+  await page.goto('reports/gsea_ora_year_profiles.html')
+  await expect(page.getByRole('button', { name: /Descargar PDF completo/i })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Descargar PDF vista web/i })).toBeVisible()
+  await expect.poll(
+    () => page.evaluate(() => typeof (window as typeof window & { generateWebViewReportPdf?: unknown }).generateWebViewReportPdf),
+  ).toBe('function')
+
+  await page.goto('reports/gsea_ora_year_profiles.html?lang=en')
+  await expect(page.getByRole('button', { name: /Download complete PDF/i })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Download web-view PDF/i })).toBeVisible()
+})
+
+test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (error) => errors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
+      errors.push(message.text())
+    }
+  })
+  page.on('response', (response) => {
+    if (response.status() >= 400) errors.push(`HTTP ${response.status()} ${response.url()}`)
+  })
+
+  await page.goto('reports/ora_beta10.html')
+  await expect(page.getByRole('heading', { level: 1, name: /ORA interactivo de los diez módulos beta10/i })).toBeVisible()
+
+  await expect(page.locator('#summaryCards .card')).toHaveCount(4)
+  await expect(page.locator('#overviewBars .bar-row')).toHaveCount(10)
+
+  await page.getByRole('button', { name: 'ORA por término' }).click()
+  await expect(page.locator('#oraChart .bar-row').first()).toBeVisible()
+  await page.locator('#oraModule').selectOption('M5')
+  await page.locator('#oraSource').selectOption('v3_mapman')
+  await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
+
+  await page.getByRole('button', { name: 'M5 · auditoría' }).click()
+  await expect(page.locator('#m5v3 .audit-term').first()).toBeVisible()
+  await expect(page.locator('#m5v5 .audit-term').first()).toBeVisible()
+
+  await page.getByRole('button', { name: 'GO auditado' }).click()
+  await expect(page.locator('#goCards .card')).toHaveCount(4)
+  await expect(page.locator('#goBars .bar-row')).toHaveCount(6)
+
+  expect(errors).toEqual([])
+})
+
 test('summary page matches the V2 scientific information hierarchy', async ({ page }) => {
   await page.goto(url('/'))
 

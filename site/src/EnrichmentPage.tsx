@@ -313,6 +313,16 @@ export default function EnrichmentPage() {
             Explora el ORA de módulos beta10 con MapMan v3, MapMan v5.1 y el GO corregido por la auditoría T-005A.
             La interfaz separa cobertura de anotación, significancia global y temas preespecificados.
           </p>
+          <div className="overview-inline-actions">
+            <a
+              className="button button--primary"
+              href={import.meta.env.BASE_URL + 'reports/ora_beta10.html'}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir informe ORA completo ↗
+            </a>
+          </div>
         </div>
       </section>
 
