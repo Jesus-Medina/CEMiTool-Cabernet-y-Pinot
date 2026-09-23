@@ -119,7 +119,7 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   })
 
   await page.goto('reports/gsea_ora_year_profiles.html')
-  await expect(page.getByRole('heading', { level: 1, name: /GSEA, ORA y trayectoria anual/i })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: /Cabernet Sauvignon y Pinot noir durante la maduración/i })).toBeVisible()
 
   await expect(page.locator('#auditSummary .card')).toHaveCount(4)
   await expect(page.locator('#auditTable tr')).toHaveCount(10)
