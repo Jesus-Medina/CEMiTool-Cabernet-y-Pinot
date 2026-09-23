@@ -23,7 +23,7 @@ main{padding-bottom:70px}.major{scroll-margin-top:122px;padding:42px 0;border-bo
 .tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}.table{width:100%;border-collapse:collapse;font-size:.68rem}.table th{position:sticky;top:0;padding:9px 10px;text-align:left;color:#51464b;background:#f7f3f5;border-bottom:1px solid var(--line);white-space:nowrap}.table td{padding:9px 10px;border-bottom:1px solid #f1ecee;vertical-align:top}.table tr:last-child td{border-bottom:0}.good{color:var(--ok);font-weight:850}.warn{color:var(--warn);font-weight:850}
 .ora-controls{grid-template-columns:1fr .7fr .7fr 1.3fr}.coverage-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.coverage-strip .card strong{font-size:1.05rem}
 .profile-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.profile-card{padding:15px;border:1px solid var(--line);border-radius:11px;background:#fff}.profile-card-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:8px}.profile-card h3{margin:0;font-family:Georgia,serif;color:var(--wine);font-size:1.2rem}.profile-card small{color:var(--muted);font-size:.61rem}.profile-chart{width:100%;min-height:235px;display:block}.profile-legend{display:flex;gap:14px;color:var(--muted);font-size:.62rem;margin-top:5px}.legendline{width:18px;height:3px;display:inline-block;margin-right:5px;vertical-align:middle;border-radius:999px}.legendline.cs{background:var(--wine)}.legendline.pn{background:var(--blue)}.canonical{margin-top:10px}.canonical summary{cursor:pointer;color:var(--wine);font-size:.66rem;font-weight:800}.canonical img{display:block;width:100%;height:auto;margin-top:10px;border:1px solid var(--line);border-radius:8px}
-footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.65rem;line-height:1.5;background:#fff}
+.inner-tabs{display:flex;gap:6px;overflow:auto;margin:16px 0;padding:7px;border:1px solid var(--line);border-radius:10px;background:#fff;scrollbar-width:none}.inner-tabs::-webkit-scrollbar{display:none}.inner-tab{flex:0 0 auto;min-height:36px;padding:0 12px;border:0;border-radius:7px;color:var(--muted);background:transparent;font-size:.69rem;font-weight:850;cursor:pointer}.inner-tab.active{color:#fff;background:var(--wine)}.inner-panel{display:none}.inner-panel.active{display:block}.panel-intro{padding:14px 0 4px}.panel-intro h3{margin:0;font-family:Georgia,serif;font-size:1.45rem}.panel-intro p{max-width:860px;margin:6px 0 0;color:var(--muted);font-size:.72rem;line-height:1.5}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.download-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.compact-table td,.compact-table th{font-size:.64rem}.hub-list-table td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.status-pill{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;font-size:.6rem;font-weight:850}.status-pill.good{background:#edf7f2}.status-pill.warn{background:#fff5e6}@media(max-width:760px){.mini-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.mini-grid{grid-template-columns:1fr}}footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.65rem;line-height:1.5;background:#fff}
 @media(max-width:1000px){.section-head{grid-template-columns:1fr}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr 1fr}.composition-grid{grid-template-columns:repeat(3,1fr)}.profile-grid{grid-template-columns:1fr}.controls,.ora-controls{grid-template-columns:1fr 1fr}.barrow{grid-template-columns:1fr}.stats{justify-content:flex-start}}
 @media(max-width:620px){.wrap{width:min(100% - 20px,1460px)}.headnav{display:none}.scope-grid,.cards,.coverage-strip{grid-template-columns:1fr}.composition-grid{grid-template-columns:1fr 1fr}.controls,.ora-controls{grid-template-columns:1fr}.native-figure{padding:10px}.native-figure figcaption{flex-direction:column}.matrix td{min-width:105px}.profile-card{padding:11px}.anchorbar{top:58px}}
 </style>
@@ -47,40 +47,95 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 </div></section>
 
 <section id="gsea" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por clase Cultivar × Stage</h2></div><p>Las matrices canónicas exportadas por CEMiTool contienen ES, NES y p ajustado para seis clases. Cada clase reúne 9 muestras: 3 de 2012, 3 de 2013 y 3 de 2014.</p></div>
-<div class="notice notice--ok"><strong>Verificación de años:</strong> el GSEA sí usa los tres años porque las 54 muestras entraron a CEMiTool y cada clase contiene exactamente tres réplicas de cada año. Sin embargo, <strong>Year no fue una columna de clase</strong>; por tanto el GSEA no estima diferencias 2012 vs 2013 vs 2014.</div>
+<div class="section-head"><div><p class="eyebrow">1 · GSEA nativo de CEMiTool</p><h2>Enriquecimiento por clase Cultivar × Stage</h2></div><p>El GSEA nativo se conserva intacto. La interfaz siguiente expone la figura original, ES, NES, p ajustado y la composición de años sin recalcular nada.</p></div>
+<div class="notice notice--ok"><strong>Verificación de años:</strong> cada una de las seis clases contiene exactamente 9 muestras = 3 de 2012 + 3 de 2013 + 3 de 2014. Los años están agrupados dentro de Cultivar × Stage; no son GSEA separados por año.</div>
 
-<div class="subsection"><div class="subhead"><h3>Composición de las clases GSEA</h3><p>Esto demuestra cómo se distribuyen los años dentro de cada clase usada por CEMiTool.</p></div><div id="gseaComposition" class="composition-grid"></div></div>
+<div class="inner-tabs" id="gseaTabs" role="tablist" aria-label="Vistas GSEA">
+<button class="inner-tab active" data-group="gsea" data-panel="gsea-overview">Resumen</button>
+<button class="inner-tab" data-group="gsea" data-panel="gsea-figure">Figura CEMiTool</button>
+<button class="inner-tab" data-group="gsea" data-panel="gsea-matrix">Matriz ES / NES / padj</button>
+<button class="inner-tab" data-group="gsea" data-panel="gsea-years">Años y clases</button>
+<button class="inner-tab" data-group="gsea" data-panel="gsea-method">Método y límites</button>
+</div>
 
-<div class="subsection"><div class="subhead"><h3>Figura nativa de CEMiTool</h3><p>PNG vigente exportado directamente desde el objeto CEMiTool beta10.</p></div><figure class="native-figure"><img src="../assets/integrated/gsea_cemitool.png" alt="Figura GSEA nativa de CEMiTool beta10"><figcaption><span>Salida nativa CEMiTool · beta10</span><a href="../assets/integrated/gsea_cemitool.pdf" target="_blank" rel="noreferrer">Abrir PDF vectorial original ↗</a></figcaption></figure></div>
+<div class="inner-panel active" id="gsea-overview" data-inner-group="gsea">
+<div class="panel-intro"><h3>Resumen GSEA</h3><p>Qué entra al análisis, qué exportó CEMiTool y qué excepción permanece explícita.</p></div>
+<div id="gseaOverviewCards" class="cards"></div>
+<div id="gseaOverviewModuleTable" class="tablewrap" style="margin-top:12px"></div>
+<div id="gseaMissing" class="notice notice--warn" style="margin-top:12px"></div>
+</div>
 
-<div class="subsection"><div class="subhead"><h3>Matriz interactiva GSEA</h3><p>Cambia entre NES, ES y p ajustado sin alterar los resultados originales.</p></div>
-<div class="controls" style="grid-template-columns:1fr 1fr auto">
+<div class="inner-panel" id="gsea-figure" data-inner-group="gsea">
+<div class="panel-intro"><h3>Figura nativa de CEMiTool</h3><p>PNG y PDF vectorial exportados directamente del objeto beta10.</p></div>
+<figure class="native-figure"><img src="../assets/integrated/gsea_cemitool.png" alt="Figura GSEA nativa de CEMiTool beta10"><figcaption><span>Salida nativa CEMiTool · beta10</span><a href="../assets/integrated/gsea_cemitool.pdf" target="_blank" rel="noreferrer">Abrir PDF vectorial original ↗</a></figcaption></figure>
+</div>
+
+<div class="inner-panel" id="gsea-matrix" data-inner-group="gsea">
+<div class="panel-intro"><h3>Matriz interactiva GSEA</h3><p>Selecciona ES, NES o p ajustado y cualquier fila exportada por CEMiTool.</p></div>
+<div class="controls" style="grid-template-columns:1fr 1fr auto auto">
 <div class="control"><label>Métrica</label><select id="gseaMetric"><option value="nes">NES</option><option value="es">ES</option><option value="padj">p ajustado</option></select></div>
 <div class="control"><label>Módulo / pathway</label><select id="gseaPathway"></select></div>
+<button id="gseaDownloadCsv" class="button">Descargar matriz CSV</button>
 <a class="button" href="../assets/integrated/gsea_cemitool.pdf" target="_blank" rel="noreferrer" style="display:flex;align-items:center;text-decoration:none">PDF original</a>
 </div>
 <div id="gseaMatrix" class="matrix-wrap" style="margin-top:12px"></div>
 <div id="gseaSelected" class="barbox" style="margin-top:12px"></div>
-<div id="gseaMissing" class="notice notice--warn" style="margin-top:12px"></div>
+</div>
+
+<div class="inner-panel" id="gsea-years" data-inner-group="gsea">
+<div class="panel-intro"><h3>Composición 2012 + 2013 + 2014</h3><p>Desglose exacto de muestras por año dentro de cada clase usada por el GSEA.</p></div>
+<div id="gseaComposition" class="composition-grid"></div>
+</div>
+
+<div class="inner-panel" id="gsea-method" data-inner-group="gsea">
+<div class="panel-intro"><h3>Método y límites</h3></div>
+<div class="cards">
+<div class="card"><span>Clases</span><strong>6</strong><small>2 cultivares × 3 etapas.</small></div>
+<div class="card"><span>Muestras por clase</span><strong>9</strong><small>3 de cada año.</small></div>
+<div class="card"><span>Salida</span><strong>ES · NES · padj</strong><small>Exportada por CEMiTool.</small></div>
+<div class="card"><span>Límite</span><strong>Year pooled</strong><small>No es un GSEA independiente por año.</small></div>
+</div>
+<div class="notice" style="margin-top:12px"><strong>M1:</strong> está presente en la red y en ORA/perfiles, pero no aparece en las matrices GSEA nativas exportadas. No se imputa ni se inventa una fila.</div>
 </div>
 </div></section>
 
 <section id="ora" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">2 · ORA funcional</p><h2>Sobrerrepresentación en los módulos beta10</h2></div><p>MapMan v3 es la capa principal. MapMan v5.1 y GO auditado son comprobaciones secundarias. Las barras representan −log10(FDR global).</p></div>
-<div class="notice"><strong>Relación con los años:</strong> los módulos usados aquí fueron aprendidos desde las 54 muestras de 2012–2014, pero la prueba ORA depende de <strong>membresía génica + anotación funcional</strong>. No existe un ORA 2012, ORA 2013 y ORA 2014 en este pipeline.</div>
-<div class="subsection">
-<div class="controls ora-controls">
+<div class="section-head"><div><p class="eyebrow">2 · ORA funcional</p><h2>ORA completo dentro del reporte integrado</h2></div><p>La misma profundidad funcional del reporte ORA standalone, ahora embebida aquí: resumen, términos, temas MapMan, QC, auditoría M5, GO y método.</p></div>
+<div class="notice"><strong>Relación con los años:</strong> los módulos fueron inferidos con las 54 muestras de 2012–2014. ORA analiza membresía génica + anotación funcional y no tiene una dimensión Year propia.</div>
+
+<div class="inner-tabs" id="oraTabs" role="tablist" aria-label="Vistas ORA">
+<button class="inner-tab active" data-group="ora" data-panel="ora-overview">Resumen</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-terms">ORA por término</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-themes">Temas MapMan</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-qc">Cobertura / QC</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-m5">M5 · auditoría</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-go">GO auditado</button>
+<button class="inner-tab" data-group="ora" data-panel="ora-method">Método y límites</button>
+</div>
+
+<div class="inner-panel active" id="ora-overview" data-inner-group="ora">
+<div class="panel-intro"><h3>Panorama del enriquecimiento</h3><p>Recuentos globales y distribución de hits MapMan v3 por módulo.</p></div>
+<div id="oraSummaryCards" class="cards"></div>
+<div id="oraOverviewBars" class="barbox" style="margin-top:12px"></div>
+<div class="notice" style="margin-top:12px"><strong>Lectura:</strong> un mayor número de términos enriquecidos no convierte un módulo en “mejor”. La cobertura de anotación y la redundancia de términos deben leerse junto a la significancia.</div>
+</div>
+
+<div class="inner-panel" id="ora-terms" data-inner-group="ora">
+<div class="panel-intro"><h3>Explorador ORA por término</h3><p>Barras horizontales = −log10(FDR global). Filtra por fuente, módulo, significancia y texto.</p></div>
+<div class="controls ora-controls" style="grid-template-columns:1fr .7fr .7fr 1.3fr auto">
 <div class="control"><label>Fuente</label><select id="oraSource"><option value="v3_mapman">MapMan v3 · principal</option><option value="v5_mapman">MapMan v5.1</option><option value="go">GO auditado</option></select></div>
 <div class="control"><label>Módulo</label><select id="oraModule"></select></div>
 <div class="control"><label>Alcance</label><select id="oraScope"><option value="sig">FDR global &lt; 0,05</option><option value="all">Todos</option></select></div>
 <div class="control"><label>Buscar</label><input id="oraQuery" type="search" placeholder="stilbenoid, PAL, GO:0010154…"></div>
+<button id="oraDownloadCsv" class="button">Descargar CSV</button>
 </div>
 <div id="oraCoverage" class="coverage-strip"></div>
 <div id="oraBars" class="barbox" style="margin-top:12px"></div>
 <div class="subsection"><div class="subhead"><h3>Tabla ORA filtrada</h3><p id="oraCount"></p></div><div class="tablewrap"><table class="table"><thead><tr><th>Término</th><th>ID</th><th>Módulo</th><th>Overlap</th><th>Fold</th><th>p</th><th>FDR global</th><th>Aspect</th></tr></thead><tbody id="oraTable"></tbody></table></div></div>
+</div>
 
-<div class="subsection"><div class="subhead"><h3>Temas MapMan preespecificados</h3><p>Cutícula/cera, epidermis, pared celular, pectina, celulosa/hemicelulosa, lignina, fenilpropanoides, flavonoides y antocianinas. Esta vista incluye también resultados no significativos o no testables.</p></div>
+<div class="inner-panel" id="ora-themes" data-inner-group="ora">
+<div class="panel-intro"><h3>Temas MapMan preespecificados</h3><p>Incluye también resultados no significativos o no testables para evitar sesgo de mostrar solo hits positivos.</p></div>
 <div class="controls" style="grid-template-columns:1fr 1fr 1.5fr">
 <div class="control"><label>Fuente</label><select id="oraThemeSource"><option value="v3_mapman">MapMan v3</option><option value="v5_mapman">MapMan v5.1</option></select></div>
 <div class="control"><label>Módulo</label><select id="oraThemeModule"></select></div>
@@ -89,50 +144,106 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div id="oraThemeView" class="cards" style="margin-top:12px"></div>
 </div>
 
-<div class="subsection"><div class="subhead"><h3>Cobertura y QC del ORA</h3><p>La cobertura de anotación se muestra separada de la significancia. Una ausencia de hits con cobertura baja no equivale a ausencia biológica.</p></div>
+<div class="inner-panel" id="ora-qc" data-inner-group="ora">
+<div class="panel-intro"><h3>Cobertura y QC</h3><p>La cobertura de anotación se mantiene separada de la significancia estadística.</p></div>
 <div id="oraQcSources" class="profile-toolbar"></div>
 <div id="oraQcCoverage" class="coverage-strip"></div>
 <div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Fuente</th><th>Módulo</th><th>Genes módulo</th><th>Anotados</th><th>Cobertura</th><th>Background</th><th>Tests</th><th>Hits</th><th>Warning</th></tr></thead><tbody id="oraQcTable"></tbody></table></div>
 </div>
 
-<div class="subsection"><div class="subhead"><h3>M5 · auditoría MapMan v3 vs v5.1</h3><p>Los mismos genes pueden recibir etiquetas distintas entre versiones. Esta comparación mantiene explícito el conflicto CHS/STS sin adjudicar una identidad enzimática causal.</p></div>
+<div class="inner-panel" id="ora-m5" data-inner-group="ora">
+<div class="panel-intro"><h3>M5 · MapMan v3 vs v5.1</h3><p>Auditoría explícita del conflicto CHS/STS sin adjudicar identidad enzimática causal.</p></div>
 <div class="cards" style="grid-template-columns:1fr 1fr">
 <article class="card"><span>MapMan v3 · hits M5</span><div id="oraM5v3" style="margin-top:10px"></div></article>
 <article class="card"><span>MapMan v5.1 · hits M5</span><div id="oraM5v5" style="margin-top:10px"></div></article>
 </div>
-<div class="notice notice--warn" style="margin-top:12px"><strong>Interpretación segura:</strong> M5 contiene un bloque enriquecido de metabolismo fenólico. La discordancia de etiquetas entre versiones es un conflicto de anotación y no una validación independiente.</div>
+<div class="notice notice--warn" style="margin-top:12px"><strong>Interpretación segura:</strong> la discordancia entre versiones es un conflicto de anotación y no una validación independiente.</div>
 </div>
 
-<div class="subsection"><div class="subhead"><h3>GO auditado · T-005A</h3><p>La capa GO vigente excluye términos obsoletos antes de recalcular el ORA. Los seis hits globales actuales están en M9 y varios comparten genes.</p></div>
+<div class="inner-panel" id="ora-go" data-inner-group="ora">
+<div class="panel-intro"><h3>Gene Ontology auditado · T-005A</h3><p>La capa vigente excluye términos obsoletos y conserva la cobertura limitada como caveat.</p></div>
 <div id="oraGoCards" class="cards"></div>
 <div id="oraGoBars" class="barbox" style="margin-top:12px"></div>
 </div>
 
-<div class="subsection"><div class="subhead"><h3>Método y límites del ORA</h3><p>La página muestra el ORA completo sin recalcularlo en el navegador.</p></div>
+<div class="inner-panel" id="ora-method" data-inner-group="ora">
+<div class="panel-intro"><h3>Método y límites</h3></div>
 <div class="cards">
-<div class="card"><span>Universo</span><strong>3.050 genes</strong><small>Módulos beta10 congelados; el fondo depende de la cobertura de cada fuente.</small></div>
+<div class="card"><span>Universo</span><strong>3.050 genes</strong><small>Módulos beta10 congelados; el fondo depende de cada fuente.</small></div>
 <div class="card"><span>Prueba</span><strong>Hipergeométrica</strong><small>Unilateral de sobrerrepresentación.</small></div>
-<div class="card"><span>Corrección</span><strong>BH / FDR</strong><small>Inferencia principal sobre módulo×término por fuente.</small></div>
-<div class="card"><span>Límite</span><strong>ORA ≠ causalidad</strong><small>Enriquecimiento de módulo completo tampoco identifica por sí solo el driver de una etapa/año.</small></div>
+<div class="card"><span>Corrección</span><strong>BH / FDR</strong><small>Inferencia principal módulo×término por fuente.</small></div>
+<div class="card"><span>Límite</span><strong>ORA ≠ causalidad</strong><small>Tampoco identifica por sí sola el driver temporal de un módulo.</small></div>
 </div>
-</div>
+<div class="notice" style="margin-top:12px"><strong>Fuentes:</strong> <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, scripts T-005/T-005A.</div>
 </div>
 </div></section>
 
 <section id="profiles" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico vs núcleo de hubs</h2></div><p>El eigengene canónico sigue siendo PC1 de todos los genes del módulo. Como sensibilidad adicional, Hub-core PC1 usa solo el 10% más central por kWithin, siguiendo exactamente la definición de hubs ya usada en T-006.</p></div>
-<div class="notice notice--ok"><strong>Los tres años siguen explícitos:</strong> 2012, 2013 y 2014 se muestran por separado para ambos resúmenes. Hub-core PC1 no reemplaza el eigengene original ni modifica los análisis T-003/T-004; sirve para comprobar cuánto cambia la trayectoria cuando se eliminan los genes periféricos.</div>
+<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico y sensibilidad Hub-core</h2></div><p>El eigengene canónico permanece como PC1 de todos los genes. Hub-core PC1 usa el top 10% por kWithin como sensibilidad separada; no reemplaza resultados T-003/T-004.</p></div>
+<div class="notice notice--ok"><strong>2012, 2013 y 2014 permanecen explícitos</strong> tanto en el eigengene canónico como en Hub-core. La nueva interfaz también muestra exactamente qué hubs centrales entraron a cada Hub-core PC1.</div>
 
-<div class="subsection">
-  <div class="subhead"><h3>Comparación de sensibilidad por módulo</h3><p>Correlación entre Hub-core PC1 y el eigengene canónico en las 54 muestras, más concordancia de dirección en los 9 contrastes Stage × Year.</p></div>
-  <div id="hubCoreCards" class="cards"></div>
-  <div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Genes totales</th><th>Hubs usados</th><th>Fracción</th><th>Correlación 54 muestras</th><th>Correlación medias</th><th>Dirección igual</th></tr></thead><tbody id="hubCoreSummary"></tbody></table></div>
+<div class="inner-tabs" id="profileTabs" role="tablist" aria-label="Vistas de perfiles">
+<button class="inner-tab active" data-group="profiles" data-panel="profiles-overview">Resumen</button>
+<button class="inner-tab" data-group="profiles" data-panel="profiles-charts">Gráficos</button>
+<button class="inner-tab" data-group="profiles" data-panel="profiles-data">Tabla completa</button>
+<button class="inner-tab" data-group="profiles" data-panel="profiles-hubs">Hubs centrales</button>
+<button class="inner-tab" data-group="profiles" data-panel="profiles-contrasts">Contrastes Hub-core</button>
+<button class="inner-tab" data-group="profiles" data-panel="profiles-method">Método y límites</button>
 </div>
 
-<div class="subsection"><div class="subhead"><h3>Selecciona el resumen y el año</h3><p>“Canónico” reproduce la trayectoria basada en todos los genes. “Hub-core” muestra PC1 del top decil kWithin. Puedes aislar 2012, 2013 o 2014.</p></div>
+<div class="inner-panel active" id="profiles-overview" data-inner-group="profiles">
+<div class="panel-intro"><h3>Sensibilidad por módulo</h3><p>Correlación Hub-core PC1 vs eigengene canónico y concordancia de dirección en los nueve contrastes Stage × Year.</p></div>
+<div id="hubCoreCards" class="cards"></div>
+<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Genes totales</th><th>Hubs usados</th><th>Fracción</th><th>Correlación 54 muestras</th><th>Correlación medias</th><th>Dirección igual</th></tr></thead><tbody id="hubCoreSummary"></tbody></table></div>
+</div>
+
+<div class="inner-panel" id="profiles-charts" data-inner-group="profiles">
+<div class="panel-intro"><h3>Trayectorias por módulo y año</h3><p>Alterna entre el resumen canónico y la sensibilidad Hub-core; filtra 2012, 2013 o 2014.</p></div>
 <div class="profile-toolbar" id="scoreButtons"></div>
-<div class="profile-toolbar" id="yearButtons"></div></div>
+<div class="profile-toolbar" id="yearButtons"></div>
 <div id="profileGrid" class="profile-grid"></div>
+</div>
+
+<div class="inner-panel" id="profiles-data" data-inner-group="profiles">
+<div class="panel-intro"><h3>Tabla completa de perfiles</h3><p>Una fila por Module × Cultivar × Stage × Year. Permite comparar directamente el score canónico y Hub-core.</p></div>
+<div class="controls" style="grid-template-columns:.8fr .8fr .8fr auto">
+<div class="control"><label>Módulo</label><select id="profileDataModule"><option value="all">Todos</option></select></div>
+<div class="control"><label>Año</label><select id="profileDataYear"><option value="all">Todos</option><option>2012</option><option>2013</option><option>2014</option></select></div>
+<div class="control"><label>Score</label><select id="profileDataScore"><option value="canonical">Canónico</option><option value="hub">Hub-core</option></select></div>
+<button id="profileDownloadCsv" class="button">Descargar CSV</button>
+</div>
+<div class="tablewrap" style="margin-top:12px"><table class="table compact-table"><thead><tr><th>Módulo</th><th>Cultivar</th><th>Stage</th><th>Año</th><th>Media</th><th>SD</th><th>N</th><th>SE</th><th>Score</th></tr></thead><tbody id="profileDataTable"></tbody></table></div>
+</div>
+
+<div class="inner-panel" id="profiles-hubs" data-inner-group="profiles">
+<div class="panel-intro"><h3>Hubs centrales usados en Hub-core PC1</h3><p>Esta tabla responde directamente qué genes entraron al cálculo de sensibilidad. Son top decil por kWithin dentro de cada módulo.</p></div>
+<div class="controls" style="grid-template-columns:1fr auto">
+<div class="control"><label>Módulo</label><select id="hubListModule"></select></div>
+<button id="hubDownloadCsv" class="button">Descargar hubs CSV</button>
+</div>
+<div id="hubListSummary" class="coverage-strip"></div>
+<div class="tablewrap" style="margin-top:12px"><table class="table hub-list-table"><thead><tr><th>Gen</th><th>Módulo</th><th>Rank kWithin</th><th>kWithin</th><th>kWithin / arista posible</th></tr></thead><tbody id="hubListTable"></tbody></table></div>
+</div>
+
+<div class="inner-panel" id="profiles-contrasts" data-inner-group="profiles">
+<div class="panel-intro"><h3>Contrastes Stage × Year: canónico vs Hub-core</h3><p>Compara la dirección Cabernet Sauvignon − Pinot noir para los nueve contrastes de cada módulo.</p></div>
+<div class="controls" style="grid-template-columns:1fr auto">
+<div class="control"><label>Módulo</label><select id="contrastModule"></select></div>
+<button id="contrastDownloadCsv" class="button">Descargar contrastes CSV</button>
+</div>
+<div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Stage</th><th>Año</th><th>Canónico CS−PN</th><th>Hub-core CS−PN</th><th>Misma dirección</th></tr></thead><tbody id="contrastTable"></tbody></table></div>
+</div>
+
+<div class="inner-panel" id="profiles-method" data-inner-group="profiles">
+<div class="panel-intro"><h3>Qué significa cada score</h3></div>
+<div class="cards">
+<div class="card"><span>Canónico</span><strong>PC1 de todos los genes</strong><small>Es el eigengene del módulo usado en los análisis principales.</small></div>
+<div class="card"><span>Hub-core</span><strong>Top 10% kWithin</strong><small>PC1 centrado/escalado de genes centrales; sensibilidad adicional.</small></div>
+<div class="card"><span>Selección hubs</span><strong>kWithin</strong><small>Suma de adyacencias intramodulares en la red beta10 congelada.</small></div>
+<div class="card"><span>Regla</span><strong>No reemplaza T-004</strong><small>Sirve para comprobar cuánto depende la trayectoria de genes periféricos.</small></div>
+</div>
+<div class="notice" style="margin-top:12px"><strong>Importante:</strong> recalcular un “eigengene solo con hubs” y usarlo como si fuera el eigengene original cambiaría la definición científica. Por eso aquí se conserva como análisis de sensibilidad separado.</div>
+</div>
 </div></section>
 </main>
 
