@@ -65,12 +65,20 @@ body{font-size:16px;line-height:1.55}
 #audit{background:var(--soft2)}
 @media(max-width:760px){.anchors{justify-content:flex-start}.wrap{width:min(100% - 22px,1260px)}}
 
+
+.language-toggle{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--wine);font-size:.78rem;font-weight:850;cursor:pointer;white-space:nowrap}
+.language-toggle:hover{border-color:#d8bdc7;background:#fff8fa}
+.language-toggle:focus-visible{outline:3px solid rgba(125,23,55,.16);outline-offset:2px}
+.language-icon{font-size:.9rem;color:var(--muted)}
+.byline{margin:12px 0 0;color:var(--muted);font-size:.76rem;line-height:1.45}
+@media(max-width:620px){.language-toggle{padding:0 10px}.language-icon{display:none}.byline{font-size:.72rem}}
+
 </style>
 </head>
 <body>
-<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div></div></header>
+<header><div class="wrap head"><div class="brand"><span class="brandmark"></span><div><strong>Cabernet Sauvignon × Pinot noir</strong><small>Transcriptómica comparativa · GSE98923</small></div></div><button id="languageToggle" class="language-toggle" type="button" aria-label="Cambiar idioma a inglés"><span class="language-icon" aria-hidden="true">文</span><span id="languageToggleLabel">English</span></button></div></header>
 
-<section class="hero"><div class="wrap"><p class="eyebrow">Caracterización transcriptómica comparativa</p><h1>Cabernet Sauvignon y Pinot noir durante la maduración</h1><p class="lede">Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.</p>
+<section class="hero"><div class="wrap"><p class="eyebrow">Caracterización transcriptómica comparativa</p><h1>Cabernet Sauvignon y Pinot noir durante la maduración</h1><p class="lede">Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.</p><p class="byline">Análisis realizado por Catalina Constanza Marchant Hurtado · Ingeniera en Biotecnología · UTEM</p>
 <div class="scope-grid"><div class="scope"><span>GSEA</span><strong>2012 + 2013 + 2014 incluidos</strong><small>Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.</small></div><div class="scope"><span>ORA</span><strong>módulos construidos con los 3 años</strong><small>El ORA no tiene dimensión Year y no fue recalculado por año.</small></div><div class="scope"><span>Perfiles</span><strong>2012 · 2013 · 2014 explícitos</strong><small>M1–M10, dos cultivares, tres etapas y tres réplicas por celda.</small></div></div></div></section>
 
 <div class="anchorbar"><nav class="wrap anchors" aria-label="Recorrido científico"><a href="#gsea">1 · GSEA</a><a href="#ora">2 · ORA</a><a href="#profiles">3 · Perfiles</a><a href="#audit">Métodos y control de calidad</a></nav></div>
@@ -263,6 +271,326 @@ body{font-size:16px;line-height:1.55}
 <footer><div class="wrap">GSE98923 · análisis de coexpresión con CEMiTool, enriquecimiento funcional y perfiles temporales de Cabernet Sauvignon y Pinot noir. Los controles metodológicos y las limitaciones se mantienen explícitos dentro del reporte.</div></footer>
 
 <script>
+
+const PAGE_LANG=new URL(window.location.href).searchParams.get('lang')==='en'?'en':'es';
+const EN={
+'GSEA · ORA · perfiles por año | CEMiTool beta10':'GSEA · ORA · yearly profiles | CEMiTool beta10',
+'Transcriptómica comparativa · GSE98923':'Comparative transcriptomics · GSE98923',
+'Caracterización transcriptómica comparativa':'Comparative transcriptomic characterization',
+'Cabernet Sauvignon y Pinot noir durante la maduración':'Cabernet Sauvignon and Pinot noir during ripening',
+'Coexpresión, enriquecimiento funcional y dinámica temporal de módulos. El recorrido científico avanza desde GSEA hacia ORA y, finalmente, a los perfiles anuales de M1–M10.':'Coexpression, functional enrichment, and temporal module dynamics. The scientific workflow proceeds from GSEA to ORA and, finally, to the yearly profiles of M1–M10.',
+'Análisis realizado por Catalina Constanza Marchant Hurtado · Ingeniera en Biotecnología · UTEM':'Analysis by Catalina Constanza Marchant Hurtado · Biotechnology Engineer · UTEM',
+'2012 + 2013 + 2014 incluidos':'2012 + 2013 + 2014 included',
+'Los años están agrupados dentro de cada clase Cultivar × Stage; no son contrastes GSEA separados por año.':'Years are pooled within each Cultivar × Stage class; they are not separate year-specific GSEA contrasts.',
+'módulos construidos con los 3 años':'modules constructed using all 3 years',
+'El ORA no tiene dimensión Year y no fue recalculado por año.':'ORA has no Year dimension and was not recalculated separately by year.',
+'Perfiles':'Profiles',
+'2012 · 2013 · 2014 explícitos':'2012 · 2013 · 2014 shown explicitly',
+'M1–M10, dos cultivares, tres etapas y tres réplicas por celda.':'M1–M10, two cultivars, three developmental stages, and three replicates per cell.',
+'Métodos y control de calidad':'Methods and quality control',
+'Recorrido científico':'Scientific workflow',
+'1 · GSEA nativo de CEMiTool':'1 · Native CEMiTool GSEA',
+'Enriquecimiento por cultivar y etapa de desarrollo':'Enrichment by cultivar and developmental stage',
+'El GSEA nativo se conserva intacto. La interfaz siguiente expone la figura original, ES, NES, p ajustado y la composición de años sin recalcular nada.':'The native GSEA output is preserved unchanged. The interface below displays the original figure, ES, NES, adjusted p-values, and year composition without recalculating any result.',
+'Verificación de años:':'Year verification:',
+'cada una de las seis clases contiene exactamente 9 muestras = 3 de 2012 + 3 de 2013 + 3 de 2014. Los años están agrupados dentro de Cultivar × Stage; no son GSEA separados por año.':'each of the six classes contains exactly 9 samples = 3 from 2012 + 3 from 2013 + 3 from 2014. Years are pooled within Cultivar × Stage; these are not separate year-specific GSEA analyses.',
+'Figura nativa de CEMiTool':'Native CEMiTool figure',
+'PNG y PDF vectorial exportados directamente del objeto de CEMiTool.':'PNG and vector PDF exported directly from the CEMiTool object.',
+'Salida nativa CEMiTool · beta10':'Native CEMiTool output · beta10',
+'Abrir PDF vectorial original ↗':'Open original vector PDF ↗',
+'Interpretación:':'Interpretation:',
+'esta figura resume la respuesta de los módulos frente a las seis clases Cultivar × Stage. La matriz interactiva de la sección siguiente permite inspeccionar ES, NES y p ajustado sin modificar la salida original.':'this figure summarizes module responses across the six Cultivar × Stage classes. The interactive matrix in the following section allows inspection of ES, NES, and adjusted p-values without altering the original output.',
+'Resumen GSEA':'GSEA summary',
+'Qué entra al análisis, qué exportó CEMiTool y qué excepción permanece explícita.':'What enters the analysis, what CEMiTool exported, and which exception remains explicitly documented.',
+'Matriz interactiva GSEA':'Interactive GSEA matrix',
+'Selecciona ES, NES o p ajustado y cualquier fila exportada por CEMiTool.':'Select ES, NES, or adjusted p-value and any row exported by CEMiTool.',
+'Métrica':'Metric',
+'p ajustado':'adjusted p-value',
+'Módulo / pathway':'Module / pathway',
+'Descargar matriz CSV':'Download matrix CSV',
+'PDF original':'Original PDF',
+'Composición 2012 + 2013 + 2014':'2012 + 2013 + 2014 composition',
+'Desglose exacto de muestras por año dentro de cada clase usada por el GSEA.':'Exact sample breakdown by year within each class used for GSEA.',
+'Método y límites':'Methods and limitations',
+'Clases':'Classes',
+'Muestras por clase':'Samples per class',
+'2 cultivares × 3 etapas.':'2 cultivars × 3 developmental stages.',
+'3 de cada año.':'3 from each year.',
+'Salida':'Output',
+'Exportada por CEMiTool.':'Exported by CEMiTool.',
+'Límite':'Limitation',
+'Year pooled':'Years pooled',
+'No es un GSEA independiente por año.':'This is not an independent GSEA for each year.',
+'está presente en la red y en ORA/perfiles, pero no aparece en las matrices GSEA nativas exportadas. No se imputa ni se inventa una fila.':'is present in the network and in ORA/profiles, but does not appear in the exported native GSEA matrices. No row is imputed or fabricated.',
+'2 · ORA funcional':'2 · Functional ORA',
+'Funciones sobrerrepresentadas en los módulos':'Functions over-represented in the modules',
+'El ORA resume qué funciones están sobrerrepresentadas en cada módulo y permite profundizar en términos, temas MapMan, Gene Ontology y cobertura de anotación.':'ORA summarizes which functions are over-represented in each module and allows deeper exploration of terms, MapMan themes, Gene Ontology, and annotation coverage.',
+'Relación con los años:':'Relationship with years:',
+'los módulos fueron inferidos con las 54 muestras de 2012–2014. ORA analiza membresía génica + anotación funcional y no tiene una dimensión Year propia.':'the modules were inferred using all 54 samples from 2012–2014. ORA analyzes gene membership plus functional annotation and does not have its own Year dimension.',
+'Panorama del enriquecimiento':'Enrichment overview',
+'Recuentos globales y distribución de hits MapMan v3 por módulo.':'Global counts and distribution of MapMan v3 hits by module.',
+'un mayor número de términos enriquecidos no convierte un módulo en “mejor”. La cobertura de anotación y la redundancia de términos deben leerse junto a la significancia.':'a larger number of enriched terms does not make a module “better.” Annotation coverage and term redundancy must be interpreted together with statistical significance.',
+'Explorador ORA por término':'ORA term explorer',
+'Barras horizontales = −log10(FDR global). Filtra por fuente, módulo, significancia y texto.':'Horizontal bars = −log10(global FDR). Filter by source, module, significance, and text.',
+'Fuente':'Source',
+'MapMan v3 · principal':'MapMan v3 · primary',
+'GO auditado':'audited GO',
+'Módulo':'Module',
+'Alcance':'Scope',
+'Todos':'All',
+'Buscar':'Search',
+'Descargar CSV':'Download CSV',
+'Ver datos completos del ORA':'View complete ORA data',
+'Tabla ORA filtrada':'Filtered ORA table',
+'Término':'Term',
+'Fold':'Fold enrichment',
+'Aspect':'Aspect',
+'Temas MapMan preespecificados':'Prespecified MapMan themes',
+'Incluye también resultados no significativos o no testables para evitar sesgo de mostrar solo hits positivos.':'Also includes non-significant or non-testable results to avoid bias from displaying only positive hits.',
+'Tema':'Theme',
+'Cobertura y QC':'Coverage and QC',
+'La cobertura de anotación se mantiene separada de la significancia estadística.':'Annotation coverage is kept separate from statistical significance.',
+'Genes módulo':'Module genes',
+'Anotados':'Annotated',
+'Cobertura':'Coverage',
+'Warning':'Warning',
+'Auditoría explícita del conflicto CHS/STS sin adjudicar identidad enzimática causal.':'Explicit audit of the CHS/STS conflict without assigning causal enzymatic identity.',
+'Limitación:':'Limitation:',
+'la discordancia entre versiones es un conflicto de anotación y no una validación independiente.':'the disagreement between versions is an annotation conflict, not an independent validation.',
+'La capa vigente excluye términos obsoletos y conserva la cobertura limitada como caveat.':'The current layer excludes obsolete terms and retains limited coverage as an explicit caveat.',
+'Universo':'Universe',
+'3.050 genes':'3,050 genes',
+'Módulos beta10 congelados; el fondo depende de cada fuente.':'Frozen beta10 modules; the background depends on each annotation source.',
+'Prueba':'Test',
+'Hipergeométrica':'Hypergeometric',
+'Unilateral de sobrerrepresentación.':'One-sided over-representation test.',
+'Corrección':'Correction',
+'Inferencia principal módulo×término por fuente.':'Primary module × term inference within each source.',
+'ORA ≠ causalidad':'ORA ≠ causality',
+'Tampoco identifica por sí sola el driver temporal de un módulo.':'It also does not identify the temporal driver of a module on its own.',
+'Fuentes:':'Sources:',
+'scripts de análisis reproducible.':'reproducible analysis scripts.',
+'3 · Perfiles por año · M1–M10':'3 · Yearly profiles · M1–M10',
+'Perfiles de expresión de los módulos M1–M10':'Expression profiles of modules M1–M10',
+'Comparación temporal entre Cabernet Sauvignon y Pinot noir. El eigengene resume la trayectoria de cada módulo y Hub-core evalúa si el patrón se mantiene al centrarse en sus genes más conectados.':'Temporal comparison between Cabernet Sauvignon and Pinot noir. The eigengene summarizes each module trajectory, while Hub-core assesses whether the pattern persists when focusing on the most highly connected genes.',
+'2012, 2013 y 2014 permanecen explícitos':'2012, 2013, and 2014 remain explicit',
+'tanto en el eigengene canónico como en Hub-core. La nueva interfaz también muestra exactamente qué hubs centrales entraron a cada Hub-core PC1.':'in both the canonical eigengene and Hub-core analyses. The interface also shows exactly which central hubs were included in each Hub-core PC1.',
+'Eigengene vs hubs:':'Eigengene vs hubs:',
+'el eigengene canónico sigue siendo PC1 de todos los genes del módulo. Hub-core PC1 es una sensibilidad separada calculada con el top 10% por kWithin. Por eso los hubs no se mezclan como una columna del eigengene: se muestran como el conjunto que define esa sensibilidad, junto a sus gráficos y contrastes.':'the canonical eigengene remains PC1 computed from all genes in the module. Hub-core PC1 is a separate sensitivity analysis calculated from the top 10% by kWithin. Therefore, hubs are not mixed into the eigengene as an additional column; they are shown as the gene set defining that sensitivity analysis, together with its plots and contrasts.',
+'Trayectorias por módulo y año':'Module trajectories by year',
+'Alterna entre el resumen canónico y la sensibilidad Hub-core; filtra 2012, 2013 o 2014.':'Switch between the canonical summary and Hub-core sensitivity analysis; filter by 2012, 2013, or 2014.',
+'Sensibilidad por módulo':'Sensitivity analysis by module',
+'Correlación Hub-core PC1 vs eigengene canónico y concordancia de dirección en los nueve contrastes Stage × Year.':'Correlation between Hub-core PC1 and the canonical eigengene, and directional concordance across the nine Stage × Year contrasts.',
+'Genes totales':'Total genes',
+'Hubs usados':'Hubs used',
+'Fracción':'Fraction',
+'Correlación 54 muestras':'Correlation across 54 samples',
+'Correlación medias':'Correlation of means',
+'Dirección igual':'Same direction',
+'Tabla completa de perfiles':'Complete profile table',
+'Una fila por Module × Cultivar × Stage × Year. Permite comparar directamente el score canónico y Hub-core.':'One row per Module × Cultivar × Stage × Year. Enables direct comparison of the canonical and Hub-core scores.',
+'Año':'Year',
+'Canónico':'Canonical',
+'Ver tabla completa de perfiles':'View complete profile table',
+'Media':'Mean',
+'Hubs centrales usados en Hub-core PC1':'Central hubs used in Hub-core PC1',
+'Esta tabla responde directamente qué genes entraron al cálculo de sensibilidad. Son top decil por kWithin dentro de cada módulo.':'This table shows exactly which genes entered the sensitivity analysis. They are the top decile by kWithin within each module.',
+'Descargar hubs CSV':'Download hub CSV',
+'Ver genes hub seleccionados':'View selected hub genes',
+'Gen':'Gene',
+'Rank kWithin':'kWithin rank',
+'kWithin / arista posible':'kWithin / possible edge',
+'Contrastes Stage × Year: canónico vs Hub-core':'Stage × Year contrasts: canonical vs Hub-core',
+'Compara la dirección Cabernet Sauvignon − Pinot noir para los nueve contrastes de cada módulo.':'Compares the Cabernet Sauvignon − Pinot noir direction across the nine contrasts for each module.',
+'Descargar contrastes CSV':'Download contrasts CSV',
+'Ver contrastes completos':'View complete contrasts',
+'Canónico CS−PN':'Canonical CS−PN',
+'Misma dirección':'Same direction',
+'Qué significa cada score':'What each score means',
+'PC1 de todos los genes':'PC1 of all genes',
+'Es el eigengene del módulo usado en los análisis principales.':'This is the module eigengene used in the primary analyses.',
+'PC1 centrado/escalado de genes centrales; sensibilidad adicional.':'Centered/scaled PC1 of central genes; additional sensitivity analysis.',
+'Selección hubs':'Hub selection',
+'Suma de adyacencias intramodulares en la red de coexpresión utilizada en el estudio.':'Sum of intramodular adjacencies in the coexpression network used in the study.',
+'Regla':'Rule',
+'Análisis complementario':'Complementary analysis',
+'Sirve para comprobar cuánto depende la trayectoria de genes periféricos.':'Used to assess how strongly the trajectory depends on peripheral genes.',
+'Método:':'Method:',
+'recalcular un “eigengene solo con hubs” y usarlo como si fuera el eigengene original cambiaría la definición científica. Por eso aquí se conserva como análisis de sensibilidad separado.':'recalculating a “hub-only eigengene” and using it as if it were the original eigengene would change the scientific definition. It is therefore retained here as a separate sensitivity analysis.',
+'Trazabilidad y completitud del análisis':'Analysis traceability and completeness',
+'Esta capa documenta la cobertura de módulos, años y análisis. Sirve como respaldo metodológico de los resultados mostrados arriba, no como resultado biológico independiente.':'This layer documents coverage across modules, years, and analyses. It serves as methodological support for the results shown above, not as an independent biological result.',
+'Cobertura módulo por módulo':'Module-by-module coverage',
+'PASS significa que la capa contiene el módulo con el alcance esperado. ATTENTION identifica una excepción conocida sin rellenar datos artificialmente.':'PASS means the layer contains the module with the expected scope. ATTENTION identifies a known exception without filling in artificial data.',
+'GSEA nativo':'Native GSEA',
+'GSEA usa 3 años':'GSEA uses all 3 years',
+'Perfiles 2012–2014':'Profiles 2012–2014',
+'Contrastes 2012–2014':'Contrasts 2012–2014',
+'Estado':'Status',
+'Ver auditoría módulo por módulo':'View module-by-module audit',
+'Regla de seguridad:':'Safeguard:',
+'esta auditoría no rerunea CEMiTool, no recalcula ORA, no cambia módulos y no imputa M1 en el GSEA. Si en el futuro desaparece otro módulo, año, perfil o contraste, el build falla.':'this audit does not rerun CEMiTool, recalculate ORA, change module definitions, or impute M1 in GSEA. If another module, year, profile, or contrast becomes missing in the future, the build fails.',
+'GSE98923 · análisis de coexpresión con CEMiTool, enriquecimiento funcional y perfiles temporales de Cabernet Sauvignon y Pinot noir. Los controles metodológicos y las limitaciones se mantienen explícitos dentro del reporte.':'GSE98923 · coexpression analysis with CEMiTool, functional enrichment, and temporal profiles of Cabernet Sauvignon and Pinot noir. Methodological controls and limitations remain explicit throughout the report.',
+'Cambiar idioma a inglés':'Switch language to English',
+'Cambiar idioma a español':'Switch language to Spanish',
+'English':'English',
+'Español':'Español',
+'Figura GSEA nativa de CEMiTool beta10':'Native CEMiTool beta10 GSEA figure',
+'Perfil por año del módulo':'Yearly profile for module',
+'Sin fila exportada para':'No exported row for',
+'Sin hits FDR global.':'No global-FDR hits.',
+'No hay términos bajo los filtros actuales.':'No terms match the current filters.',
+'No hay tema disponible bajo estos filtros.':'No theme is available under the current filters.',
+'FDR global < 0,05':'global FDR < 0.05',
+'FDR < 0,05':'FDR < 0.05',
+'capa principal':'primary layer',
+'capa secundaria':'secondary layer',
+'términos evaluados':'terms tested',
+'Hits globales':'Global hits',
+'⚠ cobertura limitada':'⚠ limited coverage',
+'categorías MapMan':'MapMan categories',
+'genes anotados del módulo':'annotated module genes',
+'sobrerrepresentación':'over-representation',
+'testado':'tested',
+'con genes beta10':'with beta10 genes',
+'genes anotados vigentes':'currently annotated genes',
+'Tests vigentes':'Current tests',
+'módulo×término':'module × term',
+'Hits globales MapMan v3 por módulo':'Global MapMan v3 hits by module',
+'Conteo descriptivo; no es ranking de calidad.':'Descriptive count; not a quality ranking.',
+'todos los genes del módulo':'all genes in the module',
+'Todos los años':'All years',
+'Eigengene canónico':'Canonical eigengene',
+'Interpretación descriptiva':'Descriptive interpretation',
+'Resumen visual; la inferencia formal se conserva en la sección de contrastes.':'Visual summary; formal inference is retained in the contrasts section.',
+'Top decil kWithin':'Top kWithin decile',
+'Correlación media':'Mean correlation',
+'Correlación mínima':'Minimum correlation',
+'módulo con mayor cambio relativo':'module with the largest relative change',
+'misma dirección en los 9 Stage×Year':'same direction across all 9 Stage × Year contrasts',
+'Muestras':'Samples',
+'18 por año · diseño balanceado':'18 per year · balanced design',
+'Clases GSEA':'GSEA classes',
+'Módulos exportados':'Exported modules',
+'M1 ausente en salida nativa':'M1 absent from native output',
+'Años por clase':'Years per class',
+'Fila GSEA':'GSEA row',
+'Máx |NES|':'Max |NES|',
+'Años de input':'Input years',
+'PRESENTE':'PRESENT',
+'AUSENTE':'ABSENT',
+'genes totales':'total genes',
+'del módulo':'of the module',
+'entre hubs seleccionados':'among selected hubs',
+'Sí':'Yes',
+'No':'No',
+'REVISAR':'REVIEW',
+'ninguna':'none',
+'muestras':'samples',
+'términos':'terms',
+'genes':'genes',
+'hubs':'hubs',
+'años':'years'
+};
+
+function enDynamic(text){
+ let x=text;
+ x=x.replace(/^(\d+) muestras$/, '$1 samples');
+ x=x.replace(/^(\d+) términos bajo los filtros actuales$/, '$1 terms under the current filters');
+ x=x.replace(/^(\d+) categorías MapMan$/, '$1 MapMan categories');
+ x=x.replace(/^(\d+)\/(\d+) genes$/, '$1/$2 genes');
+ x=x.replace(/^(\d+) genes totales$/, '$1 total genes');
+ x=x.replace(/^(\d+) hubs$/, '$1 hubs');
+ x=x.replace(/^Año (\d{4})$/, 'Year $1');
+ x=x.replace(/^(\d+) hits$/, '$1 hits');
+ x=x.replace(/^(\d+) muestras =/, '$1 samples =');
+ x=x.replace(/ · (\d+) muestras$/, ' · $1 samples');
+ x=x.replace(/(\d+) de (\d+) años/g, '$1 of $2 years');
+ x=x.replace(/(\d+) de cada año/g, '$1 from each year');
+ x=x.replace(/^La mayor separación descriptiva entre cultivares aparece en (.+)$/, 'The largest descriptive separation between cultivars occurs at $1');
+ x=x.replace(/ presenta el valor medio más alto/g, ' has the higher mean value');
+ x=x.replace(/ entre los años mostrados/g, ' across the displayed years');
+ x=x.replace(/ en (\d{4})/g, ' in $1');
+ x=x.replace(/\. La dirección de esa diferencia coincide en (\d+) de (\d+) años\./g, '. The direction of this difference is concordant in $1 of $2 years.');
+ x=x.replace(/^Filas ausentes en el GSEA nativo: /, 'Rows missing from the native GSEA output: ');
+ x=x.replace(/\. La página no imputa ni inventa ES\/NES\/FDR para módulos no exportados por CEMiTool\.$/, '. The page neither imputes nor fabricates ES/NES/FDR values for modules not exported by CEMiTool.');
+ x=x.replace(/^Longitud = −log10\(p ajustado\)\.$/, 'Length = −log10(adjusted p-value).');
+ x=x.replace(/^Longitud = magnitud absoluta; color vino = positivo, azul = negativo\.$/, 'Length = absolute magnitude; wine = positive, blue = negative.');
+ x=x.replace(/^2012 \+ 2013 \+ 2014 agrupados$/, '2012 + 2013 + 2014 pooled');
+ x=x.replace(/^(\d+)\/10 módulos$/, '$1/10 modules');
+ return x;
+}
+
+function translateString(value){
+ const trimmed=value.trim();
+ if(!trimmed)return value;
+ const exact=EN[trimmed];
+ const translated=exact??enDynamic(trimmed);
+ if(translated===trimmed)return value;
+ const lead=value.match(/^\s*/)?.[0]??'';
+ const tail=value.match(/\s*$/)?.[0]??'';
+ return lead+translated+tail;
+}
+
+function translateNodeTree(root){
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];let node;
+ while(node=walker.nextNode())nodes.push(node);
+ nodes.forEach(n=>{
+   const p=n.parentElement;
+   if(!p||['SCRIPT','STYLE','CODE'].includes(p.tagName))return;
+   n.nodeValue=translateString(n.nodeValue||'');
+ });
+ root.querySelectorAll?.('[aria-label],[placeholder],[title],[alt]').forEach(el=>{
+   ['aria-label','placeholder','title','alt'].forEach(attr=>{
+     const v=el.getAttribute(attr);if(v)el.setAttribute(attr,translateString(v));
+   });
+ });
+}
+
+function cleanTrackingParams(){
+ const u=new URL(window.location.href);
+ ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>u.searchParams.delete(k));
+ const clean=u.pathname+(u.searchParams.toString()?'?'+u.searchParams.toString():'')+u.hash;
+ if(clean!==location.pathname+location.search+location.hash)history.replaceState(null,'',clean);
+}
+
+function applyLanguage(){
+ cleanTrackingParams();
+ const toggle=document.getElementById('languageToggle');
+ const label=document.getElementById('languageToggleLabel');
+ if(PAGE_LANG==='en'){
+   document.documentElement.lang='en';
+   document.title='GSEA · ORA · yearly profiles | CEMiTool beta10';
+   const meta=document.querySelector('meta[name="description"]');
+   if(meta)meta.content='Integrated report of CEMiTool GSEA, functional ORA, and yearly eigengene profiles for M1–M10.';
+   translateNodeTree(document.body);
+   if(label)label.textContent='Español';
+   if(toggle)toggle.setAttribute('aria-label','Switch language to Spanish');
+   const observer=new MutationObserver(mutations=>{
+     mutations.forEach(m=>{
+       if(m.type==='childList')m.addedNodes.forEach(n=>{
+         if(n.nodeType===Node.TEXT_NODE)n.nodeValue=translateString(n.nodeValue||'');
+         else if(n.nodeType===Node.ELEMENT_NODE)translateNodeTree(n);
+       });
+       if(m.type==='characterData'&&m.target.nodeType===Node.TEXT_NODE)m.target.nodeValue=translateString(m.target.nodeValue||'');
+     });
+   });
+   observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+ }else{
+   document.documentElement.lang='es';
+   if(label)label.textContent='English';
+   if(toggle)toggle.setAttribute('aria-label','Cambiar idioma a inglés');
+ }
+ toggle?.addEventListener('click',()=>{
+   const u=new URL(window.location.href);
+   u.search='';
+   if(PAGE_LANG==='es')u.searchParams.set('lang','en');
+   const target=u.pathname+(u.searchParams.toString()?'?'+u.searchParams.toString():'')+u.hash;
+   window.location.assign(target);
+ });
+}
+applyLanguage();
+
 const INTEGRATED_URL='../data/gsea_year_profiles.json';
 const ORA_URL='../data/functional_enrichment.json';
 const AUDIT_URL='../data/year_completeness_audit.json';
@@ -272,7 +600,7 @@ const MODULES=Array.from({length:10},(_,i)=>'M'+(i+1));
 const STAGES=['FruitSet','Veraison','Harvest'];
 const SOURCE_LABEL={v3_mapman:'MapMan v3',v5_mapman:'MapMan v5.1',go:'GO auditado'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const fmt=(v,d=2)=>v==null?'—':Number(v).toLocaleString('es-CL',{maximumFractionDigits:d});
+const fmt=(v,d=2)=>v==null?'—':Number(v).toLocaleString(PAGE_LANG==='en'?'en-US':'es-CL',{maximumFractionDigits:d});
 const sci=v=>v==null?'—':Number(v).toExponential(2);
 const neglog=v=>v==null||v<=0?0:Math.min(-Math.log10(v),50);
 
