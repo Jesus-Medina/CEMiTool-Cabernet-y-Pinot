@@ -10,7 +10,6 @@ const primaryNavigation = [
 
 const utilityNavigation = [
   { to: '/search', label: 'Buscar' },
-  { to: '/status/t008', label: 'T-008' },
   { to: '/ask', label: 'Preguntar' },
 ]
 
@@ -37,71 +36,25 @@ export default function SiteShell() {
   const showResultsContext = inResults && pathname !== '/results'
 
   const segments = pathname.split('/').filter(Boolean)
-  const canonicalResultsPath =
-    pathname.startsWith('/modules') ||
-    pathname.startsWith('/enrichment') ||
-    pathname.startsWith('/validation') ||
-    pathname.startsWith('/genes')
-      ? true
-      : pathname.startsWith('/results')
-
   const breadcrumbItems: Array<{ label: string; to?: string }> = []
 
-  if (canonicalResultsPath) {
-    breadcrumbItems.push({ label: 'Resultados', to: '/results/modules' })
+  const moduleId =
+    pathname.startsWith('/results/modules/') ? segments[2] :
+    pathname.startsWith('/modules/') ? segments[1] :
+    null
+  const geneId =
+    pathname.startsWith('/results/genes/') ? segments[2] :
+    pathname.startsWith('/genes/') ? segments[1] :
+    null
 
-    if (
-      pathname.startsWith('/results/modules') ||
-      pathname.startsWith('/modules')
-    ) {
-      breadcrumbItems.push({ label: 'Módulos', to: '/results/modules' })
-      const moduleId =
-        pathname.startsWith('/results/modules/')
-          ? segments[2]
-          : pathname.startsWith('/modules/')
-            ? segments[1]
-            : null
-      if (moduleId) breadcrumbItems.push({ label: moduleId.toUpperCase() })
-    } else if (
-      pathname.startsWith('/results/function') ||
-      pathname.startsWith('/enrichment')
-    ) {
-      breadcrumbItems.push({ label: 'Función' })
-    } else if (
-      pathname.startsWith('/results/validation') ||
-      pathname.startsWith('/validation')
-    ) {
-      breadcrumbItems.push({ label: 'Validación' })
-    } else if (
-      pathname.startsWith('/results/genes') ||
-      pathname.startsWith('/genes')
-    ) {
-      breadcrumbItems.push({ label: 'Genes', to: '/results/genes' })
-      const geneId =
-        pathname.startsWith('/results/genes/')
-          ? segments[2]
-          : pathname.startsWith('/genes/')
-            ? segments[1]
-            : null
-      if (geneId) breadcrumbItems.push({ label: geneId })
-    }
-  } else if (pathname.startsWith('/methods')) {
-    breadcrumbItems.push({ label: 'Métodos' })
-  } else if (
-    pathname.startsWith('/reproducibility') ||
-    pathname.startsWith('/evidence')
-  ) {
-    breadcrumbItems.push({ label: 'Reproducibilidad' })
-  } else if (
-    pathname.startsWith('/status/t008') ||
-    pathname.startsWith('/t008')
-  ) {
-    breadcrumbItems.push({ label: 'Status' })
-    breadcrumbItems.push({ label: 'T-008' })
-  } else if (pathname.startsWith('/search')) {
-    breadcrumbItems.push({ label: 'Buscar' })
-  } else if (pathname.startsWith('/ask') || pathname.startsWith('/chat')) {
-    breadcrumbItems.push({ label: 'Preguntar' })
+  if (moduleId) {
+    breadcrumbItems.push({ label: 'Resultados', to: '/results' })
+    breadcrumbItems.push({ label: 'Módulos', to: '/results/modules' })
+    breadcrumbItems.push({ label: moduleId.toUpperCase() })
+  } else if (geneId) {
+    breadcrumbItems.push({ label: 'Resultados', to: '/results' })
+    breadcrumbItems.push({ label: 'Genes', to: '/results/genes' })
+    breadcrumbItems.push({ label: geneId })
   }
 
   useEffect(() => {
@@ -173,7 +126,9 @@ export default function SiteShell() {
                   to={item.to}
                   onClick={() => setMenuOpen(false)}
                   className={({ isActive }) =>
-                    isActive ? 'utility-link utility-link--active' : 'utility-link'
+                    item.to === '/ask'
+                      ? (isActive ? 'utility-link utility-link--ask utility-link--active' : 'utility-link utility-link--ask')
+                      : (isActive ? 'utility-link utility-link--active' : 'utility-link')
                   }
                 >
                   {item.label}
@@ -211,10 +166,6 @@ export default function SiteShell() {
 
         {showResultsContext && (
           <div className="result-context-bar">
-            <div>
-              <strong>Explorar resultados</strong>
-              <span>Cambia de vista sin perder el contexto científico.</span>
-            </div>
             <nav aria-label="Navegación de resultados">
               <NavLink
                 to="/results/modules"
@@ -252,7 +203,11 @@ export default function SiteShell() {
             <strong>CEMiTool Cabernet–Pinot Explorer</strong>
             <span>Visualización científica con datos canónicos y trazabilidad reproducible.</span>
           </div>
-          <span className="footer-meta">Cabernet Sauvignon × Pinot noir</span>
+          <nav className="footer-links" aria-label="Enlaces del proyecto">
+            <Link to="/status/t008">Estado T-008</Link>
+            <Link to="/search">Buscar</Link>
+            <a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a>
+          </nav>
         </div>
       </footer>
     </div>
