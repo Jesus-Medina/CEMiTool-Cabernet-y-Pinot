@@ -831,6 +831,85 @@ async function canvasToPdfPages(doc,canvas,{firstPage=false}={}){
   pageIndex+=1;
  }
 }
+
+async function waitForElementImages(root){
+ const images=[...root.querySelectorAll('img')];
+ await Promise.all(images.map(img=>{
+  img.loading='eager';
+  if(img.complete)return Promise.resolve();
+  return new Promise(resolve=>{
+   const done=()=>resolve();
+   img.addEventListener('load',done,{once:true});
+   img.addEventListener('error',done,{once:true});
+   setTimeout(resolve,4000);
+  });
+ }));
+}
+async function captureWebBlock(element){
+ await waitForElementImages(element);
+ return window.html2canvas(element,{
+  backgroundColor:'#fcfbfb',
+  scale:1.15,
+  useCORS:true,
+  allowTaint:false,
+  logging:false,
+  imageTimeout:12000,
+  scrollX:0,
+  scrollY:0,
+  windowWidth:Math.max(document.documentElement.clientWidth,1440),
+  onclone:(clonedDoc)=>{
+   clonedDoc.querySelectorAll('.header-actions').forEach(node=>node.style.display='none');
+   const clonedHeader=clonedDoc.querySelector('header');
+   const clonedAnchor=clonedDoc.querySelector('.anchorbar');
+   if(clonedHeader){clonedHeader.style.position='static';clonedHeader.style.top='auto'}
+   if(clonedAnchor){clonedAnchor.style.position='static';clonedAnchor.style.top='auto'}
+  }
+ });
+}
+function createWebPdfFlow(doc){
+ const pageW=doc.internal.pageSize.getWidth();
+ const pageH=doc.internal.pageSize.getHeight();
+ const margin=24,gap=12;
+ const usableW=pageW-margin*2,usableH=pageH-margin*2;
+ let y=margin;
+ let used=false;
+
+ const newPage=()=>{
+  if(used)doc.addPage();
+  y=margin;
+  used=true;
+ };
+ const addCanvas=(canvas,{forceNewPage=false,maxWidth=usableW,center=true}={})=>{
+  const widthScale=maxWidth/canvas.width;
+  const heightScale=usableH/canvas.height;
+  const scale=Math.min(widthScale,heightScale);
+  const w=canvas.width*scale,h=canvas.height*scale;
+  if(!used||forceNewPage||y+h>pageH-margin)newPage();
+  const x=center?margin+(usableW-w)/2:margin;
+  doc.addImage(canvas.toDataURL('image/jpeg',0.80),'JPEG',x,y,w,h,undefined,'FAST');
+  y+=h+gap;
+ };
+ const addPair=(left,right)=>{
+  if(!left&&!right)return;
+  const pairGap=14;
+  const cellW=(usableW-pairGap)/2;
+  const scaleOne=canvas=>canvas?Math.min(cellW/canvas.width,usableH/canvas.height):0;
+  const ls=scaleOne(left),rs=scaleOne(right);
+  const lh=left?left.height*ls:0,rh=right?right.height*rs:0;
+  const rowH=Math.max(lh,rh);
+  if(!used||y+rowH>pageH-margin)newPage();
+  if(left){
+   const lw=left.width*ls;
+   doc.addImage(left.toDataURL('image/jpeg',0.80),'JPEG',margin,y,lw,lh,undefined,'FAST');
+  }
+  if(right){
+   const rw=right.width*rs;
+   doc.addImage(right.toDataURL('image/jpeg',0.80),'JPEG',margin+cellW+pairGap,y,rw,rh,undefined,'FAST');
+  }
+  y+=rowH+gap;
+ };
+ return {addCanvas,addPair,newPage,get used(){return used}};
+}
 async function downloadWebViewPdf(){
  const button=document.getElementById('downloadWebPdf');
  const label=document.getElementById('downloadWebPdfLabel');
@@ -838,68 +917,71 @@ async function downloadWebViewPdf(){
   alert(reportLanguage('Los datos del reporte todavía están cargando. Inténtalo nuevamente en un momento.','The report data are still loading. Please try again in a moment.'));
   return;
  }
- const originalLabel=label?.textContent||'PDF';
  const previousScroll=window.scrollY;
- const header=document.querySelector('header');
- const anchor=document.querySelector('.anchorbar');
- const targets=[
-  document.querySelector('header'),
-  document.querySelector('.hero'),
-  document.querySelector('.anchorbar'),
-  document.querySelector('#gsea'),
-  document.querySelector('#ora'),
-  document.querySelector('#profiles'),
-  document.querySelector('#audit'),
-  document.querySelector('footer')
- ].filter(Boolean);
- const savedStyles=targets.map(el=>({el,position:el.style.position,top:el.style.top,transform:el.style.transform}));
  try{
   if(button)button.disabled=true;
   if(label)label.textContent=reportLanguage('Generando vista…','Generating view…');
   await ensureWebPdfLibraries();
-
-  // Capture the report exactly as the web version is currently shown.
-  // We only neutralize sticky positioning so no header/nav is duplicated over section screenshots.
-  if(header){header.style.position='static';header.style.top='auto'}
-  if(anchor){anchor.style.position='static';anchor.style.top='auto'}
   window.scrollTo(0,0);
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
 
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'landscape',unit:'pt',format:'a3',compress:true,putOnlyUsedFonts:true});
-  // Remove the blank initial page only after first target is ready.
-  let first=true;
+  const flow=createWebPdfFlow(doc);
 
-  for(const target of targets){
-   if(!target.offsetParent&&target.tagName!=='HEADER'&&target.tagName!=='FOOTER')continue;
-   const canvas=await window.html2canvas(target,{
-    backgroundColor:'#ffffff',
-    scale:1.2,
-    useCORS:true,
-    allowTaint:false,
-    logging:false,
-    imageTimeout:12000,
-    scrollX:0,
-    scrollY:-window.scrollY,
-    windowWidth:Math.max(document.documentElement.clientWidth,1440),
-    onclone:(clonedDoc)=>{
-      clonedDoc.querySelectorAll('.header-actions').forEach(node=>node.style.display='none');
-    }
-   });
-   await canvasToPdfPages(doc,canvas,{firstPage:first});
-   first=false;
+  for(const selector of ['header','.hero','.anchorbar']){
+   const el=document.querySelector(selector);
+   if(el)flow.addCanvas(await captureWebBlock(el));
   }
 
-  if(first)throw new Error('No visible report sections could be captured');
+  for(const sectionId of ['gsea','ora']){
+   const wrap=document.querySelector('#'+sectionId+' > .wrap');
+   if(!wrap)continue;
+   for(const child of [...wrap.children]){
+    flow.addCanvas(await captureWebBlock(child));
+   }
+  }
+
+  const profilesWrap=document.querySelector('#profiles > .wrap');
+  if(profilesWrap){
+   for(const child of [...profilesWrap.children]){
+    if(child.id==='profiles-charts'){
+     const intro=child.querySelector('.panel-intro');
+     const scoreButtons=child.querySelector('#scoreButtons');
+     const yearButtons=child.querySelector('#yearButtons');
+     if(intro)flow.addCanvas(await captureWebBlock(intro),{forceNewPage:true});
+     if(scoreButtons)flow.addCanvas(await captureWebBlock(scoreButtons));
+     if(yearButtons)flow.addCanvas(await captureWebBlock(yearButtons));
+     const cards=[...child.querySelectorAll('.profile-card')];
+     for(let i=0;i<cards.length;i+=2){
+      const left=await captureWebBlock(cards[i]);
+      const right=cards[i+1]?await captureWebBlock(cards[i+1]):null;
+      flow.addPair(left,right);
+     }
+    }else{
+     flow.addCanvas(await captureWebBlock(child));
+    }
+   }
+  }
+
+  const auditWrap=document.querySelector('#audit > .wrap');
+  if(auditWrap){
+   for(const child of [...auditWrap.children]){
+    flow.addCanvas(await captureWebBlock(child));
+   }
+  }
+  const footer=document.querySelector('footer');
+  if(footer)flow.addCanvas(await captureWebBlock(footer));
+
+  if(!flow.used)throw new Error('No visible report blocks could be captured');
   doc.save(webViewPdfFileName());
  }catch(error){
   console.error('Web-view PDF generation failed',error);
   alert(reportLanguage(
-   'No se pudo generar el PDF de vista web. Prueba nuevamente después de recargar la página.',
-   'The web-view PDF could not be generated. Please reload the page and try again.'
+   'No se pudo generar correctamente el PDF de vista web. Recarga la página y vuelve a intentarlo.',
+   'The web-view PDF could not be generated correctly. Reload the page and try again.'
   ));
  }finally{
-  savedStyles.forEach(({el,position,top,transform})=>{el.style.position=position;el.style.top=top;el.style.transform=transform});
   window.scrollTo(0,previousScroll);
   if(button)button.disabled=false;
   if(label)label.textContent=PAGE_LANG==='en'?'Web-view PDF':'PDF vista web';
