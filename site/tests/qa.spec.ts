@@ -133,13 +133,24 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
   await expect(page.locator('#oraBars .barrow').first()).toBeVisible()
   await expect(page.locator('#oraTable tr').first()).toContainText(/stilbenoid|Secondary metabolism/i)
 
+  await expect(page.locator('#hubCoreCards .card')).toHaveCount(4)
+  await expect(page.locator('#hubCoreSummary tr')).toHaveCount(10)
+  await expect(page.locator('#hubCoreSummary tr').filter({ hasText: 'M5' })).toContainText('11')
+
   await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
+  await page.getByRole('button', { name: /Hub-core PC1 · top 10% kWithin/i }).click()
+  await expect(page.locator('#profileGrid')).toContainText('Hub-core PC1')
+  await expect(page.locator('#profileGrid .profile-card').filter({ hasText: 'M5' })).toContainText('11 hubs / 108 genes')
+
   await page.getByRole('button', { name: '2012', exact: true }).click()
   await expect(page.locator('#profileGrid .profile-card')).toHaveCount(10)
   await expect(page.locator('#profileGrid')).toContainText('Año 2012')
 
   await page.getByRole('button', { name: '2014', exact: true }).click()
   await expect(page.locator('#profileGrid')).toContainText('Año 2014')
+
+  await page.getByRole('button', { name: /Eigengene canónico · todos los genes/i }).click()
+  await expect(page.locator('#profileGrid')).toContainText('Eigengene canónico')
 
   expect(errors).toEqual([])
 })
