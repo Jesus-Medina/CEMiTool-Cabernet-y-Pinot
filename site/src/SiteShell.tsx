@@ -9,7 +9,7 @@ const primaryNavigation = [
 ]
 
 const utilityNavigation = [
-  { to: '/search', label: 'Buscar' },
+  { to: '/search', label: '⌕ Buscar…' },
   { to: '/ask', label: 'Preguntar' },
 ]
 
@@ -85,7 +85,18 @@ export default function SiteShell() {
             aria-label="Ir al inicio"
             onClick={() => setMenuOpen(false)}
           >
-            <span className="brand-mark" aria-hidden="true">CP</span>
+            <span className="brand-mark brand-mark--grapes" aria-hidden="true">
+              <svg viewBox="0 0 32 38" role="presentation">
+                <circle cx="16" cy="8" r="4" />
+                <circle cx="10" cy="14" r="4" />
+                <circle cx="22" cy="14" r="4" />
+                <circle cx="16" cy="20" r="4" />
+                <circle cx="10" cy="26" r="4" />
+                <circle cx="22" cy="26" r="4" />
+                <circle cx="16" cy="32" r="4" />
+                <path d="M16 4 C16 1, 20 1, 22 3" />
+              </svg>
+            </span>
             <span className="brand-copy">
               <strong>CEMiTool Explorer</strong>
               <small>Cabernet Sauvignon × Pinot noir</small>
