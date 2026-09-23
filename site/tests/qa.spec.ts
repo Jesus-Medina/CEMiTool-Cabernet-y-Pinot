@@ -113,12 +113,15 @@ test('CEMiTool module figure and filters reflect generated canonical flags', asy
   await expect(page.locator('.cemitool-profile-tile img')).toHaveCount(10)
   await expect(page.getByRole('link', { name: /Abrir PDF original/i })).toBeVisible()
 
-  const imageFailures = await page.locator('.cemitool-profile-tile img').evaluateAll((images) =>
-    images
-      .filter((image) => !(image instanceof HTMLImageElement) || image.naturalWidth === 0)
-      .map((image) => image.getAttribute('src')),
-  )
-  expect(imageFailures).toEqual([])
+  const profileImages = page.locator('.cemitool-profile-tile img')
+  for (let index = 0; index < 10; index += 1) {
+    const image = profileImages.nth(index)
+    await image.scrollIntoViewIfNeeded()
+    await expect.poll(
+      () => image.evaluate((node) => node instanceof HTMLImageElement && node.complete && node.naturalWidth > 0),
+      { message: `CEMiTool profile image ${index + 1} should load` },
+    ).toBe(true)
+  }
 
   const rows = page.locator('.module-data-table tbody tr')
   await expect(rows).toHaveCount(modules.modules.length)
