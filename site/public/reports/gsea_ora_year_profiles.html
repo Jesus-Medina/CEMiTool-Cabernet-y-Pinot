@@ -84,20 +84,30 @@ footer{padding:25px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 </div></section>
 
 <section id="profiles" class="major"><div class="wrap">
-<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Trayectoria del eigengene por módulo</h2></div><p>Estas curvas son medias observadas del eigengene por celda Cultivar × Stage × Year. No representan la expresión de un gen individual.</p></div>
-<div class="notice notice--ok"><strong>Los tres años están explícitos aquí:</strong> 2012, 2013 y 2014 se muestran por separado para cada módulo. Cada punto resume 3 réplicas biológicas y el gráfico usa la media observada; los PNG canónicos incluyen la visualización generada por T-004.</div>
-<div class="subsection"><div class="subhead"><h3>Selecciona un año</h3><p>“Todos” muestra una composición interactiva con los tres años; también puedes aislar uno para comparar M1–M10.</p></div><div id="yearButtons" class="profile-toolbar"></div></div>
+<div class="section-head"><div><p class="eyebrow">3 · Perfiles por año · M1–M10</p><h2>Eigengene canónico vs núcleo de hubs</h2></div><p>El eigengene canónico sigue siendo PC1 de todos los genes del módulo. Como sensibilidad adicional, Hub-core PC1 usa solo el 10% más central por kWithin, siguiendo exactamente la definición de hubs ya usada en T-006.</p></div>
+<div class="notice notice--ok"><strong>Los tres años siguen explícitos:</strong> 2012, 2013 y 2014 se muestran por separado para ambos resúmenes. Hub-core PC1 no reemplaza el eigengene original ni modifica los análisis T-003/T-004; sirve para comprobar cuánto cambia la trayectoria cuando se eliminan los genes periféricos.</div>
+
+<div class="subsection">
+  <div class="subhead"><h3>Comparación de sensibilidad por módulo</h3><p>Correlación entre Hub-core PC1 y el eigengene canónico en las 54 muestras, más concordancia de dirección en los 9 contrastes Stage × Year.</p></div>
+  <div id="hubCoreCards" class="cards"></div>
+  <div class="tablewrap" style="margin-top:12px"><table class="table"><thead><tr><th>Módulo</th><th>Genes totales</th><th>Hubs usados</th><th>Fracción</th><th>Correlación 54 muestras</th><th>Correlación medias</th><th>Dirección igual</th></tr></thead><tbody id="hubCoreSummary"></tbody></table></div>
+</div>
+
+<div class="subsection"><div class="subhead"><h3>Selecciona el resumen y el año</h3><p>“Canónico” reproduce la trayectoria basada en todos los genes. “Hub-core” muestra PC1 del top decil kWithin. Puedes aislar 2012, 2013 o 2014.</p></div>
+<div class="profile-toolbar" id="scoreButtons"></div>
+<div class="profile-toolbar" id="yearButtons"></div></div>
 <div id="profileGrid" class="profile-grid"></div>
 </div></section>
 </main>
 
-<footer><div class="wrap">Fuentes canónicas: <code>results/beta10/tables/enrichment_*.tsv</code>, <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code> y <code>results/year_robustness_beta10/cell_profiles.tsv</code>. Este reporte visualiza resultados existentes; no recalcula CEMiTool, GSEA ni ORA en el navegador.</div></footer>
+<footer><div class="wrap">Fuentes canónicas: <code>results/beta10/tables/enrichment_*.tsv</code>, <code>results/functional_enrichment_beta10/</code>, <code>results/go_ora_beta10/</code>, <code>results/year_robustness_beta10/</code> y <code>results/hub_core_eigengene_sensitivity_beta10/</code>. El Hub-core PC1 es una sensibilidad adicional y no reemplaza el eigengene canónico.</div></footer>
 
 <script>
 const INTEGRATED_URL='../data/gsea_year_profiles.json';
 const ORA_URL='../data/functional_enrichment.json';
 const AUDIT_URL='../data/year_completeness_audit.json';
-let D=null,O=null,A=null,yearFilter='all';
+const HUB_CORE_URL='../data/hub_core_sensitivity.json';
+let D=null,O=null,A=null,HUB=null,yearFilter='all',scoreMode='canonical';
 const MODULES=Array.from({length:10},(_,i)=>'M'+(i+1));
 const STAGES=['FruitSet','Veraison','Harvest'];
 const SOURCE_LABEL={v3_mapman:'MapMan v3',v5_mapman:'MapMan v5.1',go:'GO auditado'};
@@ -173,14 +183,25 @@ function renderOra(){
  document.getElementById('oraTable').innerHTML=rows.slice(0,250).map(r=>'<tr><td>'+esc(r.TermName)+'</td><td><code>'+esc(r.TermID)+'</code></td><td>'+r.Module+'</td><td>'+r.Overlap_k+'/'+r.Module_n+'</td><td>'+fmt(r.Fold_enrichment,2)+'</td><td>'+sci(r.p_value)+'</td><td class="'+(r.FDR_global_module_terms<.05?'good':'')+'">'+sci(r.FDR_global_module_terms)+'</td><td>'+esc(r.Aspect||'—')+'</td></tr>').join('');
 }
 
+function profileRows(module,year){
+ if(scoreMode==='canonical'){
+  return D.profiles.rows
+   .filter(r=>r.Module===module&&(year==='all'||r.Year===Number(year)))
+   .map(r=>({Module:r.Module,Cultivar:r.Cultivar,Stage:r.Stage,Year:r.Year,Mean:r.Mean,SE:r.SE}));
+ }
+ return HUB.profiles
+  .filter(r=>r.Module===module&&(year==='all'||r.Year===Number(year)))
+  .map(r=>({Module:r.Module,Cultivar:r.Cultivar,Stage:r.Stage,Year:r.Year,Mean:r.HubCore_Mean,SE:r.HubCore_SE}));
+}
 function lineSvg(module,year){
- const rows=D.profiles.rows.filter(r=>r.Module===module&&(year==='all'||r.Year===Number(year)));
- const years=year==='all'?D.profiles.years:[Number(year)];
+ const rows=profileRows(module,year);
+ const years=year==='all'?[2012,2013,2014]:[Number(year)];
  const W=620,H=250,pad={l:48,r:20,t:24,b:42};
  const vals=rows.map(r=>r.Mean);let min=Math.min(...vals),max=Math.max(...vals);if(min===max){min-=1;max+=1}const extra=(max-min)*.12;min-=extra;max+=extra;
  const x=i=>pad.l+i*((W-pad.l-pad.r)/(STAGES.length-1));const y=v=>pad.t+(max-v)/(max-min)*(H-pad.t-pad.b);
  const yearOffsets=years.length===3?[-7,0,7]:[0];
- let svg='<svg class="profile-chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+module+' perfil del eigengene '+(year==='all'?'2012 a 2014':year)+'">';
+ const scoreLabel=scoreMode==='canonical'?'Eigengene canónico':'Hub-core PC1';
+ let svg='<svg class="profile-chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+module+' '+scoreLabel+' '+(year==='all'?'2012 a 2014':year)+'">';
  for(let i=0;i<STAGES.length;i++){svg+='<line x1="'+x(i)+'" y1="'+pad.t+'" x2="'+x(i)+'" y2="'+(H-pad.b)+'" stroke="#f0eaed"/><text x="'+x(i)+'" y="'+(H-16)+'" text-anchor="middle" font-size="11" fill="#746970">'+STAGES[i]+'</text>'}
  if(min<0&&max>0){svg+='<line x1="'+pad.l+'" y1="'+y(0)+'" x2="'+(W-pad.r)+'" y2="'+y(0)+'" stroke="#c8bec2" stroke-dasharray="4 4"/>'}
  years.forEach((yr,yi)=>{
@@ -191,16 +212,48 @@ function lineSvg(module,year){
    pts.forEach(p=>{const se=Math.abs(y(p.r.Mean-p.r.SE)-y(p.r.Mean));svg+='<line x1="'+p.x+'" y1="'+(p.y-se)+'" x2="'+p.x+'" y2="'+(p.y+se)+'" stroke="'+color+'" opacity=".55"/><circle cx="'+p.x+'" cy="'+p.y+'" r="'+(year==='all'?2.8:4)+'" fill="'+color+'"><title>'+yr+' · '+cult+' · '+p.r.Stage+' · mean '+fmt(p.r.Mean,2)+' ± SE '+fmt(p.r.SE,2)+'</title></circle>'})
   })
  });
- svg+='<text x="8" y="16" font-size="10" fill="#746970">Eigengene</text></svg>';return svg;
+ svg+='<text x="8" y="16" font-size="10" fill="#746970">'+scoreLabel+'</text></svg>';return svg;
+}
+function renderHubCoreSummary(){
+ const corr=HUB.summary.map(r=>Number(r.Correlation_HubCore_vs_Canonical_54samples));
+ const dir=HUB.summary.map(r=>Number(r.Direction_match_fraction));
+ const minCorr=Math.min(...corr),meanCorr=corr.reduce((a,b)=>a+b,0)/corr.length;
+ const fullDir=HUB.summary.filter(r=>Number(r.Direction_match_fraction)===1).length;
+ const totalHubs=HUB.summary.reduce((sum,r)=>sum+Number(r.Hub_core_genes),0);
+ const cards=[
+  ['Top decil kWithin',totalHubs+' hubs','genes centrales usados entre M1-M10'],
+  ['Correlación media',fmt(meanCorr,3),'Hub-core vs canónico · 54 muestras'],
+  ['Correlación mínima',fmt(minCorr,3),'módulo con mayor cambio relativo'],
+  ['Concordancia 9/9',fullDir+'/10 módulos','misma dirección en los 9 Stage×Year']
+ ];
+ document.getElementById('hubCoreCards').innerHTML=cards.map(c=>'<div class="card"><span>'+c[0]+'</span><strong>'+c[1]+'</strong><small>'+c[2]+'</small></div>').join('');
+ document.getElementById('hubCoreSummary').innerHTML=HUB.summary.map(r=>'<tr><td><strong>'+r.Module+'</strong></td><td>'+r.Genes_in_module+'</td><td>'+r.Hub_core_genes+'</td><td>'+fmt(Number(r.Hub_core_fraction)*100,1)+'%</td><td class="'+(Number(r.Correlation_HubCore_vs_Canonical_54samples)>=.95?'good':'warn')+'">'+fmt(r.Correlation_HubCore_vs_Canonical_54samples,3)+'</td><td>'+fmt(r.Correlation_cell_means,3)+'</td><td>'+r.Same_direction_stage_year_contrasts+'/'+r.Total_stage_year_contrasts+'</td></tr>').join('');
 }
 function renderProfiles(){
+ document.querySelectorAll('#scoreButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.score===scoreMode));
  document.querySelectorAll('#yearButtons .button').forEach(b=>b.classList.toggle('active',b.dataset.year===String(yearFilter)));
- document.getElementById('profileGrid').innerHTML=MODULES.map(m=>'<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+(yearFilter==='all'?'2012 · 2013 · 2014':'Año '+yearFilter)+'</small></div><a href="#'+m.toLowerCase()+'">#</a></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><details class="canonical"><summary>Ver PNG canónico T-004 con los tres años</summary><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil canónico por año del módulo '+m+'"></details></article>').join('');
+ const label=scoreMode==='canonical'?'Eigengene canónico':'Hub-core PC1';
+ document.getElementById('profileGrid').innerHTML=MODULES.map(m=>{
+  const sm=HUB.summary.find(r=>r.Module===m);
+  const sub=yearFilter==='all'?'2012 · 2013 · 2014':'Año '+yearFilter;
+  const modeNote=scoreMode==='canonical'?'todos los genes del módulo':sm.Hub_core_genes+' hubs / '+sm.Genes_in_module+' genes';
+  return '<article class="profile-card"><div class="profile-card-head"><div><h3>'+m+'</h3><small>'+label+' · '+sub+' · '+modeNote+'</small></div><a href="#'+m.toLowerCase()+'">#</a></div><div id="'+m.toLowerCase()+'">'+lineSvg(m,yearFilter)+'</div><div class="profile-legend"><span><i class="legendline cs"></i>Cabernet Sauvignon</span><span><i class="legendline pn"></i>Pinot noir</span></div><details class="canonical"><summary>Ver PNG canónico T-004 con los tres años</summary><img loading="lazy" src="../assets/integrated/'+m+'_stage_by_year.png" alt="Perfil canónico por año del módulo '+m+'"></details></article>'
+ }).join('');
 }
-function initProfiles(){document.getElementById('yearButtons').innerHTML=['all','2012','2013','2014'].map(y=>'<button class="button '+(y==='all'?'active':'')+'" data-year="'+y+'">'+(y==='all'?'Todos los años':y)+'</button>').join('');document.querySelectorAll('#yearButtons .button').forEach(b=>b.addEventListener('click',()=>{yearFilter=b.dataset.year;renderProfiles()}));renderProfiles()}
+function initProfiles(){
+ document.getElementById('scoreButtons').innerHTML=[
+  '<button class="button active" data-score="canonical">Eigengene canónico · todos los genes</button>',
+  '<button class="button" data-score="hub">Hub-core PC1 · top 10% kWithin</button>'
+ ].join('');
+ document.getElementById('yearButtons').innerHTML=['all','2012','2013','2014'].map(y=>'<button class="button '+(y==='all'?'active':'')+'" data-year="'+y+'">'+(y==='all'?'Todos los años':y)+'</button>').join('');
+ document.querySelectorAll('#scoreButtons .button').forEach(b=>b.addEventListener('click',()=>{scoreMode=b.dataset.score;renderProfiles()}));
+ document.querySelectorAll('#yearButtons .button').forEach(b=>b.addEventListener('click',()=>{yearFilter=b.dataset.year;renderProfiles()}));
+ renderHubCoreSummary();
+ renderProfiles();
+}
 
 async function init(){
- const [a,b,c]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'}),fetch(AUDIT_URL,{cache:'no-store'})]);if(!a.ok||!b.ok||!c.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();A=await c.json();
+ const [a,b,c,d]=await Promise.all([fetch(INTEGRATED_URL,{cache:'no-store'}),fetch(ORA_URL,{cache:'no-store'}),fetch(AUDIT_URL,{cache:'no-store'}),fetch(HUB_CORE_URL,{cache:'no-store'})]);if(!a.ok||!b.ok||!c.ok||!d.ok)throw new Error('No se pudieron cargar los JSON canónicos');D=await a.json();O=await b.json();A=await c.json();HUB=await d.json();
  renderAudit();
  renderComposition();
  const pathways=D.gsea.nes.map(r=>r.pathway);document.getElementById('gseaPathway').innerHTML=pathways.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');document.getElementById('gseaPathway').value=pathways.includes('M5')?'M5':pathways[0];['gseaMetric','gseaPathway'].forEach(id=>document.getElementById(id).addEventListener('change',renderGsea));renderGsea();
