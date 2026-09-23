@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import M5Explorer from './components/M5Explorer'
-import { ModuleExplorerDetailPage, ModulesExplorerPage } from './ModuleExplorerPage'
+import ModuleWorkspace from './ModuleWorkspace'
 import ExternalValidationPage from './ExternalValidationPage'
 import T008DashboardPage from './T008DashboardPage'
 import EvidenceBrowserPage from './EvidenceBrowserPage'
@@ -342,32 +341,16 @@ export function StoryPage() {
   )
 }
 
+import { Navigate } from 'react-router-dom'
+
 export function ModulesPage() {
-  return <ModulesExplorerPage />
+  return <Navigate to="/results" replace />
 }
 
-export function ResultsPage() {
-  return (
-    <div className="page-stack">
-      <PageIntro
-        eyebrow="RESULTADOS M1–M10"
-        title="Perfiles de coexpresión"
-        description="Composición visual de los 10 módulos identificados en la red beta=10, junto con su resumen funcional y evidencia de validación."
-        status="V2 Draft"
-      />
-      <PlaceholderPanel title="Composición visual M1–M10 en construcción">
-        Esta pantalla mostrará el overview de todos los módulos, con la tabla comparativa y la explicación "cómo leer", en lugar de la antigua landing de módulos.
-      </PlaceholderPanel>
-    </div>
-  )
-}
+export { default as ResultsPage } from './ResultsPage'
 
 export function ModuleDetailPage() {
-  const { moduleId } = useParams()
-  if (moduleId?.toUpperCase() === 'M5') {
-    return <M5Explorer />
-  }
-  return <ModuleExplorerDetailPage />
+  return <ModuleWorkspace />
 }
 
 export function GeneDetailPage() {

@@ -35,11 +35,37 @@
 - [x] Fase 0: Auditoría y plan
 - [x] Fase 1: Nuevo Shell y navegación
 - [x] Fase 2: Resultados M1–M10
-- [ ] Fase 3: Module Workspace
-- [ ] Fase 4: Module Summary
-- [ ] Fase 5: Trajectory
-- [ ] Fase 6: Biología y red
-- [ ] Fase 7: Validación del módulo
+
+### Fase 3: Shell del Module Workspace
+- [x] Crear `site/src/ModuleWorkspace.tsx`.
+- [x] Implementar layout principal: Header con título y metadatos básicos.
+- [x] Implementar navegación superior `[← Prev | Todos | Next →]`.
+- [x] Implementar sistema de pestañas (Resumen, Trayectoria, Biología y red, Validación).
+- [x] Mapear ruta `/results/modules/:moduleId` hacia este componente en `pages.tsx`.
+- [x] Eliminar división `M5Explorer` / `ModuleExplorerDetailPage`.
+
+### Fase 4: Pestaña "Resumen" (Foco: Fenotipo y Robustez)
+- [x] Aislar componentes de resumen (hub principal, métrica de validación) en `site/src/components/ModuleComponents.tsx`.
+- [x] Cargar la imagen generada por CEMiTool (`profile_M*.png`) para todos los módulos de manera dinámica.
+- [x] Mostrar `ContrastMatrix` general.
+- [x] Integrar en pestaña `Resumen` del `ModuleWorkspace`.
+
+### Fase 5: Pestaña "Trayectoria" (Foco: Perfil temporal)
+- [x] Extraer gráficos iterativos de M5 (de `M5Explorer`).
+- [x] Adaptar pestaña para mostrar SVG interactivo si es M5.
+- [x] Adaptar pestaña para mostrar imagen de perfil y matriz estática si es M1-M4, M6-M10.
+- [x] Integrar matriz de contraste de Harvest para visualizar dependencia de año.
+
+### Fase 6: Pestaña "Biología y Red" (Foco: Mecanismo)
+- [x] Extraer resumen de ORA (MapMan/GO) a `ModuleComponents.tsx`.
+- [x] Extraer tabla de priorización de Hubs a `ModuleComponents.tsx`.
+- [x] Renderizar `M5NetworkExplorer` (con su conflicto de anotación explícito) solo cuando sea M5.
+- [x] Armar pestaña `Biología y red` conectando ORA + Hubs + (Red M5).
+
+### Fase 7: Pestaña "Validación" (Foco: Piel aislada)
+- [x] Aislar `ModuleExternalSummary` (comparación con PRJNA260535 y GSE72421).
+- [x] Agregar nota metodológica transversal: "No es evidencia de causalidad mecanicista".
+- [x] Armar pestaña de validación en `ModuleWorkspace`.
 
 ## Archivos Modificados (Registro de Commits)
 - `feat(nav): implement V2 global information architecture`: `App.tsx`, `SiteShell.tsx`, `pages.tsx`, `WEB_INFORMATION_ARCHITECTURE_V2_IMPLEMENTATION.md`.
