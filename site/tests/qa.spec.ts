@@ -23,7 +23,7 @@ const t008 = JSON.parse(readFileSync('public/data/t008_progress.json', 'utf8')) 
 
 const routes = [
   ['/', /Comparar programas de coexpresión/i],
-  ['/results', /Comparar los diez módulos/i],
+  ['/results', /Elige qué dimensión quieres explorar/i],
   ['/results/modules', /Comparar los diez módulos/i],
   ['/results/modules/M5', /M5 · fenoles/i],
   ['/results/modules/M10', /^M10$/i],
@@ -104,6 +104,49 @@ test.describe('WEB-011 route and browser QA', () => {
       expect(errors).toEqual([])
     })
   }
+})
+
+test('results navigation preserves explicit parent routes and decorative assets load', async ({ page }) => {
+  await page.goto(url('/results'))
+  await waitForStablePage(page)
+  const resultsImage = page.locator('img[src*="results-grape-cluster.png"]')
+  await expect(resultsImage).toBeVisible()
+  expect(await resultsImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
+
+  await page.goto(url('/results/modules'))
+  const resultsBack = page.getByRole('link', { name: 'Volver a Resultados' })
+  await expect(resultsBack).toBeVisible()
+  await resultsBack.click()
+  await expect(page).toHaveURL(/#\/results$/)
+
+  await page.goto(url('/results/modules/M5'))
+  const modulesBack = page.getByRole('link', { name: 'Todos los módulos' })
+  await expect(modulesBack).toBeVisible()
+  await modulesBack.click()
+  await expect(page).toHaveURL(/#\/results\/modules$/)
+
+  await page.goto(url('/status/t008'))
+  const reproducibilityBack = page.getByRole('link', { name: 'Volver a Reproducibilidad' })
+  await expect(reproducibilityBack).toBeVisible()
+  await reproducibilityBack.click()
+  await expect(page).toHaveURL(/#\/reproducibility$/)
+
+  const reproducibilityImage = page.locator('img[src*="provenance-grape-magnifier.png"]')
+  await expect(reproducibilityImage).toBeVisible()
+  expect(await reproducibilityImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
+})
+
+test('new results visuals and parent navigation remain contained on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+
+  for (const route of ['/results', '/reproducibility', '/results/modules'] as const) {
+    await page.goto(url(route))
+    await waitForStablePage(page)
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    expect(overflow).toBeLessThanOrEqual(1)
+  }
+
+  await expect(page.getByRole('link', { name: 'Volver a Resultados' })).toBeVisible()
 })
 
 test('integrated GSEA ORA and yearly profiles report preserves year scope', async ({ page }) => {

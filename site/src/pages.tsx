@@ -7,7 +7,7 @@ import EvidenceBrowserPage from './EvidenceBrowserPage'
 import MethodsPageView from './MethodsPage'
 import GeneDetailPageView from './GeneDetailPage'
 import { useCanonicalData } from './hooks/useCanonicalData'
-import { ActionCard, ActionLink, AsyncState, ButtonLink } from './components/ui'
+import { ActionCard, ActionLink, AsyncState, BackLink, ButtonLink } from './components/ui'
 import type { M5Profile } from './data/siteData'
 import { formatScientific } from './utils/format'
 
@@ -411,13 +411,19 @@ export function ResultsLandingPage() {
           </p>
         </div>
 
-        {project && (
-          <dl className="results-landing-facts">
-            <div><dt>Módulos</dt><dd>{modules?.modules.length ?? '—'}</dd></div>
-            <div><dt>Cult×Stage FDR&lt;0,05</dt><dd>{significantCount}</dd></div>
-            <div><dt>Reproducibles</dt><dd>{reproducibleCount}</dd></div>
-          </dl>
-        )}
+        <div className="results-landing-visual" aria-hidden={!project}>
+          {project && (
+            <dl className="results-landing-facts">
+              <div><dt>Módulos</dt><dd>{modules?.modules.length ?? '—'}</dd></div>
+              <div><dt>Cult×Stage FDR&lt;0,05</dt><dd>{significantCount}</dd></div>
+              <div><dt>Reproducibles</dt><dd>{reproducibleCount}</dd></div>
+            </dl>
+          )}
+          <img
+            src={`${import.meta.env.BASE_URL}assets/results/results-grape-cluster.png`}
+            alt=""
+          />
+        </div>
       </header>
 
       <DataState loading={loading} error={error} />
@@ -488,7 +494,12 @@ export function ResultsLandingPage() {
 }
 
 export function ModulesPage() {
-  return <ModulesExplorerPage />
+  return (
+    <div className="result-child-page">
+      <BackLink to="/results">Volver a Resultados</BackLink>
+      <ModulesExplorerPage />
+    </div>
+  )
 }
 
 export function ModuleDetailPage() {
@@ -504,11 +515,21 @@ export function GeneDetailPage() {
 }
 
 export function ValidationPage() {
-  return <ExternalValidationPage />
+  return (
+    <div className="result-child-page">
+      <BackLink to="/results">Volver a Resultados</BackLink>
+      <ExternalValidationPage />
+    </div>
+  )
 }
 
 export function T008Page() {
-  return <T008DashboardPage />
+  return (
+    <div className="result-child-page">
+      <BackLink to="/reproducibility">Volver a Reproducibilidad</BackLink>
+      <T008DashboardPage />
+    </div>
+  )
 }
 
 export function MethodsPage() {

@@ -70,6 +70,21 @@ export function ActionLink({ direction = 'forward', className, children, ...prop
   )
 }
 
+type BackLinkProps = LinkProps
+
+export function BackLink({ className, children, ...props }: BackLinkProps) {
+  return (
+    <Link className={classes('ui-back-link', className)} {...props}>
+      <span className="ui-back-link-icon" aria-hidden="true">
+        <svg viewBox="0 0 20 20" focusable="false">
+          <path d="M11.75 5.25 7 10l4.75 4.75M7.5 10h7" />
+        </svg>
+      </span>
+      <span>{children}</span>
+    </Link>
+  )
+}
+
 type ActionCardProps = LinkProps & {
   featured?: boolean
 }

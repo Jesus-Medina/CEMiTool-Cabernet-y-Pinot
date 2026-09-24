@@ -30,6 +30,7 @@ No se añade un color, tamaño o separación local si un token existente expresa
 | Estado breve | `Badge` | Elegir tone semántico; no codificar estado sólo mediante color |
 | Límite o interpretación | `Callout` | Título explícito y tono acorde a la evidencia |
 | Enlace dentro de contenido | `ActionLink` | Texto descriptivo; la flecha es decorativa |
+| Retorno a una vista padre | `BackLink` | Destino jerárquico explícito; flecha SVG circular y etiqueta visible |
 | Destino funcional | `ActionCard` | Toda la tarjeta es un enlace y conserva foco visible |
 | Carga/error/vacío | `AsyncState` / `EmptyState` | Error usa `role=alert`; carga y vacío usan `role=status` |
 | Controles de una vista | `FilterBar` | Agrupar controles relacionados; conservar labels visibles |
@@ -41,6 +42,7 @@ No se añade un color, tamaño o separación local si un token existente expresa
 - El header tiene cuatro destinos primarios: Resumen, Resultados, Métodos y Reproducibilidad.
 - Buscar, Preguntar y GitHub son herramientas, no destinos narrativos.
 - `research-context` es la única barra para fuente de evidencia, límite, workspace y breadcrumb.
+- Toda vista profunda que no esté disponible directamente en el header debe exponer `BackLink` hacia su padre estable; no depender sólo del historial del navegador.
 - No se recrean `DatasetContext`, `ModuleContext` o breadcrumbs como franjas independientes.
 - Baseline de pericarpio y validación externa de piel deben permanecer visual y textualmente separados.
 

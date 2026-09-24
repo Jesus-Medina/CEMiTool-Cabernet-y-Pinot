@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { loadHubs, loadModules, loadProvenance, type HubsPayload, type ModulesPayload, type ProvenancePayload } from './data/siteData'
+import { BackLink } from './components/ui'
 
 const destinations = [
   { label: 'Resumen', description: 'Pregunta, diseño y hallazgos principales', to: '/', keywords: 'inicio resumen overview pregunta diseño hallazgos' },
@@ -98,6 +99,7 @@ export default function SearchPage() {
 
   return (
     <div className="search-page">
+      {genesMode && <BackLink to="/results">Volver a Resultados</BackLink>}
       <header className="search-intro">
         <div>
           <p className="eyebrow">{genesMode ? 'Resultados · Genes' : 'Buscar'}</p>

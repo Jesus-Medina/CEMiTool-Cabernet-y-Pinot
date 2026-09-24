@@ -415,6 +415,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Methods continuous vine follow-up (2026-09-23):** el motivo botánico lateral de Métodos dejó de ensamblarse con ocho copias rotadas de la rama original. El asset canónico `vine-decoration.png` fue reemplazado por una pieza vertical transparente de 724×2172 px con una única vid conectada, sin costuras ni repetición perceptible; la decoración continúa oculta en pantallas de hasta 900 px y no altera el contenido científico.
 
+**Results/reproducibility visual and return-flow follow-up (2026-09-23):** se generaron dos cutouts transparentes específicos: un racimo completo con rama terminada para la landing de Resultados y una composición vid–lupa–ADN para Reproducibilidad. Ambos se integraron sin recortes y con adaptación móvil. El logo global subió 3 px dentro de su caja para equilibrar el margen inferior. La nueva primitiva `BackLink` añade un retorno jerárquico explícito desde Módulos, Función, Validación, Genes, fichas de gen, detalles de módulo y T-008; las rutas no dependen del historial del navegador. Edge verificó carga de assets, destinos de retorno y ausencia de overflow a 390 px. No cambió ningún dato ni inferencia científica.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;

@@ -11,7 +11,7 @@ import type {
 } from '../data/siteData'
 import { useM5ExplorerData } from '../hooks/useM5ExplorerData'
 import { formatDecimal, formatScientific } from '../utils/format'
-import { AsyncState, ButtonLink, ChartCard, TableFrame } from './ui'
+import { AsyncState, BackLink, ButtonLink, ChartCard, TableFrame } from './ui'
 
 const STAGES = ['FruitSet', 'Veraison', 'Harvest'] as const
 const CULTIVARS = ['Cabernet Sauvignon', 'Pinot noir'] as const
@@ -566,7 +566,7 @@ export default function M5Explorer() {
       </section>
 
       <nav className="module-detail-pager" aria-label="Navegación entre módulos">
-        <Link className="module-detail-back" to="/results/modules">← Todos los módulos</Link>
+        <BackLink className="module-detail-back" to="/results/modules">Todos los módulos</BackLink>
         <div>
           <Link to="/results/modules/M4">← M4</Link>
           <Link to="/results/modules/M6">M6 →</Link>

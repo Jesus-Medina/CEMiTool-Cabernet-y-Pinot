@@ -8,6 +8,7 @@ import {
   type FunctionalEnrichmentPayload,
 } from './data/enrichmentData'
 import { formatDecimal, formatScientific } from './utils/format'
+import { BackLink } from './components/ui'
 import './enrichment.css'
 
 const MODULES = Array.from({ length: 10 }, (_, index) => `M${index + 1}`)
@@ -305,6 +306,7 @@ export default function EnrichmentPage() {
 
   return (
     <div className="enrichment-page">
+      <BackLink to="/results">Volver a Resultados</BackLink>
       <section className="enrichment-hero">
         <div>
           <p className="eyebrow">Resultados · Función</p>

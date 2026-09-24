@@ -8,6 +8,7 @@ import {
   type HubRow,
 } from './data/siteData'
 import { formatDecimal, formatScientific } from './utils/format'
+import { BackLink } from './components/ui'
 
 function annotationLabel(row: HubRow) {
   if (row.V3_V5_STS_CHS_label_conflict) return 'CHS/STS-like · conflicto de anotación'
@@ -65,6 +66,7 @@ export default function GeneDetailPage() {
   if (!hub) {
     return (
       <div className="gene-page">
+        <BackLink to="/results/genes">Volver a Genes</BackLink>
         <header className="gene-intro">
           <p className="eyebrow">Gen</p>
           <h1>{geneId ?? 'Gen'}</h1>
@@ -83,6 +85,7 @@ export default function GeneDetailPage() {
 
   return (
     <div className="gene-page">
+      <BackLink to="/results/genes">Volver a Genes</BackLink>
       <header className="gene-intro">
         <div>
           <p className="eyebrow">Resultados / Genes</p>

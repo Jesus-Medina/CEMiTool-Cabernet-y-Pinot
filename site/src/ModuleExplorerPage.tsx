@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { ActionLink, AsyncState, Badge, ButtonLink, Callout, EmptyState, FilterBar, TableFrame } from './components/ui'
+import { ActionLink, AsyncState, BackLink, Badge, ButtonLink, Callout, EmptyState, FilterBar, TableFrame } from './components/ui'
 import {
   loadExternalValidation,
   loadHubs,
@@ -657,7 +657,7 @@ export function ModuleExplorerDetailPage() {
       </section>
 
       <nav className="module-detail-pager" aria-label={'Navegación entre módulos'}>
-        <Link className="module-detail-back" to="/results/modules">← Todos los módulos</Link>
+        <BackLink className="module-detail-back" to="/results/modules">Todos los módulos</BackLink>
         <div>
           {previousModule ? <Link to={'/results/modules/' + previousModule}>← {previousModule}</Link> : <span />}
           {nextModule ? <Link to={'/results/modules/' + nextModule}>{nextModule} →</Link> : <span />}

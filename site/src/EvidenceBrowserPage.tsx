@@ -259,6 +259,11 @@ export default function EvidenceBrowserPage() {
             hasta los datos, parámetros, hashes y commit usados para construir la vista.
           </p>
         </div>
+        <img
+          className="evidence-hero-illustration"
+          src={`${import.meta.env.BASE_URL}assets/reproducibility/provenance-grape-magnifier.png`}
+          alt=""
+        />
       </section>
 
       {!data && !error && (
