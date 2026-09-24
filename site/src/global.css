@@ -2602,7 +2602,10 @@ body {
   position: absolute;
   z-index: 0;
   top: 280px;
-  left: 0;
+  left: max(
+    clamp(-360px, -24vw, -275px),
+    calc((100% - 100vw) / 2 + 24px)
+  );
   width: clamp(390px, 29vw, 500px);
   height: auto;
   overflow: visible;

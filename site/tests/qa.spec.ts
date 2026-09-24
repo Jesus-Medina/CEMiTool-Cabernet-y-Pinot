@@ -409,6 +409,7 @@ test('Methods decoration keeps its geometry when evidence opens', async ({ page 
   await expect(vine).toHaveAttribute('src', /assets\/methods\/vine-decoration\.png/)
   const before = await vine.boundingBox()
   expect(before).not.toBeNull()
+  expect(before?.x).toBeGreaterThanOrEqual(0)
 
   await page.locator('.method-evidence details').first().locator('summary').click()
   await page.waitForTimeout(150)
