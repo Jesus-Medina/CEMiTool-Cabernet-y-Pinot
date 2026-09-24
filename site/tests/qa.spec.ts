@@ -22,7 +22,7 @@ const m5 = JSON.parse(readFileSync('public/data/m5_trajectory.json', 'utf8')) as
 const t008 = JSON.parse(readFileSync('public/data/t008_progress.json', 'utf8')) as T008Payload
 
 const routes = [
-  ['/', /Comparar programas de coexpresión/i],
+  ['/', /¿Cómo difieren los programas de coexpresión/i],
   ['/results', /Elige qué dimensión quieres explorar/i],
   ['/results/modules', /Comparar los diez módulos/i],
   ['/results/modules/M5', /M5 · fenoles/i],
@@ -51,7 +51,9 @@ async function waitForStablePage(page: Page) {
 
 async function assertBasicAccessibility(page: Page) {
   await expect(page.locator('main')).toBeVisible()
-  await expect(page.locator('nav[aria-label="Navegación principal"]')).toBeVisible()
+  const primaryNav = page.locator('nav[aria-label="Navegación principal"]')
+  const menuButton = page.getByRole('button', { name: /menú principal/i })
+  expect(await primaryNav.isVisible() || await menuButton.isVisible()).toBe(true)
   expect(await page.locator('h1:visible').count()).toBeGreaterThanOrEqual(1)
 
   const unnamed = await page.locator('button, input, select, textarea, a[href]').evaluateAll((nodes) => {
@@ -166,7 +168,10 @@ test('integrated GSEA ORA and yearly profiles report preserves year scope', asyn
 
   await expect(page.locator('#auditSummary .card')).toHaveCount(4)
   await expect(page.locator('#auditTable tr')).toHaveCount(10)
-  await expect(page.locator('#auditTable tr').filter({ hasText: 'M1' })).toContainText('ATTENTION_GSEA_M1_NATIVE_ROW_MISSING')
+  const m1AuditRow = page.locator('#auditTable tr').filter({
+    has: page.locator('td:first-child', { hasText: /^M1$/ }),
+  })
+  await expect(m1AuditRow).toContainText('ATTENTION_GSEA_M1_NATIVE_ROW_MISSING')
   await expect(page.locator('#auditNotice')).toContainText(/M1|ATTENTION/i)
 
   await expect(page.locator('.inner-tabs')).toHaveCount(0)
@@ -322,7 +327,7 @@ test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page })
 test('summary page matches the V2 scientific information hierarchy', async ({ page }) => {
   await page.goto(url('/'))
 
-  await expect(page.getByRole('heading', { level: 1, name: /Comparar programas de coexpresión/i })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: /¿Cómo difieren los programas de coexpresión/i })).toBeVisible()
   await expect(page.locator('.home-v2-study-card .home-v2-fact')).toHaveCount(8)
   await expect(page.locator('.home-v2-finding-row article')).toHaveCount(4)
   await expect(page.locator('.home-v2-flow li')).toHaveCount(6)
@@ -343,7 +348,7 @@ test('summary page matches the V2 scientific information hierarchy', async ({ pa
   ).toBe(true)
 })
 
-test('CEMiTool module figure and filters reflect generated canonical flags', async ({ page }) => {
+test('CEMiTool module figure and filters reflect generated canonical flags', async ({ page }, testInfo) => {
   await page.goto(url('/results/modules'))
 
   await expect(page.locator('.cemitool-profile-tile')).toHaveCount(10)
@@ -360,7 +365,9 @@ test('CEMiTool module figure and filters reflect generated canonical flags', asy
     ).toBe(true)
   }
 
-  const rows = page.locator('.module-data-table tbody tr')
+  const rows = testInfo.project.name === 'mobile-chromium'
+    ? page.locator('.module-mobile-card')
+    : page.locator('.module-data-table tbody tr')
   await expect(rows).toHaveCount(modules.modules.length)
 
   const significant = modules.modules.filter((row) => row.cultivar_stage_significant_fdr05).length
@@ -381,16 +388,17 @@ test('CEMiTool module figure and filters reflect generated canonical flags', asy
   await expect(rows.first()).toContainText('M10')
 })
 
-test('results navigation stays shallow and breadcrumbs appear only on detail views', async ({ page }) => {
+test('results navigation stays shallow and exposes stable parent links', async ({ page }) => {
   await page.goto(url('/results/modules'))
   await expect(page.locator('.result-context-bar')).toBeVisible()
   await expect(page.locator('.result-context-link')).toHaveCount(4)
   await expect(page.locator('.breadcrumb-bar')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Volver a Resultados' })).toHaveAttribute('href', '#/results')
 
   await page.goto(url('/results/modules/M10'))
-  await expect(page.locator('.breadcrumb-bar')).not.toContainText('Resultados')
-  await expect(page.locator('.breadcrumb-bar')).toContainText('Módulos')
-  await expect(page.locator('.breadcrumb-bar')).toContainText('M10')
+  await expect(page.locator('.breadcrumb-bar')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Todos los módulos' })).toHaveAttribute('href', '#/results/modules')
+  await expect(page.getByRole('heading', { level: 1, name: 'M10' })).toBeVisible()
 })
 
 test('module detail navigation allows direct return and sibling browsing', async ({ page }) => {
