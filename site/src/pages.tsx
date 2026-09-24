@@ -306,7 +306,7 @@ export function HomePage() {
                 <p>
                   La evidencia en piel aislada permanece separada. T-008 lleva{' '}
                   {project.t008.validated_runs}/{project.t008.total_runs} corridas validadas;
-                  aún no permite concluir preservación moderna.
+                  el núcleo mapeable de M5, M10 y M2 muestra preservación moderada, con cobertura explícita.
                 </p>
                 <ActionLink to="/status/t008">Ver estado T-008</ActionLink>
               </div>
@@ -383,7 +383,7 @@ export function HomePage() {
               <li><strong>Grosor de piel y causalidad.</strong> GSE98923 no mide grosor ni permite atribuirlo a un módulo o hub.</li>
               <li><strong>Especificidad de tejido.</strong> La señal del baseline no puede considerarse exclusiva de piel.</li>
               <li><strong>Identidad CHS/STS.</strong> La anotación disponible no resuelve con certeza esta familia en M5.</li>
-              <li><strong>Preservación moderna.</strong> T-008 lleva {project?.t008.validated_runs ?? 2}/{project?.t008.total_runs ?? 54} corridas; aún no existe una comparación completa.</li>
+              <li><strong>Preservación fuera del núcleo mapeable.</strong> T-008 completó 54/54 corridas, pero no puede evaluar genes sin equivalencia recíproca ni declarar preservado un módulo completo cuando la cobertura es parcial.</li>
             </ul>
           </article>
         </div>

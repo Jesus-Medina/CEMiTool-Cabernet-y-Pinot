@@ -75,6 +75,22 @@ def process(args: argparse.Namespace) -> None:
             run_command([sys.executable, "scripts/post/25_t008_validate_salmon_run.py",
                          "--scratch", str(scratch), "--run", run], run, "REVALIDATE")
             continue
+        if quant.is_dir():
+            # A complete local batch may have finished outside this orchestrator
+            # (for example after a supervised/manual continuation).  Never
+            # overwrite or rerun that quantification.  Rebuild the missing
+            # evidence chain from the retained FASTQ and validate/archive the
+            # existing Salmon directory.  Any partial or inconsistent output
+            # fails in scripts 20/25 and stops the batch with sources intact.
+            run_command([sys.executable, "scripts/post/20_t008_fastq_integrity_qc.py",
+                         "--scratch", str(scratch), "--run", run], run, "FASTQ_QC_EXISTING")
+            run_command([sys.executable, "scripts/post/25_t008_validate_salmon_run.py",
+                         "--scratch", str(scratch), "--run", run], run, "QUANT_QC_EXISTING")
+            count += 1
+            if args.stop_after and count >= args.stop_after:
+                event("ALL", "BATCH", "STOP_AFTER", str(args.stop_after))
+                return
+            continue
         run_command([sys.executable, "scripts/post/19_t008_download_verified_fastq.py",
                      "--scratch", str(scratch), "--run", run], run, "DOWNLOAD")
         run_command([sys.executable, "scripts/post/20_t008_fastq_integrity_qc.py",

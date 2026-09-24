@@ -519,9 +519,9 @@ export default function ExternalValidationPage() {
       <section className="validation-next">
         <div>
           <p className="eyebrow">Conexión con T-008</p>
-          <h2>La siguiente capa es revisar la robustez de procesamiento</h2>
+          <h2>La robustez de procesamiento ya fue evaluada</h2>
           <p>
-            Los extremos de M2 y las familias parálogas de M5 son precisamente el tipo de señal que el reprocesamiento FASTQ moderno debe revisar sin sustituir el baseline histórico.
+            T-008 preserva moderadamente el núcleo mapeable de M5/M10/M2 y reproduce señales principales de M5 y M2. La evidencia de piel sigue siendo una capa externa separada y ninguna de las dos resuelve causalidad o grosor.
           </p>
         </div>
         <Link className="button button--primary" to="/status/t008">Abrir T-008</Link>

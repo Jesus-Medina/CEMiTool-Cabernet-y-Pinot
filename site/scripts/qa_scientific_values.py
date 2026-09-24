@@ -146,8 +146,16 @@ def main() -> None:
 
     if t008["summary"]["total_runs"] != 54:
         raise AssertionError("QA T-008: selected run universe changed")
-    if t008["summary"]["complete"] and t008["summary"]["validated_runs"] != 54:
-        raise AssertionError("QA T-008: completeness gate opened before 54/54")
+    if t008["summary"]["runs_complete"] and t008["summary"]["validated_runs"] != 54:
+        raise AssertionError("QA T-008: run gate opened before 54/54")
+    if not t008["summary"]["complete"]:
+        raise AssertionError("QA T-008: completed canonical outputs did not open the final gate")
+    if t008["analysis"]["comparable_beta10_genes"] != 1922:
+        raise AssertionError("QA T-008: comparable beta10 gene universe changed")
+    priority = {row["module"]: row for row in t008["analysis"]["module_results"]}
+    for module in ("M5", "M10", "M2"):
+        if priority[module]["preservation_class"] != "moderate":
+            raise AssertionError(f"QA T-008: {module} preservation classification changed")
 
     print(
         "Scientific UI QA PASS: "

@@ -1,0 +1,13 @@
+T-008 modern raw-read reprocessing preservation analysis
+historical_baseline=unchanged log2(RPKM+1) beta10 modules
+modern_layer=Salmon 1.12.1 estimated counts; median-ratio factors; log2(normalized_count+1)
+comparable_gene_rule=audited reciprocal one-to-one legacy-to-T2T-v5.1 mapping only
+samples=54; comparable_beta10_genes=1922
+module_preservation=WGCNA fixed-membership permutation test; unsigned; 200 permutations; seed=1234
+WGCNA_interpretation=Zsummary>10 strong; 2-10 moderate; <2 not supported
+M10: mapped=21/39; Zsummary=3.735 (moderate); eigengene_cor=0.996; adjacency_spearman=0.878; sign_agreement=0.889
+M2: mapped=81/214; Zsummary=7.453 (moderate); eigengene_cor=0.998; adjacency_spearman=0.775; sign_agreement=1.000
+M5: mapped=76/108; Zsummary=7.495 (moderate); eigengene_cor=0.986; adjacency_spearman=0.827; sign_agreement=0.889
+mapping_percent_range=79.182..88.756
+median_sample_spearman_across_comparable_genes=0.932
+limits=no unmapped gene is called absent; same tissue remains pericarp; no skin-thickness phenotype; CHS/STS identity remains unresolved; module preservation is not causality

@@ -1,0 +1,10 @@
+Metric	Value
+Samples	54
+Genes	47971
+Transcripts	56910
+Genes_positive_in_all_samples_for_size_factors	17934
+Size_factor_min	0.4348183879695963
+Size_factor_max	1.9512485481668156
+Mapped_percent_min	79.1822195366905
+Mapped_percent_median	83.89863400181117
+Validation	PASS

@@ -287,8 +287,8 @@ def main() -> None:
         raise AssertionError("hubs.json row count does not match hub source tables")
 
     t008_payload = payloads["t008_progress.json"]
-    if t008_payload["schema_version"] != 2:
-        raise AssertionError("t008_progress schema_version must be 2")
+    if t008_payload["schema_version"] != 3:
+        raise AssertionError("t008_progress schema_version must be 3")
     t008 = t008_payload["summary"]
     manifest_rows = read_rows(SOURCE_PATHS["t008_manifest"])
     expected_runs = len(manifest_rows)
@@ -296,8 +296,19 @@ def main() -> None:
         raise AssertionError("T-008 total run count does not match selected manifest")
     if t008["validated_runs"] != run_qc_pass_count():
         raise AssertionError("T-008 validated count does not match run QC files")
-    if t008["complete"] and t008["validated_runs"] != t008["total_runs"]:
-        raise AssertionError("T-008 cannot be complete before every run validates")
+    if t008["runs_complete"] and t008["validated_runs"] != t008["total_runs"]:
+        raise AssertionError("T-008 run gate cannot open before every run validates")
+    analysis = t008_payload["analysis"]
+    if t008["complete"] and not (
+        t008["runs_complete"] and analysis["matrices_complete"] and analysis["preservation_complete"]
+    ):
+        raise AssertionError("T-008 cannot be complete before runs, matrices and preservation validate")
+    if analysis["samples"] != 54 or analysis["genes"] != 47971 or analysis["transcripts"] != 56910:
+        raise AssertionError("T-008 modern matrix dimensions changed")
+    if analysis["comparable_beta10_genes"] != 1922:
+        raise AssertionError("T-008 reciprocal comparable-gene universe changed")
+    if len(analysis["module_results"]) != 10:
+        raise AssertionError("T-008 preservation summary must contain M1-M10")
     expected_fastq_bytes = sum(int(row["FASTQ_Total_Bytes"]) for row in manifest_rows)
     expected_reads = sum(int(row["Read_Count"]) for row in manifest_rows)
     if t008["total_fastq_bytes"] != expected_fastq_bytes:

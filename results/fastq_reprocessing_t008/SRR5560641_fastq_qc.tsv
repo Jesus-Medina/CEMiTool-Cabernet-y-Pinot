@@ -1,0 +1,17 @@
+Metric	Value
+GSM	GSM2627837
+SRA_Run	SRR5560641
+Compressed_Bytes	2327741452
+MD5	da79d75540828ea9654457ee0bb09b07
+FASTQ_Records	28319046
+Expected_ENA_Read_Count	28319046
+First_10000_records_structure	PASS
+Quality_probe_records	10000
+Quality_probe_scope	first_reads_only_not_random
+Quality_probe_read_length_min	96
+Quality_probe_read_length_max	96
+Quality_probe_read_length_mean	96.0000
+Quality_probe_Q20_fraction	0.954835
+Quality_probe_Q30_fraction	0.911808
+Quality_probe_N_fraction	0.000094
+GZIP_CRC	PASS

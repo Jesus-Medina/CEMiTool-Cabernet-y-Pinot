@@ -1,6 +1,6 @@
 # Current state
 
-Last consolidated context update: 2026-09-21.
+Last consolidated context update: 2026-09-24.
 
 ## Repository
 
@@ -124,14 +124,14 @@ T-006 está **DONE** para priorización interna y se documenta en `docs/T006_M5_
 
 T-007 está **DONE** como validación observacional de expresión; el registro reproducible es `docs/T007_SKIN_ONLY_VALIDATION.md`. Se contrastaron los 361 genes priorizados y 37 hubs congelados de M5/M10/M2 en GSE72421 (microarray de piel 2011) y PRJNA260535 (RNA-seq de piel 2012), sin añadir muestras a las 54 del diseño primario. Los resultados completos, QC y auditoría están en `results/external_skin_validation_beta10/`; las fuentes originales con hashes se conservan en `data/reference/external_t007/`. Las comparaciones principales fueron WW y 24 °Brix, respectivamente. En M5, 11/11 hubs evaluables en microarray WW y 4/7 evaluables en RNA-seq 24 °Brix pasan BH dentro de los 37 hubs; CuAO y NAC concuerdan en ambos. En M10 solo el bHLH rango 1 pasa en microarray y está filtrado del RNA-seq; no hay validación individual de los otros hubs. En M2, MYB y FAR1 concuerdan en ambos, pero el RNA-seq solo evalúa 8/22 hubs y persiste el riesgo de paralogía, variación estructural y sesgo de referencia. Las celdas faltantes del microarray no se imputaron. Ninguna fuente mide grosor de piel ni resuelve CHS frente a STS.
 
-### T-008 raw-read audit and pilot (not completed)
+### T-008 modern raw-read reprocessing
 
-T-008 está **IN PROGRESS**. El manifiesto auditado vincula los 54 GSM originales con 54 SRR single-end y verifica metadatos GEO, URL/tamaño/MD5 ENA (140,16 GB comprimidos en total). Las fuentes Grapedia T2T v5.1 y la unión exacta de 56.910 transcritos con el GFF3 están preparadas; el cruce recíproco antiguo→nuevo cubre 1.922/3.050 genes beta10. Dos corridas (`SRR5560506`, `SRR5560667`) pasaron tamaño/MD5/gzip/recuento y Salmon 1.12.1: 88,67 % y 84,94 % de mapeo, 56.910 transcritos y cero errores de cuantificación, con salida exacta archivada. La descarga del segundo run se interrumpió una vez y se reanudó por rango verificado, sin aceptar el parcial. El control 250/25 versus 200/80 de longitud supuesta mostró sensibilidad material de TPM (63/100 top genes coinciden), menor en recuentos estimados (99/100), por lo que el supuesto requiere justificación antes de inferencia. El lote restante está autorizado y preparado para ejecución secuencial con retención de FASTQ y controles por corrida. **No** hay todavía matriz moderna de 54 muestras, contraste nuevo ni conclusión de preservación. Ver `docs/T008_RAW_REPROCESSING.md` y `docs/FILES_NOT_UPLOADED.md`.
+T-008 está **DONE**. Las mismas 54 corridas single-end pasaron tamaño/MD5/gzip/recuento completo, QC por lectura y Salmon 1.12.1; el mapeo fue 79,18–88,76 %. Las matrices modernas contienen 47.971 genes × 54 muestras y usan recuentos estimados, factores de tamaño por mediana de cocientes y `log2(normalizado + 1)` para la comparación. En los 1.922 genes beta10 con equivalencia recíproca v1→T2T v5.1, M5 (76/108; Zsummary 7,495), M10 (21/39; 3,735) y M2 (81/214; 7,453) muestran preservación moderada del núcleo mapeable, con correlaciones de eigengene 0,986–0,998. M2 conserva solo 37,9 % de sus genes, de modo que no se declara preservado el módulo completo. Los contrastes Harvest M5 y los ceros extremos M2 reaparecen, pero siguen abiertos CHS/STS, paralogía, variación estructural y sesgo de referencia. El baseline `log2(RPKM+1)` y las redes beta10/beta7 no se reemplazaron. Ver `docs/T008_RAW_REPROCESSING.md`.
 
 ## Immediate pending work
 
-1. Completar T-008: cuantificar las 52 corridas restantes con QC, ensamblar las 54 columnas y comparar con el baseline histórico, examinando especialmente la familia M5 y los extremos M2. La descarga masiva está autorizada y en curso.
-2. T-009: integrar las capas de análisis y límites en el informe/manuscrito. El informe acumulativo actual todavía no incorpora T-004 a T-007.
+1. T-009: integrar T-004 a T-008, sus figuras, resultados y límites en el informe/manuscrito final.
+2. T-010/WEB-012: preparar una versión estable del explorador una vez integrada y revisada la narrativa final.
 
 ## Important boundary
 

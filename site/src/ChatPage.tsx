@@ -315,8 +315,8 @@ export default function ChatPage() {
             <p className="chat-sidebar-kicker">Límite científico</p>
             <p>
               Coexpresión y centralidad no prueban causalidad. La validación en
-              piel se mantiene separada del baseline y T-008 no se presenta como
-              terminado mientras siga incompleto.
+              piel se mantiene separada del baseline y T-008 limita la preservación
+              moderna al núcleo de genes con equivalencia recíproca.
             </p>
           </section>
         </aside>

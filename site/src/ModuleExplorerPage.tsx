@@ -717,12 +717,12 @@ export function ModuleExplorerDetailPage() {
       {data && summary && (
         <>
           {module === 'M2' && (
-            <Callout className="module-provisional-warning" tone="warning" eyebrow="Estado provisional" title="M2 no debe cerrarse interpretativamente antes de T-008">
+            <Callout className="module-provisional-warning" tone="warning" eyebrow="T-008 completado" title="M2 conserva un núcleo mapeable, no el módulo completo">
               <p>
-                El proyecto documenta una sensibilidad histórica relacionada con ceros de expresión y posibles efectos de referencia/mapeo.
-                La web conserva M2 como candidato, pero no lo presenta como una conclusión moderna establecida.
+                La cuantificación moderna conserva 81/214 genes de M2, con preservación moderada y 9/9 direcciones Stage×Year concordantes.
+                Los ceros principales reaparecen, pero la cobertura de 37,9 % y los posibles efectos de referencia, paralogía o CNV impiden una conclusión mecanística.
               </p>
-              <ActionLink to="/status/t008">Ver progreso T-008</ActionLink>
+              <ActionLink to="/status/t008">Ver resultados T-008</ActionLink>
             </Callout>
           )}
 

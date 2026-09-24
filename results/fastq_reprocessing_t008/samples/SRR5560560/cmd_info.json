@@ -1,0 +1,13 @@
+{
+    "salmon_version": "1.12.1",
+    "index": "/mnt/d/CEMiTool_T008_scratch/reference/salmon_t2t_v5_1_index",
+    "libType": "U",
+    "unmatedReads": "/mnt/d/CEMiTool_T008_scratch/raw/SRR5560560/SRR5560560.fastq.gz",
+    "fldMean": "250",
+    "fldSD": "25",
+    "seqBias": [],
+    "dumpEq": [],
+    "threads": "2",
+    "output": "/mnt/d/CEMiTool_T008_scratch/quant/SRR5560560",
+    "auxDir": "aux_info"
+}

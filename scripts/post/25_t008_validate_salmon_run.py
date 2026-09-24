@@ -127,6 +127,18 @@ def main() -> None:
                                   ("aux_info/eq_classes.txt.gz", False),
                                   ("logs/salmon_quant.log", True)):
         target = dest / (relative + ".gz" if compressed else relative)
+        if relative.endswith(".json") and target.exists():
+            # Git may check text JSON out with CRLF on Windows while Salmon
+            # wrote LF in WSL.  Validate the complete JSON object rather than
+            # treating that transport-only newline conversion as a scientific
+            # mismatch; do not rewrite either copy.
+            with (source / relative).open(encoding="utf-8") as handle:
+                source_json = json.load(handle)
+            with target.open(encoding="utf-8") as handle:
+                archived_json = json.load(handle)
+            if source_json != archived_json:
+                raise ValueError(f"Archived JSON differs semantically from source: {target}")
+            continue
         save_exact(source / relative, target, compressed)
     rows = [
         ("GSM", sample["GSM"]), ("SRA_Run", args.run),

@@ -77,11 +77,11 @@ const CLAIMS: EvidenceClaim[] = [
   },
   {
     id: 't008-progress',
-    title: 'Progreso del reprocesamiento moderno T-008',
-    description: 'Manifiesto de 54 corridas, ledger, QC por SRR y scripts que alimentan el dashboard vivo.',
+    title: 'Reprocesamiento moderno y preservación T-008',
+    description: 'Manifiesto de 54 corridas, QC por SRR, matrices, preservación de módulos y scripts reproducibles.',
     artifactIds: ['t008_progress'],
     route: '/status/t008',
-    boundary: 'Mientras no exista la matriz moderna completa, no hay conclusión de preservación de módulos.',
+    boundary: 'La preservación moderada se limita al núcleo con equivalencia recíproca; no cubre genes no mapeados ni demuestra causalidad.',
   },
 ]
 

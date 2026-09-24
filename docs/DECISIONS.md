@@ -208,10 +208,22 @@ that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
 
 ## D-016 — Auditar el supuesto de longitud de fragmento antes del reprocesamiento completo
 
-**Status:** provisional en T-008 (2026-09-22); no es una conclusión de preservación de red.
+**Status:** adopted for T-008 (2026-09-24); no es una sustitución del baseline histórico.
 
 **Decision:** usar Grapedia PN40024 T2T v5.1 y cuantificación Salmon 1.12.1 con genoma señuelo y transcritos duplicados retenidos como piloto reproducible. Mantener la red/RPKM históricos intactos. Para el análisis moderno de las 54 muestras, justificar la distribución de fragmentos de lectura única y evaluar su sensibilidad; priorizar recuentos estimados por gen con normalización explícita y QC de profundidad sobre TPM sin sensibilidad para comparar coexpresión.
 
 **Reason:** en `SRR5560506`, 250/25 versus 200/80 no cambió el mapeo, pero solo 63/100 genes top por TPM coincidieron, frente a 99/100 por recuentos estimados. La correlación `log1p` por gen fue 0,9862 para TPM y 0,9991 para recuentos. GEO describe bibliotecas no direccionales pero no da una longitud de fragmento por biblioteca. El parámetro no debe disfrazarse de medición.
 
-**Boundary:** un solo piloto no selecciona el parámetro correcto, ni resuelve lecturas compartidas entre parálogos, ni comprueba módulos M5/M10/M2. T-008 sigue abierto. Ver `docs/T008_RAW_REPROCESSING.md`.
+**Boundary:** la sensibilidad piloto no selecciona una longitud biológica verdadera ni resuelve lecturas compartidas entre parálogos. La inferencia final se apoya en recuentos estimados normalizados y conserva TPM como salida secundaria. Ver `docs/T008_RAW_REPROCESSING.md`.
+
+---
+
+## D-017 — Interpretar la preservación moderna solo dentro del núcleo mapeable
+
+**Status:** active after T-008 (2026-09-24).
+
+**Decision:** conservar `log2(RPKM + 1)` y la red beta10 como baseline histórico primario. Añadir Salmon 1.12.1 como capa de robustez moderna usando recuentos estimados por gen, normalización por mediana de cocientes y `log2(normalizado + 1)`. Comparar módulos únicamente en los 1.922 genes con equivalencia recíproca uno-a-uno v1→T2T v5.1, con membresías beta10 fijas, red unsigned y `modulePreservation` de 200 permutaciones/semilla 1234.
+
+**Reason:** la correspondencia de IDs es incompleta y desigual. En el núcleo comparable, M5, M10 y M2 obtienen Zsummary 7,495, 3,735 y 7,453, correlaciones de eigengene 0,986–0,998 y preservación direccional de 8/9, 8/9 y 9/9 celdas Stage×Year. M2 solo mapea 81/214 genes; llamar preservado al módulo completo ocultaría esa incertidumbre.
+
+**Boundary:** “preservación moderada” describe el subconjunto mapeable y su estructura observada, no los genes sin equivalencia, una identidad CHS/STS, una expansión familiar, causalidad, especificidad de piel ni grosor de piel. Los ceros M2 reproducidos siguen admitiendo explicaciones de paralogía, referencia, CNV o biología real.

@@ -40,6 +40,9 @@ SOURCES = {
     "m5_edges": "results/hub_prioritization_beta10/m5_all_intramodular_edges.tsv",
     "t008_manifest": "results/fastq_reprocessing_t008/selected_54_gsm_to_srr.tsv",
     "t008_events": "results/fastq_reprocessing_t008/t008_batch_progress.tsv",
+    "t008_matrix_qc": "results/fastq_reprocessing_t008/modern_matrix_qc.tsv",
+    "t008_preservation_qc": "results/fastq_reprocessing_t008/modern_preservation/preservation_qc.tsv",
+    "t008_module_preservation": "results/fastq_reprocessing_t008/modern_preservation/module_preservation_summary.tsv",
 }
 
 REQUIRED_COLUMNS = {
@@ -57,6 +60,13 @@ REQUIRED_COLUMNS = {
     "m5_edges": {"Gene1", "Gene2", "Pearson_r", "Beta10_unsigned_adjacency", "Pair_group"},
     "t008_manifest": {"GSM", "Cultivar", "Stage", "Year", "Replicate", "SRA_Run", "Library_Layout", "FASTQ_MD5", "FASTQ_Total_Bytes", "Read_Count"},
     "t008_events": {"UTC", "SRA_Run", "Stage", "Status", "Detail"},
+    "t008_matrix_qc": {"Metric", "Value"},
+    "t008_preservation_qc": {"Metric", "Value"},
+    "t008_module_preservation": {
+        "Module", "Total_beta10_genes", "Mapped_genes", "Mapped_fraction",
+        "Modern_vs_legacy_mapped_PC1_Pearson", "StageYear_sign_agreement",
+        "Adjacency_beta10_Spearman", "Zsummary_preservation", "Preservation_class",
+    },
 }
 
 INTEGER_RE = re.compile(r"^[+-]?\d+$")
@@ -139,7 +149,13 @@ def write_json(name: str, payload: Any) -> None:
     temporary.replace(target)
 
 
-def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, Any]]) -> dict[str, Any]:
+def build_t008(
+    manifest_rows: list[dict[str, Any]],
+    event_rows: list[dict[str, Any]],
+    matrix_qc_rows: list[dict[str, Any]],
+    preservation_qc_rows: list[dict[str, Any]],
+    module_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
     events_by_run: dict[str, list[dict[str, Any]]] = {}
     for event in event_rows:
         run = str(event.get("SRA_Run"))
@@ -212,6 +228,25 @@ def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, A
         for row in runs
         if row["status"] == "PASS" and row["percent_mapped"] is not None
     ]
+    matrix_qc = {str(row["Metric"]): row["Value"] for row in matrix_qc_rows}
+    preservation_qc = {str(row["Metric"]): row["Value"] for row in preservation_qc_rows}
+    runs_complete = len(runs) > 0 and validated == len(runs) and failed == 0
+    matrices_complete = matrix_qc.get("Validation") == "PASS"
+    preservation_complete = preservation_qc.get("Output_validation") == "PASS"
+    preservation_modules = [
+        {
+            "module": row["Module"],
+            "total_beta10_genes": row["Total_beta10_genes"],
+            "mapped_genes": row["Mapped_genes"],
+            "mapped_fraction": row["Mapped_fraction"],
+            "eigengene_pearson": row["Modern_vs_legacy_mapped_PC1_Pearson"],
+            "stage_year_sign_agreement": row["StageYear_sign_agreement"],
+            "adjacency_spearman": row["Adjacency_beta10_Spearman"],
+            "zsummary": row["Zsummary_preservation"],
+            "preservation_class": row["Preservation_class"],
+        }
+        for row in sorted(module_rows, key=lambda item: module_sort_key(str(item["Module"])))
+    ]
 
     return {
         "summary": {
@@ -222,7 +257,8 @@ def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, A
             "pending_runs": pending,
             "pending_or_running_runs": pending + in_progress,
             "progress_percent": (100.0 * validated / len(runs)) if runs else 0.0,
-            "complete": len(runs) > 0 and validated == len(runs) and failed == 0,
+            "runs_complete": runs_complete,
+            "complete": runs_complete and matrices_complete and preservation_complete,
             "latest_event_utc": latest_event,
             "total_fastq_bytes": total_fastq_bytes,
             "total_reads": total_reads,
@@ -233,6 +269,18 @@ def build_t008(manifest_rows: list[dict[str, Any]], event_rows: list[dict[str, A
             "mapping_percent_mean": (
                 sum(mapped_values) / len(mapped_values) if mapped_values else None
             ),
+        },
+        "analysis": {
+            "matrices_complete": matrices_complete,
+            "matrix_validation": matrix_qc.get("Validation"),
+            "samples": matrix_qc.get("Samples"),
+            "genes": matrix_qc.get("Genes"),
+            "transcripts": matrix_qc.get("Transcripts"),
+            "comparable_beta10_genes": preservation_qc.get("Comparable_beta10_genes"),
+            "preservation_complete": preservation_complete,
+            "preservation_validation": preservation_qc.get("Output_validation"),
+            "wgcna_permutations": preservation_qc.get("WGCNA_permutations"),
+            "module_results": preservation_modules,
         },
         "runs": runs,
         "events": event_rows,
@@ -264,7 +312,11 @@ def main() -> None:
             "Year completeness audit failed: "
             + " | ".join(year_completeness_audit["hard_errors"])
         )
-    t008 = build_t008(loaded["t008_manifest"], loaded["t008_events"])
+    t008 = build_t008(
+        loaded["t008_manifest"], loaded["t008_events"],
+        loaded["t008_matrix_qc"], loaded["t008_preservation_qc"],
+        loaded["t008_module_preservation"],
+    )
 
     beta_row = next((row for row in beta_rows if row["Power"] == PRIMARY_BETA), None)
     if beta_row is None:
@@ -467,9 +519,23 @@ def main() -> None:
             },
         },
         "t008_progress": {
-            "sources": [SOURCES["t008_manifest"], SOURCES["t008_events"]] + t008_qc_sources,
-            "scripts": ["scripts/post/25_t008_validate_salmon_run.py", "scripts/post/26_t008_process_selected_runs.py"],
-            "parameters": {},
+            "sources": [
+                SOURCES["t008_manifest"], SOURCES["t008_events"],
+                SOURCES["t008_matrix_qc"], SOURCES["t008_preservation_qc"],
+                SOURCES["t008_module_preservation"],
+            ] + t008_qc_sources,
+            "scripts": [
+                "scripts/post/25_t008_validate_salmon_run.py",
+                "scripts/post/26_t008_process_selected_runs.py",
+                "scripts/post/27_t008_assemble_modern_matrices.py",
+                "scripts/post/29_t008_modern_preservation.R",
+            ],
+            "parameters": {
+                "normalization": "median-ratio estimated counts; log2(normalized + 1)",
+                "network_type": "unsigned fixed beta10 memberships",
+                "wgcna_permutations": 200,
+                "random_seed": 1234,
+            },
         },
     }
 
@@ -486,7 +552,7 @@ def main() -> None:
         "hubs.json": {"schema_version": 1, "rows": hubs},
         "m5_network.json": {"schema_version": 1, "edges": m5_edges},
         "external_validation.json": external_validation,
-        "t008_progress.json": {"schema_version": 2, **t008},
+        "t008_progress.json": {"schema_version": 3, **t008},
         "provenance.json": build_manifest(REPO_ROOT, artifacts),
     }
 

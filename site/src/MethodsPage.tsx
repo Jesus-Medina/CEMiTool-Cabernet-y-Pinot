@@ -251,7 +251,7 @@ export default function MethodsPage() {
               <div className="method-section-heading"><span>06</span><div><p className="eyebrow">Reprocesamiento moderno</p><h2>T-008</h2></div></div>
               <div className="method-answer"><p>
                 Estado exportado actual: <strong>{project.t008.validated_runs}/{project.t008.total_runs}</strong> corridas validadas. {' '}
-                {project.t008.complete ? 'El exportador marca el lote como completo.' : 'La matriz moderna completa todavía no está disponible, por lo que el sitio no presenta una conclusión moderna final.'}
+                {project.t008.complete ? 'Matrices y preservación validadas; la interpretación se restringe a 1.922 genes beta10 con equivalencia recíproca.' : 'La comparación moderna todavía no ha superado todos sus controles.'}
               </p></div>
               <Link className="inline-link" to="/status/t008">Abrir estado T-008 →</Link>
               <MethodEvidence artifacts={evidence(['t008_progress'])} provenance={provenance} />

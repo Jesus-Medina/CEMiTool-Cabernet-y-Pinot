@@ -264,7 +264,7 @@ export type T008Event = {
 }
 
 export type T008ProgressPayload = {
-  schema_version: 2
+  schema_version: 3
   summary: {
     total_runs: number
     validated_runs: number
@@ -273,6 +273,7 @@ export type T008ProgressPayload = {
     pending_runs: number
     pending_or_running_runs: number
     progress_percent: number
+    runs_complete: boolean
     complete: boolean
     latest_event_utc: string | null
     total_fastq_bytes: number
@@ -282,6 +283,28 @@ export type T008ProgressPayload = {
     mapping_percent_min: number | null
     mapping_percent_max: number | null
     mapping_percent_mean: number | null
+  }
+  analysis: {
+    matrices_complete: boolean
+    matrix_validation: string | null
+    samples: number | null
+    genes: number | null
+    transcripts: number | null
+    comparable_beta10_genes: number | null
+    preservation_complete: boolean
+    preservation_validation: string | null
+    wgcna_permutations: number | null
+    module_results: Array<{
+      module: string
+      total_beta10_genes: number
+      mapped_genes: number
+      mapped_fraction: number
+      eigengene_pearson: number
+      stage_year_sign_agreement: number
+      adjacency_spearman: number
+      zsummary: number
+      preservation_class: 'strong' | 'moderate' | 'not_supported'
+    }>
   }
   runs: T008Run[]
   events: T008Event[]

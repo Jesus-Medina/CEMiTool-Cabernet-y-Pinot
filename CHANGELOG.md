@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-24 — T-008 modern FASTQ reprocessing completed
+
+- Validated all 54 selected FASTQ and Salmon 1.12.1 quantifications against frozen ENA sizes/MD5/read counts, the audited T2T v5.1 reference and the full 56.910-transcript target set; no raw reads were deleted.
+- Added 47.971-gene × 54-sample count, TPM and median-ratio-normalized matrices with sample/matrix QC.
+- Added fixed-membership modern-versus-historical preservation analysis over 1.922 reciprocal gene mappings, complete factorial/Stage×Year checks, M5 CHS/STS-family and M2-zero diagnostics, PCA and WGCNA preservation with 200 permutations.
+- Classified the mapped cores of M5, M10 and M2 as moderately preserved while retaining explicit coverage, pericarp, CHS/STS, structural-variation and non-causality limits; preserved the historical beta10/beta7 baseline unchanged.
+- Upgraded the T-008 web payload to schema v3 and the dashboard from run progress to validated matrix/preservation results with full provenance.
+
 - Corrige la decoración vertical de Métodos: conserva su posición original en el margen izquierdo, mantiene proporción y tamaño al abrir evidencias y elimina el recorte interno que producía el borde rectangular. También aumenta el espacio entre los enlaces de navegación y herramientas del header.
 - Añade ilustraciones transparentes propias a Resultados y Reproducibilidad, completas y sin bordes cortados.
 - Incorpora `BackLink`, con flecha circular color vino, en las vistas profundas de resultados y T-008 para recuperar el flujo hacia su página padre.

@@ -14,7 +14,11 @@ type M5Payload = {
 }
 
 type T008Payload = {
-  summary: { pending_runs: number }
+  summary: { pending_runs: number; complete: boolean }
+  analysis: {
+    comparable_beta10_genes: number
+    module_results: Array<{ module: string; preservation_class: string; mapped_genes: number; total_beta10_genes: number }>
+  }
 }
 
 const modules = JSON.parse(readFileSync('public/data/modules.json', 'utf8')) as ModulesPayload
@@ -450,7 +454,7 @@ test('Evidence Browser search resolves a finding and its artifact', async ({ pag
   const search = page.getByRole('searchbox', { name: 'Buscar evidencia' })
   await search.fill('t008')
   await expect(
-    page.locator('.evidence-claim').filter({ hasText: 'Progreso del reprocesamiento moderno T-008' }),
+    page.locator('.evidence-claim').filter({ hasText: 'Reprocesamiento moderno y preservación T-008' }),
   ).toHaveCount(1)
 
   await page.getByRole('button', { name: /Artefactos/i }).click()
@@ -463,6 +467,14 @@ test('T-008 status filter matches generated pending count', async ({ page }) => 
   await page.goto(url('/status/t008'))
   await page.getByLabel('Estado').selectOption('PENDING')
   await expect(page.locator('.t008-table tbody tr')).toHaveCount(t008.summary.pending_runs)
+})
+
+test('T-008 completed preservation gate remains coverage-aware', async ({ page }) => {
+  await page.goto(url('/status/t008'))
+  expect(t008.summary.complete).toBe(true)
+  expect(t008.analysis.comparable_beta10_genes).toBe(1922)
+  await expect(page.getByRole('heading', { name: /núcleo mapeable de M5, M10 y M2/i })).toBeVisible()
+  await expect(page.getByText(/M2 solo tiene 81\/214 genes comparables/i)).toBeVisible()
 })
 
 test('mobile layout has no document-level horizontal overflow', async ({ page }, testInfo) => {

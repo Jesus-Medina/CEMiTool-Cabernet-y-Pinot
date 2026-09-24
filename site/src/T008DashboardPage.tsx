@@ -8,7 +8,7 @@ import {
   type T008RunStatus,
 } from './data/siteData'
 import { formatDecimal } from './utils/format'
-import { Badge } from './components/ui'
+import { Badge, TableFrame } from './components/ui'
 import './t008.css'
 
 type StatusFilter = 'all' | T008RunStatus
@@ -159,7 +159,11 @@ export default function T008DashboardPage() {
   }
 
   const summary = data.summary
+  const analysis = data.analysis
   const validated = data.runs.filter((run) => run.status === 'PASS')
+  const priorityModules = ['M5', 'M10', 'M2']
+    .map((module) => analysis.module_results.find((row) => row.module === module))
+    .filter((row): row is T008ProgressPayload['analysis']['module_results'][number] => Boolean(row))
   const recentEvents = [...data.events].reverse().slice(0, 14)
 
   return (
@@ -170,7 +174,7 @@ export default function T008DashboardPage() {
           <h1>Estado del reprocesamiento moderno</h1>
           <p>
             Seguimiento de las mismas 54 corridas del baseline histórico contra PN40024 T2T v5.1.
-            Aquí se muestra avance técnico reproducible; no una conclusión biológica final.
+            El baseline beta10 no fue reemplazado: esta capa comprueba qué señales resisten una cuantificación actual.
           </p>
         </div>
         <div className="t008-big-number">
@@ -181,16 +185,16 @@ export default function T008DashboardPage() {
 
       <section className={summary.complete ? 't008-gate t008-gate--complete' : 't008-gate'}>
         <div>
-          <p className="eyebrow">{summary.complete ? 'QC de corridas completo' : 'Gate científico activo'}</p>
-          <h2>{summary.complete ? '54/54 permite pasar a ensamblaje, no a una conclusión automática' : 'Todavía no existe matriz moderna completa'}</h2>
+          <p className="eyebrow">{summary.complete ? 'T-008 completo' : 'Gate científico activo'}</p>
+          <h2>{summary.complete ? 'El núcleo mapeable de M5, M10 y M2 muestra preservación moderada' : 'Todavía no existe una comparación moderna completa'}</h2>
           <p>
             {summary.complete
-              ? 'El tablero solo confirma que las corridas pasaron QC. La matriz, normalización y comparación de módulos siguen siendo pasos científicos separados.'
-              : 'Mientras falte una sola corrida validada, la web no presenta preservación moderna de M5/M10/M2 ni contrasta cultivares con esta cuantificación.'}
+              ? 'Las 54 corridas, la matriz moderna y el análisis de preservación pasaron sus controles. La conclusión se limita a los genes con correspondencia recíproca; no prueba que el módulo completo esté preservado ni identifica causalidad.'
+              : 'La web exige 54/54 corridas, matriz validada y análisis de preservación aprobado antes de mostrar una conclusión moderna.'}
           </p>
         </div>
         <Badge tone={summary.complete ? 'success' : 'warning'} className="t008-gate-badge">
-          {summary.complete ? 'QC DE CORRIDAS COMPLETO' : 'SIN CONCLUSIÓN DE PRESERVACIÓN'}
+          {summary.complete ? 'ANÁLISIS COMPLETO CON LÍMITES' : 'SIN CONCLUSIÓN DE PRESERVACIÓN'}
         </Badge>
       </section>
 
@@ -238,6 +242,57 @@ export default function T008DashboardPage() {
           <strong>{formatDecimal(summary.mapping_percent_mean, 2)}%</strong>
           <small>rango {formatDecimal(summary.mapping_percent_min, 2)}–{formatDecimal(summary.mapping_percent_max, 2)}%</small>
         </article>
+        <article>
+          <span>Matriz moderna</span>
+          <strong>{analysis.genes?.toLocaleString('es-CL') ?? '—'} genes</strong>
+          <small>{analysis.samples ?? '—'} muestras · {analysis.transcripts?.toLocaleString('es-CL') ?? '—'} transcritos</small>
+        </article>
+        <article>
+          <span>Genes beta10 comparables</span>
+          <strong>{analysis.comparable_beta10_genes?.toLocaleString('es-CL') ?? '—'}</strong>
+          <small>equivalencias recíprocas v1→v5.1</small>
+        </article>
+      </section>
+
+      <section className="t008-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Preservación moderna</p>
+            <h2>M5, M10 y M2 conservan un núcleo mapeable, con cobertura desigual</h2>
+          </div>
+          <p>WGCNA fijo sobre membresías beta10, red unsigned, {analysis.wgcna_permutations ?? '—'} permutaciones. Zsummary 2–10 se interpreta como preservación moderada.</p>
+        </div>
+        <div className="t008-scale-grid">
+          {priorityModules.map((row) => (
+            <article key={row.module}>
+              <span>{row.module} · {row.preservation_class === 'moderate' ? 'moderada' : row.preservation_class}</span>
+              <strong>Z = {formatDecimal(row.zsummary, 2)}</strong>
+              <small>{row.mapped_genes}/{row.total_beta10_genes} genes mapeados · eigengene r={formatDecimal(row.eigengene_pearson, 3)} · adyacencia ρ={formatDecimal(row.adjacency_spearman, 3)}</small>
+            </article>
+          ))}
+        </div>
+        <details className="data-disclosure">
+          <summary>Ver los diez módulos y su cobertura</summary>
+          <TableFrame label="Preservación moderna de los diez módulos beta10">
+            <table className="scientific-table">
+              <thead><tr><th>Módulo</th><th>Mapeados</th><th>Cobertura</th><th>Zsummary</th><th>Clase</th><th>r eigengene</th><th>ρ adyacencia</th><th>Dirección Stage×Year</th></tr></thead>
+              <tbody>
+                {analysis.module_results.map((row) => (
+                  <tr key={row.module}>
+                    <td><strong>{row.module}</strong></td>
+                    <td>{row.mapped_genes}/{row.total_beta10_genes}</td>
+                    <td>{formatDecimal(100 * row.mapped_fraction, 1)}%</td>
+                    <td>{formatDecimal(row.zsummary, 2)}</td>
+                    <td>{row.preservation_class === 'strong' ? 'fuerte' : row.preservation_class === 'moderate' ? 'moderada' : 'no apoyada'}</td>
+                    <td>{formatDecimal(row.eigengene_pearson, 3)}</td>
+                    <td>{formatDecimal(row.adjacency_spearman, 3)}</td>
+                    <td>{formatDecimal(100 * row.stage_year_sign_agreement, 1)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableFrame>
+        </details>
       </section>
 
       <DesignMatrix runs={data.runs} />
@@ -342,13 +397,13 @@ export default function T008DashboardPage() {
       <section className="t008-boundary">
         <article>
           <p className="eyebrow">Qué sí refleja</p>
-          <h2>Estado técnico reproducible de las mismas 54 lecturas</h2>
-          <p>Descarga verificada, QC, cuantificación y métricas por corrida aparecen cuando existen en los archivos canónicos.</p>
+          <h2>Preservación moderada del núcleo comparable</h2>
+          <p>M5, M10 y M2 conservan perfiles de eigengene y estructura de coexpresión entre los genes que pudieron mapearse de forma recíproca.</p>
         </article>
         <article>
-          <p className="eyebrow">Qué no refleja todavía</p>
-          <h2>No hay contraste moderno ni módulo preservado/perdido</h2>
-          <p>El material continúa siendo pericarpio. Completar FASTQ/Salmon es requisito previo, no una conclusión biológica.</p>
+          <p className="eyebrow">Límite de interpretación</p>
+          <h2>No equivale a preservar cada gen ni a demostrar mecanismo</h2>
+          <p>M2 solo tiene 81/214 genes comparables. El material sigue siendo pericarpio; no mide grosor de piel, no resuelve CHS frente a STS y no demuestra causalidad.</p>
         </article>
       </section>
 
