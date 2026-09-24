@@ -417,6 +417,8 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **Results/reproducibility visual and return-flow follow-up (2026-09-23):** se generaron dos cutouts transparentes específicos: un racimo completo con rama terminada para la landing de Resultados y una composición vid–lupa–ADN para Reproducibilidad. Ambos se integraron sin recortes y con adaptación móvil. El logo global subió 3 px dentro de su caja para equilibrar el margen inferior. La nueva primitiva `BackLink` añade un retorno jerárquico explícito desde Módulos, Función, Validación, Genes, fichas de gen, detalles de módulo y T-008; las rutas no dependen del historial del navegador. Edge verificó carga de assets, destinos de retorno y ausencia de overflow a 390 px. No cambió ningún dato ni inferencia científica.
 
+**Methods decoration stability and header spacing follow-up (2026-09-23):** la decoración de Métodos dejó de usar el alto variable de la página y `object-fit: cover`; ahora conserva las proporciones intrínsecas del asset vertical y permanece fuera del flujo del contenido, sin corte lateral ni deformación al abrir evidencias. Se aumentó a 10 px la separación entre enlaces primarios y herramientas del header. La prueba de navegador compara la geometría de la vid antes/después de desplegar una evidencia, además de verificar el espaciado del header. No cambió ningún dato ni inferencia científica.
+
 **Acceptance criteria for T-010 DONE:**
 
 - site builds reproducibly from the repository;

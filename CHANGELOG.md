@@ -1,5 +1,6 @@
 # Changelog
 
+- Corrige la decoración vertical de Métodos: mantiene su proporción y tamaño al abrir evidencias, deja de recortarse por el borde izquierdo y conserva una posición estable. También aumenta el espacio entre los enlaces de navegación y herramientas del header.
 - Añade ilustraciones transparentes propias a Resultados y Reproducibilidad, completas y sin bordes cortados.
 - Incorpora `BackLink`, con flecha circular color vino, en las vistas profundas de resultados y T-008 para recuperar el flujo hacia su página padre.
 - Eleva 3 px el isotipo del header para equilibrar su separación del borde inferior.

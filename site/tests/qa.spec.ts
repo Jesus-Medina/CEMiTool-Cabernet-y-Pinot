@@ -400,6 +400,26 @@ test('results navigation stays shallow and exposes stable parent links', async (
   await expect(page.getByRole('heading', { level: 1, name: 'M10' })).toBeVisible()
 })
 
+test('Methods decoration keeps its geometry when evidence opens', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile-chromium', 'decoration is intentionally hidden on mobile')
+  await page.goto(url('/methods'))
+  await waitForStablePage(page)
+
+  const vine = page.locator('.methods-vine-decoration img')
+  await expect(vine).toHaveAttribute('src', /assets\/methods\/vine-decoration\.png/)
+  const before = await vine.boundingBox()
+  expect(before).not.toBeNull()
+
+  await page.locator('.method-evidence details').first().locator('summary').click()
+  await page.waitForTimeout(150)
+
+  const after = await vine.boundingBox()
+  expect(after).not.toBeNull()
+  expect(after?.width).toBeCloseTo(before?.width ?? 0, 1)
+  expect(after?.height).toBeCloseTo(before?.height ?? 0, 1)
+  await expect(page.locator('.utility-nav')).toHaveCSS('gap', '10px')
+})
+
 test('module detail navigation allows direct return and sibling browsing', async ({ page }) => {
   await page.goto(url('/results/modules/M5'))
   await expect(page.getByRole('link', { name: /Todos los módulos/i })).toBeVisible()
