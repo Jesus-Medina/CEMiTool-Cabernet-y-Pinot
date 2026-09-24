@@ -381,6 +381,7 @@ test('CEMiTool module figure and filters reflect generated canonical flags', asy
   await expect(rows).toHaveCount(yearDependent)
 
   await page.getByRole('button', { name: 'Todos', exact: true }).click()
+  await expect(rows).toHaveCount(modules.modules.length)
   await page.getByRole('searchbox', { name: 'Buscar módulo' }).fill('M10')
   await expect(rows).toHaveCount(1)
   await expect(rows.first()).toContainText('M10')
