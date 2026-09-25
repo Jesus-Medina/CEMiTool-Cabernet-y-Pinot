@@ -12,7 +12,10 @@ Frontend del explorador científico interactivo del proyecto.
 - WEB-006: enriquecimiento funcional MapMan v3/v5.1 + GO T-005A completado.
 - WEB-008: validación externa skin-only completada.
 - WEB-009: dashboard vivo T-008 completado; refleja el estado canónico actual sin inferir preservación.
-- Preview GitHub Pages: desplegada correctamente en `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
+- WEB-010: navegador de evidencia y provenance completado.
+- WEB-011: QA científica, responsive y multinavegador completada.
+- WEB-012: la versión estable incorpora la **Síntesis científica integrada**, publicación automática del manuscrito/informe canónicos y el estado final 54/54 del reprocesamiento moderno.
+- GitHub Pages: `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
 
 ## Desarrollo
 
@@ -21,6 +24,7 @@ cd site
 npm install
 python scripts/export_site_data.py
 python scripts/validate_site_data.py
+python scripts/sync_public_reports.py
 npm run dev
 ```
 
@@ -31,6 +35,7 @@ El workflow `.github/workflows/site-check.yml` regenera los datos de frontend y 
 ```bash
 python scripts/export_site_data.py
 python scripts/validate_site_data.py
+python scripts/sync_public_reports.py
 npm run lint
 npm run typecheck
 npm run build

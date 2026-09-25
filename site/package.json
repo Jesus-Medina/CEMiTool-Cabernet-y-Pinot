@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "sync:reports": "python scripts/sync_public_reports.py",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint src --max-warnings=0",

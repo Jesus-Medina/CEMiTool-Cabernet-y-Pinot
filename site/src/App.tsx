@@ -3,6 +3,7 @@ import SiteShell from './SiteShell'
 import EnrichmentPage from './EnrichmentPage'
 import ChatPage from './ChatPage'
 import SearchPage from './SearchPage'
+import SynthesisPage from './SynthesisPage'
 import {
   EvidencePage,
   GeneDetailPage,
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="results/validation" element={<ValidationPage />} />
         <Route path="results/genes" element={<SearchPage />} />
         <Route path="results/genes/:geneId" element={<GeneDetailPage />} />
+        <Route path="results/synthesis" element={<SynthesisPage />} />
 
         <Route path="modules" element={<ModulesPage />} />
         <Route path="modules/:moduleId" element={<ModuleDetailPage />} />

@@ -14,6 +14,9 @@ on:
       - 'results/hub_prioritization_beta10/**'
       - 'results/external_skin_validation_beta10/**'
       - 'results/fastq_reprocessing_t008/**'
+      - 'results/integrated_report_t009/**'
+      - 'reports/current/**'
+      - 'manuscript/**'
       - 'scripts/master/**'
       - 'scripts/post/**'
       - '.github/workflows/site-check.yml'
@@ -29,6 +32,9 @@ on:
       - 'results/hub_prioritization_beta10/**'
       - 'results/external_skin_validation_beta10/**'
       - 'results/fastq_reprocessing_t008/**'
+      - 'results/integrated_report_t009/**'
+      - 'reports/current/**'
+      - 'manuscript/**'
       - 'scripts/master/**'
       - 'scripts/post/**'
       - '.github/workflows/site-check.yml'
@@ -58,8 +64,14 @@ jobs:
       - name: Export canonical site data
         run: python scripts/export_site_data.py
 
+      - name: Sync canonical reports for publication
+        run: python scripts/sync_public_reports.py
+
       - name: Validate canonical site data
         run: python scripts/validate_site_data.py
+
+      - name: Scientific value QA
+        run: python scripts/qa_scientific_values.py
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -80,6 +92,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Bundle performance budget
+        run: npm run qa:bundle
 
       - name: Syntax-check chatbot Worker
         working-directory: .

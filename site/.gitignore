@@ -2,3 +2,6 @@ node_modules/
 dist/
 public/data/*.json
 !public/data/README.md
+public/reports/scientific-synthesis-manuscript.html
+public/reports/scientific-synthesis-manuscript.pdf
+public/reports/complete-technical-analysis.pdf

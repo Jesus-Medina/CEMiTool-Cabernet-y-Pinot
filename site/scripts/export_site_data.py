@@ -537,6 +537,25 @@ def main() -> None:
                 "random_seed": 1234,
             },
         },
+        "integrated_synthesis": {
+            "sources": [
+                "results/integrated_report_t009/claim_evidence_matrix.tsv",
+                "results/integrated_report_t009/integration_qc.tsv",
+                "manuscript/article_draft.pdf",
+                "reports/current/analysis_report.pdf",
+            ],
+            "scripts": [
+                "scripts/post/30_t009_integrated_report.R",
+                "site/src/SynthesisPage.tsx",
+            ],
+            "parameters": {
+                "public_title": "Síntesis científica integrada",
+                "evidence_model": "explicit hierarchy without aggregate score",
+                "primary_candidate_program": "M5",
+                "year_reproducible_module": "M10",
+                "coverage_limited_module": "M2",
+            },
+        },
     }
 
     outputs = {

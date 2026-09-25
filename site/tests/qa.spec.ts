@@ -36,12 +36,23 @@ const routes = [
   ['/results/validation', /piel aislada|validación/i],
   ['/results/genes', /Explora genes priorizados/i],
   ['/results/genes/VIT_12s0028g00860', /VIT_12s0028g00860/i],
+  ['/results/synthesis', /Programas de coexpresión durante la maduración/i],
   ['/methods', /Cómo se construyó la evidencia/i],
   ['/reproducibility', /Audita un resultado hasta su fuente/i],
   ['/status/t008', /Estado del reprocesamiento moderno/i],
   ['/search', /Encuentra un resultado/i],
   ['/ask', /Pregúntale al proyecto/i],
 ] as const
+
+test('scientific synthesis uses a public title and exposes the complete documents', async ({ page }) => {
+  await page.goto(url('/results/synthesis'))
+  await waitForStablePage(page)
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Programas de coexpresión')
+  await expect(page.getByText('M5 es el programa candidato con mayor convergencia de evidencia.')).toBeVisible()
+  await expect(page.getByText(/T-009/i)).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Leer en HTML' })).toHaveAttribute('href', /scientific-synthesis-manuscript\.html$/)
+  await expect(page.getByRole('link', { name: /Abrir informe PDF/i })).toHaveAttribute('href', /complete-technical-analysis\.pdf$/)
+})
 
 function url(route: string) {
   return `.#${route}`

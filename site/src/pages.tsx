@@ -428,6 +428,20 @@ export function ResultsLandingPage() {
 
       <DataState loading={loading} error={error} />
 
+      <section className="results-secondary-path">
+        <div>
+          <p className="eyebrow">Lectura integrada</p>
+          <h2>Síntesis científica del estudio</h2>
+          <p>
+            Conecta robustez anual, función, hubs, validación externa y reprocesamiento moderno
+            en una conclusión calibrada y lista para lectura.
+          </p>
+        </div>
+        <ButtonLink variant="primary" to="/results/synthesis">
+          Leer síntesis
+        </ButtonLink>
+      </section>
+
       <section className="results-destination-grid" aria-label="Áreas de resultados">
         <ActionCard to="/results/modules" featured className="results-destination-card results-destination-card--primary">
           <div>

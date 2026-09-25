@@ -51,6 +51,7 @@ export default function SiteShell() {
   const showResultsContext =
     inResults &&
     pathname !== '/results' &&
+    pathname !== '/results/synthesis' &&
     !moduleId &&
     !geneId
 
@@ -289,7 +290,8 @@ export default function SiteShell() {
             <span>Visualización científica con datos canónicos y trazabilidad reproducible.</span>
           </div>
           <nav className="footer-links" aria-label="Enlaces del proyecto">
-            <Link to="/status/t008">Estado T-008</Link>
+            <Link to="/results/synthesis">Síntesis científica</Link>
+            <Link to="/status/t008">Reprocesamiento moderno</Link>
             <Link to="/search">Buscar</Link>
             <a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a>
           </nav>

@@ -83,6 +83,14 @@ const CLAIMS: EvidenceClaim[] = [
     route: '/status/t008',
     boundary: 'La preservación moderada se limita al núcleo con equivalencia recíproca; no cubre genes no mapeados ni demuestra causalidad.',
   },
+  {
+    id: 'integrated-synthesis',
+    title: 'Síntesis científica integrada',
+    description: 'Jerarquía final de evidencia, informe técnico y manuscrito con conclusiones calibradas.',
+    artifactIds: ['integrated_synthesis'],
+    route: '/results/synthesis',
+    boundary: 'La convergencia de capas prioriza seguimiento experimental; no constituye un score causal ni una prueba de grosor de piel.',
+  },
 ]
 
 function githubUrl(path: string, commit: string | null) {

@@ -1042,6 +1042,276 @@ code, pre, kbd, samp { font-family: var(--font-mono); }
   }
 }
 
+/* Integrated scientific synthesis */
+.synthesis-page {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.synthesis-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+  gap: var(--space-6);
+  align-items: end;
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--color-border-default);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(126, 47, 77, .12), transparent 34%),
+    linear-gradient(150deg, var(--color-surface-primary), var(--color-surface-secondary));
+  box-shadow: var(--shadow-soft);
+}
+
+.synthesis-hero h1 {
+  max-width: 900px;
+  margin: var(--space-2) 0 var(--space-3);
+  color: var(--color-text-strong);
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 5.4vw, 4.9rem);
+  line-height: .98;
+  letter-spacing: -.035em;
+}
+
+.synthesis-hero > div > p:last-of-type {
+  max-width: var(--layout-reading);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.65;
+}
+
+.synthesis-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.synthesis-hero aside {
+  padding: var(--space-5);
+  border-left: 3px solid var(--color-brand-primary);
+  background: rgba(255, 255, 255, .72);
+}
+
+.synthesis-hero aside span,
+.synthesis-download-grid article > span {
+  color: var(--color-brand-primary);
+  font-size: var(--text-micro);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.synthesis-hero aside strong {
+  display: block;
+  margin: var(--space-2) 0;
+  color: var(--color-text-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.2;
+}
+
+.synthesis-hero aside p,
+.synthesis-section-heading > p:last-child {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.synthesis-section {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.synthesis-section-heading {
+  max-width: var(--layout-reading);
+}
+
+.synthesis-section-heading h2 {
+  margin: var(--space-1) 0;
+  color: var(--color-text-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.synthesis-section-heading > p:last-child {
+  margin-bottom: 0;
+}
+
+.synthesis-priority-grid,
+.synthesis-download-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.synthesis-priority-card,
+.synthesis-download-grid article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--panel-padding);
+  border: 1px solid var(--color-border-default);
+  border-radius: 14px;
+  background: var(--color-surface-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.synthesis-priority-card--lead {
+  border-color: rgba(107, 41, 66, .28);
+  background: linear-gradient(155deg, rgba(126, 47, 77, .07), transparent 58%), var(--color-surface-primary);
+}
+
+.synthesis-priority-card > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.synthesis-priority-card > div:first-child > strong {
+  color: var(--color-brand-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+.synthesis-priority-card h3,
+.synthesis-download-grid h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: var(--text-xl);
+}
+
+.synthesis-priority-card > p,
+.synthesis-download-grid p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.synthesis-priority-card dl {
+  display: grid;
+  gap: var(--space-2);
+  margin: auto 0 0;
+}
+
+.synthesis-priority-card dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.synthesis-priority-card dt {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+.synthesis-priority-card dd {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-weight: 800;
+}
+
+.synthesis-priority-card > a,
+.synthesis-download-grid article div > a:not(.button) {
+  color: var(--color-brand-primary);
+  font-size: var(--text-small);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.synthesis-evidence {
+  padding: clamp(24px, 4vw, 44px);
+  border-radius: 18px;
+  color: var(--color-text-inverse);
+  background: var(--color-brand-deep);
+}
+
+.synthesis-evidence .eyebrow,
+.synthesis-evidence .synthesis-section-heading p {
+  color: rgba(255, 255, 255, .72);
+}
+
+.synthesis-evidence h2 {
+  color: white;
+}
+
+.synthesis-evidence ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.synthesis-evidence li {
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, .24);
+}
+
+.synthesis-evidence li > span {
+  color: rgba(255, 255, 255, .58);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+}
+
+.synthesis-evidence li strong {
+  display: block;
+  margin: var(--space-2) 0;
+  font-size: var(--text-small);
+}
+
+.synthesis-evidence li p {
+  margin: 0;
+  color: rgba(255, 255, 255, .76);
+  font-size: var(--text-small);
+  line-height: 1.55;
+}
+
+.synthesis-download-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.synthesis-download-grid article div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+@media (max-width: 980px) {
+  .synthesis-hero,
+  .synthesis-priority-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .synthesis-evidence ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .synthesis-hero {
+    padding: var(--space-4);
+  }
+
+  .synthesis-hero h1 {
+    font-size: clamp(2.15rem, 12vw, 3.3rem);
+  }
+
+  .synthesis-evidence ol,
+  .synthesis-download-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .synthesis-download-grid .button {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

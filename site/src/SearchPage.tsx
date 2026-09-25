@@ -10,6 +10,7 @@ const destinations = [
   { label: 'Validación', description: 'Evidencia externa en piel', to: '/results/validation', keywords: 'validacion piel gse72421 prjna260535 externo' },
   { label: 'Métodos', description: 'Diseño, red, estadística y scripts', to: '/methods', keywords: 'metodos diseño beta estadistica scripts cemitool' },
   { label: 'Reproducibilidad', description: 'Claims, archivos, scripts y hashes', to: '/reproducibility', keywords: 'evidencia reproducibilidad provenance archivos scripts hash' },
+  { label: 'Síntesis científica', description: 'Conclusiones integradas y documentos completos', to: '/results/synthesis', keywords: 'sintesis informe manuscrito conclusion integrada m5 m10 m2' },
   { label: 'T-008', description: 'Estado del reprocesamiento moderno', to: '/status/t008', keywords: 't008 salmon fastq reprocesamiento qc status' },
   { label: 'Preguntar', description: 'Asistente grounded del proyecto', to: '/ask', keywords: 'chat preguntar asistente gemini rag' },
 ]
