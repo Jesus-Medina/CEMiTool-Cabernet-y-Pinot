@@ -9,7 +9,7 @@ output:
     number_sections: true
     df_print: paged
   word_document:
-    toc: true
+    toc: false
     number_sections: true
   pdf_document:
     toc: true
@@ -293,8 +293,8 @@ This document is a computational analysis report, not a substitute for biologica
 This section is an additional statistical layer performed after construction of the beta-10 CEMiTool network. It is not part of the native CEMiTool report and is not stored inside the CEMiTool object.
 
 ```{r post-cemitool-load, echo=FALSE, message=FALSE, warning=FALSE}
-stats_dir <- "C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool_GITHUB_SYNC/results/module_statistics_beta10"
-cmp_dir <- "C:/Users/jesus/OneDrive/Documentos/Cata/CEMiTool_GITHUB_SYNC/results/comparisons"
+stats_dir <- file.path(project_dir, "results", "module_statistics_beta10")
+cmp_dir <- file.path(project_dir, "results", "comparisons")
 rd <- function(x) read.delim(x, sep="\t", header=TRUE, stringsAsFactors=FALSE, check.names=FALSE)
 anova <- rd(file.path(stats_dir, "module_factorial_ANOVA_typeIII.tsv"))
 inter <- rd(file.path(stats_dir, "significant_cultivar_stage_interactions_FDR05.tsv"))
@@ -389,9 +389,9 @@ if (nrow(year_sig)) {
 }
 ```
 
-This supports keeping 2012, 2013 and 2014 explicit. The current additive model adjusts for Year but does not yet test whether the Cultivar x Stage pattern itself is stable across years.
+This supports keeping 2012, 2013 and 2014 explicit. The completed robustness layer below tests whether the Cultivar x Stage pattern is stable across years.
 
-## Interpretation boundaries and next step
+## Interpretation boundaries
 
 - GSE98923 is berry pericarp, not isolated skin.
 - There is no direct skin-thickness phenotype in this dataset.
@@ -399,12 +399,128 @@ This supports keeping 2012, 2013 and 2014 explicit. The current additive model a
 - Several modules have a significant Year effect.
 - The baseline uses the historical GEO RPKM matrix.
 
-The next planned statistical test is:
-
-```text
-Eigengene ~ Cultivar * Stage * Year
-```
-
-followed by Cabernet-versus-Pinot contrasts within each Stage x Year combination. Modules that remain robust can then proceed to functional annotation, hub-gene prioritization and skin-only validation.
+The subsequent layers use `Eigengene ~ Cultivar * Stage * Year`, functional annotation, hub prioritization, skin-only external comparison and modern raw-read reprocessing. They remain observational and do not convert module association into phenotype causality.
 
 <!-- END POST_CEMITOOL_MODULE_STATISTICS -->
+
+<!-- BEGIN T009_INTEGRATED_EVIDENCE -->
+
+# Integrated evidence from T-004 through T-008
+
+This section connects the vintage, functional, candidate-gene, external-validation and modern-processing layers. Each statement is derived from the canonical machine-readable files loaded below. The historical beta-10 network remains unchanged.
+
+```{r t009-load, echo=FALSE, message=FALSE, warning=FALSE}
+rdp <- function(...) read.delim(file.path(project_dir, ...), sep="\t", header=TRUE, stringsAsFactors=FALSE, check.names=FALSE)
+year_class <- rdp("results", "year_robustness_beta10", "priority_module_classification.tsv")
+year_consistency <- rdp("results", "year_robustness_beta10", "stage_year_consistency.tsv")
+mapman_hits <- rdp("results", "functional_enrichment_beta10", "v3_mapman_global_FDR05_hits.tsv")
+go_qc <- rdp("results", "go_ora_beta10", "go_annotation_and_test_qc.tsv")
+go_hits <- rdp("results", "go_ora_beta10", "go_global_FDR05_hits.tsv")
+m5_hubs <- rdp("results", "hub_prioritization_beta10", "m5_focus_genes.tsv")
+m10_m2_hubs <- rdp("results", "hub_prioritization_beta10", "m10_m2_focus_genes.tsv")
+external_hubs <- rdp("results", "external_skin_validation_beta10", "primary_external_condition_hubs.tsv")
+modern_qc <- rdp("results", "fastq_reprocessing_t008", "modern_matrix_qc.tsv")
+preservation <- rdp("results", "fastq_reprocessing_t008", "modern_preservation", "module_preservation_summary.tsv")
+priority <- c("M5", "M10", "M2", "M3", "M1")
+```
+
+## T-004: robustness across vintages
+
+The full model was `Eigengene ~ Cultivar * Stage * Year`. M10 met the prespecified module-level reproducibility rule. M5, M2, M3 and M1 were year-dependent under at least one criterion, but M5 Harvest and M2 Veraison/Harvest retained the same Cabernet-minus-Pinot direction and passed global FDR in all three years. M3 Harvest was dominated in magnitude by 2013, and M1 was not established as stable.
+
+```{r t009-year-table}
+x <- year_class[match(priority, year_class$Module), c("Module", "Classification", "Stages_with_2plus_year_FDR_hits", "Single_year_dominant_stages", "Detected_direction_reversal")]
+names(x) <- c("Module", "Classification", "Repeated stage", "Single-year dominant", "Sign reversal")
+knitr::kable(x, caption="Vintage-robustness classification of the five interaction modules.")
+```
+
+```{r t009-m5-profile, fig.cap="M5 observed eigengene means and biological-replicate standard errors by stage, cultivar and year. Inferential contrasts come from the full factorial model."}
+knitr::include_graphics(file.path(project_dir, "results", "year_robustness_beta10", "profiles", "M5_stage_by_year.png"))
+```
+
+## T-005 and T-005A: functional enrichment and ontology audit
+
+MapMan v3 was the primary annotation layer because it covered 2,608 of 3,050 beta-10 genes. M5 was globally enriched for phenolic/stilbenoid and PAL categories. Newer v5.1 labels assigned several of the same chromosome-16 genes to CHS/flavonoid categories, so the exact CHS-versus-STS identity remains unresolved.
+
+The official 2026-07-26 Gene Ontology audit identified 390 obsolete IDs among 3,556 represented Grapedia terms. After filtering, the annotated background remained 519 genes and all six global-FDR GO hits occurred in M9. Sparse coverage prevents treating the absence of GO hits in M5, M10, M2, M3 or M1 as biological absence.
+
+```{r t009-mapman-table}
+x <- mapman_hits[mapman_hits$Module == "M5", c("TermID", "TermName", "Overlap_k", "Fold_enrichment", "FDR_global_module_terms")]
+x <- head(x[order(x$FDR_global_module_terms), ], 7)
+x$TermName <- c(
+  "Stilbenoid biosynthesis", "Phenolics", "Secondary metabolism",
+  "PAL", "PAL activity", "p-coumaroyl-CoA biosynthesis",
+  "p-coumaroyl-CoA biosynthesis"
+)[seq_len(nrow(x))]
+x$Fold_enrichment <- round(x$Fold_enrichment, 2)
+x$FDR_global_module_terms <- format(x$FDR_global_module_terms, scientific=TRUE, digits=3)
+names(x) <- c("Term", "MapMan category", "Hits", "Fold", "Global FDR")
+knitr::kable(x, caption="Leading globally significant MapMan v3 terms in M5.")
+```
+
+## T-006: hub-gene prioritization
+
+Intramodular connectivity was calculated on the frozen beta-10 adjacency. Eight of the 11 M5 top-decile hubs belong to the chromosome-16 family with conflicting STS/CHS labels. A copper amine oxidase candidate ranked fifth and a NAC-domain transcription-factor candidate ranked seventh; PAL genes were enriched at module level but were not in the top 11. M10 prioritized a bHLH candidate and a HAK/KUP/KT transporter. M2 prioritized MYB- and FAR1-labeled candidates, while recurrent exact zeros require mapping- and structure-aware interpretation.
+
+```{r t009-m5-hubs}
+x <- m5_hubs[m5_hubs$Top_decile_kWithin, c("Gene", "Rank_kWithin", "kWithin", "V3_stilbenoid_label", "V5_CHS_label", "V3_NAC_label", "Harvest_same_direction_all_years")]
+x$kWithin <- round(x$kWithin, 2)
+x$Evidence <- paste0(
+  ifelse(x$V3_stilbenoid_label, "v3-STS ", ""),
+  ifelse(x$V5_CHS_label, "v5-CHS ", ""),
+  ifelse(x$V3_NAC_label, "NAC", "")
+)
+x <- x[, c("Gene", "Rank_kWithin", "kWithin", "Evidence")]
+names(x) <- c("Gene", "Rank", "kWithin", "Annotation evidence")
+knitr::kable(x, caption="M5 top-decile intramodular hubs and selected annotation evidence.")
+```
+
+## T-007: external skin-only expression support
+
+GSE72421 and PRJNA260535 were analyzed as independent skin-only evidence, not as additional GSE98923 replicates. In GSE72421 well-watered skin, 11 of 11 evaluable M5 hubs passed BH correction within the predefined 37-hub set and matched the stable Harvest direction. In PRJNA260535 at 24 degrees Brix, four of seven evaluable M5 hubs passed. CuAO- and NAC-labeled M5 candidates agreed in both sources. M10 support was limited, whereas selected M2 MYB and FAR1 candidates agreed but had incomplete RNA-seq coverage.
+
+```{r t009-external-summary}
+x <- aggregate(cbind(Assayed=external_hubs$Assayed, Significant=!is.na(external_hubs$BH_prespecified_top37) & external_hubs$BH_prespecified_top37 < 0.05) ~ Dataset + Condition + Module, data=external_hubs, FUN=sum)
+x <- x[x$Dataset %in% c("GSE72421", "PRJNA260535"), ]
+knitr::kable(x, caption="Evaluable and BH-supported predefined hubs in the two primary external comparisons.")
+```
+
+## T-008: modern raw-read processing and module preservation
+
+All 54 FASTQ and Salmon outputs passed integrity and quantification checks. The modern matrix contains 47,971 genes and 54 samples. Preservation used only 1,922 audited reciprocal one-to-one legacy-to-v5.1 mappings and fixed historical memberships.
+
+```{r t009-preservation-table}
+x <- preservation[match(c("M1", "M5", "M10", "M2", "M3"), preservation$Module), c("Module", "Total_beta10_genes", "Mapped_genes", "Mapped_fraction", "Modern_vs_canonical_full_PC1_Pearson", "Adjacency_beta10_Spearman", "Zsummary_preservation", "Preservation_class")]
+x$Mapped_fraction <- sprintf("%.1f%%", 100*x$Mapped_fraction)
+x$Modern_vs_canonical_full_PC1_Pearson <- round(x$Modern_vs_canonical_full_PC1_Pearson, 3)
+x$Adjacency_beta10_Spearman <- round(x$Adjacency_beta10_Spearman, 3)
+x$Zsummary_preservation <- round(x$Zsummary_preservation, 2)
+names(x) <- c("Module", "Genes", "Mapped", "Coverage", "Eigengene r", "Adjacency rho", "Zsummary", "Class")
+knitr::kable(x, caption="Fixed-membership preservation against modern read reprocessing.")
+```
+
+```{r t009-preservation-figure, fig.cap="WGCNA module-preservation Zsummary statistics. Coverage and mapping ambiguity must be considered together with Zsummary."}
+knitr::include_graphics(file.path(project_dir, "results", "fastq_reprocessing_t008", "modern_preservation", "module_preservation_zsummary.png"))
+```
+
+M1 was strongly preserved. M5, M10 and M2 showed moderate preservation of their mapped cores with eigengene correlations of 0.986--0.998. M2 mapped only 81 of 214 genes, so the complete module is not declared preserved. M3 preservation was not supported.
+
+# Integrated interpretation
+
+M5 has the strongest convergent evidence: the largest cultivar-by-stage interaction, a repeated Harvest direction across vintages, coherent phenolic-pathway enrichment, externally supported hubs and moderate mapped-core preservation after modern reprocessing. M10 has the strongest module-level vintage reproducibility but less functional and external support. M2 retains repeated Veraison and Harvest contrasts and a preserved mapped core, but limited mapping coverage and exact-zero patterns require structural and reference-aware follow-up. M3 and M1 remain lower-confidence biological priorities despite specific statistical or technical signals.
+
+# Final limitations
+
+- The primary material is berry pericarp, not isolated skin.
+- No analyzed dataset measures berry skin thickness.
+- Cultivar is entangled with clone, rootstock and planting history in the original field system.
+- External sources differ in year, condition, developmental definition and platform.
+- MapMan and GO coverage are incomplete, and duplicated CHS/STS-family genes remain ambiguous.
+- Reciprocal one-to-one mapping excludes ambiguous genes and therefore underrepresents some families.
+- Coexpression, enrichment, hub status, external concordance and preservation are not causal evidence.
+
+# Final conclusion
+
+The project supports cultivar-associated developmental transcriptional programs in grape berry pericarp. M5 is the leading integrated candidate program, M10 is the clearest year-reproducible module, and M2 warrants mapping- and structure-aware follow-up. No current result demonstrates that a module or gene causes thick or thin berry skin.
+
+<!-- END T009_INTEGRATED_EVIDENCE -->

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-25 — T-009 integrated report and manuscript completed
+
+- Added a reproducible integration workflow for T-004--T-008 with invariant checks, preservation of prior renders and separate technical-report and manuscript outputs.
+- Rendered the cumulative technical report and scientific manuscript as HTML, DOCX and PDF; validated required claims, structure, tables, figures and every rendered page.
+- Added a nine-claim evidence matrix, an 80-file supplementary manifest with MD5 hashes, integration QC and artifact validation under `results/integrated_report_t009/`.
+- Added three verified primary references and calibrated the final narrative around M5 convergence, M10 year reproducibility and the mapped-core-only interpretation of M2.
+- Retained explicit limits for pericarp tissue, absent skin-thickness phenotype, field-system confounding, external-study differences, GO coverage, CHS/STS identity, ambiguous mapping and causality.
+
 ## 2026-09-24 — T-008 modern FASTQ reprocessing completed
 
 - Validated all 54 selected FASTQ and Salmon 1.12.1 quantifications against frozen ENA sizes/MD5/read counts, the audited T2T v5.1 reference and the full 56.910-transcript target set; no raw reads were deleted.

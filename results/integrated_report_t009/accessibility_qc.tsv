@@ -1,0 +1,3 @@
+Artifact	High	Medium	Low	Action	Result
+reports/current/analysis_report.docx	0	0	0	Added descriptive alternative text to 17 embedded images and repeated full visual validation	PASS
+manuscript/article_draft.docx	0	0	3	Retained three canonical DOI hyperlinks as explicit URLs for reproducible citation resolution	PASS_WITH_DOCUMENTED_LOW_FINDINGS

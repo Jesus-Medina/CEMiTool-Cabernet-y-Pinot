@@ -1,0 +1,7 @@
+Artifact	Format	Bytes	Pages	Structural_check	Text_check	Visual_check	Result
+reports/current/analysis_report.html	html	12235378	NA	Rendered by rmarkdown/Pandoc 3.10	Required integrated phrases present	Browser-independent HTML output generated	PASS
+reports/current/analysis_report.docx	docx	8108427	31	ZIP package valid; 163 paragraphs; 20 tables; 19 media objects; 17 embedded images have alternative text	Required integrated phrases present	All pages exported read-only by Microsoft Word and visually inspected after accessibility patch	PASS
+reports/current/analysis_report.pdf	pdf	8201514	36	Readable by pypdf and Poppler	Required integrated phrases present	All pages rasterized and visually inspected	PASS
+manuscript/article_draft.html	html	716158	NA	Rendered by rmarkdown/Pandoc 3.10	Required integrated phrases present	Browser-independent HTML output generated	PASS
+manuscript/article_draft.docx	docx	44665	8	ZIP package valid; 58 paragraphs; 3 tables; 2 media objects	Required integrated phrases present	All pages exported read-only by Microsoft Word and visually inspected	PASS
+manuscript/article_draft.pdf	pdf	74037	8	Readable by pypdf and Poppler	Required integrated phrases present	All pages rasterized and visually inspected	PASS

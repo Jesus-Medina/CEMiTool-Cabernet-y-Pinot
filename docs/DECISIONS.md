@@ -227,3 +227,15 @@ that its biology is absent. See `docs/T005A_GO_ORA_ONTOLOGY_AUDIT.md`.
 **Reason:** la correspondencia de IDs es incompleta y desigual. En el núcleo comparable, M5, M10 y M2 obtienen Zsummary 7,495, 3,735 y 7,453, correlaciones de eigengene 0,986–0,998 y preservación direccional de 8/9, 8/9 y 9/9 celdas Stage×Year. M2 solo mapea 81/214 genes; llamar preservado al módulo completo ocultaría esa incertidumbre.
 
 **Boundary:** “preservación moderada” describe el subconjunto mapeable y su estructura observada, no los genes sin equivalencia, una identidad CHS/STS, una expansión familiar, causalidad, especificidad de piel ni grosor de piel. Los ceros M2 reproducidos siguen admitiendo explicaciones de paralogía, referencia, CNV o biología real.
+
+---
+
+## D-018 — Integrar la evidencia como jerarquía, no como score ni mecanismo
+
+**Status:** active after T-009 (2026-09-25).
+
+**Decision:** sintetizar las capas validadas por convergencia explícita de evidencia, manteniendo visible qué pregunta responde cada una. M5 es el programa candidato integrado principal; M10 es la señal prioritaria con reproducibilidad modular entre años; M2 se interpreta como núcleo mapeable preservado con una frontera estricta de cobertura. No se calcula un score total y una capa positiva no reemplaza una capa negativa o incompleta.
+
+**Reason:** M5 reúne la interacción Cultivar × Stage más fuerte, dirección Harvest repetida, enriquecimiento MapMan coherente, hubs con apoyo externo y preservación moderna moderada. M10 cumple la regla de reproducibilidad anual pero tiene apoyo funcional/externo más limitado. M2 mantiene contrastes Veraison/Harvest y preservación del núcleo, pero solo 81/214 genes mapean y persisten ceros compatibles con explicaciones estructurales o de referencia. M3 no preserva su núcleo moderno y M1 no establece estabilidad anual del contraste aunque la estructura modular global sea fuerte.
+
+**Boundary:** esta jerarquía prioriza seguimiento experimental. No prueba CHS frente a STS, regulación directa, especificidad de piel, grosor de piel ni causalidad. Ver `docs/T009_INTEGRATED_REPORT.md` y `results/integrated_report_t009/claim_evidence_matrix.tsv`.

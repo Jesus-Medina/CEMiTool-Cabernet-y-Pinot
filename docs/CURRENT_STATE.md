@@ -1,6 +1,6 @@
 # Current state
 
-Last consolidated context update: 2026-09-24.
+Last consolidated context update: 2026-09-25.
 
 ## Repository
 
@@ -128,10 +128,13 @@ T-007 está **DONE** como validación observacional de expresión; el registro r
 
 T-008 está **DONE**. Las mismas 54 corridas single-end pasaron tamaño/MD5/gzip/recuento completo, QC por lectura y Salmon 1.12.1; el mapeo fue 79,18–88,76 %. Las matrices modernas contienen 47.971 genes × 54 muestras y usan recuentos estimados, factores de tamaño por mediana de cocientes y `log2(normalizado + 1)` para la comparación. En los 1.922 genes beta10 con equivalencia recíproca v1→T2T v5.1, M5 (76/108; Zsummary 7,495), M10 (21/39; 3,735) y M2 (81/214; 7,453) muestran preservación moderada del núcleo mapeable, con correlaciones de eigengene 0,986–0,998. M2 conserva solo 37,9 % de sus genes, de modo que no se declara preservado el módulo completo. Los contrastes Harvest M5 y los ceros extremos M2 reaparecen, pero siguen abiertos CHS/STS, paralogía, variación estructural y sesgo de referencia. El baseline `log2(RPKM+1)` y las redes beta10/beta7 no se reemplazaron. Ver `docs/T008_RAW_REPROCESSING.md`.
 
+### T-009 integrated scientific report and manuscript
+
+T-009 está **DONE**. `scripts/post/30_t009_integrated_report.R` integra T-004--T-008 en el informe técnico acumulativo y en un manuscrito científico, ambos disponibles en HTML, DOCX y PDF. Las versiones previas quedaron archivadas. `results/integrated_report_t009/` contiene una matriz de nueve afirmaciones con evidencia y límites, un manifiesto de 80 archivos suplementarios con MD5, QC de integración y validación de artefactos. Los seis formatos pasaron comprobación de contenido y estructura; se inspeccionaron visualmente 36 páginas del PDF técnico, 8 del PDF manuscrito, 31 páginas del DOCX técnico y 8 del DOCX manuscrito. La síntesis prioriza M5 por convergencia de evidencia, distingue la reproducibilidad modular de M10 y restringe M2 a su núcleo mapeable. No cambia muestras, matrices, redes ni inferencias causales. Ver `docs/T009_INTEGRATED_REPORT.md`.
+
 ## Immediate pending work
 
-1. T-009: integrar T-004 a T-008, sus figuras, resultados y límites en el informe/manuscrito final.
-2. T-010/WEB-012: preparar una versión estable del explorador una vez integrada y revisada la narrativa final.
+1. T-010/WEB-012: sincronizar la narrativa integrada de T-009 con el explorador y preparar una versión estable etiquetada.
 
 ## Important boundary
 

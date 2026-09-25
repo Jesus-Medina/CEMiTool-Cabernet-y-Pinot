@@ -293,11 +293,13 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-009 — Final integrated scientific report/manuscript
 
-**Status:** ACTIVE; next scientific task after T-008.
+**Status:** DONE (2026-09-25).
 
 **Goal:** assemble methods, diagnostics, results, validation, limitations, figures and supplementary files into a publication-quality narrative.
 
 **No result should be promoted to a strong mechanistic conclusion unless its evidence layer has actually been completed.**
+
+**Acceptance verification:** `scripts/post/30_t009_integrated_report.R` validates and integrates T-004--T-008 without rerunning CEMiTool, archives the prior report/manuscript, and renders the technical report and scientific manuscript in HTML, DOCX and PDF. All six artifacts passed format, content, structural and visual checks; `results/integrated_report_t009/` records nine claim-to-evidence links, an 80-file supplementary manifest with MD5 hashes, integration QC and artifact validation. The narrative identifies M5 as the leading integrated program, M10 as the clearest module-level year-reproducible signal and M2 as a preserved mapped core only. Pericarp, absent thickness phenotype, cultivar confounding, external-platform differences, sparse GO coverage, CHS/STS ambiguity, mapping coverage and non-causality limits remain explicit. Full record: `docs/T009_INTEGRATED_REPORT.md`.
 
 
 ---

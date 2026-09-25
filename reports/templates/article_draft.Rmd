@@ -1,14 +1,19 @@
 ---
-title: "[Manuscript title]"
-author:
-  - "[Author 1]"
-  - "[Author 2]"
+title: "Developmental coexpression programs distinguish Cabernet Sauvignon and Pinot noir berry pericarp"
+subtitle: "An integrated analysis across vintages, functional annotation, skin-only validation and modern read reprocessing"
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
 bibliography: references.bib
+link-citations: true
 output:
+  html_document:
+    toc: true
+    number_sections: true
   word_document:
     toc: false
+    number_sections: true
   pdf_document:
+    toc: true
+    number_sections: true
     latex_engine: xelatex
 fontsize: 11pt
 geometry: margin=1in
@@ -20,89 +25,149 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.align = "center",
-  out.width = "88%"
+  out.width = "88%",
+  dpi = 180
 )
 
-project_dir <- normalizePath("..", winslash = "/", mustWork = TRUE)
+project_dir <- Sys.getenv("CEMITOOL_PROJECT_DIR", unset = "")
+if (!nzchar(project_dir)) project_dir <- normalizePath("..", winslash = "/", mustWork = TRUE)
+project_dir <- normalizePath(project_dir, winslash = "/", mustWork = TRUE)
+rd <- function(...) read.delim(file.path(project_dir, ...), sep = "\t", stringsAsFactors = FALSE, check.names = FALSE)
 
-samples <- read.delim(
-  file.path(project_dir, "data/metadata/samples.tsv"),
-  sep = "\t",
-  stringsAsFactors = FALSE,
-  check.names = FALSE
-)
+samples <- rd("data", "metadata", "samples.tsv")
+expr <- readRDS(file.path(project_dir, "data", "processed", "expression_log2rpkm.rds"))
+interactions <- rd("results", "module_statistics_beta10", "significant_cultivar_stage_interactions_FDR05.tsv")
+stage_contrasts <- rd("results", "module_statistics_beta10", "significant_cabernet_vs_pinot_stage_contrasts_FDR05.tsv")
+year_class <- rd("results", "year_robustness_beta10", "priority_module_classification.tsv")
+mapman_hits <- rd("results", "functional_enrichment_beta10", "v3_mapman_global_FDR05_hits.tsv")
+go_qc <- rd("results", "go_ora_beta10", "go_annotation_and_test_qc.tsv")
+m5_hubs <- rd("results", "hub_prioritization_beta10", "m5_focus_genes.tsv")
+m10_m2_hubs <- rd("results", "hub_prioritization_beta10", "m10_m2_focus_genes.tsv")
+external_hubs <- rd("results", "external_skin_validation_beta10", "primary_external_condition_hubs.tsv")
+modern_qc <- rd("results", "fastq_reprocessing_t008", "modern_matrix_qc.tsv")
+preservation <- rd("results", "fastq_reprocessing_t008", "modern_preservation", "module_preservation_summary.tsv")
 
-expr <- readRDS(
-  file.path(project_dir, "data/processed/expression_log2rpkm.rds")
-)
-
-cem <- readRDS(
-  file.path(project_dir, "results/objects/cemitool.rds")
-)
-
-parameters <- readLines(
-  file.path(project_dir, "logs/parameters.txt")
-)
-
-param_value <- function(key) {
-  hit <- grep(paste0("^", key, "="), parameters, value = TRUE)
-  if (length(hit) == 0) return(NA_character_)
-  sub(paste0("^", key, "="), "", hit[[1]])
-}
+priority <- c("M5", "M10", "M2", "M3", "M1")
+format_sci <- function(x) format(x, scientific = TRUE, digits = 3)
 ```
 
 # Abstract
 
-[Write the final abstract after the biological results have been interpreted and verified.]
+We asked whether coexpression programs in berry pericarp differ between Cabernet Sauvignon and Pinot noir across development, remain detectable across three vintages, and retain support after functional annotation, external skin-only comparison and modern raw-read reprocessing. The primary analysis used a balanced subset of 54 GSE98923 samples spanning two cultivars, three stages, three years and three biological replicates per cell. A beta-10 CEMiTool network was retained as primary and beta 7 as sensitivity evidence. Module eigengenes were tested with `Eigengene ~ Cultivar * Stage + Year` and then with a full `Cultivar * Stage * Year` model. Five modules had a cultivar-by-stage interaction after Benjamini-Hochberg correction, led by M5. M10 met the prespecified module-level reproducibility rule; M5 and M2 were year-dependent overall but retained same-direction, significant cultivar contrasts in Harvest or Veraison/Harvest across all three years. M5 was enriched for phenolic, stilbenoid and PAL MapMan categories, although current annotation did not resolve chalcone synthase from stilbene synthase for the chromosome-16 hub family. Skin-only datasets supported expression differences for several predefined M5 hubs and for selected M2 candidates, but did not measure skin thickness. Reprocessing all 54 raw-read libraries with Salmon and a current T2T annotation preserved the mapped cores of M5, M10 and M2 moderately, with eigengene correlations of 0.986--0.998. These results support cultivar-associated developmental transcriptional programs, particularly M5, while leaving enzyme identity in duplicated families, tissue specificity, structural variation and causal links to skin traits unresolved.
 
 # Introduction
 
-[Add the literature-supported biological background, study rationale, and research question. Insert only verified references in `references.bib`.]
+Grapevine berry development involves coordinated transcriptional transitions around veraison and during ripening. GSE98923 provides a dense multi-year developmental series in Cabernet Sauvignon and Pinot noir and was originally used to characterize the timing of ripening-associated molecular events [@fasoli2018timing]. The present study asks a narrower question: which coexpression programs differ between the two cultivars as a function of developmental stage, and which of those differences survive explicit tests of vintage, annotation, external skin expression and modern preprocessing?
+
+The source tissue is berry pericarp after seed removal. It includes skin but is not an isolated-skin experiment. The dataset also lacks a direct skin-thickness phenotype. We therefore treat cuticle, cell-wall and phenylpropanoid signals as biological hypotheses and do not use cultivar identity as a proxy measurement for skin thickness.
 
 # Materials and Methods
 
-## Dataset and experimental design
+## Primary dataset and balanced design
 
-Publicly available expression data were obtained from GEO accession GSE98923. The baseline analysis used a balanced subset of **`r nrow(samples)` samples** comprising Cabernet Sauvignon and Pinot noir, three developmental stages (FruitSet, Veraison, and Harvest), three years (2012-2014), and three replicates per cultivar-stage-year combination.
+We selected **`r nrow(samples)` samples** from GSE98923: Cabernet Sauvignon and Pinot noir at FruitSet, Veraison and Harvest in 2012, 2013 and 2014, with three biological replicates in each cultivar-stage-year cell. The 219-sample source trajectory was not treated as additional replication because neighboring time points represent distinct developmental times [@fasoli2018timing].
 
-## Expression preprocessing
+## Historical expression baseline and network
 
-The processed RPKM matrix distributed with GSE98923 was used as the expression source. The selected expression matrix contained **`r nrow(expr)` genes** across **`r ncol(expr)` samples**. Values were transformed as \(\log_2(\mathrm{RPKM}+1)\) before co-expression analysis.
+The baseline used the processed GEO matrix transformed as `log2(RPKM + 1)`. CEMiTool filtering retained 3,050 genes. The network used Pearson correlation, an unsigned adjacency, signed TOM, minimum module size 30 and seed 1234. Beta 10 was selected as the primary compromise between scale-free fit and connectivity (R-squared 0.706); beta 7 was retained as a sensitivity network (R-squared 0.550). Module correspondence across networks was evaluated by shared gene membership rather than label identity.
 
-## Co-expression network analysis
+## Eigengene models and vintage robustness
 
-Gene co-expression analysis was performed in R using CEMiTool. Pearson correlation was used with an unsigned network and signed TOM. CEMiTool filtering was enabled with `filter_pval = 0.1`, `apply_vst = FALSE`, and a minimum module size of 30.
+Each beta-10 module eigengene was the sign-aligned first principal component of standardized module expression. The initial Type III model was `Eigengene ~ Cultivar * Stage + Year`, with sum-to-zero contrasts and Benjamini-Hochberg false-discovery-rate correction. The robustness model was `Eigengene ~ Cultivar * Stage * Year`. Cabernet-minus-Pinot contrasts were estimated separately within each stage-year cell. No sample was silently excluded; one flagged M5 observation was examined only in a declared sensitivity analysis.
 
-Automatic beta selection did not return a usable value in the initial baseline analysis. For reproducibility of the established baseline, the soft-thresholding power was fixed at **beta = 10** with `set_beta = 10` and `force_beta = FALSE`. This parameter is specific to the present sample set and preprocessing and should be re-evaluated if either changes. A random seed of 1234 was used.
+## Functional annotation and hub prioritization
 
-Software versions are provided in `logs/session_info.txt`.
+Module-wide overrepresentation used one-sided hypergeometric tests and global Benjamini-Hochberg correction. Grapedia MapMan v3 was primary because it annotated 2,608 of 3,050 beta-10 genes. T2T v5.1 MapMan and GO were secondary. The GO audit used the official 2026-07-26 ontology and removed 390 obsolete identifiers before testing. Intramodular connectivity was calculated on the frozen beta-10 adjacency as the sum of off-diagonal `|Pearson r|^10`; the top decile was used as a descriptive candidate set, not a significance test.
+
+## External skin-only validation
+
+Predefined M5, M10 and M2 candidates were compared with GSE72421 berry-skin microarray data at well-watered harvest and PRJNA260535 berry-skin RNA-seq at 24 degrees Brix [@ghan2015five; @ghan2017subnetworks]. These datasets were used as external observational validation and were not pooled with GSE98923. Missing source values were not imputed.
+
+## Modern raw-read reprocessing
+
+The 54 source FASTQ runs were checked against archived sizes and MD5 hashes, decompressed completely and quantified with Salmon 1.12.1 against the Grapedia PN40024 T2T v5.1 transcriptome. Estimated gene counts were normalized by median-ratio size factors and transformed as `log2(normalized count + 1)`. Preservation compared fixed historical module memberships only for 1,922 reciprocal one-to-one legacy-to-v5.1 gene mappings. WGCNA module preservation used an unsigned network, 200 permutations and seed 1234. This layer tests robustness to modern processing; it does not replace the historical baseline.
 
 # Results
 
-## Co-expression modules
+## Five modules showed cultivar-dependent developmental behavior
 
-CEMiTool identified **`r CEMiTool::nmodules(cem)` modules** in the baseline analysis.
+Five of ten biological modules passed FDR below 0.05 for the cultivar-by-stage interaction. M5 was strongest by more than 18 orders of magnitude relative to the next module.
 
-[Describe the biologically relevant module patterns after inspecting the module profiles, enrichment results, and hub genes. Avoid interpreting module function solely from visual appearance.]
+```{r interaction-table}
+x <- interactions[, c("Module", "F value", "p_value", "FDR")]
+x$p_value <- format_sci(x$p_value)
+x$FDR <- format_sci(x$FDR)
+knitr::kable(x, caption = "Beta-10 modules with a significant Cultivar x Stage interaction.")
+```
 
-## Figures
+The additive model estimated lower Cabernet Sauvignon eigengenes at Harvest for M5, M2, M10 and M3, and at Veraison for M2, M10 and M5. These are module-expression contrasts, not phenotypic effects.
 
-[Select only manuscript-relevant figures from `results/figures/`. The full technical report contains the complete analysis figure set.]
+## Vintage separated reproducible patterns from year-dependent effects
 
-## Tables
+M10 satisfied the prespecified module-level reproducibility rule. M5, M2, M3 and M1 were year-dependent under at least one criterion. Year dependence did not erase all repeated patterns: M5 Harvest and M2 Veraison/Harvest retained the same Cabernet-minus-Pinot direction and passed global FDR in all three years. M3 Harvest was dominated in magnitude by 2013, while M1 did not establish a stable cultivar-stage pattern.
 
-[Move the principal manuscript tables here. Complete machine-readable tables are stored under `results/tables/` and indexed in the supplementary manifest.]
+```{r year-priority-table}
+x <- year_class[match(priority, year_class$Module), c("Module", "Classification", "Stages_with_2plus_year_FDR_hits", "Single_year_dominant_stages", "Detected_direction_reversal")]
+names(x) <- c("Module", "Classification", "Repeated stage", "Single-year dominant", "Sign reversal")
+knitr::kable(x, caption = "Vintage-robustness classification for the five interaction modules.")
+```
+
+```{r m5-profile, fig.cap="Observed M5 eigengene means and biological-replicate standard errors by cultivar, stage and year. The inferential tests use the full factorial model rather than the plotted standard errors."}
+knitr::include_graphics(file.path(project_dir, "results", "year_robustness_beta10", "profiles", "M5_stage_by_year.png"))
+```
+
+## M5 carried the clearest functional signal, with unresolved CHS-STS identity
+
+MapMan v3 detected strong M5 enrichment for stilbenoid biosynthesis (18 of 93 annotated M5 genes; fold enrichment 26.57; global FDR `r format_sci(mapman_hits$FDR_global_module_terms[mapman_hits$Module == "M5" & mapman_hits$TermID == "9.2.3"])`) and PAL (7 genes; fold enrichment 24.54; global FDR `r format_sci(mapman_hits$FDR_global_module_terms[mapman_hits$Module == "M5" & mapman_hits$TermID == "9.2.1.1.1"])`). Eight of the 11 top M5 hubs belong to a chromosome-16 family labeled stilbenoid-related in v3 and CHS/flavonoid-related in v5.1. Shared protein domains do not distinguish CHS from STS activity, so the family cannot be assigned a single enzyme identity from these annotations.
+
+The corrected GO analysis retained 519 annotated background genes after obsolete-term filtering. All six global-FDR GO hits occurred in M9; M5, M10, M2, M3 and M1 had no global-FDR GO hit. Coverage was only 11.1% for M5 and 5.6% for M2, so absence of a GO hit is not evidence that these modules lack relevant biology. Prespecified cuticle/wax, pectin, cellulose/hemicellulose, lignin and anthocyanin themes were not globally enriched in the priority modules.
+
+## Hub ranking prioritized candidates without establishing mechanism
+
+M5's top-decile set contained 11 genes. The chromosome-16 family dominated the ranking, accompanied by a copper amine oxidase candidate (rank 5) and a NAC-domain transcription-factor candidate (rank 7). PAL genes were enriched at module level but were not among the 11 most connected M5 genes. M10 prioritized an annotated bHLH candidate and a HAK/KUP/KT transporter. M2 prioritized MYB- and FAR1-labeled candidates, while nine of its 22 top-decile genes had exact zeros in at least seven of nine Cabernet Harvest samples. Those zeros require caution because expression, paralogy, reference bias and structural variation remain competing explanations.
+
+## Independent skin datasets supported a subset of predefined hubs
+
+In GSE72421 well-watered skin, all 11 evaluable M5 hubs passed BH correction within the predefined 37-hub set and matched the stable primary Harvest direction. In PRJNA260535 at 24 degrees Brix, four of seven evaluable M5 hubs passed the same correction. The CuAO- and NAC-labeled M5 candidates agreed in both datasets. M10 had individual support only for its rank-1 bHLH in the microarray and that gene was filtered from the RNA-seq matrix. M2 MYB and FAR1 candidates agreed in both datasets, but only eight of 22 M2 hubs were evaluable in the filtered RNA-seq data.
+
+These results show expression concordance in isolated skin under different experiments. They do not make the pericarp network skin-specific and do not test skin thickness.
+
+## Modern reprocessing preserved the mapped cores of the leading modules
+
+All 54 FASTQ and Salmon runs passed integrity and quantification checks. Mapping ranged from `r sprintf("%.2f", as.numeric(modern_qc$Value[modern_qc$Metric == "Mapped_percent_min"]))`% to 88.76%, and the modern matrix contained 47,971 genes. Across reciprocal one-to-one genes, the median sample-level Spearman correlation between historical and modern profiles was 0.932.
+
+```{r preservation-table}
+x <- preservation[match(c("M1", "M5", "M10", "M2", "M3"), preservation$Module), c("Module", "Total_beta10_genes", "Mapped_genes", "Mapped_fraction", "Modern_vs_canonical_full_PC1_Pearson", "Adjacency_beta10_Spearman", "Zsummary_preservation", "Preservation_class")]
+x$Mapped_fraction <- sprintf("%.1f%%", 100 * x$Mapped_fraction)
+x$Modern_vs_canonical_full_PC1_Pearson <- round(x$Modern_vs_canonical_full_PC1_Pearson, 3)
+x$Adjacency_beta10_Spearman <- round(x$Adjacency_beta10_Spearman, 3)
+x$Zsummary_preservation <- round(x$Zsummary_preservation, 2)
+names(x) <- c("Module", "Genes", "Mapped", "Coverage", "Eigengene r", "Adjacency rho", "Zsummary", "Class")
+knitr::kable(x, caption = "Preservation against modern raw-read reprocessing for selected modules.")
+```
+
+```{r preservation-figure, fig.cap="WGCNA Zsummary preservation statistics for fixed beta-10 module memberships in the modern matrix. Coverage must be considered together with Zsummary."}
+knitr::include_graphics(file.path(project_dir, "results", "fastq_reprocessing_t008", "modern_preservation", "module_preservation_zsummary.png"))
+```
+
+M1 was strongly preserved. M5, M10 and M2 showed moderate preservation of their mapped cores and eigengene correlations of 0.986--0.998. M2 mapped only 81 of 214 genes (37.9%), so the whole module cannot be declared preserved. M3 had low coverage and unsupported preservation despite directional agreement in its mapped contrasts.
 
 # Discussion
 
-[Interpret the findings in relation to grape berry development and the relevant literature. Discuss limitations, including the use of processed RPKM values, the fixed beta = 10 baseline choice, the selected 54-sample baseline design, and any potential year/cultivar effects.]
+The combined evidence supports a hierarchy rather than a single definitive mechanism. M5 is the strongest cultivar-by-stage signal, repeats its Harvest direction across three years, carries coherent phenolic-pathway enrichment, contains highly connected candidates with external skin expression support, and retains a moderately preserved mapped core after modern reprocessing. This convergence makes M5 the leading program for follow-up. It does not identify a unique causal regulator or establish a skin-thickness mechanism.
+
+M10 is smaller but more reproducible at module level and moderately preserved in the modern matrix. Its functional interpretation remains limited because it lacks global MapMan enrichment and most hubs lack two-dataset external support. M2 shows unusually stable Veraison and Harvest module contrasts and a preserved mapped core, yet its low modern mapping coverage and recurrent exact-zero patterns make structural and reference-sensitive explanations especially important. M3 and M1 require lower-confidence interpretation: M3 lacks modern preservation support, while M1's significant additive interaction did not become a stable year-level cultivar pattern even though M1 as a whole was strongly preserved technically.
+
+The functional layer is constrained by annotation coverage and by duplicated phenylpropanoid families. MapMan v3 provides broad coverage but conflicts with v5.1 labels for several M5 chromosome-16 genes. The GO audit prevents obsolete identifiers from entering inference, but sparse GO coverage limits negative conclusions. Enzyme identity within the CHS-STS family will require sequence-aware orthology/paralogy analysis or direct biochemical evidence.
+
+Several design limits remain. GSE98923 sampled pericarp rather than isolated skin and did not measure skin thickness. Cultivar is also entangled with clone, rootstock and planting history in the original field system. External datasets differ in year, developmental definition, treatment and platform; their agreement is supportive rather than a replication of the primary factorial design. Finally, reciprocal one-to-one mapping intentionally excludes ambiguous genes, improving specificity at the cost of family coverage.
 
 # Conclusions
 
-[Write concise conclusions supported directly by the results.]
+The analysis identifies cultivar-associated developmental coexpression programs in grape berry pericarp that survive several independent checks. M5 has the strongest combined support, M10 has the clearest module-level year reproducibility, and M2 retains repeated stage-specific contrasts but needs structural and mapping-aware follow-up. The results justify targeted validation of these transcriptional programs. They do not demonstrate that any module or gene causes thick or thin berry skin.
 
 # Data and code availability
 
-The analysis uses public data from GEO accession GSE98923. The reproducible project contains the sample selection, processing scripts, exported results, software-session information, and a supplementary file manifest with MD5 checksums.
+The primary data are public under GEO GSE98923. External validation used GEO GSE72421 and SRA BioProject PRJNA260535. The repository preserves exact sample selection, analysis scripts, machine-readable result tables, source hashes, quality-control records and a supplementary manifest. The historical `log2(RPKM + 1)` beta-10 network remains the primary baseline; modern processing is retained as a separate robustness layer.
 
 # References
