@@ -109,7 +109,7 @@ export function HomePage() {
         <div className="home-v2-hero-copy">
           <p className="home-v2-kicker">Pregunta científica</p>
           <h1>
-            ¿Cómo difieren los programas de coexpresión entre{' '}
+            ¿Cómo difiere la coexpresión entre{' '}
             <span>Cabernet Sauvignon</span> y <span>Pinot noir</span> durante la maduración?
           </h1>
           <p className="home-v2-lede">

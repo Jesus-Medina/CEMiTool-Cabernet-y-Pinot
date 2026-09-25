@@ -47,7 +47,7 @@ export default function SynthesisPage() {
       <header className="synthesis-hero">
         <div>
           <p className="eyebrow">Síntesis científica integrada</p>
-          <h1>Programas de coexpresión durante la maduración de Cabernet Sauvignon y Pinot noir</h1>
+          <h1>Redes de coexpresión durante la maduración de Cabernet Sauvignon y Pinot noir</h1>
           <p>
             Una lectura conjunta de la red beta10, la robustez entre años, la función,
             los genes hub, la evidencia externa en piel y el reprocesamiento moderno.

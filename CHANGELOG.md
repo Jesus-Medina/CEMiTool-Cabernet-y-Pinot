@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-25 — Coexpression title terminology
+
+- Replaced the reader-facing Home title with `¿Cómo difiere la coexpresión entre Cabernet Sauvignon y Pinot noir durante la maduración?`.
+- Replaced the integrated synthesis title with `Redes de coexpresión durante la maduración de Cabernet Sauvignon y Pinot noir`.
+- Left all scientific content, values, interpretation and visual styling unchanged.
+
 ## 2026-09-25 — Stable public scientific explorer
 
 - Published the integrated study narrative as `Síntesis científica integrada`, avoiding internal task codes in the reader-facing title and navigation.

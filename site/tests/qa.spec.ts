@@ -26,7 +26,7 @@ const m5 = JSON.parse(readFileSync('public/data/m5_trajectory.json', 'utf8')) as
 const t008 = JSON.parse(readFileSync('public/data/t008_progress.json', 'utf8')) as T008Payload
 
 const routes = [
-  ['/', /¿Cómo difieren los programas de coexpresión/i],
+  ['/', /¿Cómo difiere la coexpresión/i],
   ['/results', /Elige qué dimensión quieres explorar/i],
   ['/results/modules', /Comparar los diez módulos/i],
   ['/results/modules/M5', /M5 · fenoles/i],
@@ -36,7 +36,7 @@ const routes = [
   ['/results/validation', /piel aislada|validación/i],
   ['/results/genes', /Explora genes priorizados/i],
   ['/results/genes/VIT_12s0028g00860', /VIT_12s0028g00860/i],
-  ['/results/synthesis', /Programas de coexpresión durante la maduración/i],
+  ['/results/synthesis', /Redes de coexpresión durante la maduración/i],
   ['/methods', /Cómo se construyó la evidencia/i],
   ['/reproducibility', /Audita un resultado hasta su fuente/i],
   ['/status/t008', /Estado del reprocesamiento moderno/i],
@@ -47,7 +47,7 @@ const routes = [
 test('scientific synthesis uses a public title and exposes the complete documents', async ({ page }) => {
   await page.goto(url('/results/synthesis'))
   await waitForStablePage(page)
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Programas de coexpresión')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Redes de coexpresión')
   await expect(page.getByText('M5 es el programa candidato con mayor convergencia de evidencia.')).toBeVisible()
   await expect(page.getByText(/T-009/i)).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Leer en HTML' })).toHaveAttribute('href', /scientific-synthesis-manuscript\.html$/)
@@ -342,7 +342,7 @@ test('standalone ORA HTML loads canonical data, bars and tabs', async ({ page })
 test('summary page matches the V2 scientific information hierarchy', async ({ page }) => {
   await page.goto(url('/'))
 
-  await expect(page.getByRole('heading', { level: 1, name: /¿Cómo difieren los programas de coexpresión/i })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: /¿Cómo difiere la coexpresión/i })).toBeVisible()
   await expect(page.locator('.home-v2-study-card .home-v2-fact')).toHaveCount(8)
   await expect(page.locator('.home-v2-finding-row article')).toHaveCount(4)
   await expect(page.locator('.home-v2-evidence-ladder li')).toHaveCount(4)
