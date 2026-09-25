@@ -306,7 +306,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 ## T-010 — Interactive web explorer / GitHub Pages
 
-**Status:** IN PROGRESS (2026-09-22); WEB-001 through WEB-011 completed. WEB-012 stable release/tag remains.
+**Status:** DONE (2026-09-25); WEB-001 through WEB-012 completed and stable release `web-v1.0` prepared.
 
 **Master plan:** `docs/WEB_EXPLORER_IMPLEMENTATION_PLAN.md`
 
@@ -327,7 +327,7 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 - website is a visualization layer, not a new inference layer;
 - no hand-entered replacement for canonical result tables when machine-readable sources exist;
 - preserve the pericarp/skin-thickness, hub/causality, CHS/STS, external-validation and T-008 interpretation limits;
-- T-008 progress must remain explicitly incomplete until the 54-run criteria are actually satisfied.
+- T-008 is complete for all 54 runs; the website must preserve the mapped-core-only interpretation and its coverage limits rather than generalizing preservation to every historical module gene.
 
 **Implementation phases:** WEB-000 through WEB-012 are tracked in the master plan.
 
@@ -355,9 +355,11 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 
 **WEB-011 completion (2026-09-22):** se cerró la fase de QA con el workflow `WEB-011 scientific and browser QA`, run `35766922688`, PASS sobre commit `a42a095`. La corrida volvió a exportar y validar los datasets del sitio, ejecutó QA de valores científicos, lint, typecheck, build y presupuesto de bundle, e hizo pruebas Playwright en Chrome, Firefox y móvil. La pasada móvil detectó overflows de layout que fueron corregidos sucesivamente en Enrichment (`40cbb17`), Validation (`c53ff7a`), T-008 (`758ed2e`) y Evidence (`a42a095`). El run final terminó sin pasos fallidos y dejó validado el comportamiento de rutas principales, filtros, accesibilidad básica y ausencia de overflow horizontal a nivel de documento.
 
-**Immediate next step:** WEB-012 stable release/tag.
+**Immediate next step:** no active implementation task; future web opportunities remain in the separately documented portfolio and require explicit prioritization.
 
 **WEB-012 visual follow-up (2026-09-23):** el header global se homogeneizó con el mockup aprobado en todas las resoluciones. La marca y el botón `Menú` permanecen visibles; navegación principal, utilidades y GitHub se mantienen dentro del menú desplegable. Lint, typecheck, build y verificación manual del preview pasaron. No cambió ningún resultado científico.
+
+**WEB-012 completion (2026-09-25):** el sitio público incorporó la narrativa integrada bajo el nombre comprensible `Síntesis científica integrada`, sin exponer `T-009` como etiqueta para lectores. La nueva ruta `/results/synthesis` conecta M5, M10 y M2 con evidencia canónica, límites explícitos y enlaces a manuscrito e informe técnico. Los informes se sincronizan y verifican por SHA durante el build. Los workflows `Site scaffold checks` (`36102680555`), `WEB-011 scientific and browser QA` (`36102680500`) y `Deploy scientific explorer to GitHub Pages` (`36102680522`) finalizaron con éxito sobre `e2a69bb`; Chrome, Firefox y móvil pasaron. La URL pública y los tres documentos devolvieron HTTP 200, la carga dinámica mostró los valores esperados y se preparó la versión estable `web-v1.0`. Registro completo: `docs/WEB012_STABLE_RELEASE.md`.
 
 **UX-04 first implementation slice (2026-09-23):** se añadió una superficie de contexto persistente en las rutas de resultados: `BASELINE ACTIVO · GSE98923 · 54 muestras · pericarpio completo` o `EVIDENCIA EXTERNA · piel aislada · no suma al N=54`, según la ruta. La portada queda limpia y la etiqueta es responsive. No cambió ningún resultado científico.
 
@@ -432,3 +434,5 @@ pairs were then matched exactly against the raw GMT and frozen gene map.
 - GitHub Pages deployment is active;
 - README links to the deployed site;
 - final scientific and visual QA is recorded.
+
+**Acceptance verification:** todos los criterios anteriores están satisfechos. El sitio se reconstruye desde fuentes canónicas, conserva provenance y límites científicos, está desplegado en GitHub Pages, enlazado desde README y validado por CI multibrowser. T-010 queda cerrado sin modificar matrices, muestras, redes ni inferencias del estudio.

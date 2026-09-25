@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-25 — Stable public scientific explorer
+
+- Published the integrated study narrative as `Síntesis científica integrada`, avoiding internal task codes in the reader-facing title and navigation.
+- Added a canonical-data-backed synthesis for M5, M10 and the mapped core of M2, with explicit pericarp, skin-thickness, CHS/STS, mapping and non-causality limits.
+- Added build-time SHA verification and publication of the integrated manuscript and complete technical report.
+- Extended search, Results, reproducibility provenance, navigation and automated route/document checks while preserving the established visual system.
+- Passed scientific QA, lint, UI consistency, typecheck, build, bundle budget and Playwright checks in Chrome, Firefox and mobile; deployed successfully to GitHub Pages and prepared stable version `web-v1.0`.
+
 ## 2026-09-25 — T-009 integrated report and manuscript completed
 
 - Added a reproducible integration workflow for T-004--T-008 with invariant checks, preservation of prior renders and separate technical-report and manuscript outputs.

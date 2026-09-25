@@ -132,9 +132,13 @@ T-008 está **DONE**. Las mismas 54 corridas single-end pasaron tamaño/MD5/gzip
 
 T-009 está **DONE**. `scripts/post/30_t009_integrated_report.R` integra T-004--T-008 en el informe técnico acumulativo y en un manuscrito científico, ambos disponibles en HTML, DOCX y PDF. Las versiones previas quedaron archivadas. `results/integrated_report_t009/` contiene una matriz de nueve afirmaciones con evidencia y límites, un manifiesto de 80 archivos suplementarios con MD5, QC de integración y validación de artefactos. Los seis formatos pasaron comprobación de contenido y estructura; se inspeccionaron visualmente 36 páginas del PDF técnico, 8 del PDF manuscrito, 31 páginas del DOCX técnico y 8 del DOCX manuscrito. La síntesis prioriza M5 por convergencia de evidencia, distingue la reproducibilidad modular de M10 y restringe M2 a su núcleo mapeable. No cambia muestras, matrices, redes ni inferencias causales. Ver `docs/T009_INTEGRATED_REPORT.md`.
 
+### Interactive scientific explorer
+
+T-010 está **DONE**. El explorador público integra la síntesis científica con un nombre orientado a lectores, datos generados desde resultados canónicos, provenance, documentos descargables y límites visibles. La ruta `/results/synthesis` presenta M5 como candidato integrado principal, M10 como la señal modular más reproducible entre años y M2 únicamente como núcleo mapeable. GitHub Actions validó exportación, cifras científicas, UI, TypeScript, build, presupuesto de bundle y navegación en Chrome, Firefox y móvil; GitHub Pages desplegó correctamente. La versión estable es `web-v1.0`. Ver `docs/WEB012_STABLE_RELEASE.md`.
+
 ## Immediate pending work
 
-1. T-010/WEB-012: sincronizar la narrativa integrada de T-009 con el explorador y preparar una versión estable etiquetada.
+No hay una tarea de ejecución activa. Las ampliaciones futuras del explorador están registradas como oportunidades separadas y no deben iniciarse sin priorización explícita.
 
 ## Important boundary
 

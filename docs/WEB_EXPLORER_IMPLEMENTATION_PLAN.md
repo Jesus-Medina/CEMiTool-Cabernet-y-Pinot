@@ -66,9 +66,9 @@ Estos invariantes deben reflejarse tanto en el contenido como en la interfaz:
 - Una diferencia de eigengene no demuestra “represión”.
 - RNA no implica directamente proteína o actividad enzimática.
 - La familia CHS/STS presenta conflicto de anotación y no debe simplificarse artificialmente.
-- M2 sigue siendo provisional hasta que T-008 permita reevaluarlo.
+- Tras T-008, M2 se interpreta únicamente como un núcleo mapeable moderadamente preservado (81/214), no como preservación del módulo completo.
 - La validación externa en piel es observacional y no se mezcla con las 54 muestras del baseline.
-- Mientras T-008 esté incompleto, la web debe mostrar explícitamente que no existe todavía una conclusión moderna de preservación.
+- La web debe distinguir la preservación de núcleos con equivalencia recíproca de cualquier afirmación sobre el módulo histórico completo.
 
 La web debe incluir bloques visibles de **“Qué muestra la evidencia”** y **“Qué NO demuestra”** en resultados sensibles.
 
@@ -639,7 +639,7 @@ El deployment debe detenerse si:
 - falla el build;
 - falla un test crítico.
 
-No bloquear el sitio porque T-008 esté incompleto: debe mostrar correctamente el estado incompleto.
+El estado de T-008 debe derivarse de fuentes canónicas: antes de su cierre debía mostrarse incompleto y, después de 54/54, debe presentar resultados y límites de cobertura sin borrar el historial.
 
 ---
 
@@ -854,11 +854,13 @@ sin modificar el archivo científico original.
 - [x] mapping;
 - [x] estados PASS/FAIL/IN PROGRESS/PENDING;
 - [x] advertencia 54/54;
-- [x] preparado para comparación histórico/moderno futura.
+- [x] comparación histórico/moderno implementada tras completar 54/54.
 
 **Aceptación:** actualizar `t008_batch_progress.tsv` y redeployar actualiza la página sin editar React.
 
 **Verificación 2026-09-22:** implementación principal en `4ef68dc` y corrección de etiquetado de celdas pendientes en `20983af`. `t008_progress.json` pasó a schema v2 e incorpora las 54 corridas del manifiesto, estados derivados del ledger/QC, tamaño FASTQ, lecturas, mapping y métricas por corrida. La ruta `/t008` muestra progreso global, PASS/FAIL/IN PROGRESS/PENDING, cobertura del diseño 2×3×3, corridas validadas, ledger filtrable, event log, provenance y un gate explícito que impide presentar preservación moderna mientras no exista matriz completa. CI run `35752102720` pasó exportación, validación, lint, typecheck y build, reportando `t008=2/54`; Pages run `35752102759` desplegó con éxito.
+
+**Verificación final 2026-09-25:** el payload schema v3 refleja 54/54 corridas validadas y expone matrices modernas y preservación solo para los núcleos con equivalencia recíproca. La síntesis pública conserva M2 como 81/214 genes (37,9 %) y no extrapola al módulo completo.
 
 ---
 
@@ -903,11 +905,13 @@ sin modificar el archivo científico original.
 - [x] workflow;
 - [x] permisos Pages;
 - [x] deployment preview;
-- [ ] deployment final;
+- [x] deployment final;
 - [x] URL en README;
-- [ ] versión inicial etiquetada.
+- [x] versión inicial etiquetada (`web-v1.0`).
 
 **Aceptación:** sitio público estable, reconstruible desde el repo y sin secretos.
+
+**Verificación 2026-09-25:** la síntesis integrada se publicó como `Síntesis científica integrada` en `/results/synthesis`, con datos canónicos para M5/M10/M2 y documentos sincronizados por SHA durante el build. Los runs `36102680555`, `36102680500` y `36102680522` pasaron scaffold, QA científica/multibrowser y deployment sobre `e2a69bb`. La URL pública y los tres documentos respondieron HTTP 200; la UI cargó los valores dinámicos esperados. Registro: `docs/WEB012_STABLE_RELEASE.md`.
 
 ---
 
@@ -1026,19 +1030,7 @@ El sitio completo solo se considera DONE cuando:
 
 # 19. Próximo paso exacto
 
-## Próxima tarea: WEB-007 — Module Explorer
-
-Con M5 ya cubierto en trayectoria, función, red, locus y validación, el siguiente paso es evitar que la web parezca un estudio de un solo módulo.
-
-Implementar:
-
-- tabla comparativa M1–M10 desde `modules.json`;
-- filtros por interacción Cultivar×Stage y robustez;
-- tamaño, FDR, clasificación anual y nota interpretativa;
-- M10 como señal temporal reproducible pero funcionalmente no resuelta;
-- M2 con advertencia provisional y vínculo explícito a T-008;
-- rutas de detalle para M10/M2 sin inventar resultados equivalentes a M5;
-- enlaces a enriquecimiento, hubs, validación y provenance cuando existan.
+La implementación comprometida WEB-001–WEB-012 está completa. No existe una siguiente fase activa: cualquier ampliación debe seleccionarse explícitamente desde la cartera futura y mantener los límites científicos vigentes.
 
 ---
 
@@ -1046,18 +1038,18 @@ Implementar:
 
 | Fase | Estado | Fecha | Nota |
 |---|---|---|---|
-| WEB-000 | IN PROGRESS | 2026-09-22 | Plan creado; falta congelar paleta y provenance schema |
+| WEB-000 | DONE | 2026-09-25 | Plan, arquitectura, paleta, sistema visual y provenance schema consolidados |
 | WEB-001 | DONE | 2026-09-22 | Scaffold + routing + CI; lint/typecheck/build PASS |
 | WEB-002 | DONE | 2026-09-22 | Exportador + validator + provenance; CI PASS (run 35745653944) |
 | WEB-003 | DONE | 2026-09-22 | Home + Story conectadas a JSON canónico; CI PASS (run 35746120112) |
 | WEB-004 | DONE | 2026-09-22 | M5 Explorer interactivo + hubs + CHS/STS + provenance; CI PASS (run 35747710946) |
 | WEB-005 | DONE | 2026-09-22 | Cytoscape M5 + chr16; CI/deploy PASS; network lazy-loaded |
 | WEB-006 | DONE | 2026-09-22 | MapMan v3/v5.1 + GO T-005A + temas/cobertura; CI/deploy PASS |
-| WEB-007 | TODO | — | Próxima |
+| WEB-007 | DONE | 2026-09-22 | Explorador comparativo M1–M10; CI/deploy PASS |
 | WEB-008 | DONE | 2026-09-22 | T-007 skin-only explorer; CI/deploy PASS |
-| WEB-009 | DONE | 2026-09-22 | T-008 live dashboard; CI/deploy PASS (2/54 actual) |
+| WEB-009 | DONE | 2026-09-25 | Dashboard actualizado a T-008 completo: 54/54 y preservación de núcleos mapeables |
 | WEB-010 | DONE | 2026-09-22 | Evidence Browser global + hashes + commit + búsqueda; CI/Pages PASS |
-| WEB-011 | TODO | — | — |
-| WEB-012 | IN PROGRESS | 2026-09-22 | Preview pública desplegada; release estable queda para después de QA final |
+| WEB-011 | DONE | 2026-09-25 | QA científica, Chrome, Firefox y móvil PASS (run 36102680500) |
+| WEB-012 | DONE | 2026-09-25 | Síntesis integrada, deployment estable y versión `web-v1.0` |
 
 Este cuadro debe actualizarse en cada sesión de implementación para evitar perder el estado del trabajo.
