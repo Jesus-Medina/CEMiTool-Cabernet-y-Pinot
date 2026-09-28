@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-27 — Public conclusion and reader-facing terminology
+
+- Regenerated the reproducible scientific manuscript in HTML, DOCX and PDF with coexpression-network terminology and an integrated conclusion that prioritizes M5 from convergent evidence.
+- Preserved the preceding manuscript under `manuscript/archive/20260927_063724_before_public_conclusion/` and synchronized verified public HTML/PDF copies.
+- Removed internal task codes from reader-facing navigation, labels, evidence descriptions and report copy while preserving historical records and backward-compatible route aliases.
+- Added a canonical `/reprocessing` route and explicit public conclusions for M5, M10 and the mapped core of M2.
+- Retained the scientific limits: no causal inference, no direct skin-thickness phenotype, whole-pericarp primary tissue and unresolved CHS/STS identity.
+- Passed scientific QA, UI consistency, lint, typecheck, build, bundle budget and functional Chromium checks without changing samples, matrices, networks, models or numerical results.
+
 ## 2026-09-25 — Coexpression title terminology
 
 - Replaced the reader-facing Home title with `¿Cómo difiere la coexpresión entre Cabernet Sauvignon y Pinot noir durante la maduración?`.

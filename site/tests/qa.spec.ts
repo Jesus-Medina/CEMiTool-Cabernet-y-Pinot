@@ -39,7 +39,7 @@ const routes = [
   ['/results/synthesis', /Redes de coexpresión durante la maduración/i],
   ['/methods', /Cómo se construyó la evidencia/i],
   ['/reproducibility', /Audita un resultado hasta su fuente/i],
-  ['/status/t008', /Estado del reprocesamiento moderno/i],
+  ['/reprocessing', /Estado del reprocesamiento moderno/i],
   ['/search', /Encuentra un resultado/i],
   ['/ask', /Pregúntale al proyecto/i],
 ] as const
@@ -48,8 +48,8 @@ test('scientific synthesis uses a public title and exposes the complete document
   await page.goto(url('/results/synthesis'))
   await waitForStablePage(page)
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Redes de coexpresión')
-  await expect(page.getByText('M5 es el programa candidato con mayor convergencia de evidencia.')).toBeVisible()
-  await expect(page.getByText(/T-009/i)).toHaveCount(0)
+  await expect(page.getByText('M5 es la red de coexpresión prioritaria del estudio.')).toBeVisible()
+  await expect(page.getByText(/T-00\d/i)).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Leer en HTML' })).toHaveAttribute('href', /scientific-synthesis-manuscript\.html$/)
   await expect(page.getByRole('link', { name: /Abrir informe PDF/i })).toHaveAttribute('href', /complete-technical-analysis\.pdf$/)
 })
@@ -142,7 +142,7 @@ test('results navigation preserves explicit parent routes and decorative assets 
   await modulesBack.click()
   await expect(page).toHaveURL(/#\/results\/modules$/)
 
-  await page.goto(url('/status/t008'))
+  await page.goto(url('/reprocessing'))
   const reproducibilityBack = page.getByRole('link', { name: 'Volver a Reproducibilidad' })
   await expect(reproducibilityBack).toBeVisible()
   await reproducibilityBack.click()
@@ -463,25 +463,25 @@ test('M5 year and replicate filters alter the view, not the source data', async 
 test('Evidence Browser search resolves a finding and its artifact', async ({ page }) => {
   await page.goto(url('/reproducibility'))
   const search = page.getByRole('searchbox', { name: 'Buscar evidencia' })
-  await search.fill('t008')
+  await search.fill('reprocesamiento')
   await expect(
-    page.locator('.evidence-claim').filter({ hasText: 'Reprocesamiento moderno y preservación T-008' }),
+    page.locator('.evidence-claim').filter({ hasText: 'Reprocesamiento moderno y preservación de redes' }),
   ).toHaveCount(1)
 
   await page.getByRole('button', { name: /Artefactos/i }).click()
   await expect(
-    page.locator('.evidence-artifact').filter({ hasText: 't008_progress' }),
+    page.locator('.evidence-artifact').filter({ hasText: 'Reprocesamiento moderno' }),
   ).toHaveCount(1)
 })
 
-test('T-008 status filter matches generated pending count', async ({ page }) => {
-  await page.goto(url('/status/t008'))
+test('modern reprocessing status filter matches generated pending count', async ({ page }) => {
+  await page.goto(url('/reprocessing'))
   await page.getByLabel('Estado').selectOption('PENDING')
   await expect(page.locator('.t008-table tbody tr')).toHaveCount(t008.summary.pending_runs)
 })
 
-test('T-008 completed preservation gate remains coverage-aware', async ({ page }) => {
-  await page.goto(url('/status/t008'))
+test('completed modern reprocessing remains coverage-aware', async ({ page }) => {
+  await page.goto(url('/reprocessing'))
   expect(t008.summary.complete).toBe(true)
   expect(t008.analysis.comparable_beta10_genes).toBe(1922)
   await expect(page.getByRole('heading', { name: /núcleo mapeable de M5, M10 y M2/i })).toBeVisible()
@@ -491,7 +491,7 @@ test('T-008 completed preservation gate remains coverage-aware', async ({ page }
 test('mobile layout has no document-level horizontal overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium', 'mobile-only responsive audit')
 
-  for (const route of ['/', '/results', '/results/modules', '/results/modules/M5', '/results/function', '/results/validation', '/results/genes', '/methods', '/reproducibility', '/status/t008', '/ask']) {
+  for (const route of ['/', '/results', '/results/modules', '/results/modules/M5', '/results/function', '/results/validation', '/results/genes', '/methods', '/reproducibility', '/reprocessing', '/ask']) {
     await page.goto(url(route))
     await waitForStablePage(page)
     const dimensions = await page.evaluate(() => {

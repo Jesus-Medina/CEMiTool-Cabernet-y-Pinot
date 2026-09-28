@@ -312,7 +312,7 @@ export default function EnrichmentPage() {
           <p className="eyebrow">Resultados · Función</p>
           <h1>¿Qué funciones aparecen sobrerrepresentadas?</h1>
           <p>
-            Explora el ORA de módulos beta10 con MapMan v3, MapMan v5.1 y el GO corregido por la auditoría T-005A.
+            Explora el ORA de módulos beta10 con MapMan v3, MapMan v5.1 y Gene Ontology después de filtrar términos obsoletos.
             La interfaz separa cobertura de anotación, significancia global y temas preespecificados.
           </p>
           <div className="overview-inline-actions">

@@ -70,17 +70,17 @@ const CLAIMS: EvidenceClaim[] = [
   {
     id: 'skin-validation',
     title: 'Validación externa en piel aislada',
-    description: 'Fuentes, scripts y parámetros usados para GSE72421 y PRJNA260535 en T-007.',
+    description: 'Fuentes, scripts y parámetros usados para GSE72421 y PRJNA260535.',
     artifactIds: ['external_validation'],
     route: '/results/validation',
     boundary: 'La validación externa es observacional y no se suma al N=54 del baseline.',
   },
   {
-    id: 't008-progress',
-    title: 'Reprocesamiento moderno y preservación T-008',
+    id: 'modern-reprocessing',
+    title: 'Reprocesamiento moderno y preservación de redes',
     description: 'Manifiesto de 54 corridas, QC por SRR, matrices, preservación de módulos y scripts reproducibles.',
     artifactIds: ['t008_progress'],
-    route: '/status/t008',
+    route: '/reprocessing',
     boundary: 'La preservación moderada se limita al núcleo con equivalencia recíproca; no cubre genes no mapeados ni demuestra causalidad.',
   },
   {
@@ -92,6 +92,26 @@ const CLAIMS: EvidenceClaim[] = [
     boundary: 'La convergencia de capas prioriza seguimiento experimental; no constituye un score causal ni una prueba de grosor de piel.',
   },
 ]
+
+const artifactLabels: Record<string, string> = {
+  project_summary: 'Diseño experimental y red principal',
+  modules: 'Resumen de módulos',
+  module_contrasts: 'Contrastes por etapa y año',
+  m5_trajectory: 'Trayectoria de M5',
+  functional_enrichment: 'Enriquecimiento funcional completo',
+  enrichments: 'Resumen de enriquecimiento',
+  hub_core_sensitivity: 'Sensibilidad del núcleo de hubs',
+  year_completeness_audit: 'Auditoría temporal',
+  hubs: 'Genes hub priorizados',
+  m5_network: 'Red de coexpresión M5',
+  external_validation: 'Validación externa en piel',
+  t008_progress: 'Reprocesamiento moderno',
+  integrated_synthesis: 'Síntesis científica integrada',
+}
+
+function artifactLabel(id: string) {
+  return artifactLabels[id] ?? id.replaceAll('_', ' ')
+}
 
 function githubUrl(path: string, commit: string | null) {
   const ref = commit ?? 'main'
@@ -124,7 +144,7 @@ function ArtifactEvidence({
     <details className="evidence-artifact" id={`artifact-${artifact.artifact_id}`}>
       <summary>
         <span>
-          <strong>{artifact.artifact_id}</strong>
+          <strong>{artifactLabel(artifact.artifact_id)}</strong>
           <small>{artifact.sources.length} fuente(s) · {artifact.scripts.length} script(s)</small>
         </span>
         <span className="evidence-chevron" aria-hidden="true">⌄</span>
@@ -133,10 +153,10 @@ function ArtifactEvidence({
       <div className="evidence-artifact-body">
         <section>
           <h3>RESULTADO / ENTRADA</h3>
-          {artifact.sources.map((source) => (
+          {artifact.sources.map((source, index) => (
             <article className="evidence-file" key={source.path}>
               <a href={githubUrl(source.path, provenance.repository_commit)} target="_blank" rel="noreferrer">
-                {source.path}
+                Abrir fuente canónica {index + 1} ↗
               </a>
               <div>
                 <code>SHA-256 {shortHash(source.sha256)}</code>
@@ -148,10 +168,10 @@ function ArtifactEvidence({
 
         <section>
           <h3>GENERADO POR</h3>
-          {artifact.scripts.map((script) => (
+          {artifact.scripts.map((script, index) => (
             <article className="evidence-file" key={script.path}>
               <a href={githubUrl(script.path, provenance.repository_commit)} target="_blank" rel="noreferrer">
-                {script.path}
+                Abrir script reproducible {index + 1} ↗
               </a>
               <div><code>SHA-256 {shortHash(script.sha256)}</code></div>
             </article>
@@ -246,6 +266,7 @@ export default function EvidenceBrowserPage() {
     return data.artifacts.filter((artifact) =>
       [
         artifact.artifact_id,
+        artifactLabel(artifact.artifact_id),
         ...artifact.sources.map((source) => source.path),
         ...artifact.scripts.map((script) => script.path),
         JSON.stringify(artifact.parameters),
@@ -319,11 +340,11 @@ export default function EvidenceBrowserPage() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="M5, Harvest, enrichment, t008, module_contrasts.tsv…"
+                placeholder="M5, Harvest, enriquecimiento, reprocesamiento…"
               />
             </label>
             <p>
-              La búsqueda cubre hallazgos, artifact IDs, rutas de resultados, scripts y parámetros.
+              La búsqueda cubre hallazgos, resultados, scripts y parámetros reproducibles.
             </p>
           </section>
 
@@ -362,13 +383,13 @@ export default function EvidenceBrowserPage() {
               {filteredClaims.map((claim) => (
                 <article className="evidence-claim" key={claim.id}>
                   <div>
-                    <span className="evidence-claim-id">{claim.id}</span>
+                    <span className="evidence-claim-id">Hallazgo verificable</span>
                     <h3>{claim.title}</h3>
                     <p>{claim.description}</p>
                   </div>
                   <div className="evidence-artifact-chips">
                     {claim.artifactIds.map((id) => (
-                      <Link key={id} to={'/reproducibility?artifact=' + encodeURIComponent(id)}>{id}</Link>
+                      <Link key={id} to={'/reproducibility?artifact=' + encodeURIComponent(id)}>{artifactLabel(id)}</Link>
                     ))}
                   </div>
                   <div className="evidence-boundary">

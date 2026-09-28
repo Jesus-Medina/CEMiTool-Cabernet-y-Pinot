@@ -37,8 +37,9 @@ export default function App() {
         <Route path="enrichment" element={<EnrichmentPage />} />
         <Route path="genes/:geneId" element={<GeneDetailPage />} />
         <Route path="validation" element={<ValidationPage />} />
-        <Route path="status/t008" element={<T008Page />} />
-        <Route path="t008" element={<T008Page />} />
+        <Route path="reprocessing" element={<T008Page />} />
+        <Route path="status/t008" element={<Navigate to="/reprocessing" replace />} />
+        <Route path="t008" element={<Navigate to="/reprocessing" replace />} />
         <Route path="methods" element={<MethodsPage />} />
         <Route path="reproducibility" element={<EvidencePage />} />
         <Route path="evidence" element={<EvidencePage />} />

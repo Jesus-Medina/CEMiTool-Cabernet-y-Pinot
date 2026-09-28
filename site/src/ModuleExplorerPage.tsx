@@ -717,12 +717,12 @@ export function ModuleExplorerDetailPage() {
       {data && summary && (
         <>
           {module === 'M2' && (
-            <Callout className="module-provisional-warning" tone="warning" eyebrow="T-008 completado" title="M2 conserva un núcleo mapeable, no el módulo completo">
+            <Callout className="module-provisional-warning" tone="warning" eyebrow="Reprocesamiento completado" title="M2 conserva un núcleo mapeable, no el módulo completo">
               <p>
                 La cuantificación moderna conserva 81/214 genes de M2, con preservación moderada y 9/9 direcciones Stage×Year concordantes.
                 Los ceros principales reaparecen, pero la cobertura de 37,9 % y los posibles efectos de referencia, paralogía o CNV impiden una conclusión mecanística.
               </p>
-              <ActionLink to="/status/t008">Ver resultados T-008</ActionLink>
+              <ActionLink to="/reprocessing">Ver reprocesamiento moderno</ActionLink>
             </Callout>
           )}
 
@@ -749,7 +749,7 @@ export function ModuleExplorerDetailPage() {
             <div className="module-route-grid">
               <Link to={'/results/function?module=' + module}><strong>Enriquecimiento</strong><span>MapMan v3/v5.1 + GO</span></Link>
               <Link to={'/results/validation?module=' + module}><strong>Validación externa</strong><span>evidencia independiente en piel</span></Link>
-              <Link to="/status/t008"><strong>T-008</strong><span>reprocesamiento moderno</span></Link>
+              <Link to="/reprocessing"><strong>Reprocesamiento</strong><span>cuantificación moderna y preservación</span></Link>
               {module === 'M5' && <Link to="/results/modules/M5"><strong>M5</strong><span>red, chr16 y hubs</span></Link>}
             </div>
           </section>

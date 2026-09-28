@@ -33,7 +33,7 @@ const suggestions = [
   '¿Qué es M5 y por qué es importante?',
   '¿Por qué se eligió beta=10?',
   '¿Qué mostró la validación externa en piel?',
-  '¿Qué está terminado y qué falta en T-008?',
+  '¿Qué mostró el reprocesamiento moderno?',
 ]
 
 function messageId() {
@@ -50,7 +50,7 @@ export default function ChatPage() {
       id: messageId(),
       role: 'assistant',
       content:
-        'Hola. Puedo ayudarte a navegar el proyecto CEMiTool Cabernet–Pinot usando sus documentos, tablas y scripts indexados. Pregúntame por M5, beta, hubs, validación, T-008 o dónde está cada evidencia.',
+        'Hola. Puedo ayudarte a navegar el proyecto CEMiTool Cabernet–Pinot usando sus documentos, tablas y scripts indexados. Pregúntame por M5, beta, hubs, validación, reprocesamiento moderno o dónde está cada evidencia.',
     },
   ])
   const [draft, setDraft] = useState('')
@@ -315,7 +315,7 @@ export default function ChatPage() {
             <p className="chat-sidebar-kicker">Límite científico</p>
             <p>
               Coexpresión y centralidad no prueban causalidad. La validación en
-              piel se mantiene separada del baseline y T-008 limita la preservación
+              piel se mantiene separada del baseline y el reprocesamiento limita la preservación
               moderna al núcleo de genes con equivalencia recíproca.
             </p>
           </section>

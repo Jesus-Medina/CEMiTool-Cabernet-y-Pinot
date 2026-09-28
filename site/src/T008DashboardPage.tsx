@@ -92,21 +92,21 @@ function Provenance({ provenance }: { provenance: ProvenancePayload }) {
 
   return (
     <details className="t008-provenance">
-      <summary>Trazabilidad del tablero T-008</summary>
+      <summary>Trazabilidad del reprocesamiento moderno</summary>
       <div className="t008-provenance-grid">
         <div>
           <h3>Fuentes canónicas</h3>
-          {artifact.sources.map((source) => (
+          {artifact.sources.map((source, index) => (
             <p key={source.path}>
-              <a href={sourceUrl(source.path)} target="_blank" rel="noreferrer">{source.path}</a>
+              <a href={sourceUrl(source.path)} target="_blank" rel="noreferrer">Abrir fuente canónica {index + 1} ↗</a>
               <small>SHA-256 {source.sha256.slice(0, 16)}…</small>
             </p>
           ))}
         </div>
         <div>
           <h3>Scripts</h3>
-          {artifact.scripts.map((script) => (
-            <p key={script.path}><a href={sourceUrl(script.path)} target="_blank" rel="noreferrer">{script.path}</a></p>
+          {artifact.scripts.map((script, index) => (
+            <p key={script.path}><a href={sourceUrl(script.path)} target="_blank" rel="noreferrer">Abrir script reproducible {index + 1} ↗</a></p>
           ))}
           <p><strong>Commit:</strong> <code>{commit.slice(0, 12)}</code></p>
         </div>
@@ -135,7 +135,7 @@ export default function T008DashboardPage() {
       })
       .catch((reason: unknown) => {
         if (!active) return
-        setError(reason instanceof Error ? reason.message : 'Error al cargar T-008')
+        setError(reason instanceof Error ? reason.message : 'Error al cargar el reprocesamiento moderno')
       })
     return () => { active = false }
   }, [])
@@ -152,10 +152,10 @@ export default function T008DashboardPage() {
   }, [data, status, cultivar, stage, year, query])
 
   if (!data && !error) {
-    return <div className="data-state" role="status"><span className="data-state-dot" />Cargando progreso T-008…</div>
+    return <div className="data-state" role="status"><span className="data-state-dot" />Cargando el reprocesamiento moderno…</div>
   }
   if (error || !data) {
-    return <div className="data-state data-state--error" role="alert"><strong>No se pudo cargar T-008.</strong><span>{error}</span></div>
+    return <div className="data-state data-state--error" role="alert"><strong>No se pudo cargar el reprocesamiento moderno.</strong><span>{error}</span></div>
   }
 
   const summary = data.summary
@@ -170,7 +170,7 @@ export default function T008DashboardPage() {
     <div className="t008-page">
       <section className="t008-hero">
         <div>
-          <p className="eyebrow">Estado · T-008</p>
+          <p className="eyebrow">Robustez técnica</p>
           <h1>Estado del reprocesamiento moderno</h1>
           <p>
             Seguimiento de las mismas 54 corridas del baseline histórico contra PN40024 T2T v5.1.
@@ -185,7 +185,7 @@ export default function T008DashboardPage() {
 
       <section className={summary.complete ? 't008-gate t008-gate--complete' : 't008-gate'}>
         <div>
-          <p className="eyebrow">{summary.complete ? 'T-008 completo' : 'Gate científico activo'}</p>
+          <p className="eyebrow">{summary.complete ? 'Reprocesamiento completo' : 'Control científico activo'}</p>
           <h2>{summary.complete ? 'El núcleo mapeable de M5, M10 y M2 muestra preservación moderada' : 'Todavía no existe una comparación moderna completa'}</h2>
           <p>
             {summary.complete

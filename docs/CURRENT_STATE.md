@@ -136,10 +136,16 @@ T-009 está **DONE**. `scripts/post/30_t009_integrated_report.R` integra T-004--
 
 T-010 está **DONE**. El explorador público integra la síntesis científica con un nombre orientado a lectores, datos generados desde resultados canónicos, provenance, documentos descargables y límites visibles. La ruta `/results/synthesis` presenta M5 como candidato integrado principal, M10 como la señal modular más reproducible entre años y M2 únicamente como núcleo mapeable. GitHub Actions validó exportación, cifras científicas, UI, TypeScript, build, presupuesto de bundle y navegación en Chrome, Firefox y móvil; GitHub Pages desplegó correctamente. La versión estable es `web-v1.0`. Ver `docs/WEB012_STABLE_RELEASE.md`.
 
+### Public-language and manuscript finalization
+
+El 2026-09-27 se cerró una revisión editorial sin alterar datos, modelos ni inferencias. El manuscrito y el sitio describen el objeto de estudio como **redes de coexpresión** y presentan la conclusión integrada en lenguaje comprensible: M5 es la red prioritaria porque reúne la interacción Cultivar × Stage más fuerte, un patrón Harvest repetido en los tres años, coherencia funcional, hubs relevantes, apoyo observacional externo y preservación bajo el reprocesamiento moderno. Esta prioridad no equivale a causalidad, especificidad de piel, grosor de piel ni resolución de la ambigüedad CHS/STS.
+
+El manuscrito reproducible vigente se conserva en `manuscript/article_draft.{Rmd,html,docx,pdf}`; la versión anterior quedó archivada en `manuscript/archive/20260927_063724_before_public_conclusion/`. El sitio publica copias verificadas del HTML y PDF, usa nombres orientados a lectores y deja los códigos históricos de tareas únicamente en documentación de provenance o alias internos compatibles. La ruta canónica de reprocesamiento es `/reprocessing`; los enlaces históricos continúan redirigiendo para no romper referencias.
+
 ## Immediate pending work
 
 No hay una tarea de ejecución activa. Las ampliaciones futuras del explorador están registradas como oportunidades separadas y no deben iniciarse sin priorización explícita.
 
 ## Important boundary
 
-No current result demonstrates skin thickness causality. The study is identifying cultivar-development transcriptional programs that may later be connected to skin-relevant biology and validated in independent skin-only datasets.
+No current result demonstrates skin thickness causality. The study identifies cultivar-development coexpression networks that may later be connected to skin-relevant biology and tested experimentally.

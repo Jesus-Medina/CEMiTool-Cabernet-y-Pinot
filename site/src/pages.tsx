@@ -240,7 +240,7 @@ export function HomePage() {
         <div className="home-v2-finding-row">
           <article>
             <span className="home-v2-round-icon" aria-hidden="true">⌘</span>
-            <div><strong>{moduleCount} módulos β10</strong><p>La red principal identifica diez programas de coexpresión.</p></div>
+            <div><strong>{moduleCount} módulos β10</strong><p>La red principal identifica diez redes modulares de coexpresión.</p></div>
           </article>
           <article>
             <span className="home-v2-round-icon" aria-hidden="true">◇</span>
@@ -304,11 +304,11 @@ export function HomePage() {
               <div>
                 <h3>Validación y reprocesamiento</h3>
                 <p>
-                  La evidencia en piel aislada permanece separada. T-008 lleva{' '}
+                  La evidencia en piel aislada permanece separada. El reprocesamiento moderno incluye{' '}
                   {project.t008.validated_runs}/{project.t008.total_runs} corridas validadas;
                   el núcleo mapeable de M5, M10 y M2 muestra preservación moderada, con cobertura explícita.
                 </p>
-                <ActionLink to="/status/t008">Ver estado T-008</ActionLink>
+                <ActionLink to="/reprocessing">Ver reprocesamiento moderno</ActionLink>
               </div>
             </li>
           </ol>
@@ -355,6 +355,26 @@ export function HomePage() {
         </aside>
       </section>
 
+      <section className="home-v2-section" aria-labelledby="home-v2-conclusion-title">
+        <div className="home-v2-section-heading">
+          <p>Conclusión del estudio bioinformático</p>
+          <h2 id="home-v2-conclusion-title">M5 reúne la evidencia integrada más sólida</h2>
+        </div>
+        <div className="home-v2-knowledge-panel home-v2-knowledge-panel--known">
+          <p>
+            M5 es la red de coexpresión prioritaria del estudio porque reúne la interacción
+            cultivar-etapa más fuerte, un patrón Harvest repetido en tres años, coherencia
+            funcional, hubs relevantes, apoyo observacional externo y preservación bajo
+            reprocesamiento moderno.
+          </p>
+          <p>
+            El estudio concluye con una prioridad experimental clara: validar M5 y sus candidatos
+            sin interpretar la coexpresión como causalidad ni como una medición de grosor de piel.
+          </p>
+          <ActionLink to="/results/synthesis">Leer la conclusión integrada</ActionLink>
+        </div>
+      </section>
+
       <section className="home-v2-section home-v2-limits" aria-labelledby="home-v2-limits-title">
         <div className="home-v2-section-heading">
           <p>Frontera de la evidencia</p>
@@ -368,7 +388,7 @@ export function HomePage() {
             </header>
             <ul>
               <li><strong>Diseño verificable.</strong> Hay {project?.design.sample_count ?? 54} muestras balanceadas de pericarpio completo.</li>
-              <li><strong>Diferencias de programa.</strong> {significantModuleCount} módulos muestran interacción Cultivar×Stage con FDR&lt;0,05.</li>
+              <li><strong>Diferencias de coexpresión.</strong> {significantModuleCount} módulos muestran interacción Cultivar×Stage con FDR&lt;0,05.</li>
               <li><strong>Robustez diferenciada.</strong> M10 cumple la regla anual; M5 conserva la dirección de Harvest en los tres años.</li>
               <li><strong>Apoyo externo separado.</strong> Algunos hubs encuentran concordancia observacional en datasets de piel aislada.</li>
             </ul>
@@ -383,7 +403,7 @@ export function HomePage() {
               <li><strong>Grosor de piel y causalidad.</strong> GSE98923 no mide grosor ni permite atribuirlo a un módulo o hub.</li>
               <li><strong>Especificidad de tejido.</strong> La señal del baseline no puede considerarse exclusiva de piel.</li>
               <li><strong>Identidad CHS/STS.</strong> La anotación disponible no resuelve con certeza esta familia en M5.</li>
-              <li><strong>Preservación fuera del núcleo mapeable.</strong> T-008 completó 54/54 corridas, pero no puede evaluar genes sin equivalencia recíproca ni declarar preservado un módulo completo cuando la cobertura es parcial.</li>
+              <li><strong>Preservación fuera del núcleo mapeable.</strong> El reprocesamiento completó 54/54 corridas, pero no puede evaluar genes sin equivalencia recíproca ni declarar preservado un módulo completo cuando la cobertura es parcial.</li>
             </ul>
           </article>
         </div>

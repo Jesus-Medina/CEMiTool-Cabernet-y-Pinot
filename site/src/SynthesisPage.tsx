@@ -61,8 +61,8 @@ export default function SynthesisPage() {
         </div>
         <aside>
           <span>Conclusión central</span>
-          <strong>M5 es el programa candidato con mayor convergencia de evidencia.</strong>
-          <p>M10 aporta la señal modular más reproducible entre años y M2 exige interpretar únicamente su núcleo mapeable.</p>
+          <strong>M5 es la red de coexpresión prioritaria del estudio.</strong>
+          <p>Reúne la interacción cultivar-etapa más fuerte, un patrón Harvest repetido en tres años, coherencia funcional, hubs relevantes, apoyo observacional externo y preservación bajo reprocesamiento moderno.</p>
         </aside>
       </header>
 
@@ -144,11 +144,40 @@ export default function SynthesisPage() {
         </ol>
       </section>
 
+      <section className="synthesis-section" aria-labelledby="synthesis-conclusion-title">
+        <div className="synthesis-section-heading">
+          <p className="eyebrow">Conclusiones del estudio bioinformático</p>
+          <h2 id="synthesis-conclusion-title">La evidencia prioriza M5 y define el siguiente paso experimental</h2>
+        </div>
+        <div className="synthesis-priority-grid">
+          <article className="synthesis-priority-card synthesis-priority-card--lead">
+            <div><Badge tone="brand">Conclusión principal</Badge><strong>M5</strong></div>
+            <h3>Prioridad integrada</h3>
+            <p>M5 concentra la evidencia estadística, temporal, funcional, topológica, externa y técnica más completa del estudio.</p>
+          </article>
+          <article className="synthesis-priority-card">
+            <div><Badge tone="success">Robustez anual</Badge><strong>M10</strong></div>
+            <h3>Referencia de reproducibilidad</h3>
+            <p>M10 cumple la regla modular preespecificada entre años, aunque su apoyo funcional y de hubs es menor que el de M5.</p>
+          </article>
+          <article className="synthesis-priority-card">
+            <div><Badge tone="warning">Cobertura parcial</Badge><strong>M2</strong></div>
+            <h3>Seguimiento con cautela</h3>
+            <p>M2 conserva señales repetidas dentro de su núcleo comparable, pero la cobertura incompleta impide generalizar al módulo completo.</p>
+          </article>
+        </div>
+        <p>
+          El estudio bioinformático queda completo para su alcance actual: prioriza candidatos y
+          formula hipótesis comprobables. El paso siguiente es la validación experimental; los
+          resultados no prueban causalidad ni grosor de piel.
+        </p>
+      </section>
+
       <Callout tone="warning" eyebrow="Límite científico" title="La evidencia converge, pero no demuestra causalidad ni grosor de piel">
         <p>
           El tejido primario es pericarpio, no piel aislada; no existe una medición directa de
           grosor. Tampoco está resuelta la identidad CHS frente a STS del bloque familiar de M5.
-          Los resultados priorizan programas y candidatos para validación experimental.
+          Los resultados priorizan redes y candidatos para validación experimental.
         </p>
       </Callout>
 

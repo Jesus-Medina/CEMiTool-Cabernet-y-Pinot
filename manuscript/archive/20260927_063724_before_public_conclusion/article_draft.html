@@ -10,9 +10,9 @@
 
 
 
-<meta name="date" content="2026-09-27" />
+<meta name="date" content="2026-09-25" />
 
-<title>Developmental coexpression networks distinguish Cabernet Sauvignon and Pinot noir berry pericarp</title>
+<title>Developmental coexpression programs distinguish Cabernet Sauvignon and Pinot noir berry pericarp</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -371,11 +371,11 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Developmental coexpression networks
+<h1 class="title toc-ignore">Developmental coexpression programs
 distinguish Cabernet Sauvignon and Pinot noir berry pericarp</h1>
 <h3 class="subtitle">An integrated analysis across vintages, functional
 annotation, skin-only validation and modern read reprocessing</h3>
-<h4 class="date">2026-09-27</h4>
+<h4 class="date">2026-09-25</h4>
 
 </div>
 
@@ -423,7 +423,7 @@ mapped cores of the leading modules</a></li>
 
 <div id="abstract" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Abstract</h1>
-<p>We asked whether coexpression networks in berry pericarp differ
+<p>We asked whether coexpression programs in berry pericarp differ
 between Cabernet Sauvignon and Pinot noir across development, remain
 detectable across three vintages, and retain support after functional
 annotation, external skin-only comparison and modern raw-read
@@ -444,10 +444,11 @@ Skin-only datasets supported expression differences for several
 predefined M5 hubs and for selected M2 candidates, but did not measure
 skin thickness. Reprocessing all 54 raw-read libraries with Salmon and a
 current T2T annotation preserved the mapped cores of M5, M10 and M2
-moderately, with eigengene correlations of 0.986–0.998. The integrated
-evidence prioritizes M5 for experimental follow-up while leaving enzyme
-identity in duplicated families, tissue specificity, structural
-variation and causal links to skin traits unresolved.</p>
+moderately, with eigengene correlations of 0.986–0.998. These results
+support cultivar-associated developmental transcriptional programs,
+particularly M5, while leaving enzyme identity in duplicated families,
+tissue specificity, structural variation and causal links to skin traits
+unresolved.</p>
 </div>
 <div id="introduction" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Introduction</h1>
@@ -456,7 +457,7 @@ transitions around veraison and during ripening. GSE98923 provides a
 dense multi-year developmental series in Cabernet Sauvignon and Pinot
 noir and was originally used to characterize the timing of
 ripening-associated molecular events <span class="citation">(<a href="#ref-fasoli2018timing">Fasoli et al. 2018</a>)</span>. The present
-study asks a narrower question: which coexpression networks differ
+study asks a narrower question: which coexpression programs differ
 between the two cultivars as a function of developmental stage, and
 which of those differences survive explicit tests of vintage,
 annotation, external skin expression and modern preprocessing?</p>
@@ -607,13 +608,20 @@ pattern.</p>
 <table>
 <caption>Vintage-robustness classification for the five interaction
 modules.</caption>
+<colgroup>
+<col width="9%" />
+<col width="20%" />
+<col width="22%" />
+<col width="28%" />
+<col width="18%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Module</th>
-<th align="left">Class</th>
-<th align="left">Repeated stages</th>
-<th align="left">Dominant stage</th>
-<th align="left">Reversal</th>
+<th align="left">Classification</th>
+<th align="left">Repeated stage</th>
+<th align="left">Single-year dominant</th>
+<th align="left">Sign reversal</th>
 </tr>
 </thead>
 <tbody>
@@ -719,21 +727,23 @@ checks. Mapping ranged from 79.18% to 88.76%, and the modern matrix
 contained 47,971 genes. Across reciprocal one-to-one genes, the median
 sample-level Spearman correlation between historical and modern profiles
 was 0.932.</p>
-<table>
+<table style="width:100%;">
 <caption>Preservation against modern raw-read reprocessing for selected
 modules.</caption>
 <colgroup>
+<col width="3%" />
 <col width="8%" />
 <col width="7%" />
 <col width="8%" />
 <col width="11%" />
-<col width="15%" />
+<col width="14%" />
 <col width="17%" />
 <col width="11%" />
 <col width="17%" />
 </colgroup>
 <thead>
 <tr class="header">
+<th align="left"></th>
 <th align="left">Module</th>
 <th align="right">Genes</th>
 <th align="right">Mapped</th>
@@ -746,6 +756,7 @@ modules.</caption>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">1</td>
 <td align="left">M1</td>
 <td align="right">2167</td>
 <td align="right">1483</td>
@@ -756,6 +767,7 @@ modules.</caption>
 <td align="left">strong</td>
 </tr>
 <tr class="even">
+<td align="left">6</td>
 <td align="left">M5</td>
 <td align="right">108</td>
 <td align="right">76</td>
@@ -766,6 +778,7 @@ modules.</caption>
 <td align="left">moderate</td>
 </tr>
 <tr class="odd">
+<td align="left">2</td>
 <td align="left">M10</td>
 <td align="right">39</td>
 <td align="right">21</td>
@@ -776,6 +789,7 @@ modules.</caption>
 <td align="left">moderate</td>
 </tr>
 <tr class="even">
+<td align="left">3</td>
 <td align="left">M2</td>
 <td align="right">214</td>
 <td align="right">81</td>
@@ -786,6 +800,7 @@ modules.</caption>
 <td align="left">moderate</td>
 </tr>
 <tr class="odd">
+<td align="left">4</td>
 <td align="left">M3</td>
 <td align="right">131</td>
 <td align="right">35</td>
@@ -820,8 +835,8 @@ repeats its Harvest direction across three years, carries coherent
 phenolic-pathway enrichment, contains highly connected candidates with
 external skin expression support, and retains a moderately preserved
 mapped core after modern reprocessing. This convergence makes M5 the
-leading coexpression network for follow-up. It does not identify a
-unique causal regulator or establish a skin-thickness mechanism.</p>
+leading program for follow-up. It does not identify a unique causal
+regulator or establish a skin-thickness mechanism.</p>
 <p>M10 is smaller but more reproducible at module level and moderately
 preserved in the modern matrix. Its functional interpretation remains
 limited because it lacks global MapMan enrichment and most hubs lack
@@ -851,16 +866,14 @@ specificity at the cost of family coverage.</p>
 </div>
 <div id="conclusions" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Conclusions</h1>
-<p>This bioinformatic study concludes that M5 is the priority
-coexpression network because it combines the strongest cultivar-by-stage
-interaction, a Harvest pattern repeated across three years, functional
-coherence, relevant hubs, external observational support and
-preservation under modern raw-read reprocessing. M10 has the clearest
-module-level year reproducibility, whereas M2 retains repeated
-stage-specific contrasts but requires structural- and mapping-aware
-follow-up. Together, these results define a transparent hierarchy for
-targeted experimental validation. They do not demonstrate that any
-module or gene causes thick or thin berry skin.</p>
+<p>The analysis identifies cultivar-associated developmental
+coexpression programs in grape berry pericarp that survive several
+independent checks. M5 has the strongest combined support, M10 has the
+clearest module-level year reproducibility, and M2 retains repeated
+stage-specific contrasts but needs structural and mapping-aware
+follow-up. The results justify targeted validation of these
+transcriptional programs. They do not demonstrate that any module or
+gene causes thick or thin berry skin.</p>
 </div>
 <div id="data-and-code-availability" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Data and code

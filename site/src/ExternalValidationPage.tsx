@@ -518,13 +518,13 @@ export default function ExternalValidationPage() {
 
       <section className="validation-next">
         <div>
-          <p className="eyebrow">Conexión con T-008</p>
+          <p className="eyebrow">Conexión con el reprocesamiento moderno</p>
           <h2>La robustez de procesamiento ya fue evaluada</h2>
           <p>
-            T-008 preserva moderadamente el núcleo mapeable de M5/M10/M2 y reproduce señales principales de M5 y M2. La evidencia de piel sigue siendo una capa externa separada y ninguna de las dos resuelve causalidad o grosor.
+            El reprocesamiento moderno preserva moderadamente el núcleo mapeable de M5/M10/M2 y reproduce señales principales de M5 y M2. La evidencia de piel sigue siendo una capa externa separada y ninguna de las dos resuelve causalidad o grosor.
           </p>
         </div>
-        <Link className="button button--primary" to="/status/t008">Abrir T-008</Link>
+        <Link className="button button--primary" to="/reprocessing">Abrir reprocesamiento</Link>
       </section>
 
       {provenance && <Provenance provenance={provenance} />}

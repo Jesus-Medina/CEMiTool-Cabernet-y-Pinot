@@ -4,17 +4,17 @@ Frontend del explorador científico interactivo del proyecto.
 
 ## Estado
 
-- WEB-001: scaffold React + TypeScript + Vite completado.
-- WEB-002: capa canónica de exportación/validación completada.
-- WEB-003: Home + Story conectadas a datos reales.
-- WEB-004: M5 Explorer interactivo completado.
-- WEB-005: red Cytoscape M5 + locus chr16 completados.
-- WEB-006: enriquecimiento funcional MapMan v3/v5.1 + GO T-005A completado.
-- WEB-008: validación externa skin-only completada.
-- WEB-009: dashboard vivo T-008 completado; refleja el estado canónico actual sin inferir preservación.
-- WEB-010: navegador de evidencia y provenance completado.
-- WEB-011: QA científica, responsive y multinavegador completada.
-- WEB-012: la versión estable incorpora la **Síntesis científica integrada**, publicación automática del manuscrito/informe canónicos y el estado final 54/54 del reprocesamiento moderno.
+La versión estable incluye:
+
+- resumen científico y comparación interactiva de módulos;
+- exploración de M5, su red y el locus de cromosoma 16;
+- enriquecimiento funcional MapMan v3/v5.1 y Gene Ontology con términos obsoletos filtrados;
+- validación externa en piel, mantenida como evidencia observacional separada;
+- reprocesamiento moderno de las 54 corridas y análisis de preservación con cobertura explícita;
+- navegador de evidencia con fuentes, scripts, parámetros y hashes;
+- síntesis científica integrada, manuscrito e informe técnico canónicos;
+- validación responsive y multinavegador.
+
 - GitHub Pages: `https://jesus-medina.github.io/CEMiTool-Cabernet-y-Pinot/`.
 
 ## Desarrollo

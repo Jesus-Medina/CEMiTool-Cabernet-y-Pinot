@@ -23,8 +23,22 @@ const sections: MethodSection[] = [
   { id: 'statistics', label: 'Estadística', artifactIds: ['modules', 'module_contrasts'] },
   { id: 'enrichment', label: 'Función', artifactIds: ['functional_enrichment', 'enrichments'] },
   { id: 'validation', label: 'Validación', artifactIds: ['external_validation'] },
-  { id: 't008', label: 'T-008', artifactIds: ['t008_progress'] },
+  { id: 't008', label: 'Reprocesamiento', artifactIds: ['t008_progress'] },
 ]
+
+const artifactLabels: Record<string, string> = {
+  project_summary: 'Diseño experimental y red principal',
+  modules: 'Resumen de módulos',
+  module_contrasts: 'Contrastes por etapa y año',
+  functional_enrichment: 'Enriquecimiento funcional completo',
+  enrichments: 'Resumen de enriquecimiento',
+  external_validation: 'Validación externa en piel',
+  t008_progress: 'Reprocesamiento moderno',
+}
+
+function artifactLabel(id: string) {
+  return artifactLabels[id] ?? id.replaceAll('_', ' ')
+}
 
 function scrollToMethod(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -50,16 +64,16 @@ function MethodEvidence({
       {artifacts.map((artifact) => (
         <details key={artifact.artifact_id}>
           <summary>
-            <span>{artifact.artifact_id}</span>
+            <span>{artifactLabel(artifact.artifact_id)}</span>
             <small>{artifact.sources.length} fuente(s) · {artifact.scripts.length} script(s)</small>
           </summary>
           <div className="method-evidence-body">
             {artifact.sources.length > 0 && (
               <div>
                 <strong>Resultados / entradas</strong>
-                {artifact.sources.map((source) => (
+                {artifact.sources.map((source, index) => (
                   <a key={source.path} href={githubUrl(source.path, provenance.repository_commit)} target="_blank" rel="noreferrer">
-                    {source.path}
+                    Abrir fuente canónica {index + 1} ↗
                   </a>
                 ))}
               </div>
@@ -67,9 +81,9 @@ function MethodEvidence({
             {artifact.scripts.length > 0 && (
               <div>
                 <strong>Scripts</strong>
-                {artifact.scripts.map((script) => (
+                {artifact.scripts.map((script, index) => (
                   <a key={script.path} href={githubUrl(script.path, provenance.repository_commit)} target="_blank" rel="noreferrer">
-                    {script.path}
+                    Abrir script reproducible {index + 1} ↗
                   </a>
                 ))}
               </div>
@@ -248,12 +262,12 @@ export default function MethodsPage() {
             </section>
 
             <section className="method-section" id="t008">
-              <div className="method-section-heading"><span>06</span><div><p className="eyebrow">Reprocesamiento moderno</p><h2>T-008</h2></div></div>
+              <div className="method-section-heading"><span>06</span><div><p className="eyebrow">Robustez técnica</p><h2>Reprocesamiento moderno</h2></div></div>
               <div className="method-answer"><p>
                 Estado exportado actual: <strong>{project.t008.validated_runs}/{project.t008.total_runs}</strong> corridas validadas. {' '}
                 {project.t008.complete ? 'Matrices y preservación validadas; la interpretación se restringe a 1.922 genes beta10 con equivalencia recíproca.' : 'La comparación moderna todavía no ha superado todos sus controles.'}
               </p></div>
-              <Link className="inline-link" to="/status/t008">Abrir estado T-008 →</Link>
+              <Link className="inline-link" to="/reprocessing">Abrir reprocesamiento moderno →</Link>
               <MethodEvidence artifacts={evidence(['t008_progress'])} provenance={provenance} />
             </section>
           </div>

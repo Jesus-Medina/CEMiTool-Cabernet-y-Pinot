@@ -291,7 +291,7 @@ export default function SiteShell() {
           </div>
           <nav className="footer-links" aria-label="Enlaces del proyecto">
             <Link to="/results/synthesis">Síntesis científica</Link>
-            <Link to="/status/t008">Reprocesamiento moderno</Link>
+            <Link to="/reprocessing">Reprocesamiento moderno</Link>
             <Link to="/search">Buscar</Link>
             <a href="https://github.com/Jesus-Medina/CEMiTool-Cabernet-y-Pinot" target="_blank" rel="noreferrer">GitHub ↗</a>
           </nav>
