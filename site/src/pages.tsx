@@ -360,7 +360,7 @@ export function HomePage() {
           <p>Conclusión del estudio bioinformático</p>
           <h2 id="home-v2-conclusion-title">M5 reúne la evidencia integrada más sólida</h2>
         </div>
-        <div className="home-v2-knowledge-panel home-v2-knowledge-panel--known">
+        <div className="home-v2-conclusion-panel home-v2-knowledge-panel--known">
           <p>
             M5 es la red de coexpresión prioritaria del estudio porque reúne la interacción
             cultivar-etapa más fuerte, un patrón Harvest repetido en tres años, coherencia

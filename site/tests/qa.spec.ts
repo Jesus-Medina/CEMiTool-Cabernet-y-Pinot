@@ -347,6 +347,10 @@ test('summary page matches the V2 scientific information hierarchy', async ({ pa
   await expect(page.locator('.home-v2-finding-row article')).toHaveCount(4)
   await expect(page.locator('.home-v2-evidence-ladder li')).toHaveCount(4)
   await expect(page.locator('.home-v2-knowledge-grid article')).toHaveCount(2)
+  const conclusion = page.locator('.home-v2-conclusion-panel')
+  await expect(conclusion).toBeVisible()
+  await expect(conclusion.getByText(/M5 es la red de coexpresión prioritaria/i)).toBeVisible()
+  await expect(conclusion.getByRole('link', { name: /Leer la conclusión integrada/i })).toBeVisible()
 
   const heroImage = page.locator('.home-v2-grapes img')
   await expect(heroImage).toBeVisible()

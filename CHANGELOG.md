@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-27 — Home conclusion card styling
+
+- Reworked the Home bioinformatic-conclusion card so its content has the same padding, reading width, typography and action spacing as the rest of the scientific surfaces.
+- Added a focused browser assertion for the conclusion card and link; mobile Chromium overflow QA remains clean.
+- No scientific values, wording of the conclusion or data sources changed.
+
 ## 2026-09-27 — Public conclusion and reader-facing terminology
 
 - Regenerated the reproducible scientific manuscript in HTML, DOCX and PDF with coexpression-network terminology and an integrated conclusion that prioritizes M5 from convergent evidence.
